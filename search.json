@@ -1,0 +1,633 @@
+[
+  {
+    "objectID": "course-syllabus.html",
+    "href": "course-syllabus.html",
+    "title": "Public Syllabus",
+    "section": "",
+    "text": "Note: This is a partial syllabus designed to be public-facing. Carleton students should see the version on Moodle for all course details.",
+    "crumbs": [
+      "Course information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#meetings",
+    "href": "course-syllabus.html#meetings",
+    "title": "Public Syllabus",
+    "section": "Meetings",
+    "text": "Meetings\nThere will be three course meetings per week (Mondays, Wednesdays, and Fridays). Daily attendance and active participation is expected. Course meetings will combine demonstrations/lecture and in-class group exercises. On most days, I’ll ask you to complete a reading or watch a short video before class.",
+    "crumbs": [
+      "Course information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#assignments",
+    "href": "course-syllabus.html#assignments",
+    "title": "Public Syllabus",
+    "section": "Assignments",
+    "text": "Assignments\nHomework will be assigned once-ish per week, distributed via GitHub. You will submit homework assignments via gradescope. You will use quarto for all assignments and submit all necessary work for each assignment on GitHub.",
+    "crumbs": [
+      "Course information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#portfolio-projects",
+    "href": "course-syllabus.html#portfolio-projects",
+    "title": "Public Syllabus",
+    "section": "Portfolio Projects",
+    "text": "Portfolio Projects\nPortfolio project require you to integrate several smaller computational tasks and require clear communication of the proposed solution or findings to a broader audience. You will typically work in pairs or triples.",
+    "crumbs": [
+      "Course information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#lab-quizzes",
+    "href": "course-syllabus.html#lab-quizzes",
+    "title": "Public Syllabus",
+    "section": "Lab Quizzes",
+    "text": "Lab Quizzes\nPart of being proficient in data science is being able to do basic data analysis “on the fly”, without access to class resources. There will be 3 short (~30 minute) in-class lab quizzes to assess your ability to do basic tasks in R. I recognize that “in the real world”, you will almost always have access to your resources, so you will also have 48 hours to re-submit.",
+    "crumbs": [
+      "Course information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#final-project",
+    "href": "course-syllabus.html#final-project",
+    "title": "Public Syllabus",
+    "section": "Final Project",
+    "text": "Final Project\nThe final project is a capstone experience synthesizing everything you’ve learned over the course of the term. This is an opportunity for you to exercise your creativity and create something meaningful. The final project is wildly open-ended and more details will follow.",
+    "crumbs": [
+      "Course information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#communication",
+    "href": "course-syllabus.html#communication",
+    "title": "Public Syllabus",
+    "section": "Communication",
+    "text": "Communication\nAssignments and slides will be shared publicly on our course website. Grades will be posted on Moodle. Please use our github discussion page for any homework or course content questions; email me privately with any personal matters (grade discussions, illness, emergency, etc.). Any time-sensitive announcements will be sent via email. It is your responsibility to make sure that your notification settings allow time-sensitive announcements to reach you.",
+    "crumbs": [
+      "Course information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#textbook",
+    "href": "course-syllabus.html#textbook",
+    "title": "Public Syllabus",
+    "section": "Textbook",
+    "text": "Textbook\nThere is no “perfect” data science textbook. We will use excerpts from the following texts:\n\nR for Data Science 2e\nModern Data Science with R 3e\n\nThese books are all freely available online. If you prefer a hard copy, they are also available for purchase through the publisher.",
+    "crumbs": [
+      "Course information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#software",
+    "href": "course-syllabus.html#software",
+    "title": "Public Syllabus",
+    "section": "Software",
+    "text": "Software\nThe use of the R programming language, with the RStudio interface is an essential component of this course.",
+    "crumbs": [
+      "Course information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "computing/computing-cheatsheets.html",
+    "href": "computing/computing-cheatsheets.html",
+    "title": "R cheatsheets",
+    "section": "",
+    "text": "The following cheatsheets come from https://posit.co/resources/cheatsheets. We haven’t covered every function and functionality listed on them, but you might still find them useful as references.",
+    "crumbs": [
+      "Computing",
+      "Cheatsheets"
+    ]
+  },
+  {
+    "objectID": "computing/rstudio-stat220.html",
+    "href": "computing/rstudio-stat220.html",
+    "title": "Using RStudio in Stat 220",
+    "section": "",
+    "text": "There will be a lot of RStudio content thrown your way this term, most in the form of .Rmd (R Markdown) files. To stay organized, I strongly suggest you create a stat220 folder that contains the following subfolders:\nTo get started with this organization, follow the steps below.",
+    "crumbs": [
+      "Computing",
+      "Rstudio in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/rstudio-stat220.html#file-organization-using-maize",
+    "href": "computing/rstudio-stat220.html#file-organization-using-maize",
+    "title": "Using RStudio in Stat 220",
+    "section": "File organization: Using maize",
+    "text": "File organization: Using maize\nThe server (online) version of RStudio is run from a Unix server. You can navigate this file system using Unix commands, but I assume that most or all of you will just use RStudio to access your files on this server.\n1. In RStudio, click the Files tab in the lower right-hand window. Note: this is not the same as the File menu option.\n\n\n\n\n\n\n\n\n2. Verify that you are in your HOME folder (should simply say Home right under the New Folder button). To navigate to your Home folder (if somehow you are not in it), click the … button (far right side of the Files tab) and enter a ~ (tilde) symbol\n\n\n\n\n\n\n\n\n3. Click the New Folder button and name the folder stat220.\n\n\n\n\n\n\n\n\n4. Click on this newly created (empty) stat220 folder. Within the folder create another New Folder and name it assignments.\n\n\n\n\n\n\n\n\n5. Within the stat220 folder, create an RStudio project called content with the following steps:\n\n\na. Click the Project button in the upper right corner of your RStudio window and select New Project….\n\n\n\n\n\n\n\n\n\n\n\nb. Select New Directory and then New Project\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nc. Enter content as the Directory name and use the Browse button to find your stat220 folder. Then click Create Project.\n\n\n\n\n\n\n\n\n\n\n\nd. You should now have a new folder called content in your stat220 folder and this folder will contain an RStudio project .Rproj. Feel free to add subfolders to this content folder (e.g. slides, examples, etc).\n\n\n\n\n\n\n\n\n\nWarning: Do not create an RStudio project in the main stat220 folder because it is not good practice to have RStudio projects in subfolders of another project (e.g. a project within a project is not recommended).",
+    "crumbs": [
+      "Computing",
+      "Rstudio in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/rstudio-stat220.html#file-organization-using-your-own-rstudio",
+    "href": "computing/rstudio-stat220.html#file-organization-using-your-own-rstudio",
+    "title": "Using RStudio in Stat 220",
+    "section": "File organization: Using your own RStudio",
+    "text": "File organization: Using your own RStudio\nCreate a folder called stat220 somewhere on your computer. Within this folder create an assignments subfolder. Then complete step 5 from above to create a content RStudio project folder.",
+    "crumbs": [
+      "Computing",
+      "Rstudio in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/rstudio-stat220.html#rstudio-projects",
+    "href": "computing/rstudio-stat220.html#rstudio-projects",
+    "title": "Using RStudio in Stat 220",
+    "section": "RStudio projects",
+    "text": "RStudio projects\nOnce you’ve created a project, your R session should be running within that project folder. You can check which project you are in by checking the project name in the upper right part of your RStudio window. Here we see the content project is open:\n\n\n\n\n\n\n\n\nRunning R from an RStudio project sets your working directory to the project folder:\n\n\n\n\n\n\n\n\nThis allows for easy file path access to all files related to this project.\nTo start a project, click on the .Rproj file or use the Open Project… option shown in step 5 above.",
+    "crumbs": [
+      "Computing",
+      "Rstudio in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/rstudio-stat220.html#best-practices-or-what-not-to-do",
+    "href": "computing/rstudio-stat220.html#best-practices-or-what-not-to-do",
+    "title": "Using RStudio in Stat 220",
+    "section": "Best practices (or what not to do)",
+    "text": "Best practices (or what not to do)\n\nNever save files to a lab computer hard drive (e.g. desktop, downloads, etc). They will be erased when you log off.\nDo not use gmail as a file storage system! Avoid emailing yourself files that you created (and saved) on a lab computer. Eventually you will lose work this way.\nAvoid using online versions of google drive and dropbox. Similar to gmail, downloading, editing a doc, then uploading it back to drive/dropbox is another great way to lose work.\nAvoid this and this.",
+    "crumbs": [
+      "Computing",
+      "Rstudio in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/rstudio-stat220.html#acknowledgments",
+    "href": "computing/rstudio-stat220.html#acknowledgments",
+    "title": "Using RStudio in Stat 220",
+    "section": "Acknowledgments",
+    "text": "Acknowledgments\nThis guide is based on the guide from Katie St. Clair and is licensed under the CC BY-NC 3.0 Creative Commons License.",
+    "crumbs": [
+      "Computing",
+      "Rstudio in Stat 220"
+    ]
+  },
+  {
+    "objectID": "course-faq.html",
+    "href": "course-faq.html",
+    "title": "FAQ",
+    "section": "",
+    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
+    "crumbs": [
+      "Course information",
+      "FAQ"
+    ]
+  },
+  {
+    "objectID": "course-faq.html#where-can-i-get-help",
+    "href": "course-faq.html#where-can-i-get-help",
+    "title": "FAQ",
+    "section": "",
+    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
+    "crumbs": [
+      "Course information",
+      "FAQ"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 220: Intro to Data Science",
+    "section": "",
+    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n\nWelcome + data, ggplot review\n\nslides01  01-example-unvotes\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\nslides02  02-reproducible-reports\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1 \n\nggplot + theming\nslides03  03-ggplot-basics\nHW 1\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nDesign\nslides04  04-polishing-your-plots\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\nslides05  05-making-a-map\nHW 2\n\n\n2\nF\nFri, Jan 17\n\nEthics I\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\nslides07  07-verbs\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\nslides08  08-group_by\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4  📚 R4DS 19.1-19.3\n\nTidy data/pivots and joins\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 16 \n\nWorking with factors\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\n\n\n\n5\nM\nMon, Feb 3\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nText Analysis\n\nPortfolio 2\n\n\n5\nW\nWed, Feb 5\nTBA\nEthics II\n\nHW 5\n\n\n5\nF\nFri, Feb 7\nTBA\nTBA\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\nMidterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n📚What is an API? 📝 work through tidycensus basic usage vignette (including signing up for a census API key!)\nAPIs\n\n\n\n\n7\nW\nWed, Feb 19\nTBA\nScraping\n\nHW7  Final Project Proposal\n\n\n7\nF\nFri, Feb 21\n\nEthics III\n\nLab Quiz 3\n\n\n8\nM\nMon, Feb 24\nTBA\nIntro to Interactivity\n\nPortfolio 3\n\n\n8\nW\nWed, Feb 26\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\nShiny 1\n\nHW8\n\n\n8\nF\nFri, Feb 28\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nM\nMon, Mar 3\n\nShiny 3\n\nFinal Project sketch draft\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\n\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "course-links.html",
+    "href": "course-links.html",
+    "title": "Useful links",
+    "section": "",
+    "text": "RStudio Server\n🔗 on Carleton’s Maize Server\n\n\nCourse GitHub organization\n🔗 on GitHub\n\n\nGradebook\n🔗 on Moodle\n\n\nTexbooks\n🔗 Modern Data Science with R (MDS)\n🔗 R for Data Science (R4DS)\n\n\nPackage documentation\n🔗 ggplot2: ggplot2.tidyverse.org\n🔗 dplyr: dplyr.tidyverse.org\n🔗 tidyr: tidyr.tidyverse.org\n🔗 forcats: forcats.tidyverse.org\n🔗 stringr: stringr.tidyverse.org\n🔗 lubridate: lubridate.tidyverse.org\n🔗 readr: readr.tidyverse.org",
+    "crumbs": [
+      "Course information",
+      "Useful links"
+    ]
+  },
+  {
+    "objectID": "slides/01/slides01.html#about-me",
+    "href": "slides/01/slides01.html#about-me",
+    "title": "Welcome to Stat 220",
+    "section": "About me",
+    "text": "About me\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-is-data-science",
+    "href": "slides/01/slides01.html#what-is-data-science",
+    "title": "Welcome to Stat 220",
+    "section": "What is “data science”?",
+    "text": "What is “data science”?"
+  },
+  {
+    "objectID": "slides/01/slides01.html#themes",
+    "href": "slides/01/slides01.html#themes",
+    "title": "Welcome to Stat 220",
+    "section": "Themes:",
+    "text": "Themes:"
+  },
+  {
+    "objectID": "slides/01/slides01.html#show-and-tell",
+    "href": "slides/01/slides01.html#show-and-tell",
+    "title": "Welcome to Stat 220",
+    "section": "Show and tell",
+    "text": "Show and tell\n\nTODO"
+  },
+  {
+    "objectID": "slides/01/slides01.html#section",
+    "href": "slides/01/slides01.html#section",
+    "title": "Welcome to Stat 220",
+    "section": "",
+    "text": "What skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-is-this-class-all-about",
+    "href": "slides/01/slides01.html#what-is-this-class-all-about",
+    "title": "Welcome to Stat 220",
+    "section": "What is this class all about?",
+    "text": "What is this class all about?\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
+  },
+  {
+    "objectID": "slides/01/slides01.html#why-r",
+    "href": "slides/01/slides01.html#why-r",
+    "title": "Welcome to Stat 220",
+    "section": "Why R?",
+    "text": "Why R?\n\nAnd the second reason, which is both a huge strength of R and a bit of a weakness, is that R is not just a programming language. It was designed from day 1 to be an environment that can do data analysis. So, compared to the other options like Python, you can get up and running in R doing data science, learning much, much less about programming to get started. And that generally makes it like easier to get up and running if you don’t have formal training in computer science or software engineering.\n\n\n-Hadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham"
+  },
+  {
+    "objectID": "slides/01/slides01.html#advice",
+    "href": "slides/01/slides01.html#advice",
+    "title": "Welcome to Stat 220",
+    "section": "Advice",
+    "text": "Advice\n\n\n\n\n\n\n\n\nIt’s easy when you start out programming to get really frustrated and think, “Oh it’s me, I’m really stupid,” or, “I’m not made out to program.” But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It’s just a natural part of programming. So, it happens to everyone and gets less and less over time. Don’t blame yourself. Just take a break, do something fun, and then come back and try again later.\n\n\n\nHadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham; Artwork by Allison Horst"
+  },
+  {
+    "objectID": "slides/01/slides01.html#on-your-own",
+    "href": "slides/01/slides01.html#on-your-own",
+    "title": "Welcome to Stat 220",
+    "section": "On your own:",
+    "text": "On your own:\n\n\nDownload today’s .Rmd from Moodle\nLog into the maize server: maize.mathcs.carleton.edu\nUpload the .Rmd to maize\nSkim the file"
+  },
+  {
+    "objectID": "slides/01/slides01.html#your-turn",
+    "href": "slides/01/slides01.html#your-turn",
+    "title": "Welcome to Stat 220",
+    "section": "Your turn:",
+    "text": "Your turn:\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
+  },
+  {
+    "objectID": "slides/01/slides01.html#course-website",
+    "href": "slides/01/slides01.html#course-website",
+    "title": "Welcome to Stat 220",
+    "section": "Course website",
+    "text": "Course website\n\nvizdata.org\n\n\naka “the one link to rule them all”"
+  },
+  {
+    "objectID": "slides/01/slides01.html#lectures",
+    "href": "slides/01/slides01.html#lectures",
+    "title": "Welcome to Stat 220",
+    "section": "Lectures",
+    "text": "Lectures\n\nIn person\nAttendance is expected\nPlease bring a charged laptop every day\nA little bit of everything:\n\nTraditional lecture\nLive coding + demos\nShort exercises + solution discussion\nLonger group work assignments"
+  },
+  {
+    "objectID": "slides/01/slides01.html#office-hours",
+    "href": "slides/01/slides01.html#office-hours",
+    "title": "Welcome to Stat 220",
+    "section": "Office hours",
+    "text": "Office hours\n\n\n\nDay\nTime\nType\nLocation\n\n\n\n\nMonday\n11-12\nDrop-in\nCMC 307\n\n\nTuesday\n2-3\nDrop-in\nCMC 307\n\n\nWednesday\n4-5\nDrop-in\nCMC 307\n\n\nFriday\n11-12\nBy appt\nCMC 223"
+  },
+  {
+    "objectID": "slides/01/slides01.html#my-schedule-aka-an-american-horror-story",
+    "href": "slides/01/slides01.html#my-schedule-aka-an-american-horror-story",
+    "title": "Welcome to Stat 220",
+    "section": "My schedule, aka an American Horror Story",
+    "text": "My schedule, aka an American Horror Story"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-will-you-do-in-this-course",
+    "href": "slides/01/slides01.html#what-will-you-do-in-this-course",
+    "title": "Welcome to Stat 220",
+    "section": "What will you do in this course?",
+    "text": "What will you do in this course?\n\n\nGraded work:\n\nHomework\nLab Quizzes\nPortfolio Projects\nFinal Project\n\n\nUngraded work:\n\nDaily prep for class: read/watch/review/try\nIn-class exercises and group work\nEngagement in small and large group discussions"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
+    "href": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
+    "title": "Welcome to Stat 220",
+    "section": "What will a typical day/week look like?",
+    "text": "What will a typical day/week look like?\n\n\nBefore class:\n\nWatch a video or read a chapter\nCome with questions\nBe prepared to try what was covered\n\n\nIn class:\n\nMini lecture\n\nSometimes review\nSometimes new\n\nHands-on coding in R\n\n\nAfter class:\n\nFinish any in-class exercises\nWork on homework and portfolio projects"
+  },
+  {
+    "objectID": "slides/01/slides01.html#grading-system",
+    "href": "slides/01/slides01.html#grading-system",
+    "title": "Welcome to Stat 220",
+    "section": "Grading system",
+    "text": "Grading system"
+  },
+  {
+    "objectID": "slides/01/slides01.html#benefits",
+    "href": "slides/01/slides01.html#benefits",
+    "title": "Welcome to Stat 220",
+    "section": "Benefits",
+    "text": "Benefits"
+  },
+  {
+    "objectID": "slides/01/slides01.html#possible-drawbacks",
+    "href": "slides/01/slides01.html#possible-drawbacks",
+    "title": "Welcome to Stat 220",
+    "section": "Possible drawbacks",
+    "text": "Possible drawbacks"
+  },
+  {
+    "objectID": "slides/01/slides01.html#earning-a-course-grade",
+    "href": "slides/01/slides01.html#earning-a-course-grade",
+    "title": "Welcome to Stat 220",
+    "section": "Earning a course grade",
+    "text": "Earning a course grade"
+  },
+  {
+    "objectID": "slides/01/slides01.html#tokens",
+    "href": "slides/01/slides01.html#tokens",
+    "title": "Welcome to Stat 220",
+    "section": "Tokens",
+    "text": "Tokens"
+  },
+  {
+    "objectID": "slides/01/slides01.html#why-limit-the-number-of-tokens",
+    "href": "slides/01/slides01.html#why-limit-the-number-of-tokens",
+    "title": "Welcome to Stat 220",
+    "section": "Why limit the number of tokens?",
+    "text": "Why limit the number of tokens?"
+  },
+  {
+    "objectID": "slides/01/slides01.html#collaboration-policy",
+    "href": "slides/01/slides01.html#collaboration-policy",
+    "title": "Welcome to Stat 220",
+    "section": "Collaboration policy",
+    "text": "Collaboration policy"
+  },
+  {
+    "objectID": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
+    "href": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
+    "title": "Welcome to Stat 220",
+    "section": "Use of generative artificial intelligence (AI)",
+    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n✅ AI tools for code: You may make use of the technology for coding examples on assignments; if you do so, you must explicitly cite where you obtained the code. See the syllabus for guidelines for citing AI-generated content.\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you."
+  },
+  {
+    "objectID": "slides/01/slides01.html#tools",
+    "href": "slides/01/slides01.html#tools",
+    "title": "Welcome to Stat 220",
+    "section": "Tools",
+    "text": "Tools\n\n&lt;maize.mathcs.carleton.edu&gt;\n\n\nBrowser based RStudio instance(s) provided by Carleton\nRequires internet connection to access\nProvides consistency in hardware and software environments\nLocal R installations are fine but we will not guarantee support"
+  },
+  {
+    "objectID": "slides/01/slides01.html#github",
+    "href": "slides/01/slides01.html#github",
+    "title": "Welcome to Stat 220",
+    "section": "GitHub",
+    "text": "GitHub\n\nhttps://github.com/stat220-w25\n\n\nGitHub organization for the course\nAll of your work and your membership (enrollment) in the organization is private\nEach assignment is a private repo on GitHub, I distribute the assignments on GitHub and you submit them there\nFeedback on assignments is given as GitHub issues, scores recorded on Sakai Gradebook\n\n\nFill out the Getting to know you survey for collection of your account names, later this week you will be invited to the course organization."
+  },
+  {
+    "objectID": "slides/01/slides01.html#username-advice",
+    "href": "slides/01/slides01.html#username-advice",
+    "title": "Welcome to Stat 220",
+    "section": "Username advice",
+    "text": "Username advice\n\nin case you don’t yet have a GitHub account…\n\nSome brief advice about selecting your account names (particularly for GitHub),\n\nIncorporate your actual name! People like to know who they’re dealing with and makes your username easier for people to guess or remember\nReuse your username from other contexts, e.g., Twitter or Slack\nPick a username you will be comfortable revealing to your future boss\nShorter is better than longer, but be as unique as possible\nMake it timeless. Avoid highlighting your current university, employer, or place of residence"
+  },
+  {
+    "objectID": "slides/01/slides01.html#todays-tasks",
+    "href": "slides/01/slides01.html#todays-tasks",
+    "title": "Welcome to Stat 220",
+    "section": "Today’s tasks",
+    "text": "Today’s tasks\n\nCreate a GitHub account if you don’t have one\nRead the syllabus\nMake sure you can login in to the maize server or update your local R/RStudio versions\nComplete the Getting to know you survey\nComplete the readings for next class"
+  },
+  {
+    "objectID": "computing/git-stat220.html",
+    "href": "computing/git-stat220.html",
+    "title": "GitHub Classroom Guide for Stat 220",
+    "section": "",
+    "text": "Jump to… Individual assignments | Group work | Additional resources\nThis is a guide for students to setup Git and GitHub for use in Stat 220.\nIf you are using the maize RStudio server, then you can connect to GitHub without any extra software downloads. If you are using RStudio on your computer, then you will need to download Git software (as directed in Computing Access) to use GitHub connected projects.\nI will host all of our course materials on GitHub, and you will use GitHub to submit homework and collaborate on projects.",
+    "crumbs": [
+      "Computing",
+      "Git/Github in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/git-stat220.html#getting-setup-with-git-and-github",
+    "href": "computing/git-stat220.html#getting-setup-with-git-and-github",
+    "title": "GitHub Classroom Guide for Stat 220",
+    "section": "Getting setup with Git and GitHub",
+    "text": "Getting setup with Git and GitHub\nIf you are not working on the maize RStudio server, then make sure that you have installed all of the software mentioned in Computing Access. In addition, you should install the usethis and gitcreds R packages.\nEveryone needs to connect Git and GitHub by doing the following:\n\nRegister for account on GitHub (https://github.com/). I recommend using a username that incorporates your name (e.g. aloy). Please use your Carleton email with this account.\n\nSetup options in Git by running the following code chunk in your console:\nlibrary(usethis)\nuse_git_config(user.name = \"Jane Doe\", user.email = \"jane@example.org\")\nchanging the first two lines to your own name and email (this should be the email associated with your GitHub account).\n\n\n(Optional) This step explains how to use GitHub on RStudio without having to enter your password every time to connect. This is an optional step since you can still use GitHub without setting up a SSH key or caching credentials, you will just need to enter your password every time you push or pull with GitHub. Pick one method below: cache credentials for HTTPS or SSH. GitHub recommends HTTPS, so I recommend trying that first.\n\n\nStrongly recommended: Cache credential using a HTTPS linked project.\nComplete the steps in Section 10.1 of Happy Git with R to get a personal access token (you will need to install the usethis package first). Then, follow the directions in Section 10.2.1 of Happy Git with R (I’ve had good luck with the gitcreds package, and it is installed on maize.)\n\nA second method is to generate a SSH key. First check to see if you have a SSH key. Go into the shell (again, through RStudio Tools -&gt; Shell) and complete on this page http://happygitwithr.com/ssh-keys.html, which is Chapter 11 in Happy Git with R.\n\n\n(optional) Follow the instructions here (http://happygitwithr.com/push-pull-github.html) to ensure you can connect to GitHub from your computer. If you can’t get this command line push/pull to work that is fine. Try connecting to GitHub via RStudio, as detailed next. If you can’t connect via RStudio then contact me.",
+    "crumbs": [
+      "Computing",
+      "Git/Github in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/git-stat220.html#individual-assignments",
+    "href": "computing/git-stat220.html#individual-assignments",
+    "title": "GitHub Classroom Guide for Stat 220",
+    "section": "Individual assignments",
+    "text": "Individual assignments\nIf you followed the suggestions in the Using Rstudio in Stat 220 page, then you should already have an assignments folder on your computer or maize account.\nEach new assignment/project will be posted as a repository on GitHub and added directly to your account (within the Stat220 organization). This repository will contain assignment details (README, .Rmd).\nCreating an individual assignment repo and project\n\nGo to our course GitHub organization page and find your homework repo, such as hw-1-username (where your username is attached).\nEnter the online assignment repository on GitHub. Click the green “Code” button. Most of you should just use the default setting which is to “clone” (copy) using HTTPS. Click the clipboard to the right of the URL to copy the repo location. (If you are using SSH, make sure it says “Clone with SSH” in bold in the top left of the pop-up box. If not, click the “SSH” button and copy the link in the box to your clipboard.)\nNow open up RStudio and create a project as follows:\n\n\nClick the Project button in the upper right corner of your RStudio window and select New Project….\n\n \n\n\n\n\n\n\n\n\n\nSelect Version Control and then New Project\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPaste the link you just copied into the Repository URL box. Leave the Project directory name blank (or keep the auto-filled name). Use the Browse button to find your assignments folder, then click Create Project\n\n\n\n\n\n\n\n\n\n\n   \nWarning: If you received an error in the above steps, you may have to clone with HTTPS instead of SSH (or vice versa). You can do this by again clicking on the “Clone or Download” button in the repository page, then clicking “Use HTTPS” in the top right of the pop-up box. Now copy the link and repeat this step.\nWorking on your assignment\nAn RStudio project should now open, which will allow you to start working on your homework assignment. You should see the project assignment name in the top right side of Rstudio. You will probably see a blank console screen when you open a new project. Look in the Files tab for your homework .Rmd file. Click on whatever file you want to edit (probably the .Rmd file) and edit away. Make sure that your current assignment’s project is the one open and showing in the upper rightproject name. To open a project, click on the .Rproj file or use the Open Project… option available in the upper right project link.\nCommits\nAfter you make changes to the homework assignment, commit them. What are commits you ask? Commits are essentially taking a snapshot of your projects. Commits save this snapshot to your local version of Git (located on your hard drive or the maize server). For example, if I make changes to a code so that it prints “Hello world”, and then commit them with an informative message, I can look at the history of my commits and view the code that I wrote at that time. If I made some more changes to the function that resulted in an error, I could go back to the commit where the code was originally working. This prevents you from creating several versions of your homework (homework-v1, homework-v2, …) or from trying to remember what your code originally looked like.\nYou can make commits in the Git tab in RStudio.\n\n\n\n\n\n\n\n\nClick the Commit button in the Git tab. Check the boxes of the files that you want to commit, enter your commit message (briefly state what changes have been made), then hit Commit. You can read how to do this in RStudio in more detail here: http://r-pkgs.had.co.nz/git.html#git-commit.\nTwo things about committing.\n\nYou should commit somewhat frequently. At minimum, if you’re doing a homework assignment, you should make a commit each time that you’ve finished a question.\nLeave informative commit messages. “Added stuff” will not help you if you’re looking at your commit history in a year. A message like “Added initial version of hello-world function” will be more useful.\nPushing changes to Github\nAt some point you’ll want to get the updated version of the assignment back onto GitHub, either so that we can help you with your code or so that it can be graded. You will also want to push work frequently when you have a shared GitHub repo for project collaborations (i.e. more than one person is working on a project and code). If you are ready to push, you can again click on the “Up” Push arrow in the Git tab or in the Commit pop-up window or in the Git tab (shown above).\nTo “turn in” an assignment, all you need to do is push all your relevant files to Github by the deadline.",
+    "crumbs": [
+      "Computing",
+      "Git/Github in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/git-stat220.html#group-work",
+    "href": "computing/git-stat220.html#group-work",
+    "title": "GitHub Classroom Guide for Stat 220",
+    "section": "Group work",
+    "text": "Group work\nCollaborative Github assignments are pretty similar to individual assignments.\nCreating a group/partner assignment repo and project\nGo to our course GitHub organization page and find the repo for your group, for example if your group name is “team01” the you might find the mp1-team01 repo. Clone this repo to your computer/maize account using the same steps done for an individual assignment (see steps 2-3).\nWorking with collaborative repos\nFor group homework, I suggest that only the recorder edit the group-homework-x.Rmd file to avoid merge conflicts! Other group members can create a new Markdown doc to run and save commands. Only the recorder needs to push changes (answers) to the Github repo and all others can then pull these changes (i.e. the final answers) after the HW is submitted.\nWhen you are working together on a Github project, you should commit and push your modifications frequently. You will also need to frequently pull updates from Github down to your local version of RStudio. These updates are changes that your teammates have made since your last pull. To pull in changes, click the “Down” Pull arrow in the Git tab (shown above).\nIf you get an error about conflict after pulling or pushing, don’t freak out! This can happen if you edit a file (usually an .Rmd or .R file) in a location that was also changed by a teammate. When this happens you should attempt to fix the merge conflict. Take a look at this resource site and try to fix the merge conflict in Rstudio. If that doesn’t work contact me!",
+    "crumbs": [
+      "Computing",
+      "Git/Github in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/git-stat220.html#additional-resources",
+    "href": "computing/git-stat220.html#additional-resources",
+    "title": "GitHub Classroom Guide for Stat 220",
+    "section": "Additional resources",
+    "text": "Additional resources\n\nHappy Git and GitHub for the useR\nRstudio, Git and GitHub\nInteractive learning guide for Git\nGitHub Guides\nGit setup for Windows (video)\nGit setup for Mac (video)\nHow to clone, edit, and push homework assignments with GitHub Classroom (video)\n\n\nAcknowledgements\nMost of this content in this guide was taken from https://github.com/jfiksel/github-classroom-for-students and edited by Adam Loy for our classroom use. and is licensed under the CC BY-NC 3.0 Creative Commons License.",
+    "crumbs": [
+      "Computing",
+      "Git/Github in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/computing-access.html",
+    "href": "computing/computing-access.html",
+    "title": "Computing Access",
+    "section": "",
+    "text": "I expect you to use RStudio to run R in this course. You have two options for using RStudio:\n\nWe have a Carleton server hosting Rstudio at https://maize.mathcs.carleton.edu/. Your files on this account will be accessible as long as you are a student at Carleton. Use your Carleton credentials to access your account and you need to be running the Carleton VPN (below) to access this server. Use this option if\n\nyour personal computer is old and/or slow\nyou prefer to use school computers (lab or library computers)\n\nYou can also run R/RStudio from your personal computer. If you use a local version of R/RStudio this term, make sure that you have recently updated both R and RStudio.\nTo check your version of R, run the command getRversion() and compare your version to the newest version posted on https://cran.r-project.org/. If you need an update, then install the newer version using the installation directions above.\nIn RStudio, check for updates with the menu option Help &gt; Check for updates. Follow directions if an update is needed.\nFor a fresh download:\n\nDownload the latest version of R for your operating system from https://cran.r-project.org/\nDownload the free RStudio desktop version from https://posit.co/download/rstudio-desktop/\n\nUse the default download and install options for each. For R, download the “precompiled binary” distribution rather than the source code.",
+    "crumbs": [
+      "Computing",
+      "Access"
+    ]
+  },
+  {
+    "objectID": "computing/computing-access.html#rrstudio",
+    "href": "computing/computing-access.html#rrstudio",
+    "title": "Computing Access",
+    "section": "",
+    "text": "I expect you to use RStudio to run R in this course. You have two options for using RStudio:\n\nWe have a Carleton server hosting Rstudio at https://maize.mathcs.carleton.edu/. Your files on this account will be accessible as long as you are a student at Carleton. Use your Carleton credentials to access your account and you need to be running the Carleton VPN (below) to access this server. Use this option if\n\nyour personal computer is old and/or slow\nyou prefer to use school computers (lab or library computers)\n\nYou can also run R/RStudio from your personal computer. If you use a local version of R/RStudio this term, make sure that you have recently updated both R and RStudio.\nTo check your version of R, run the command getRversion() and compare your version to the newest version posted on https://cran.r-project.org/. If you need an update, then install the newer version using the installation directions above.\nIn RStudio, check for updates with the menu option Help &gt; Check for updates. Follow directions if an update is needed.\nFor a fresh download:\n\nDownload the latest version of R for your operating system from https://cran.r-project.org/\nDownload the free RStudio desktop version from https://posit.co/download/rstudio-desktop/\n\nUse the default download and install options for each. For R, download the “precompiled binary” distribution rather than the source code.",
+    "crumbs": [
+      "Computing",
+      "Access"
+    ]
+  },
+  {
+    "objectID": "computing/computing-access.html#vpn",
+    "href": "computing/computing-access.html#vpn",
+    "title": "Computing Access",
+    "section": "VPN",
+    "text": "VPN\nIf you plan to use the maize server and you plan to do any work off campus this term (e.g., while on a field trip, travel for athletics, or just sitting in Little Joy) you need to install Carleton’s VPN to have access.\nTo install the GlobalProtect VPN follow directions provided by ITS.",
+    "crumbs": [
+      "Computing",
+      "Access"
+    ]
+  },
+  {
+    "objectID": "computing/computing-access.html#git-and-github",
+    "href": "computing/computing-access.html#git-and-github",
+    "title": "Computing Access",
+    "section": "Git and GitHub",
+    "text": "Git and GitHub\nGit is version control software that you install locally on your computer. Git is already installed on the maize RStudio server.\nGithub is a cloud-based service for hosting git projects. It allows multiple users to share and contribute to projects and it is how you will be submitting homework assignments and projects for this class. More information about Github for this class is found on Moodle.\nIf you are using a local install of R/RStudio, then you will need to install Git.\nInstalling Git\nDirections for both Windows & Mac here at http://happygitwithr.com/install-git.html.\n\nIf you are using maize, then there is nothing you need to install.\nWindows users should follow Option 1 in 6.2.\nMac users can follow Option 1 in 6.3 if comfortable, otherwise follow Option 2\nLinux users can follow 6.4.",
+    "crumbs": [
+      "Computing",
+      "Access"
+    ]
+  },
+  {
+    "objectID": "computing/computing-access.html#latex",
+    "href": "computing/computing-access.html#latex",
+    "title": "Computing Access",
+    "section": "LaTeX",
+    "text": "LaTeX\nYou need a LaTeX compiler to create a pdf document from a R Markdown file. If you use the maize server, you don’t need to install anything (the server already has a LaTeX compiler). If you are using a local RStudio, you should install a Latex compiler.\nInstalling LaTeX (not needed if you are using the maize server)\nIf you don’t already have a tex package installed on your computer, the easiest option to create pdf’s is to use the tinytex R package. This can be installed with the following R commands:\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()  # install TinyTeX\n\nIf you’d like a stand alone LaTeX package, you could install the basic installations of either:\n\nMacTeX for Mac (3.2GB!)\nMiKTeX for Windows (190MB)\n\n\nAcknowledgements\nThis installation guide was written by Adam Loy and is based on the guide from stat545.com and is licensed under the CC BY-NC 3.0 Creative Commons License.",
+    "crumbs": [
+      "Computing",
+      "Access"
+    ]
+  },
+  {
+    "objectID": "carleton-only-syllabus.html",
+    "href": "carleton-only-syllabus.html",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "",
+    "text": "Meetings\nMWF 3a\n9:50-11 MW | 9:40-10:40 F\nCMC 102\n\n\nProfessor\nAmanda Luby\nCMC 223\n\n\n\naluby@carleton.edu\n\n\n\nOffice Hours\nMon 11-12 | Tues 2-3 | Wed 4-5 | Fri 11-12 (appt)\nBy appt through my Google Calendar\nCMC 307\n\n\nWebsite\n[[ADD LINK]]\n\n\n\nTexts\nR for Data Science (2nd Ed)\nhttps://r4ds.hadley.nz/\nWickham, Çetinkaya-Rundel, Grolemund\n\n\n\n\nModern Data Science with R (3rd Ed)\nhttps://mdsr-book.github.io/mdsr3e/\nBaumer, Kaplan, Horton\n\n\n\nSoftware\nMaize RStudio Server maize.mathcs.carleton.edu\n\n\n\n\nR (optional) free from r-project.org\n\n\n\n\nRStudio (optional) free from rstudio.com/downloads"
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#meetings",
+    "href": "carleton-only-syllabus.html#meetings",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Meetings",
+    "text": "Meetings\nThere will be three course meetings per week (Mondays, Wednesdays, and Fridays). Daily attendance and active participation is expected. Course meetings will combine demonstrations/lecture and in-class group exercises. On most days, I’ll ask you to complete a reading or watch a short video before class."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#assignments",
+    "href": "carleton-only-syllabus.html#assignments",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Assignments",
+    "text": "Assignments\nHomework will be assigned once-ish per week, distributed via GitHub. You will submit homework assignments via gradescope. You will use quarto for all assignments and submit all necessary work for each assignment on GitHub."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#portfolio-projects",
+    "href": "carleton-only-syllabus.html#portfolio-projects",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Portfolio Projects",
+    "text": "Portfolio Projects\nPortfolio project require you to integrate several smaller computational tasks and require clear communication of the proposed solution or findings to a broader audience. You will typically work in pairs or triples."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#lab-quizzes",
+    "href": "carleton-only-syllabus.html#lab-quizzes",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Lab Quizzes",
+    "text": "Lab Quizzes\nPart of being proficient in data science is being able to do basic data analysis “on the fly”, without access to class resources. There will be 3 short (~30 minute) in-class lab quizzes to assess your ability to do basic tasks in R. I recognize that “in the real world”, you will almost always have access to your resources, so you will also have 48 hours to re-submit."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#final-project",
+    "href": "carleton-only-syllabus.html#final-project",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Final Project",
+    "text": "Final Project\nThe final project is a capstone experience synthesizing everything you’ve learned over the course of the term. This is an opportunity for you to exercise your creativity and create something meaningful. The final project is wildly open-ended and more details will follow."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#communication",
+    "href": "carleton-only-syllabus.html#communication",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Communication",
+    "text": "Communication\nAssignments and slides will be shared publicly on our course website. Grades will be posted on Moodle. Please use our github discussion page for any homework or course content questions; email me privately with any personal matters (grade discussions, illness, emergency, etc.). Any time-sensitive announcements will be sent via email. It is your responsibility to make sure that your notification settings allow time-sensitive announcements to reach you."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#how-each-assignment-is-graded",
+    "href": "carleton-only-syllabus.html#how-each-assignment-is-graded",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "How each assignment is graded",
+    "text": "How each assignment is graded\nEach assignment will include a short rubric with the specifications of how I will evaluate your work. In general, these are the “marks” that you can receive on each course component:\n\n\n\n\n\n\n\n\n\nHow it’s evaluated\nHow it’s recorded\n\n\n\n\nHomework Problems\nCompleteness, Correctness, and Effort\nSuccessful or Not Successful\n\n\nLab Quiz Problems\nCompleteness and Correctness\nSuccessful or Not Successful\n\n\nPortfolio Projects\nCompleteness, effort, correctness, and communication quality\nExcellent, Successful, or Retry\n\n\nFinal Project\nCompleteness, effort, correctness, and communication quality\nExcellent, Succesful, or Not Successful"
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#earning-a-course-grade",
+    "href": "carleton-only-syllabus.html#earning-a-course-grade",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Earning a course grade",
+    "text": "Earning a course grade\nYour course grade is assigned using the table below. Each row indicates the minimum percentage of “Successful” results needed to satisfy the requirement of that grade. To earn a grade, complete all requirements listed in the row for that grade.\n\n\n\n\n\n\n\n\n\n\n\nHomework Problems\nLab Quiz Problems\nPortfolio Projects (4 total)\nFinal Project\n\n\n\n\nA\n85%\n90%\n2 Excellent\nExcellent\n\n\nB\n75%\n80%\n4 Successful\nSuccessful\n\n\nC\n65%\n70%\n3 Successful\nSuccessful\n\n\nD\n55%\n50%\n2 Successful\nSuccessful\n\n\n\nExample: Ben finishes the course with 82% of homework problems successfully completed, 85% of lab quiz problems successfully completed, 2/4 portfolio projects marked “excellent”, and a “Successful” final project. Ben satisfies everything in the “B” row and earns a “B” in the course."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#plusminus-grades",
+    "href": "carleton-only-syllabus.html#plusminus-grades",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Plus/minus grades",
+    "text": "Plus/minus grades\n“Plus” and “minus” grades will be given if you complete all the requirements for a base letter grade and make sufficient progress toward the next grade. Below is an overview:\n\nIf “B” base grade:\n\nand A in two bins: “B+”\nand A in three bins: “A-”\n\nIf “C” base grade:\n\nand at least B in two bins: “C+”\nand at least B in three bins: “B-”\n\nIf “D” base grade:\n\nand at least C in two bins: “D+”\nand at least C in three bins: “C-”\n\nIf “F” base grade:\n\nand at least D in two bins: “D-”\n\n\nExample: Mira finishes the course with 88% of homework problems successfully completed, 85% of lab quiz problems successfully completed, 3/4 portfolio projects marked “excellent”, and a “Successful” final project. Mira satisfies everything in the “B” row, and meets the “A” threshold for two bins (homework and portfolio projects). Mira earns a B+. If Mira instead receives “excellent” marks on the final project, Mira earns an A-."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#how-lab-quiz-resubmissions-work",
+    "href": "carleton-only-syllabus.html#how-lab-quiz-resubmissions-work",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "How lab quiz resubmissions work",
+    "text": "How lab quiz resubmissions work\nWhen you resubmit a lab quiz, you change the denominator for your quiz bin. Let’s say you earn a successful mark on 7/10 problems on the in-class version and 9/10 on the resubmission. Your ultimate score is (7+9)/(10+10). You are not required to do resubmissions."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#important-points-about-this-grading-system",
+    "href": "carleton-only-syllabus.html#important-points-about-this-grading-system",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Important points about this grading system",
+    "text": "Important points about this grading system\n\nDifferent categories of coursework do not “average together”: you can’t make up for less-than-great work on portfolio projects by doing very well on quizzes, for instance. Each course grade requires consistent quality across all bins to earn the grade\nYou do not have to do everything. If you want an “A” in the class, for example, you don’t have to complete every quiz question correctly, only 90% of them."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#tokens",
+    "href": "carleton-only-syllabus.html#tokens",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Tokens",
+    "text": "Tokens\n\nTurning in a token provides either (a) a 72-hour extension on a homework assignment, or (b) a revision on a portfolio project\nTokens may be used for extensions on the final project milestone check-ins, but not for the final due-date. Milestone check-ins cannot be revised\nYou may use a token for an extension on the lab quiz resubmission, but not on the in-class portion. You do not need to use a token to resubmit each lab quiz.\nYou can revise the same portfolio project multiple times, if needed, but you must spend a token each time.\nA portfolio project must be completed with a good-faith effort to be eligible for revision. If I deem a submission to be “not assessable” due to a lack of effort, then it cannot be revised.\nAll revisions must be submitted by 11:59pm on the last day of class."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#textbook",
+    "href": "carleton-only-syllabus.html#textbook",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Textbook",
+    "text": "Textbook\nThere is no “perfect” data science textbook. We will use excerpts from the following texts:\n\nR for Data Science 2e\nModern Data Science with R 3e\n\nThese books are all freely available online. If you prefer a hard copy, they are also available for purchase through the publisher."
+  },
+  {
+    "objectID": "carleton-only-syllabus.html#software",
+    "href": "carleton-only-syllabus.html#software",
+    "title": "Stat 220: Introduction to Data Science",
+    "section": "Software",
+    "text": "Software\nThe use of the R programming language, with the RStudio interface is an essential component of this course. You have two options for using RStudio:\n\nThe server version of RStudio on the web at https://maize.mathcs.carleton.edu. The advantage of using the server version is that all of your work will be stored in the cloud, where it is automatically saved and backed up. This means that you can access your work from any computer on campus using a web browser. The downside is that you have to share limited computational resources with each other!\nA local version of RStudio installed on your machine.The downside to this approach is that your work is only stored locally, but I get around this problem by keeping all of my work on GitHub. You will learn how to use GitHub throughout the course.\n\nNote that you do not have to choose one or the other, you may use both. However, it is important that you understand the distinction so that you can keep track of your work. Both R and RStudio are free and open-source."
+  }
+]
