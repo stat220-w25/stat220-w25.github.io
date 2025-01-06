@@ -81,7 +81,7 @@
     "href": "course-syllabus.html#textbook",
     "title": "Public Syllabus",
     "section": "Textbook",
-    "text": "Textbook\nThere is no “perfect” data science textbook. We will use excerpts from the following texts:\n\nR for Data Science 2e\nModern Data Science with R 3e\n\nThese books are all freely available online. If you prefer a hard copy, they are also available for purchase through the publisher.",
+    "text": "Textbook\nThere is no “perfect” data science textbook. We will use excerpts from the following texts:\n\nR for Data Science 2e\nModern Data Science with R 3e\nFundamentals of Data Visualization\n\nThese books are all freely available online. If you prefer a hard copy, they are also available for purchase through the publisher.",
     "crumbs": [
       "Course information",
       "Syllabus"
@@ -99,15 +99,445 @@
     ]
   },
   {
-    "objectID": "computing/computing-cheatsheets.html",
-    "href": "computing/computing-cheatsheets.html",
-    "title": "R cheatsheets",
+    "objectID": "computing/r-basics-refresher.html",
+    "href": "computing/r-basics-refresher.html",
+    "title": "R Basics",
     "section": "",
-    "text": "The following cheatsheets come from https://posit.co/resources/cheatsheets. We haven’t covered every function and functionality listed on them, but you might still find them useful as references.",
+    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
+  },
+  {
+    "objectID": "computing/r-basics-refresher.html#loading-r-packages",
+    "href": "computing/r-basics-refresher.html#loading-r-packages",
+    "title": "R Basics",
+    "section": "",
+    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
+  },
+  {
+    "objectID": "computing/r-basics-refresher.html#creating-and-naming-objects",
+    "href": "computing/r-basics-refresher.html#creating-and-naming-objects",
+    "title": "R Basics",
+    "section": "Creating and naming objects",
+    "text": "Creating and naming objects\nAll R statements where you create objects have the form:\n\nobject_name &lt;- value\n\nAt first, we’ll be creating a lot of data objects. For example, we an load a data set containing the ratings for each episode of The Office using the code\n\noffice_ratings &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-17/office_ratings.csv\")\n\nIn this class you will be creating a lot of objects, so you’ll need to come up with names for those objects. Trying to think of informative/meaningful names for objects is hard, but necessary work! Below are the fundamental rules for naming objects in R:\n\nnames can’t start with a number\nnames are case-sensitive\nsome common letters are used internally by R and should be avoided as variable names (c, q, t, C, D, F, T, I)\nThere are reserved words that R won’t let you use for variable names (for, in, while, if, else, repeat, break, next)\nR will let you use the name of a predefined function—but don’t do it!\n\nYou can always check to see if you the name you want to use is already taken via exists():\nFor example lm exists\n\nexists(\"lm\")\n\n[1] TRUE\n\n\nbut carleton_college doesn’t.\n\nexists(\"carleton_college\")\n\n[1] FALSE\n\n\nThere are also a lot of naming styles out there, and if you have coded in another language, you may have already developed a preference. Below is an illustration by Allison Horst\n\n\n\n\n\n\n\n\nI generally following the tidyverse style guide, so you’ll see that I use only lowercase letters, numbers, and _ (snake case)."
+  },
+  {
+    "objectID": "computing/r-basics-refresher.html#overviews-of-data-frames",
+    "href": "computing/r-basics-refresher.html#overviews-of-data-frames",
+    "title": "R Basics",
+    "section": "Overviews of data frames",
+    "text": "Overviews of data frames\nAbove, you loaded in a data set called office_ratings. Data sets are stored as a special data structure called a data frame. Data frames are the most-commonly used data structure for data analysis in R. For now, think of them like spreadsheets.\nOnce you have your data frame, you can get a quick overview of it using a few commands (below I use data_set as a generic placeholder for the data frame’s name):\n\n\n\n\n\n\nCommand\nDescription\n\n\n\nhead(data_set)\nprint the first 6 rows\n\n\ntail(data_set)\nprint the last 6 rows\n\n\nglimpse(data_set)\na quick overview where columns run down the screen and the data values run across. This allows you to see every column in the data frame.\n\n\nstr(data_set)\na quick overview like glimpse(), but without some of the formatting\n\n\nsummary(data_set)\nquick summary statistics for each column\n\n\ndim(data_set)\nthe number of rows and columns\n\n\nnrow(data_set)\nthe number of rows\n\n\nncol(data_set)\nthe number of columns"
+  },
+  {
+    "objectID": "computing/r-basics-refresher.html#tibbles",
+    "href": "computing/r-basics-refresher.html#tibbles",
+    "title": "R Basics",
+    "section": "Tibbles",
+    "text": "Tibbles\nA tibble, or a tbl_df is another version of a data frame which is used by default in a lot of the tidyverse packages that we’ll use.\n\nTibbles are data.frames that are lazy and surly: they do less (i.e. they don’t change variable names or types, and don’t do partial matching) and complain more (e.g. when a variable does not exist). This forces you to confront problems earlier, typically leading to cleaner, more expressive code. Tibbles also have an enhanced print() method which makes them easier to use with large datasets containing complex objects.\n\n\n\n\n\n\n\n Check point\n\n\n\nRun the above commands on the office_ratings data set. Compare and contrast the information returned by each command.\n\n\n\n\n\n\n\n\nGetting a spreadsheet\n\n\n\nIn RStudio, you can run the command View(data_set) to pull up a spreadsheet representation of a data frame. You can also click on the name of the data frame in the Environment pane. This can be a great way help you think about the data, and even has some interactive functions (e.g., filtering and searching); however, never include View(data_set) in an .Rmd file!!\n\n\n\n\n\n\n\n\nReview from intro stats\n\n\n\nIn intro stats we used the terms cases (or observations) and variables to describe the rows and columns of a data frame, respectively."
+  },
+  {
+    "objectID": "computing/r-basics-refresher.html#extracting-pieces-of-data-frames",
+    "href": "computing/r-basics-refresher.html#extracting-pieces-of-data-frames",
+    "title": "R Basics",
+    "section": "Extracting pieces of data frames",
+    "text": "Extracting pieces of data frames\nSince data frames are the fundamental data structure for most analyses in R, it’s important to know how to work with them. You already know how to get an overview of a data frame, but that isn’t always very informative. Often, you want to extract pieces of a data frame, such as a specific column or row.\nExtracting rows\nData frames can be indexed by their row/column numbers. To extract elements of a data frame, the basic syntax is data_set[row.index, column.index]. So, to extract the 10th row of office_ratings we run\n\noffice_ratings[10, ]\n\n# A tibble: 1 × 6\n  season episode title    imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      2       4 The Fire         8.4        2713 2005-10-11\n\n\nNotice that to extract an entire row, we leave the column index position blank.\nWe can also extract multiple rows by creating a vector of row indices. For example, we can extract the first 5 rows via\n\noffice_ratings[1:5, ]\n\n# A tibble: 5 × 6\n  season episode title         imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                 7.6        3706 2005-03-24\n2      1       2 Diversity Day         8.3        3566 2005-03-29\n3      1       3 Health Care           7.9        2983 2005-04-05\n4      1       4 The Alliance          8.1        2886 2005-04-12\n5      1       5 Basketball            8.4        3179 2005-04-19\n\n\nHere, 1:5 create a sequence of integers from 1 to 5.\nWe could also specify arbitrary row index values by combing the values into a vector. For example, we could extract the 1st, 13th, 64th, and 128th rows via\n\noffice_ratings[c(1, 13, 64, 128), ]\n\n# A tibble: 4 × 6\n  season episode title            imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                    7.6        3706 2005-03-24\n2      2       7 The Client               8.6        2631 2005-11-08\n3      4      13 Job Fair                 7.9        1977 2008-05-08\n4      7      11 Classy Christmas         8.9        2138 2010-12-09\n\n\nExtracting columns\nSimilar to extracting rows, we can use a numeric index to extract the columns of a data frame. For example, to extract the 3rd column, we can run\n\noffice_ratings[,3]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nAlternatively, we can pass in the column name in quotes instead of the column number\n\noffice_ratings[,\"title\"]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nNotice that the extracted column is still formatted as a data frame (or tibble). If you want to extract the contents of the column and just have a vector of titles, you have a few options.\n\nYou could use double brackets with the column number:\n\n\noffice_ratings[[3]]\n\n\nYou could use double brackets with the column name in quotes:\n\n\noffice_ratings[[\"title\"]]\n\n\nYou could use the $ extractor with the column name (not in quotes):\n\n\noffice_ratings$title\n\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract the 35th row of office_ratings.\nExtract rows 35, 36, 37, and 38 of office_ratings.\nExtract the imdb_rating column from office ratings using the column index number.\nExtract the imdb_rating column from office ratings using the column name."
+  },
+  {
+    "objectID": "computing/r-basics-refresher.html#lists",
+    "href": "computing/r-basics-refresher.html#lists",
+    "title": "R Basics",
+    "section": "Lists",
+    "text": "Lists\nIt turns out that data frames are special cases of lists, a more general data structure. In a data frame, each column is an element of the data list and each column must be of the same length. In general, lists can be comprised of elements of vastly different lengths and data types.\nAs an example, let’s construct a list of the faculty in the MAST department and what is being taught this winter.\n\nstat_faculty &lt;- c(\"Kelling\", \"Loy\", \"Luby\", \"Poppick\", \"St. Clair\", \"Wadsworth\")\nstat_courses &lt;- c(120, 220, 230, 250, 285, 330)\nmath_faculty &lt;- c(\"Brooke\", \"Davis\", \"Egge\", \"Gomez-Gonzales\", \"Haunsperger\", \"Johnson\", \n                  \"Meyer\", \"Montee\", \"Shrestha\",\"Terry\", \"Thompson\", \"Turnage-Butterbaugh\")\nmath_courses &lt;- c(101, 106, 111, 120, 210, 211, 232, 236, 240, 241, 251, 321, 333, 395)\n\nmast &lt;- list(stat_faculty = stat_faculty, stat_courses = stat_courses, \n             math_faculty = math_faculty, math_courses = math_courses)\n\nOverview of a list\nYou can get an overview of a list a few ways:\n\n\nglimpse(list_name) and str(list_name) list the elements of the list and the first few entries of each element.\n\n\nglimpse(mast)\n\nList of 4\n $ stat_faculty: chr [1:6] \"Kelling\" \"Loy\" \"Luby\" \"Poppick\" ...\n $ stat_courses: num [1:6] 120 220 230 250 285 330\n $ math_faculty: chr [1:12] \"Brooke\" \"Davis\" \"Egge\" \"Gomez-Gonzales\" ...\n $ math_courses: num [1:14] 101 106 111 120 210 211 232 236 240 241 ...\n\n\n\n\nlength(list_name) will tell you how many elements are in the list\n\n\nlength(mast)\n\n[1] 4\n\n\nExtracting elements of a list\nSince data frames are lists, you’ve already seen how to extract elements of a list. For example, to extract the stat_faculty you could run\n\nmast[[1]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\nor\n\nmast[[\"stat_faculty\"]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you had only used a single bracket above, the returned object would still be a list, which is typically not what we would want.\n\nmast[1]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\n\n\n Check point\n\n\n\nExtract the statistics courses offered this term."
+  },
+  {
+    "objectID": "computing/r-basics-refresher.html#vectors",
+    "href": "computing/r-basics-refresher.html#vectors",
+    "title": "R Basics",
+    "section": "Vectors",
+    "text": "Vectors\nThe columns of the office_ratings data frame and the elements of the mast list were comprised of (atomic) vectors. Unlike lists, all elements within a vector share the same type. For example, all names in the stat_faculty vector were character strings and all ratings in the imdb_rating column were numeric. We’ll deal with a variety of types of vectors in this course, including:\n\nnumeric\ncharacter (text)\nlogical (TRUE/FALSE)\n\nExtracting elements of a vector\nJust like with lists (and therefore data frames), we use brackets to extract elements from a vector. As an example, let’s work with the title column from office_ratings.\n\ntitle &lt;- office_ratings$title # vector of titles\n\nTo extract the 111th title, we run\n\ntitle[111]\n\n[1] \"New Leads\"\n\n\nor two extract the 100th through 111th titles, we run\n\ntitle[100:111]\n\n [1] \"Double Date\"          \"Murder\"               \"Shareholder Meeting\" \n [4] \"Scott's Tots\"         \"Secret Santa\"         \"The Banker\"          \n [7] \"Sabre\"                \"Manager and Salesman\" \"The Delivery: Part 1\"\n[10] \"The Delivery: Part 2\" \"St. Patrick's Day\"    \"New Leads\"           \n\n\nNegative indices\nSometimes, we want to “kick out” elements of our vector. To do this, we can use a negative index value. For example,\n\ntitle[-1]\n\nreturns all but the first title—that is, it kicks out the first title. To kick out multiple elements, we need to negate a vector of indices. For example, below we kick out the first 10 titles\n\ntitle[-c(1:10)]\n\nAnd now we kick out the 5th, 50th, and 150th titles\n\ntitle[-c(5, 50, 150)]\n\nThis idea can be adapted to lists and data frames. For example, to kick out the first row of office_ratings, we run\n\noffice_ratings[-1,]\n\n# A tibble: 187 × 6\n   season episode title             imdb_rating total_votes air_date  \n    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n 1      1       2 Diversity Day             8.3        3566 2005-03-29\n 2      1       3 Health Care               7.9        2983 2005-04-05\n 3      1       4 The Alliance              8.1        2886 2005-04-12\n 4      1       5 Basketball                8.4        3179 2005-04-19\n 5      1       6 Hot Girl                  7.8        2852 2005-04-26\n 6      2       1 The Dundies               8.7        3213 2005-09-20\n 7      2       2 Sexual Harassment         8.2        2736 2005-09-27\n 8      2       3 Office Olympics           8.4        2742 2005-10-04\n 9      2       4 The Fire                  8.4        2713 2005-10-11\n10      2       5 Halloween                 8.2        2561 2005-10-18\n# ℹ 177 more rows\n\n\nor to kick out the math courses from the mast list we run\n\nmast[-4]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n$stat_courses\n[1] 120 220 230 250 285 330\n\n$math_faculty\n [1] \"Brooke\"              \"Davis\"               \"Egge\"               \n [4] \"Gomez-Gonzales\"      \"Haunsperger\"         \"Johnson\"            \n [7] \"Meyer\"               \"Montee\"              \"Shrestha\"           \n[10] \"Terry\"               \"Thompson\"            \"Turnage-Butterbaugh\"\n\n\nLogical indices\nIt’s great to be able to extract (or omit) elements using indices, but sometimes we don’t know what index value we should use. For example, if you wanted to extract all of the 300-level statistics courses from the stat_courses vector, you would need to manually determine that positions 2:5 meet that requirement. That’s a lot of work! A better alternative is to allow R to find the elements meeting that requirement using logical operators. Below is a table summarizing common logical operators in R.\n\n\nComparison\nMeaning\n\n\n\n&lt;\nless than\n\n\n&gt;\ngreater than\n\n\n&lt;=\nless than or equal to\n\n\n&gt;=\ngreater than or equal to\n\n\n==\nis equal to\n\n\n!=\nnot equal to\n\n\n\nIn order to extract the 300-level statistics courses, we’ll take two steps:\n\nWe’ll determine whether each course is numbered at least 300,\nthen we’ll use that sequence of TRUEs/FALSEs to extract the course.\n\nSo, first we use the logical operator &gt;= to compare stat_courses and 300. This returns TRUE if the element meets the specification and FALSE otherwise.\n\nstat_courses &gt;= 300\n\n[1] FALSE FALSE FALSE FALSE FALSE  TRUE\n\n\nNow, we can use this vector as our index. Only the TRUE elements will be extracted:\n\nstat_courses[stat_courses &gt;= 300]\n\n[1] 330\n\n\nThe same idea can be used with data frames and lists, just remember how to format the brackets and indices!\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract all statistics courses below 250 from stat_courses.\nExtract all math courses except for 240 (probability) from math_courses.\nExtract all rows from season 3 of The Office.\n\n\n\ns"
+  },
+  {
+    "objectID": "computing/computing-access.html",
+    "href": "computing/computing-access.html",
+    "title": "Computing Access",
+    "section": "",
+    "text": "I expect you to use RStudio to run R in this course. You have two options for using RStudio:\n\nWe have a Carleton server hosting Rstudio at https://maize.mathcs.carleton.edu/. Your files on this account will be accessible as long as you are a student at Carleton. Use your Carleton credentials to access your account and you need to be running the Carleton VPN (below) to access this server. Use this option if\n\nyour personal computer is old and/or slow\nyou prefer to use school computers (lab or library computers)\n\nYou can also run R/RStudio from your personal computer. If you use a local version of R/RStudio this term, make sure that you have recently updated both R and RStudio.\nTo check your version of R, run the command getRversion() and compare your version to the newest version posted on https://cran.r-project.org/. If you need an update, then install the newer version using the installation directions above.\nIn RStudio, check for updates with the menu option Help &gt; Check for updates. Follow directions if an update is needed.\nFor a fresh download:\n\nDownload the latest version of R for your operating system from https://cran.r-project.org/\nDownload the free RStudio desktop version from https://posit.co/download/rstudio-desktop/\n\nUse the default download and install options for each. For R, download the “precompiled binary” distribution rather than the source code.",
     "crumbs": [
       "Computing",
-      "Cheatsheets"
+      "Access"
     ]
+  },
+  {
+    "objectID": "computing/computing-access.html#rrstudio",
+    "href": "computing/computing-access.html#rrstudio",
+    "title": "Computing Access",
+    "section": "",
+    "text": "I expect you to use RStudio to run R in this course. You have two options for using RStudio:\n\nWe have a Carleton server hosting Rstudio at https://maize.mathcs.carleton.edu/. Your files on this account will be accessible as long as you are a student at Carleton. Use your Carleton credentials to access your account and you need to be running the Carleton VPN (below) to access this server. Use this option if\n\nyour personal computer is old and/or slow\nyou prefer to use school computers (lab or library computers)\n\nYou can also run R/RStudio from your personal computer. If you use a local version of R/RStudio this term, make sure that you have recently updated both R and RStudio.\nTo check your version of R, run the command getRversion() and compare your version to the newest version posted on https://cran.r-project.org/. If you need an update, then install the newer version using the installation directions above.\nIn RStudio, check for updates with the menu option Help &gt; Check for updates. Follow directions if an update is needed.\nFor a fresh download:\n\nDownload the latest version of R for your operating system from https://cran.r-project.org/\nDownload the free RStudio desktop version from https://posit.co/download/rstudio-desktop/\n\nUse the default download and install options for each. For R, download the “precompiled binary” distribution rather than the source code.",
+    "crumbs": [
+      "Computing",
+      "Access"
+    ]
+  },
+  {
+    "objectID": "computing/computing-access.html#vpn",
+    "href": "computing/computing-access.html#vpn",
+    "title": "Computing Access",
+    "section": "VPN",
+    "text": "VPN\nIf you plan to use the maize server and you plan to do any work off campus this term (e.g., while on a field trip, travel for athletics, or just sitting in Little Joy) you need to install Carleton’s VPN to have access.\nTo install the GlobalProtect VPN follow directions provided by ITS.",
+    "crumbs": [
+      "Computing",
+      "Access"
+    ]
+  },
+  {
+    "objectID": "computing/computing-access.html#git-and-github",
+    "href": "computing/computing-access.html#git-and-github",
+    "title": "Computing Access",
+    "section": "Git and GitHub",
+    "text": "Git and GitHub\nGit is version control software that you install locally on your computer. Git is already installed on the maize RStudio server.\nGithub is a cloud-based service for hosting git projects. It allows multiple users to share and contribute to projects and it is how you will be submitting homework assignments and projects for this class. More information about Github for this class is found on Moodle.\nIf you are using a local install of R/RStudio, then you will need to install Git.\nInstalling Git\nDirections for both Windows & Mac here at http://happygitwithr.com/install-git.html.\n\nIf you are using maize, then there is nothing you need to install.\nWindows users should follow Option 1 in 6.2.\nMac users can follow Option 1 in 6.3 if comfortable, otherwise follow Option 2\nLinux users can follow 6.4.",
+    "crumbs": [
+      "Computing",
+      "Access"
+    ]
+  },
+  {
+    "objectID": "computing/computing-access.html#latex",
+    "href": "computing/computing-access.html#latex",
+    "title": "Computing Access",
+    "section": "LaTeX",
+    "text": "LaTeX\nYou need a LaTeX compiler to create a pdf document from a R Markdown file. If you use the maize server, you don’t need to install anything (the server already has a LaTeX compiler). If you are using a local RStudio, you should install a Latex compiler.\nInstalling LaTeX (not needed if you are using the maize server)\nIf you don’t already have a tex package installed on your computer, the easiest option to create pdf’s is to use the tinytex R package. This can be installed with the following R commands:\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()  # install TinyTeX\n\nIf you’d like a stand alone LaTeX package, you could install the basic installations of either:\n\nMacTeX for Mac (3.2GB!)\nMiKTeX for Windows (190MB)\n\n\nAcknowledgements\nThis installation guide was written by Adam Loy and is based on the guide from stat545.com and is licensed under the CC BY-NC 3.0 Creative Commons License.",
+    "crumbs": [
+      "Computing",
+      "Access"
+    ]
+  },
+  {
+    "objectID": "computing/git-stat220.html",
+    "href": "computing/git-stat220.html",
+    "title": "GitHub Classroom Guide for Stat 220",
+    "section": "",
+    "text": "Jump to… Individual assignments | Group work | Additional resources\nThis is a guide for students to setup Git and GitHub for use in Stat 220.\nIf you are using the maize RStudio server, then you can connect to GitHub without any extra software downloads. If you are using RStudio on your computer, then you will need to download Git software (as directed in Computing Access) to use GitHub connected projects.\nI will host all of our course materials on GitHub, and you will use GitHub to submit homework and collaborate on projects.",
+    "crumbs": [
+      "Computing",
+      "Git/Github in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/git-stat220.html#getting-setup-with-git-and-github",
+    "href": "computing/git-stat220.html#getting-setup-with-git-and-github",
+    "title": "GitHub Classroom Guide for Stat 220",
+    "section": "Getting setup with Git and GitHub",
+    "text": "Getting setup with Git and GitHub\nIf you are not working on the maize RStudio server, then make sure that you have installed all of the software mentioned in Computing Access. In addition, you should install the usethis and gitcreds R packages.\nEveryone needs to connect Git and GitHub by doing the following:\n\nRegister for account on GitHub (https://github.com/). I recommend using a username that incorporates your name (e.g. aloy). Please use your Carleton email with this account.\n\nSetup options in Git by running the following code chunk in your console:\nlibrary(usethis)\nuse_git_config(user.name = \"Jane Doe\", user.email = \"jane@example.org\")\nchanging the first two lines to your own name and email (this should be the email associated with your GitHub account).\n\n\n(Optional) This step explains how to use GitHub on RStudio without having to enter your password every time to connect. This is an optional step since you can still use GitHub without setting up a SSH key or caching credentials, you will just need to enter your password every time you push or pull with GitHub. Pick one method below: cache credentials for HTTPS or SSH. GitHub recommends HTTPS, so I recommend trying that first.\n\n\nStrongly recommended: Cache credential using a HTTPS linked project.\nComplete the steps in Section 10.1 of Happy Git with R to get a personal access token (you will need to install the usethis package first). Then, follow the directions in Section 10.2.1 of Happy Git with R (I’ve had good luck with the gitcreds package, and it is installed on maize.)\n\nA second method is to generate a SSH key. First check to see if you have a SSH key. Go into the shell (again, through RStudio Tools -&gt; Shell) and complete on this page http://happygitwithr.com/ssh-keys.html, which is Chapter 11 in Happy Git with R.\n\n\n(optional) Follow the instructions here (http://happygitwithr.com/push-pull-github.html) to ensure you can connect to GitHub from your computer. If you can’t get this command line push/pull to work that is fine. Try connecting to GitHub via RStudio, as detailed next. If you can’t connect via RStudio then contact me.",
+    "crumbs": [
+      "Computing",
+      "Git/Github in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/git-stat220.html#individual-assignments",
+    "href": "computing/git-stat220.html#individual-assignments",
+    "title": "GitHub Classroom Guide for Stat 220",
+    "section": "Individual assignments",
+    "text": "Individual assignments\nIf you followed the suggestions in the Using Rstudio in Stat 220 page, then you should already have an assignments folder on your computer or maize account.\nEach new assignment/project will be posted as a repository on GitHub and added directly to your account (within the Stat220 organization). This repository will contain assignment details (README, .Rmd).\nCreating an individual assignment repo and project\n\nGo to our course GitHub organization page and find your homework repo, such as hw-1-username (where your username is attached).\nEnter the online assignment repository on GitHub. Click the green “Code” button. Most of you should just use the default setting which is to “clone” (copy) using HTTPS. Click the clipboard to the right of the URL to copy the repo location. (If you are using SSH, make sure it says “Clone with SSH” in bold in the top left of the pop-up box. If not, click the “SSH” button and copy the link in the box to your clipboard.)\nNow open up RStudio and create a project as follows:\n\n\nClick the Project button in the upper right corner of your RStudio window and select New Project….\n\n \n\n\n\n\n\n\n\n\n\nSelect Version Control and then New Project\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPaste the link you just copied into the Repository URL box. Leave the Project directory name blank (or keep the auto-filled name). Use the Browse button to find your assignments folder, then click Create Project\n\n\n\n\n\n\n\n\n\n\n   \nWarning: If you received an error in the above steps, you may have to clone with HTTPS instead of SSH (or vice versa). You can do this by again clicking on the “Clone or Download” button in the repository page, then clicking “Use HTTPS” in the top right of the pop-up box. Now copy the link and repeat this step.\nWorking on your assignment\nAn RStudio project should now open, which will allow you to start working on your homework assignment. You should see the project assignment name in the top right side of Rstudio. You will probably see a blank console screen when you open a new project. Look in the Files tab for your homework .Rmd file. Click on whatever file you want to edit (probably the .Rmd file) and edit away. Make sure that your current assignment’s project is the one open and showing in the upper rightproject name. To open a project, click on the .Rproj file or use the Open Project… option available in the upper right project link.\nCommits\nAfter you make changes to the homework assignment, commit them. What are commits you ask? Commits are essentially taking a snapshot of your projects. Commits save this snapshot to your local version of Git (located on your hard drive or the maize server). For example, if I make changes to a code so that it prints “Hello world”, and then commit them with an informative message, I can look at the history of my commits and view the code that I wrote at that time. If I made some more changes to the function that resulted in an error, I could go back to the commit where the code was originally working. This prevents you from creating several versions of your homework (homework-v1, homework-v2, …) or from trying to remember what your code originally looked like.\nYou can make commits in the Git tab in RStudio.\n\n\n\n\n\n\n\n\nClick the Commit button in the Git tab. Check the boxes of the files that you want to commit, enter your commit message (briefly state what changes have been made), then hit Commit. You can read how to do this in RStudio in more detail here: http://r-pkgs.had.co.nz/git.html#git-commit.\nTwo things about committing.\n\nYou should commit somewhat frequently. At minimum, if you’re doing a homework assignment, you should make a commit each time that you’ve finished a question.\nLeave informative commit messages. “Added stuff” will not help you if you’re looking at your commit history in a year. A message like “Added initial version of hello-world function” will be more useful.\nPushing changes to Github\nAt some point you’ll want to get the updated version of the assignment back onto GitHub, either so that we can help you with your code or so that it can be graded. You will also want to push work frequently when you have a shared GitHub repo for project collaborations (i.e. more than one person is working on a project and code). If you are ready to push, you can again click on the “Up” Push arrow in the Git tab or in the Commit pop-up window or in the Git tab (shown above).\nTo “turn in” an assignment, all you need to do is push all your relevant files to Github by the deadline.",
+    "crumbs": [
+      "Computing",
+      "Git/Github in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/git-stat220.html#group-work",
+    "href": "computing/git-stat220.html#group-work",
+    "title": "GitHub Classroom Guide for Stat 220",
+    "section": "Group work",
+    "text": "Group work\nCollaborative Github assignments are pretty similar to individual assignments.\nCreating a group/partner assignment repo and project\nGo to our course GitHub organization page and find the repo for your group, for example if your group name is “team01” the you might find the mp1-team01 repo. Clone this repo to your computer/maize account using the same steps done for an individual assignment (see steps 2-3).\nWorking with collaborative repos\nFor group homework, I suggest that only the recorder edit the group-homework-x.Rmd file to avoid merge conflicts! Other group members can create a new Markdown doc to run and save commands. Only the recorder needs to push changes (answers) to the Github repo and all others can then pull these changes (i.e. the final answers) after the HW is submitted.\nWhen you are working together on a Github project, you should commit and push your modifications frequently. You will also need to frequently pull updates from Github down to your local version of RStudio. These updates are changes that your teammates have made since your last pull. To pull in changes, click the “Down” Pull arrow in the Git tab (shown above).\nIf you get an error about conflict after pulling or pushing, don’t freak out! This can happen if you edit a file (usually an .Rmd or .R file) in a location that was also changed by a teammate. When this happens you should attempt to fix the merge conflict. Take a look at this resource site and try to fix the merge conflict in Rstudio. If that doesn’t work contact me!",
+    "crumbs": [
+      "Computing",
+      "Git/Github in Stat 220"
+    ]
+  },
+  {
+    "objectID": "computing/git-stat220.html#additional-resources",
+    "href": "computing/git-stat220.html#additional-resources",
+    "title": "GitHub Classroom Guide for Stat 220",
+    "section": "Additional resources",
+    "text": "Additional resources\n\nHappy Git and GitHub for the useR\nRstudio, Git and GitHub\nInteractive learning guide for Git\nGitHub Guides\nGit setup for Windows (video)\nGit setup for Mac (video)\nHow to clone, edit, and push homework assignments with GitHub Classroom (video)\n\n\nAcknowledgements\nMost of this content in this guide was taken from https://github.com/jfiksel/github-classroom-for-students and edited by Adam Loy for our classroom use. and is licensed under the CC BY-NC 3.0 Creative Commons License.",
+    "crumbs": [
+      "Computing",
+      "Git/Github in Stat 220"
+    ]
+  },
+  {
+    "objectID": "course-faq.html",
+    "href": "course-faq.html",
+    "title": "FAQ",
+    "section": "",
+    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
+    "crumbs": [
+      "Course information",
+      "FAQ"
+    ]
+  },
+  {
+    "objectID": "course-faq.html#where-can-i-get-help",
+    "href": "course-faq.html#where-can-i-get-help",
+    "title": "FAQ",
+    "section": "",
+    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
+    "crumbs": [
+      "Course information",
+      "FAQ"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 220: Intro to Data Science",
+    "section": "",
+    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n📝complete welcome survey\n\nWelcome + data, R review\n\nslides01 01-example-unvotes\n\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\nslides02  02-reproducible-reports\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1 \n\nggplot\nslides03  03-ggplot-basics\nHW 1\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nTheming + Design\nslides04  04-polishing-your-plots\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\nslides05  05-making-a-map\nHW 2\n\n\n2\nF\nFri, Jan 17\n\nCatch up + Ethics I\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\nslides07  07-verbs\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\nslides08  08-group_by\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4  📚 R4DS 19.1-19.3\n\nTidy data/pivots and joins\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 16 \n\nWorking with factors\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\n\n\n\n5\nM\nMon, Feb 3\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nText Analysis\n\nPortfolio 2\n\n\n5\nW\nWed, Feb 5\nTBA\nCatch up + Ethics II\n\nHW 5\n\n\n5\nF\nFri, Feb 7\nTBA\nTBA\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\nMidterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n📚What is an API? 📝 work through tidycensus basic usage vignette (including signing up for a census API key!)\nAPIs\n\n\n\n\n7\nW\nWed, Feb 19\nTBA\nScraping\n\nHW7  Final Project Proposal\n\n\n7\nF\nFri, Feb 21\n\nEthics III\n\nLab Quiz 3\n\n\n8\nM\nMon, Feb 24\nTBA\nIntro to Interactivity\n\nPortfolio 3\n\n\n8\nW\nWed, Feb 26\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\nShiny 1\n\nHW8\n\n\n8\nF\nFri, Feb 28\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nM\nMon, Mar 3\n\nShiny 3\n\nFinal Project sketch draft\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\n\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "course-links.html",
+    "href": "course-links.html",
+    "title": "Useful links",
+    "section": "",
+    "text": "RStudio Server\n🔗 Carleton’s Maize Server\n\n\nCourse GitHub organization\n🔗 GitHub\n\n\nGradebook\n🔗 on Moodle\n\n\nSpend a Token\n🔗 Spend a token\n\n\nTextbooks\n🔗 Modern Data Science with R (MDS)\n🔗 R for Data Science (R4DS)\n🔗 Fundamentals of Data Visualization\n\n\nPackage documentation\n🔗 ggplot2: ggplot2.tidyverse.org\n🔗 dplyr: dplyr.tidyverse.org\n🔗 tidyr: tidyr.tidyverse.org\n🔗 forcats: forcats.tidyverse.org\n🔗 stringr: stringr.tidyverse.org\n🔗 lubridate: lubridate.tidyverse.org\n🔗 readr: readr.tidyverse.org",
+    "crumbs": [
+      "Course information",
+      "Useful links"
+    ]
+  },
+  {
+    "objectID": "slides/01/slides01.html#about-me",
+    "href": "slides/01/slides01.html#about-me",
+    "title": "Welcome to Stat 220",
+    "section": "About me",
+    "text": "About me\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-is-data-science",
+    "href": "slides/01/slides01.html#what-is-data-science",
+    "title": "Welcome to Stat 220",
+    "section": "What is “data science”?",
+    "text": "What is “data science”?"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-is-this-class-about",
+    "href": "slides/01/slides01.html#what-is-this-class-about",
+    "title": "Welcome to Stat 220",
+    "section": "What is this class about?",
+    "text": "What is this class about?\n\nDevelop research questions that can be answered with data\nAcquire data from multiple sources\nWrangle common types of data\nVisualize data to provide insight\nCommunicate your findings\nDocument your code and collaborate on coding projects"
+  },
+  {
+    "objectID": "slides/01/slides01.html#section",
+    "href": "slides/01/slides01.html#section",
+    "title": "Welcome to Stat 220",
+    "section": "",
+    "text": "What skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-is-this-class-all-about",
+    "href": "slides/01/slides01.html#what-is-this-class-all-about",
+    "title": "Welcome to Stat 220",
+    "section": "What is this class all about?",
+    "text": "What is this class all about?\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
+  },
+  {
+    "objectID": "slides/01/slides01.html#why-r",
+    "href": "slides/01/slides01.html#why-r",
+    "title": "Welcome to Stat 220",
+    "section": "Why R?",
+    "text": "Why R?\n\nAnd the second reason, which is both a huge strength of R and a bit of a weakness, is that R is not just a programming language. It was designed from day 1 to be an environment that can do data analysis. So, compared to the other options like Python, you can get up and running in R doing data science, learning much, much less about programming to get started. And that generally makes it like easier to get up and running if you don’t have formal training in computer science or software engineering.\n\n\n-Hadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham"
+  },
+  {
+    "objectID": "slides/01/slides01.html#advice",
+    "href": "slides/01/slides01.html#advice",
+    "title": "Welcome to Stat 220",
+    "section": "Advice",
+    "text": "Advice\n\n\n\n\n\n\n\n\nIt’s easy when you start out programming to get really frustrated and think, “Oh it’s me, I’m really stupid,” or, “I’m not made out to program.” But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It’s just a natural part of programming. So, it happens to everyone and gets less and less over time. Don’t blame yourself. Just take a break, do something fun, and then come back and try again later.\n\n\n\nHadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham; Artwork by Allison Horst"
+  },
+  {
+    "objectID": "slides/01/slides01.html#on-your-own",
+    "href": "slides/01/slides01.html#on-your-own",
+    "title": "Welcome to Stat 220",
+    "section": "On your own:",
+    "text": "On your own:\n\n\nLog into the maize server: maize.mathcs.carleton.edu\nFollow the directions at stat220-w25.github.io/computing/rstudio-stat220 to create a “content” folder\nLoad the .Rmd file with: download.file(     \"https://math.carleton.edu/aluby/stat220/01-example-unvotes.rmd\",      destfile = \"01-example-unvotes.rmd\")\nSkim the file without running any code:\n\nWhere is the code?\nWhere is the narrative?\n\nRun each code chunk in order. What does this analysis do?\n\n\n\n\n\n−+\n10:00"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-steps-went-into-this-analysis",
+    "href": "slides/01/slides01.html#what-steps-went-into-this-analysis",
+    "title": "Welcome to Stat 220",
+    "section": "What steps went into this analysis?",
+    "text": "What steps went into this analysis?\n\nRecording the original data\nAccessing data via an R package\nCombining multiple datasets into one\nData cleaning: filtering, creating new columns, grouping, summarizing\nMaking a graph\nFitting a smooth line model"
+  },
+  {
+    "objectID": "slides/01/slides01.html#your-turn",
+    "href": "slides/01/slides01.html#your-turn",
+    "title": "Welcome to Stat 220",
+    "section": "Your turn:",
+    "text": "Your turn:\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
+  },
+  {
+    "objectID": "slides/01/slides01.html#course-github",
+    "href": "slides/01/slides01.html#course-github",
+    "title": "Welcome to Stat 220",
+    "section": "Course github",
+    "text": "Course github\n\nhttps://github.com/stat220-w25/\n\n\naka “the one link to rule them all”\n\n\naccess slides\nsee schedule\naccess repositories for homework and projects"
+  },
+  {
+    "objectID": "slides/01/slides01.html#office-hours-tentative",
+    "href": "slides/01/slides01.html#office-hours-tentative",
+    "title": "Welcome to Stat 220",
+    "section": "Office hours (tentative)",
+    "text": "Office hours (tentative)\n\n\n\nDay\nTime\nType\nLocation\n\n\n\n\nMonday\n11-12\nDrop-in\nCMC 307\n\n\nTuesday\n2-3\nDrop-in\nCMC 307\n\n\nWednesday\n4-5\nDrop-in\nCMC 307\n\n\nFriday\n11-12\nBy appt\nCMC 223"
+  },
+  {
+    "objectID": "slides/01/slides01.html#where-is-amanda-in-january",
+    "href": "slides/01/slides01.html#where-is-amanda-in-january",
+    "title": "Welcome to Stat 220",
+    "section": "Where is Amanda in January?",
+    "text": "Where is Amanda in January?"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-will-you-do-in-this-course",
+    "href": "slides/01/slides01.html#what-will-you-do-in-this-course",
+    "title": "Welcome to Stat 220",
+    "section": "What will you do in this course?",
+    "text": "What will you do in this course?\n\n\nGraded work:\n\nHomework\nLab Quizzes\nPortfolio Projects\nFinal Project\n\n\nUngraded work:\n\nDaily prep for class: read/watch/review/try\nIn-class exercises and group work\nEngagement in small and large group discussions"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
+    "href": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
+    "title": "Welcome to Stat 220",
+    "section": "What will a typical day/week look like?",
+    "text": "What will a typical day/week look like?\n\n\nBefore class:\n\nWatch a video or read a chapter\nCome with questions\nBe prepared to try what was covered\n\n\nIn class:\n\nMini lecture\n\nSometimes review\nSometimes new\n\nHands-on coding in R\n\n\nAfter class:\n\nFinish any in-class exercises\nWork on homework and portfolio projects"
+  },
+  {
+    "objectID": "slides/01/slides01.html#grading-system",
+    "href": "slides/01/slides01.html#grading-system",
+    "title": "Welcome to Stat 220",
+    "section": "Grading system",
+    "text": "Grading system\nHomework and lab quiz problems will be graded as successful or not successful. Projects will be graded as excellent, successful, or retry. You will have the opportunity to resubmit the lab quizzes outside of class.\nTo earn a course grade, you must meet all of the requirements in a given row:\n\n\n\n\n\n\n\n\n\n\n\nHomework Problems\nLab Quiz Problems\nPortfolio Projects (4 total)\nFinal Project\n\n\n\n\nA\n85%\n90%\n2 Excellent\nExcellent\n\n\nB\n75%\n80%\n4 Successful\nSuccessful\n\n\nC\n65%\n70%\n3 Successful\nSuccessful\n\n\nD\n55%\n50%\n2 Successful\nSuccessful\n\n\n\n“+” and “-” grades are determined by partially meeting the requirements in a given row."
+  },
+  {
+    "objectID": "slides/01/slides01.html#benefits",
+    "href": "slides/01/slides01.html#benefits",
+    "title": "Welcome to Stat 220",
+    "section": "Benefits",
+    "text": "Benefits\n\nYou decide what grade you’re aiming for, and what you have to do to earn it\nClear guidelines for “successful” and “excellent” marks\nOpportunity to revise and resubmit"
+  },
+  {
+    "objectID": "slides/01/slides01.html#possible-drawbacks",
+    "href": "slides/01/slides01.html#possible-drawbacks",
+    "title": "Welcome to Stat 220",
+    "section": "Possible drawbacks",
+    "text": "Possible drawbacks\n\nNo partial credit!\nRevisions take time\nCategories don’t “average out”"
+  },
+  {
+    "objectID": "slides/01/slides01.html#tokens",
+    "href": "slides/01/slides01.html#tokens",
+    "title": "Welcome to Stat 220",
+    "section": "Tokens",
+    "text": "Tokens\nYou can use a token to:\n\nRevise a portfolio project that did not earn a “successful”\n72-hour extension on a homework assignment (the request must be submitted before the deadline)\n72-hour extension on lab quiz resubmissions (the request must be submitted before the deadline)\nBy passing the syllabus quiz, you’ll activate your 5 tokens for the term. I will track token balances in the moodle gradebook (updated weekly)"
+  },
+  {
+    "objectID": "slides/01/slides01.html#collaboration-policy",
+    "href": "slides/01/slides01.html#collaboration-policy",
+    "title": "Welcome to Stat 220",
+    "section": "Collaboration policy",
+    "text": "Collaboration policy\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
+  },
+  {
+    "objectID": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
+    "href": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
+    "title": "Welcome to Stat 220",
+    "section": "Use of generative artificial intelligence (AI)",
+    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT or Gemini, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.\n\n\n\nAdapted from Mine Çetinkaya-Rundel"
+  },
+  {
+    "objectID": "slides/01/slides01.html#tools",
+    "href": "slides/01/slides01.html#tools",
+    "title": "Welcome to Stat 220",
+    "section": "Tools",
+    "text": "Tools\n\nhttps://maize.mathcs.carleton.edu\n\n\nBrowser based RStudio instance(s) provided by Carleton\nRequires internet connection to access\nProvides consistency in hardware and software environments\nLocal R installations are also fine! But it may be harder for me to provide support"
+  },
+  {
+    "objectID": "slides/01/slides01.html#github",
+    "href": "slides/01/slides01.html#github",
+    "title": "Welcome to Stat 220",
+    "section": "GitHub",
+    "text": "GitHub\n\nhttps://github.com/stat220-w25\n\n\nGitHub organization for the course\nAll of your work and your membership (enrollment) in the organization is private\nEach assignment is a private repo on GitHub, I distribute the assignments on GitHub.\nYou will work on your assignment, then “knit 🧶 commit ✅ push ⤴️”\nYou’ll then be able to submit your PDF via gradescope\n\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
+  },
+  {
+    "objectID": "slides/01/slides01.html#username-advice",
+    "href": "slides/01/slides01.html#username-advice",
+    "title": "Welcome to Stat 220",
+    "section": "Username advice",
+    "text": "Username advice\n\nin case you don’t yet have a GitHub account…\n\nSome brief advice about selecting your account names (particularly for GitHub),\n\nIncorporate your actual name! People like to know who they’re dealing with and makes your username easier for people to guess or remember\nReuse your username from other contexts, e.g., Twitter or Slack\nPick a username you will be comfortable revealing to your future boss\nShorter is better than longer, but be as unique as possible\nMake it timeless. Avoid highlighting your current university, employer, or place of residence"
+  },
+  {
+    "objectID": "slides/01/slides01.html#your-tasks-before-next-class",
+    "href": "slides/01/slides01.html#your-tasks-before-next-class",
+    "title": "Welcome to Stat 220",
+    "section": "Your tasks before next class",
+    "text": "Your tasks before next class\n\nCreate a GitHub account if you don’t have one\nComplete the welcome survey if you haven’t already\nRead the syllabus and pass syllabus quiz\nMake sure you can login in to the maize server or update your local R/RStudio versions\nComplete the readings for next class"
+  },
+  {
+    "objectID": "notes/01-r-basics.html",
+    "href": "notes/01-r-basics.html",
+    "title": "R Basics",
+    "section": "",
+    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#loading-r-packages",
+    "href": "notes/01-r-basics.html#loading-r-packages",
+    "title": "R Basics",
+    "section": "",
+    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#creating-and-naming-objects",
+    "href": "notes/01-r-basics.html#creating-and-naming-objects",
+    "title": "R Basics",
+    "section": "Creating and naming objects",
+    "text": "Creating and naming objects\nAll R statements where you create objects have the form:\n\nobject_name &lt;- value\n\nAt first, we’ll be creating a lot of data objects. For example, we an load a data set containing the ratings for each episode of The Office using the code\n\noffice_ratings &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-17/office_ratings.csv\")\n\nIn this class you will be creating a lot of objects, so you’ll need to come up with names for those objects. Trying to think of informative/meaningful names for objects is hard, but necessary work! Below are the fundamental rules for naming objects in R:\n\nnames can’t start with a number\nnames are case-sensitive\nsome common letters are used internally by R and should be avoided as variable names (c, q, t, C, D, F, T, I)\nThere are reserved words that R won’t let you use for variable names (for, in, while, if, else, repeat, break, next)\nR will let you use the name of a predefined function—but don’t do it!\n\nYou can always check to see if you the name you want to use is already taken via exists():\nFor example lm exists\n\nexists(\"lm\")\n\n[1] TRUE\n\n\nbut carleton_college doesn’t.\n\nexists(\"carleton_college\")\n\n[1] FALSE\n\n\nThere are also a lot of naming styles out there, and if you have coded in another language, you may have already developed a preference. Below is an illustration by Allison Horst\n\n\n\n\n\n\n\n\nI generally following the tidyverse style guide, so you’ll see that I use only lowercase letters, numbers, and _ (snake case)."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#overviews-of-data-frames",
+    "href": "notes/01-r-basics.html#overviews-of-data-frames",
+    "title": "R Basics",
+    "section": "Overviews of data frames",
+    "text": "Overviews of data frames\nAbove, you loaded in a data set called office_ratings. Data sets are stored as a special data structure called a data frame. Data frames are the most-commonly used data structure for data analysis in R. For now, think of them like spreadsheets.\nOnce you have your data frame, you can get a quick overview of it using a few commands (below I use data_set as a generic placeholder for the data frame’s name):\n\n\n\n\n\n\nCommand\nDescription\n\n\n\nhead(data_set)\nprint the first 6 rows\n\n\ntail(data_set)\nprint the last 6 rows\n\n\nglimpse(data_set)\na quick overview where columns run down the screen and the data values run across. This allows you to see every column in the data frame.\n\n\nstr(data_set)\na quick overview like glimpse(), but without some of the formatting\n\n\nsummary(data_set)\nquick summary statistics for each column\n\n\ndim(data_set)\nthe number of rows and columns\n\n\nnrow(data_set)\nthe number of rows\n\n\nncol(data_set)\nthe number of columns"
+  },
+  {
+    "objectID": "notes/01-r-basics.html#tibbles",
+    "href": "notes/01-r-basics.html#tibbles",
+    "title": "R Basics",
+    "section": "Tibbles",
+    "text": "Tibbles\nA tibble, or a tbl_df is another version of a data frame which is used by default in a lot of the tidyverse packages that we’ll use.\n\nTibbles are data.frames that are lazy and surly: they do less (i.e. they don’t change variable names or types, and don’t do partial matching) and complain more (e.g. when a variable does not exist). This forces you to confront problems earlier, typically leading to cleaner, more expressive code. Tibbles also have an enhanced print() method which makes them easier to use with large datasets containing complex objects.\n\n\n\n\n\n\n\n Check point\n\n\n\nRun the above commands on the office_ratings data set. Compare and contrast the information returned by each command.\n\n\n\n\n\n\n\n\nGetting a spreadsheet\n\n\n\nIn RStudio, you can run the command View(data_set) to pull up a spreadsheet representation of a data frame. You can also click on the name of the data frame in the Environment pane. This can be a great way help you think about the data, and even has some interactive functions (e.g., filtering and searching); however, never include View(data_set) in an .Rmd file!!\n\n\n\n\n\n\n\n\nReview from intro stats\n\n\n\nIn intro stats we used the terms cases (or observations) and variables to describe the rows and columns of a data frame, respectively."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
+    "href": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
+    "title": "R Basics",
+    "section": "Extracting pieces of data frames",
+    "text": "Extracting pieces of data frames\nSince data frames are the fundamental data structure for most analyses in R, it’s important to know how to work with them. You already know how to get an overview of a data frame, but that isn’t always very informative. Often, you want to extract pieces of a data frame, such as a specific column or row.\nExtracting rows\nData frames can be indexed by their row/column numbers. To extract elements of a data frame, the basic syntax is data_set[row.index, column.index]. So, to extract the 10th row of office_ratings we run\n\noffice_ratings[10, ]\n\n# A tibble: 1 × 6\n  season episode title    imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      2       4 The Fire         8.4        2713 2005-10-11\n\n\nNotice that to extract an entire row, we leave the column index position blank.\nWe can also extract multiple rows by creating a vector of row indices. For example, we can extract the first 5 rows via\n\noffice_ratings[1:5, ]\n\n# A tibble: 5 × 6\n  season episode title         imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                 7.6        3706 2005-03-24\n2      1       2 Diversity Day         8.3        3566 2005-03-29\n3      1       3 Health Care           7.9        2983 2005-04-05\n4      1       4 The Alliance          8.1        2886 2005-04-12\n5      1       5 Basketball            8.4        3179 2005-04-19\n\n\nHere, 1:5 create a sequence of integers from 1 to 5.\nWe could also specify arbitrary row index values by combing the values into a vector. For example, we could extract the 1st, 13th, 64th, and 128th rows via\n\noffice_ratings[c(1, 13, 64, 128), ]\n\n# A tibble: 4 × 6\n  season episode title            imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                    7.6        3706 2005-03-24\n2      2       7 The Client               8.6        2631 2005-11-08\n3      4      13 Job Fair                 7.9        1977 2008-05-08\n4      7      11 Classy Christmas         8.9        2138 2010-12-09\n\n\nExtracting columns\nSimilar to extracting rows, we can use a numeric index to extract the columns of a data frame. For example, to extract the 3rd column, we can run\n\noffice_ratings[,3]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nAlternatively, we can pass in the column name in quotes instead of the column number\n\noffice_ratings[,\"title\"]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nNotice that the extracted column is still formatted as a data frame (or tibble). If you want to extract the contents of the column and just have a vector of titles, you have a few options.\n\nYou could use double brackets with the column number:\n\n\noffice_ratings[[3]]\n\n\nYou could use double brackets with the column name in quotes:\n\n\noffice_ratings[[\"title\"]]\n\n\nYou could use the $ extractor with the column name (not in quotes):\n\n\noffice_ratings$title\n\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract the 35th row of office_ratings.\nExtract rows 35, 36, 37, and 38 of office_ratings.\nExtract the imdb_rating column from office ratings using the column index number.\nExtract the imdb_rating column from office ratings using the column name."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#lists",
+    "href": "notes/01-r-basics.html#lists",
+    "title": "R Basics",
+    "section": "Lists",
+    "text": "Lists\nIt turns out that data frames are special cases of lists, a more general data structure. In a data frame, each column is an element of the data list and each column must be of the same length. In general, lists can be comprised of elements of vastly different lengths and data types.\nAs an example, let’s construct a list of the faculty in the MAST department and what is being taught this winter.\n\nstat_faculty &lt;- c(\"Kelling\", \"Loy\", \"Luby\", \"Poppick\", \"St. Clair\", \"Wadsworth\")\nstat_courses &lt;- c(120, 220, 230, 250, 285, 330)\nmath_faculty &lt;- c(\"Brooke\", \"Davis\", \"Egge\", \"Gomez-Gonzales\", \"Haunsperger\", \"Johnson\", \n                  \"Meyer\", \"Montee\", \"Shrestha\",\"Terry\", \"Thompson\", \"Turnage-Butterbaugh\")\nmath_courses &lt;- c(101, 106, 111, 120, 210, 211, 232, 236, 240, 241, 251, 321, 333, 395)\n\nmast &lt;- list(stat_faculty = stat_faculty, stat_courses = stat_courses, \n             math_faculty = math_faculty, math_courses = math_courses)\n\nOverview of a list\nYou can get an overview of a list a few ways:\n\n\nglimpse(list_name) and str(list_name) list the elements of the list and the first few entries of each element.\n\n\nglimpse(mast)\n\nList of 4\n $ stat_faculty: chr [1:6] \"Kelling\" \"Loy\" \"Luby\" \"Poppick\" ...\n $ stat_courses: num [1:6] 120 220 230 250 285 330\n $ math_faculty: chr [1:12] \"Brooke\" \"Davis\" \"Egge\" \"Gomez-Gonzales\" ...\n $ math_courses: num [1:14] 101 106 111 120 210 211 232 236 240 241 ...\n\n\n\n\nlength(list_name) will tell you how many elements are in the list\n\n\nlength(mast)\n\n[1] 4\n\n\nExtracting elements of a list\nSince data frames are lists, you’ve already seen how to extract elements of a list. For example, to extract the stat_faculty you could run\n\nmast[[1]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\nor\n\nmast[[\"stat_faculty\"]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you had only used a single bracket above, the returned object would still be a list, which is typically not what we would want.\n\nmast[1]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\n\n\n Check point\n\n\n\nExtract the statistics courses offered this term."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#vectors",
+    "href": "notes/01-r-basics.html#vectors",
+    "title": "R Basics",
+    "section": "Vectors",
+    "text": "Vectors\nThe columns of the office_ratings data frame and the elements of the mast list were comprised of (atomic) vectors. Unlike lists, all elements within a vector share the same type. For example, all names in the stat_faculty vector were character strings and all ratings in the imdb_rating column were numeric. We’ll deal with a variety of types of vectors in this course, including:\n\nnumeric\ncharacter (text)\nlogical (TRUE/FALSE)\n\nExtracting elements of a vector\nJust like with lists (and therefore data frames), we use brackets to extract elements from a vector. As an example, let’s work with the title column from office_ratings.\n\ntitle &lt;- office_ratings$title # vector of titles\n\nTo extract the 111th title, we run\n\ntitle[111]\n\n[1] \"New Leads\"\n\n\nor two extract the 100th through 111th titles, we run\n\ntitle[100:111]\n\n [1] \"Double Date\"          \"Murder\"               \"Shareholder Meeting\" \n [4] \"Scott's Tots\"         \"Secret Santa\"         \"The Banker\"          \n [7] \"Sabre\"                \"Manager and Salesman\" \"The Delivery: Part 1\"\n[10] \"The Delivery: Part 2\" \"St. Patrick's Day\"    \"New Leads\"           \n\n\nNegative indices\nSometimes, we want to “kick out” elements of our vector. To do this, we can use a negative index value. For example,\n\ntitle[-1]\n\nreturns all but the first title—that is, it kicks out the first title. To kick out multiple elements, we need to negate a vector of indices. For example, below we kick out the first 10 titles\n\ntitle[-c(1:10)]\n\nAnd now we kick out the 5th, 50th, and 150th titles\n\ntitle[-c(5, 50, 150)]\n\nThis idea can be adapted to lists and data frames. For example, to kick out the first row of office_ratings, we run\n\noffice_ratings[-1,]\n\n# A tibble: 187 × 6\n   season episode title             imdb_rating total_votes air_date  \n    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n 1      1       2 Diversity Day             8.3        3566 2005-03-29\n 2      1       3 Health Care               7.9        2983 2005-04-05\n 3      1       4 The Alliance              8.1        2886 2005-04-12\n 4      1       5 Basketball                8.4        3179 2005-04-19\n 5      1       6 Hot Girl                  7.8        2852 2005-04-26\n 6      2       1 The Dundies               8.7        3213 2005-09-20\n 7      2       2 Sexual Harassment         8.2        2736 2005-09-27\n 8      2       3 Office Olympics           8.4        2742 2005-10-04\n 9      2       4 The Fire                  8.4        2713 2005-10-11\n10      2       5 Halloween                 8.2        2561 2005-10-18\n# ℹ 177 more rows\n\n\nor to kick out the math courses from the mast list we run\n\nmast[-4]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n$stat_courses\n[1] 120 220 230 250 285 330\n\n$math_faculty\n [1] \"Brooke\"              \"Davis\"               \"Egge\"               \n [4] \"Gomez-Gonzales\"      \"Haunsperger\"         \"Johnson\"            \n [7] \"Meyer\"               \"Montee\"              \"Shrestha\"           \n[10] \"Terry\"               \"Thompson\"            \"Turnage-Butterbaugh\"\n\n\nLogical indices\nIt’s great to be able to extract (or omit) elements using indices, but sometimes we don’t know what index value we should use. For example, if you wanted to extract all of the 300-level statistics courses from the stat_courses vector, you would need to manually determine that positions 2:5 meet that requirement. That’s a lot of work! A better alternative is to allow R to find the elements meeting that requirement using logical operators. Below is a table summarizing common logical operators in R.\n\n\nComparison\nMeaning\n\n\n\n&lt;\nless than\n\n\n&gt;\ngreater than\n\n\n&lt;=\nless than or equal to\n\n\n&gt;=\ngreater than or equal to\n\n\n==\nis equal to\n\n\n!=\nnot equal to\n\n\n\nIn order to extract the 300-level statistics courses, we’ll take two steps:\n\nWe’ll determine whether each course is numbered at least 300,\nthen we’ll use that sequence of TRUEs/FALSEs to extract the course.\n\nSo, first we use the logical operator &gt;= to compare stat_courses and 300. This returns TRUE if the element meets the specification and FALSE otherwise.\n\nstat_courses &gt;= 300\n\n[1] FALSE FALSE FALSE FALSE FALSE  TRUE\n\n\nNow, we can use this vector as our index. Only the TRUE elements will be extracted:\n\nstat_courses[stat_courses &gt;= 300]\n\n[1] 330\n\n\nThe same idea can be used with data frames and lists, just remember how to format the brackets and indices!\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract all statistics courses below 250 from stat_courses.\nExtract all math courses except for 240 (probability) from math_courses.\nExtract all rows from season 3 of The Office."
   },
   {
     "objectID": "computing/rstudio-stat220.html",
@@ -176,353 +606,14 @@
     ]
   },
   {
-    "objectID": "course-faq.html",
-    "href": "course-faq.html",
-    "title": "FAQ",
+    "objectID": "computing/computing-cheatsheets.html",
+    "href": "computing/computing-cheatsheets.html",
+    "title": "R cheatsheets",
     "section": "",
-    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
-    "crumbs": [
-      "Course information",
-      "FAQ"
-    ]
-  },
-  {
-    "objectID": "course-faq.html#where-can-i-get-help",
-    "href": "course-faq.html#where-can-i-get-help",
-    "title": "FAQ",
-    "section": "",
-    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
-    "crumbs": [
-      "Course information",
-      "FAQ"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Stat 220: Intro to Data Science",
-    "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n\nWelcome + data, ggplot review\n\nslides01  01-example-unvotes\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\nslides02  02-reproducible-reports\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1 \n\nggplot + theming\nslides03  03-ggplot-basics\nHW 1\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nDesign\nslides04  04-polishing-your-plots\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\nslides05  05-making-a-map\nHW 2\n\n\n2\nF\nFri, Jan 17\n\nEthics I\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\nslides07  07-verbs\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\nslides08  08-group_by\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4  📚 R4DS 19.1-19.3\n\nTidy data/pivots and joins\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 16 \n\nWorking with factors\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\n\n\n\n5\nM\nMon, Feb 3\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nText Analysis\n\nPortfolio 2\n\n\n5\nW\nWed, Feb 5\nTBA\nEthics II\n\nHW 5\n\n\n5\nF\nFri, Feb 7\nTBA\nTBA\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\nMidterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n📚What is an API? 📝 work through tidycensus basic usage vignette (including signing up for a census API key!)\nAPIs\n\n\n\n\n7\nW\nWed, Feb 19\nTBA\nScraping\n\nHW7  Final Project Proposal\n\n\n7\nF\nFri, Feb 21\n\nEthics III\n\nLab Quiz 3\n\n\n8\nM\nMon, Feb 24\nTBA\nIntro to Interactivity\n\nPortfolio 3\n\n\n8\nW\nWed, Feb 26\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\nShiny 1\n\nHW8\n\n\n8\nF\nFri, Feb 28\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nM\nMon, Mar 3\n\nShiny 3\n\nFinal Project sketch draft\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\n\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
-    "crumbs": [
-      "Course information",
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "course-links.html",
-    "href": "course-links.html",
-    "title": "Useful links",
-    "section": "",
-    "text": "RStudio Server\n🔗 on Carleton’s Maize Server\n\n\nCourse GitHub organization\n🔗 on GitHub\n\n\nGradebook\n🔗 on Moodle\n\n\nTexbooks\n🔗 Modern Data Science with R (MDS)\n🔗 R for Data Science (R4DS)\n\n\nPackage documentation\n🔗 ggplot2: ggplot2.tidyverse.org\n🔗 dplyr: dplyr.tidyverse.org\n🔗 tidyr: tidyr.tidyverse.org\n🔗 forcats: forcats.tidyverse.org\n🔗 stringr: stringr.tidyverse.org\n🔗 lubridate: lubridate.tidyverse.org\n🔗 readr: readr.tidyverse.org",
-    "crumbs": [
-      "Course information",
-      "Useful links"
-    ]
-  },
-  {
-    "objectID": "slides/01/slides01.html#about-me",
-    "href": "slides/01/slides01.html#about-me",
-    "title": "Welcome to Stat 220",
-    "section": "About me",
-    "text": "About me\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
-  },
-  {
-    "objectID": "slides/01/slides01.html#what-is-data-science",
-    "href": "slides/01/slides01.html#what-is-data-science",
-    "title": "Welcome to Stat 220",
-    "section": "What is “data science”?",
-    "text": "What is “data science”?"
-  },
-  {
-    "objectID": "slides/01/slides01.html#themes",
-    "href": "slides/01/slides01.html#themes",
-    "title": "Welcome to Stat 220",
-    "section": "Themes:",
-    "text": "Themes:"
-  },
-  {
-    "objectID": "slides/01/slides01.html#show-and-tell",
-    "href": "slides/01/slides01.html#show-and-tell",
-    "title": "Welcome to Stat 220",
-    "section": "Show and tell",
-    "text": "Show and tell\n\nTODO"
-  },
-  {
-    "objectID": "slides/01/slides01.html#section",
-    "href": "slides/01/slides01.html#section",
-    "title": "Welcome to Stat 220",
-    "section": "",
-    "text": "What skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
-  },
-  {
-    "objectID": "slides/01/slides01.html#what-is-this-class-all-about",
-    "href": "slides/01/slides01.html#what-is-this-class-all-about",
-    "title": "Welcome to Stat 220",
-    "section": "What is this class all about?",
-    "text": "What is this class all about?\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
-  },
-  {
-    "objectID": "slides/01/slides01.html#why-r",
-    "href": "slides/01/slides01.html#why-r",
-    "title": "Welcome to Stat 220",
-    "section": "Why R?",
-    "text": "Why R?\n\nAnd the second reason, which is both a huge strength of R and a bit of a weakness, is that R is not just a programming language. It was designed from day 1 to be an environment that can do data analysis. So, compared to the other options like Python, you can get up and running in R doing data science, learning much, much less about programming to get started. And that generally makes it like easier to get up and running if you don’t have formal training in computer science or software engineering.\n\n\n-Hadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham"
-  },
-  {
-    "objectID": "slides/01/slides01.html#advice",
-    "href": "slides/01/slides01.html#advice",
-    "title": "Welcome to Stat 220",
-    "section": "Advice",
-    "text": "Advice\n\n\n\n\n\n\n\n\nIt’s easy when you start out programming to get really frustrated and think, “Oh it’s me, I’m really stupid,” or, “I’m not made out to program.” But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It’s just a natural part of programming. So, it happens to everyone and gets less and less over time. Don’t blame yourself. Just take a break, do something fun, and then come back and try again later.\n\n\n\nHadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham; Artwork by Allison Horst"
-  },
-  {
-    "objectID": "slides/01/slides01.html#on-your-own",
-    "href": "slides/01/slides01.html#on-your-own",
-    "title": "Welcome to Stat 220",
-    "section": "On your own:",
-    "text": "On your own:\n\n\nDownload today’s .Rmd from Moodle\nLog into the maize server: maize.mathcs.carleton.edu\nUpload the .Rmd to maize\nSkim the file"
-  },
-  {
-    "objectID": "slides/01/slides01.html#your-turn",
-    "href": "slides/01/slides01.html#your-turn",
-    "title": "Welcome to Stat 220",
-    "section": "Your turn:",
-    "text": "Your turn:\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
-  },
-  {
-    "objectID": "slides/01/slides01.html#course-website",
-    "href": "slides/01/slides01.html#course-website",
-    "title": "Welcome to Stat 220",
-    "section": "Course website",
-    "text": "Course website\n\nvizdata.org\n\n\naka “the one link to rule them all”"
-  },
-  {
-    "objectID": "slides/01/slides01.html#lectures",
-    "href": "slides/01/slides01.html#lectures",
-    "title": "Welcome to Stat 220",
-    "section": "Lectures",
-    "text": "Lectures\n\nIn person\nAttendance is expected\nPlease bring a charged laptop every day\nA little bit of everything:\n\nTraditional lecture\nLive coding + demos\nShort exercises + solution discussion\nLonger group work assignments"
-  },
-  {
-    "objectID": "slides/01/slides01.html#office-hours",
-    "href": "slides/01/slides01.html#office-hours",
-    "title": "Welcome to Stat 220",
-    "section": "Office hours",
-    "text": "Office hours\n\n\n\nDay\nTime\nType\nLocation\n\n\n\n\nMonday\n11-12\nDrop-in\nCMC 307\n\n\nTuesday\n2-3\nDrop-in\nCMC 307\n\n\nWednesday\n4-5\nDrop-in\nCMC 307\n\n\nFriday\n11-12\nBy appt\nCMC 223"
-  },
-  {
-    "objectID": "slides/01/slides01.html#my-schedule-aka-an-american-horror-story",
-    "href": "slides/01/slides01.html#my-schedule-aka-an-american-horror-story",
-    "title": "Welcome to Stat 220",
-    "section": "My schedule, aka an American Horror Story",
-    "text": "My schedule, aka an American Horror Story"
-  },
-  {
-    "objectID": "slides/01/slides01.html#what-will-you-do-in-this-course",
-    "href": "slides/01/slides01.html#what-will-you-do-in-this-course",
-    "title": "Welcome to Stat 220",
-    "section": "What will you do in this course?",
-    "text": "What will you do in this course?\n\n\nGraded work:\n\nHomework\nLab Quizzes\nPortfolio Projects\nFinal Project\n\n\nUngraded work:\n\nDaily prep for class: read/watch/review/try\nIn-class exercises and group work\nEngagement in small and large group discussions"
-  },
-  {
-    "objectID": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
-    "href": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
-    "title": "Welcome to Stat 220",
-    "section": "What will a typical day/week look like?",
-    "text": "What will a typical day/week look like?\n\n\nBefore class:\n\nWatch a video or read a chapter\nCome with questions\nBe prepared to try what was covered\n\n\nIn class:\n\nMini lecture\n\nSometimes review\nSometimes new\n\nHands-on coding in R\n\n\nAfter class:\n\nFinish any in-class exercises\nWork on homework and portfolio projects"
-  },
-  {
-    "objectID": "slides/01/slides01.html#grading-system",
-    "href": "slides/01/slides01.html#grading-system",
-    "title": "Welcome to Stat 220",
-    "section": "Grading system",
-    "text": "Grading system"
-  },
-  {
-    "objectID": "slides/01/slides01.html#benefits",
-    "href": "slides/01/slides01.html#benefits",
-    "title": "Welcome to Stat 220",
-    "section": "Benefits",
-    "text": "Benefits"
-  },
-  {
-    "objectID": "slides/01/slides01.html#possible-drawbacks",
-    "href": "slides/01/slides01.html#possible-drawbacks",
-    "title": "Welcome to Stat 220",
-    "section": "Possible drawbacks",
-    "text": "Possible drawbacks"
-  },
-  {
-    "objectID": "slides/01/slides01.html#earning-a-course-grade",
-    "href": "slides/01/slides01.html#earning-a-course-grade",
-    "title": "Welcome to Stat 220",
-    "section": "Earning a course grade",
-    "text": "Earning a course grade"
-  },
-  {
-    "objectID": "slides/01/slides01.html#tokens",
-    "href": "slides/01/slides01.html#tokens",
-    "title": "Welcome to Stat 220",
-    "section": "Tokens",
-    "text": "Tokens"
-  },
-  {
-    "objectID": "slides/01/slides01.html#why-limit-the-number-of-tokens",
-    "href": "slides/01/slides01.html#why-limit-the-number-of-tokens",
-    "title": "Welcome to Stat 220",
-    "section": "Why limit the number of tokens?",
-    "text": "Why limit the number of tokens?"
-  },
-  {
-    "objectID": "slides/01/slides01.html#collaboration-policy",
-    "href": "slides/01/slides01.html#collaboration-policy",
-    "title": "Welcome to Stat 220",
-    "section": "Collaboration policy",
-    "text": "Collaboration policy"
-  },
-  {
-    "objectID": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
-    "href": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
-    "title": "Welcome to Stat 220",
-    "section": "Use of generative artificial intelligence (AI)",
-    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. We will practice using AI to facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n✅ AI tools for code: You may make use of the technology for coding examples on assignments; if you do so, you must explicitly cite where you obtained the code. See the syllabus for guidelines for citing AI-generated content.\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you."
-  },
-  {
-    "objectID": "slides/01/slides01.html#tools",
-    "href": "slides/01/slides01.html#tools",
-    "title": "Welcome to Stat 220",
-    "section": "Tools",
-    "text": "Tools\n\n&lt;maize.mathcs.carleton.edu&gt;\n\n\nBrowser based RStudio instance(s) provided by Carleton\nRequires internet connection to access\nProvides consistency in hardware and software environments\nLocal R installations are fine but we will not guarantee support"
-  },
-  {
-    "objectID": "slides/01/slides01.html#github",
-    "href": "slides/01/slides01.html#github",
-    "title": "Welcome to Stat 220",
-    "section": "GitHub",
-    "text": "GitHub\n\nhttps://github.com/stat220-w25\n\n\nGitHub organization for the course\nAll of your work and your membership (enrollment) in the organization is private\nEach assignment is a private repo on GitHub, I distribute the assignments on GitHub and you submit them there\nFeedback on assignments is given as GitHub issues, scores recorded on Sakai Gradebook\n\n\nFill out the Getting to know you survey for collection of your account names, later this week you will be invited to the course organization."
-  },
-  {
-    "objectID": "slides/01/slides01.html#username-advice",
-    "href": "slides/01/slides01.html#username-advice",
-    "title": "Welcome to Stat 220",
-    "section": "Username advice",
-    "text": "Username advice\n\nin case you don’t yet have a GitHub account…\n\nSome brief advice about selecting your account names (particularly for GitHub),\n\nIncorporate your actual name! People like to know who they’re dealing with and makes your username easier for people to guess or remember\nReuse your username from other contexts, e.g., Twitter or Slack\nPick a username you will be comfortable revealing to your future boss\nShorter is better than longer, but be as unique as possible\nMake it timeless. Avoid highlighting your current university, employer, or place of residence"
-  },
-  {
-    "objectID": "slides/01/slides01.html#todays-tasks",
-    "href": "slides/01/slides01.html#todays-tasks",
-    "title": "Welcome to Stat 220",
-    "section": "Today’s tasks",
-    "text": "Today’s tasks\n\nCreate a GitHub account if you don’t have one\nRead the syllabus\nMake sure you can login in to the maize server or update your local R/RStudio versions\nComplete the Getting to know you survey\nComplete the readings for next class"
-  },
-  {
-    "objectID": "computing/git-stat220.html",
-    "href": "computing/git-stat220.html",
-    "title": "GitHub Classroom Guide for Stat 220",
-    "section": "",
-    "text": "Jump to… Individual assignments | Group work | Additional resources\nThis is a guide for students to setup Git and GitHub for use in Stat 220.\nIf you are using the maize RStudio server, then you can connect to GitHub without any extra software downloads. If you are using RStudio on your computer, then you will need to download Git software (as directed in Computing Access) to use GitHub connected projects.\nI will host all of our course materials on GitHub, and you will use GitHub to submit homework and collaborate on projects.",
+    "text": "The following cheatsheets come from https://posit.co/resources/cheatsheets. We haven’t covered every function and functionality listed on them, but you might still find them useful as references.",
     "crumbs": [
       "Computing",
-      "Git/Github in Stat 220"
-    ]
-  },
-  {
-    "objectID": "computing/git-stat220.html#getting-setup-with-git-and-github",
-    "href": "computing/git-stat220.html#getting-setup-with-git-and-github",
-    "title": "GitHub Classroom Guide for Stat 220",
-    "section": "Getting setup with Git and GitHub",
-    "text": "Getting setup with Git and GitHub\nIf you are not working on the maize RStudio server, then make sure that you have installed all of the software mentioned in Computing Access. In addition, you should install the usethis and gitcreds R packages.\nEveryone needs to connect Git and GitHub by doing the following:\n\nRegister for account on GitHub (https://github.com/). I recommend using a username that incorporates your name (e.g. aloy). Please use your Carleton email with this account.\n\nSetup options in Git by running the following code chunk in your console:\nlibrary(usethis)\nuse_git_config(user.name = \"Jane Doe\", user.email = \"jane@example.org\")\nchanging the first two lines to your own name and email (this should be the email associated with your GitHub account).\n\n\n(Optional) This step explains how to use GitHub on RStudio without having to enter your password every time to connect. This is an optional step since you can still use GitHub without setting up a SSH key or caching credentials, you will just need to enter your password every time you push or pull with GitHub. Pick one method below: cache credentials for HTTPS or SSH. GitHub recommends HTTPS, so I recommend trying that first.\n\n\nStrongly recommended: Cache credential using a HTTPS linked project.\nComplete the steps in Section 10.1 of Happy Git with R to get a personal access token (you will need to install the usethis package first). Then, follow the directions in Section 10.2.1 of Happy Git with R (I’ve had good luck with the gitcreds package, and it is installed on maize.)\n\nA second method is to generate a SSH key. First check to see if you have a SSH key. Go into the shell (again, through RStudio Tools -&gt; Shell) and complete on this page http://happygitwithr.com/ssh-keys.html, which is Chapter 11 in Happy Git with R.\n\n\n(optional) Follow the instructions here (http://happygitwithr.com/push-pull-github.html) to ensure you can connect to GitHub from your computer. If you can’t get this command line push/pull to work that is fine. Try connecting to GitHub via RStudio, as detailed next. If you can’t connect via RStudio then contact me.",
-    "crumbs": [
-      "Computing",
-      "Git/Github in Stat 220"
-    ]
-  },
-  {
-    "objectID": "computing/git-stat220.html#individual-assignments",
-    "href": "computing/git-stat220.html#individual-assignments",
-    "title": "GitHub Classroom Guide for Stat 220",
-    "section": "Individual assignments",
-    "text": "Individual assignments\nIf you followed the suggestions in the Using Rstudio in Stat 220 page, then you should already have an assignments folder on your computer or maize account.\nEach new assignment/project will be posted as a repository on GitHub and added directly to your account (within the Stat220 organization). This repository will contain assignment details (README, .Rmd).\nCreating an individual assignment repo and project\n\nGo to our course GitHub organization page and find your homework repo, such as hw-1-username (where your username is attached).\nEnter the online assignment repository on GitHub. Click the green “Code” button. Most of you should just use the default setting which is to “clone” (copy) using HTTPS. Click the clipboard to the right of the URL to copy the repo location. (If you are using SSH, make sure it says “Clone with SSH” in bold in the top left of the pop-up box. If not, click the “SSH” button and copy the link in the box to your clipboard.)\nNow open up RStudio and create a project as follows:\n\n\nClick the Project button in the upper right corner of your RStudio window and select New Project….\n\n \n\n\n\n\n\n\n\n\n\nSelect Version Control and then New Project\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPaste the link you just copied into the Repository URL box. Leave the Project directory name blank (or keep the auto-filled name). Use the Browse button to find your assignments folder, then click Create Project\n\n\n\n\n\n\n\n\n\n\n   \nWarning: If you received an error in the above steps, you may have to clone with HTTPS instead of SSH (or vice versa). You can do this by again clicking on the “Clone or Download” button in the repository page, then clicking “Use HTTPS” in the top right of the pop-up box. Now copy the link and repeat this step.\nWorking on your assignment\nAn RStudio project should now open, which will allow you to start working on your homework assignment. You should see the project assignment name in the top right side of Rstudio. You will probably see a blank console screen when you open a new project. Look in the Files tab for your homework .Rmd file. Click on whatever file you want to edit (probably the .Rmd file) and edit away. Make sure that your current assignment’s project is the one open and showing in the upper rightproject name. To open a project, click on the .Rproj file or use the Open Project… option available in the upper right project link.\nCommits\nAfter you make changes to the homework assignment, commit them. What are commits you ask? Commits are essentially taking a snapshot of your projects. Commits save this snapshot to your local version of Git (located on your hard drive or the maize server). For example, if I make changes to a code so that it prints “Hello world”, and then commit them with an informative message, I can look at the history of my commits and view the code that I wrote at that time. If I made some more changes to the function that resulted in an error, I could go back to the commit where the code was originally working. This prevents you from creating several versions of your homework (homework-v1, homework-v2, …) or from trying to remember what your code originally looked like.\nYou can make commits in the Git tab in RStudio.\n\n\n\n\n\n\n\n\nClick the Commit button in the Git tab. Check the boxes of the files that you want to commit, enter your commit message (briefly state what changes have been made), then hit Commit. You can read how to do this in RStudio in more detail here: http://r-pkgs.had.co.nz/git.html#git-commit.\nTwo things about committing.\n\nYou should commit somewhat frequently. At minimum, if you’re doing a homework assignment, you should make a commit each time that you’ve finished a question.\nLeave informative commit messages. “Added stuff” will not help you if you’re looking at your commit history in a year. A message like “Added initial version of hello-world function” will be more useful.\nPushing changes to Github\nAt some point you’ll want to get the updated version of the assignment back onto GitHub, either so that we can help you with your code or so that it can be graded. You will also want to push work frequently when you have a shared GitHub repo for project collaborations (i.e. more than one person is working on a project and code). If you are ready to push, you can again click on the “Up” Push arrow in the Git tab or in the Commit pop-up window or in the Git tab (shown above).\nTo “turn in” an assignment, all you need to do is push all your relevant files to Github by the deadline.",
-    "crumbs": [
-      "Computing",
-      "Git/Github in Stat 220"
-    ]
-  },
-  {
-    "objectID": "computing/git-stat220.html#group-work",
-    "href": "computing/git-stat220.html#group-work",
-    "title": "GitHub Classroom Guide for Stat 220",
-    "section": "Group work",
-    "text": "Group work\nCollaborative Github assignments are pretty similar to individual assignments.\nCreating a group/partner assignment repo and project\nGo to our course GitHub organization page and find the repo for your group, for example if your group name is “team01” the you might find the mp1-team01 repo. Clone this repo to your computer/maize account using the same steps done for an individual assignment (see steps 2-3).\nWorking with collaborative repos\nFor group homework, I suggest that only the recorder edit the group-homework-x.Rmd file to avoid merge conflicts! Other group members can create a new Markdown doc to run and save commands. Only the recorder needs to push changes (answers) to the Github repo and all others can then pull these changes (i.e. the final answers) after the HW is submitted.\nWhen you are working together on a Github project, you should commit and push your modifications frequently. You will also need to frequently pull updates from Github down to your local version of RStudio. These updates are changes that your teammates have made since your last pull. To pull in changes, click the “Down” Pull arrow in the Git tab (shown above).\nIf you get an error about conflict after pulling or pushing, don’t freak out! This can happen if you edit a file (usually an .Rmd or .R file) in a location that was also changed by a teammate. When this happens you should attempt to fix the merge conflict. Take a look at this resource site and try to fix the merge conflict in Rstudio. If that doesn’t work contact me!",
-    "crumbs": [
-      "Computing",
-      "Git/Github in Stat 220"
-    ]
-  },
-  {
-    "objectID": "computing/git-stat220.html#additional-resources",
-    "href": "computing/git-stat220.html#additional-resources",
-    "title": "GitHub Classroom Guide for Stat 220",
-    "section": "Additional resources",
-    "text": "Additional resources\n\nHappy Git and GitHub for the useR\nRstudio, Git and GitHub\nInteractive learning guide for Git\nGitHub Guides\nGit setup for Windows (video)\nGit setup for Mac (video)\nHow to clone, edit, and push homework assignments with GitHub Classroom (video)\n\n\nAcknowledgements\nMost of this content in this guide was taken from https://github.com/jfiksel/github-classroom-for-students and edited by Adam Loy for our classroom use. and is licensed under the CC BY-NC 3.0 Creative Commons License.",
-    "crumbs": [
-      "Computing",
-      "Git/Github in Stat 220"
-    ]
-  },
-  {
-    "objectID": "computing/computing-access.html",
-    "href": "computing/computing-access.html",
-    "title": "Computing Access",
-    "section": "",
-    "text": "I expect you to use RStudio to run R in this course. You have two options for using RStudio:\n\nWe have a Carleton server hosting Rstudio at https://maize.mathcs.carleton.edu/. Your files on this account will be accessible as long as you are a student at Carleton. Use your Carleton credentials to access your account and you need to be running the Carleton VPN (below) to access this server. Use this option if\n\nyour personal computer is old and/or slow\nyou prefer to use school computers (lab or library computers)\n\nYou can also run R/RStudio from your personal computer. If you use a local version of R/RStudio this term, make sure that you have recently updated both R and RStudio.\nTo check your version of R, run the command getRversion() and compare your version to the newest version posted on https://cran.r-project.org/. If you need an update, then install the newer version using the installation directions above.\nIn RStudio, check for updates with the menu option Help &gt; Check for updates. Follow directions if an update is needed.\nFor a fresh download:\n\nDownload the latest version of R for your operating system from https://cran.r-project.org/\nDownload the free RStudio desktop version from https://posit.co/download/rstudio-desktop/\n\nUse the default download and install options for each. For R, download the “precompiled binary” distribution rather than the source code.",
-    "crumbs": [
-      "Computing",
-      "Access"
-    ]
-  },
-  {
-    "objectID": "computing/computing-access.html#rrstudio",
-    "href": "computing/computing-access.html#rrstudio",
-    "title": "Computing Access",
-    "section": "",
-    "text": "I expect you to use RStudio to run R in this course. You have two options for using RStudio:\n\nWe have a Carleton server hosting Rstudio at https://maize.mathcs.carleton.edu/. Your files on this account will be accessible as long as you are a student at Carleton. Use your Carleton credentials to access your account and you need to be running the Carleton VPN (below) to access this server. Use this option if\n\nyour personal computer is old and/or slow\nyou prefer to use school computers (lab or library computers)\n\nYou can also run R/RStudio from your personal computer. If you use a local version of R/RStudio this term, make sure that you have recently updated both R and RStudio.\nTo check your version of R, run the command getRversion() and compare your version to the newest version posted on https://cran.r-project.org/. If you need an update, then install the newer version using the installation directions above.\nIn RStudio, check for updates with the menu option Help &gt; Check for updates. Follow directions if an update is needed.\nFor a fresh download:\n\nDownload the latest version of R for your operating system from https://cran.r-project.org/\nDownload the free RStudio desktop version from https://posit.co/download/rstudio-desktop/\n\nUse the default download and install options for each. For R, download the “precompiled binary” distribution rather than the source code.",
-    "crumbs": [
-      "Computing",
-      "Access"
-    ]
-  },
-  {
-    "objectID": "computing/computing-access.html#vpn",
-    "href": "computing/computing-access.html#vpn",
-    "title": "Computing Access",
-    "section": "VPN",
-    "text": "VPN\nIf you plan to use the maize server and you plan to do any work off campus this term (e.g., while on a field trip, travel for athletics, or just sitting in Little Joy) you need to install Carleton’s VPN to have access.\nTo install the GlobalProtect VPN follow directions provided by ITS.",
-    "crumbs": [
-      "Computing",
-      "Access"
-    ]
-  },
-  {
-    "objectID": "computing/computing-access.html#git-and-github",
-    "href": "computing/computing-access.html#git-and-github",
-    "title": "Computing Access",
-    "section": "Git and GitHub",
-    "text": "Git and GitHub\nGit is version control software that you install locally on your computer. Git is already installed on the maize RStudio server.\nGithub is a cloud-based service for hosting git projects. It allows multiple users to share and contribute to projects and it is how you will be submitting homework assignments and projects for this class. More information about Github for this class is found on Moodle.\nIf you are using a local install of R/RStudio, then you will need to install Git.\nInstalling Git\nDirections for both Windows & Mac here at http://happygitwithr.com/install-git.html.\n\nIf you are using maize, then there is nothing you need to install.\nWindows users should follow Option 1 in 6.2.\nMac users can follow Option 1 in 6.3 if comfortable, otherwise follow Option 2\nLinux users can follow 6.4.",
-    "crumbs": [
-      "Computing",
-      "Access"
-    ]
-  },
-  {
-    "objectID": "computing/computing-access.html#latex",
-    "href": "computing/computing-access.html#latex",
-    "title": "Computing Access",
-    "section": "LaTeX",
-    "text": "LaTeX\nYou need a LaTeX compiler to create a pdf document from a R Markdown file. If you use the maize server, you don’t need to install anything (the server already has a LaTeX compiler). If you are using a local RStudio, you should install a Latex compiler.\nInstalling LaTeX (not needed if you are using the maize server)\nIf you don’t already have a tex package installed on your computer, the easiest option to create pdf’s is to use the tinytex R package. This can be installed with the following R commands:\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()  # install TinyTeX\n\nIf you’d like a stand alone LaTeX package, you could install the basic installations of either:\n\nMacTeX for Mac (3.2GB!)\nMiKTeX for Windows (190MB)\n\n\nAcknowledgements\nThis installation guide was written by Adam Loy and is based on the guide from stat545.com and is licensed under the CC BY-NC 3.0 Creative Commons License.",
-    "crumbs": [
-      "Computing",
-      "Access"
+      "Cheatsheets"
     ]
   },
   {
@@ -530,7 +621,7 @@
     "href": "carleton-only-syllabus.html",
     "title": "Stat 220: Introduction to Data Science",
     "section": "",
-    "text": "Meetings\nMWF 3a\n9:50-11 MW | 9:40-10:40 F\nCMC 102\n\n\nProfessor\nAmanda Luby\nCMC 223\n\n\n\naluby@carleton.edu\n\n\n\nOffice Hours\nMon 11-12 | Tues 2-3 | Wed 4-5 | Fri 11-12 (appt)\nBy appt through my Google Calendar\nCMC 307\n\n\nWebsite\n[[ADD LINK]]\n\n\n\nTexts\nR for Data Science (2nd Ed)\nhttps://r4ds.hadley.nz/\nWickham, Çetinkaya-Rundel, Grolemund\n\n\n\n\nModern Data Science with R (3rd Ed)\nhttps://mdsr-book.github.io/mdsr3e/\nBaumer, Kaplan, Horton\n\n\n\nSoftware\nMaize RStudio Server maize.mathcs.carleton.edu\n\n\n\n\nR (optional) free from r-project.org\n\n\n\n\nRStudio (optional) free from rstudio.com/downloads"
+    "text": "Meetings\nMWF 3a\n9:50-11 MW | 9:40-10:40 F\nCMC 102\n\n\nProfessor\nAmanda Luby\nCMC 223\n\n\n\naluby@carleton.edu\n\n\n\nOffice Hours\nMon 11-12 | Tues 2-3 | Wed 4-5 | Fri 11-12 (appt)\nBy appt through my Google Calendar\nCMC 307\n\n\nWebsite\ngithub.com/stat220-w25\n\n\n\nTexts\nR for Data Science (2nd Ed)\nhttps://r4ds.hadley.nz/\nWickham, Çetinkaya-Rundel, Grolemund\n\n\n\n\nModern Data Science with R (3rd Ed)\nhttps://mdsr-book.github.io/mdsr3e/\nBaumer, Kaplan, Horton\n\n\n\n\nFundamentals of Data Visualization\nhttps://clauswilke.com/dataviz/\nWilke\n\n\n\nSoftware\nMaize RStudio Server maize.mathcs.carleton.edu\n\n\n\n\nR (optional) free from r-project.org\n\n\n\n\nRStudio (optional) free from rstudio.com/downloads"
   },
   {
     "objectID": "carleton-only-syllabus.html#meetings",
@@ -621,7 +712,7 @@
     "href": "carleton-only-syllabus.html#textbook",
     "title": "Stat 220: Introduction to Data Science",
     "section": "Textbook",
-    "text": "Textbook\nThere is no “perfect” data science textbook. We will use excerpts from the following texts:\n\nR for Data Science 2e\nModern Data Science with R 3e\n\nThese books are all freely available online. If you prefer a hard copy, they are also available for purchase through the publisher."
+    "text": "Textbook\nThere is no “perfect” data science textbook. We will use excerpts from the following texts:\n\nR for Data Science 2e\nModern Data Science with R 3e\nFundamentals of Data Visualization\n\nThese books are all freely available online. If you prefer a hard copy, they are also available for purchase through the publisher."
   },
   {
     "objectID": "carleton-only-syllabus.html#software",
