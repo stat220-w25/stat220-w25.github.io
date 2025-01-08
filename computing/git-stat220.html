@@ -272,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>If you are <strong>not</strong> working on the maize RStudio server, then make sure that you have installed all of the software mentioned in <a href="../computing/computing-access.html">Computing Access</a>. In addition, you should install the <code>usethis</code> and <code>gitcreds</code> R packages.</p>
 <p>Everyone needs to connect Git and GitHub by doing the following:</p>
 <ol type="1">
-<li><p>Register for account on GitHub (<a href="https://github.com/" class="uri">https://github.com/</a>). I recommend using a username that incorporates your name (e.g.&nbsp;aloy). Please use your Carleton email with this account.</p></li>
+<li><p>Register for account on GitHub (<a href="https://github.com/" class="uri">https://github.com/</a>). I recommend using a username that incorporates your name (e.g.&nbsp;aluby). Please use your Carleton email with this account (you can connect multiple emails to a single GitHub account)</p></li>
 <li>
 <p>Setup options in Git by running the following code chunk in your console:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org">usethis</a></span><span class="op">)</span></span>
@@ -280,17 +280,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>changing the first two lines to your own name and email (this should be the email associated with your GitHub account).</p>
 </li>
 <li>
-<p>(Optional) This step explains how to use GitHub on RStudio without having to enter your password every time to connect. This is an optional step since you can still use GitHub without setting up a SSH key or caching credentials, you will just need to enter your password every time you push or pull with GitHub. Pick one method below: cache credentials for HTTPS or SSH. GitHub recommends HTTPS, so I recommend trying that first.</p>
+<p>In order to commit and push to GitHub via R, you need to create a <strong>PAT (Personal Access Token)</strong>. This is like a Password 2.0. When RStudio prompts you for your GitHub username and password, use your PAT instead.</p>
 <ul>
-<li>
-<p><strong>Strongly recommended:</strong> Cache credential using a HTTPS linked project.</p>
-<p>Complete the steps in <a href="http://happygitwithr.com/credential-caching.html">Section 10.1 of Happy Git with R</a> to get a personal access token (you will need to install the <code>usethis</code> package first). Then, follow the directions in <a href="https://happygitwithr.com/credential-caching.html#call-an-r-function-to-store-your-credentials">Section 10.2.1 of Happy Git with R</a> (I’ve had good luck with the <code>gitcreds</code> package, and it is installed on maize.)</p>
-</li>
-<li><p>A second method is to generate a SSH key. First check to see if you have a SSH key. Go into the shell (again, through RStudio <code>Tools -&gt; Shell</code>) and complete on this page <a href="http://happygitwithr.com/ssh-keys.html" class="uri">http://happygitwithr.com/ssh-keys.html</a>, which is Chapter 11 in Happy Git with R.</p></li>
+<li>Complete the steps in <a href="https://happygitwithr.com/https-pat">Happy Git with R Ch 9.3</a> to get a personal access token. I recommend using the “classic” token, but either should work. You will need <code>workflow</code>, <code>user</code>, and <code>repo</code> scopes (permissions) for this class, and I recommend setting it for 90 days so you won’t need a new one through the end of the term. Make sure to save this somewhere safe!</li>
 </ul>
 </li>
-<li><p><strong>(optional)</strong> Follow the instructions here (<a href="http://happygitwithr.com/push-pull-github.html" class="uri">http://happygitwithr.com/push-pull-github.html</a>) to ensure you can connect to GitHub from your computer. If you can’t get this command line push/pull to work that is fine. Try connecting to GitHub via RStudio, as detailed next. If you can’t connect via RStudio then contact me.</p></li>
+<li><p>It will be annoying to type your PAT in anytime you want to push to github. Instead, tell R to store your git credentials with <code><a href="https://gitcreds.r-lib.org/reference/gitcreds_get.html">gitcreds::gitcreds_set()</a></code>. When prompted for your password, use your PAT from Step 3.</p></li>
 </ol>
+<pre><code>&gt; gitcreds::gitcreds_set()
+
+? Enter password or token: ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+-&gt; Adding new credentials...
+-&gt; Removing credentials from cache...
+-&gt; Done.</code></pre>
+<p>To see if things are set up correctly, run</p>
+<pre><code><a href="https://usethis.r-lib.org/reference/git_sitrep.html">usethis::git_sitrep()</a></code></pre>
 <hr></section><section id="individual-assignments" class="level2"><h2 class="anchored" data-anchor-id="individual-assignments">Individual assignments</h2>
 <p>If you followed the suggestions in the <a href="../computing/rstudio-stat220.html">Using Rstudio in Stat 220</a> page, then you should already have an assignments folder on your computer or maize account.</p>
 <p>Each new assignment/project will be posted as a repository on GitHub and added directly to your account (within the Stat220 organization). This repository will contain assignment details (README, .Rmd).</p>
