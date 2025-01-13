@@ -265,29 +265,692 @@
     ]
   },
   {
-    "objectID": "portfolio/portfolio-1.html",
-    "href": "portfolio/portfolio-1.html",
-    "title": "Portfolio Project 1",
+    "objectID": "activities/04-customizing-plots.html",
+    "href": "activities/04-customizing-plots.html",
+    "title": "Customizing plots",
     "section": "",
-    "text": "Overview\nIn your first mini-project, you’ll apply what you’ve learned about ggplot2 and design principles to replicate and redesign a published graph. This project consists of three parts:\n\nReplicating an existing graph using ggplot2. Depending on the graph you choose, this may require some creativity in recreating data.\nUsing design principles from class, re-design the original graph to be better. This should include, at minimum, changes to two of the “layers” of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme).\nA written summary (no more than 1 printed page) including (1) an evaluation of the original graph and (2) reasoning for your design choices in improving the graph. This should include references to readings and discussions from class.\n\n\n\nOptions and Examples\nThe list below includes some good places to get started finding a graph. You do not have to choose a graph from one of these sources. It can be hard to find associated data with some published graphs, so don’t spend too much time trying to find data for a specific graph before moving on.\n\nOur World In Data\nFiveThirtyEight + Associated R Package (See available data here).\nHelpMeViz\nDataIsPlural\nTidyTuesday – If you choose this option, please be especially kind in your critique. This is a weekly R community activity, and many submissions are by beginners.\nr/dataisbeautiful\nr/dataisugly\n\n\n\nSubmission\nYour submission should include two visualizations (replication and improvement), a written overview of your work, and all associated code. You should work in a rmarkdown or quarto file. Your knitted/rendered file can be either pdf or html. I will distribute GitHub skeleton repos that you should fill in as you work. You should commit your final code and output file to your repo and link your repo to gradescope to submit.\n\n\nRubric\nA successful project will:\n\nInclude all necessary components pushed to GitHub and linked to gradescope\nContain code, plots, and written summary in a single .rmd document\nThe .rmd with all necessary code for recreation\nThe .rmd does not include unnecessary code\nProvide a thoughtful summary and critique\nThe replication matches the original graph on all layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\nThe improved graph has made changes to at least two of the layers\n\nAesthetics faithfully represent the representation of the underlying data\n\nMeet minimum submission quality standards\n\nVery few grammatical mistakes, spelling mistakes, or typos\nAppropriate labels and font sizes\nA readable theme\nThe rendered document does not contain any unnecessary content (package loading messages, warnings, etc.)\n\n\nAn excellent project will meet all of the requirements for a successful project, plus\n\nBe published (publicly!) to the web. (It is a portfolio project, after all). I recommend using RPubs as it’s very easy to publish a standalone website through RStudio, but if you have a public-facing website, that’s great too! Please include a URL in your YAML header so I can find it when grading.\n\nThere are lots of reasons you might not want the world to know that you are enrolled in this class, and this is one of your rights under FERPA. If you’re not comfortable including your name, you don’t have to! Your public document can be authored by “Student” (which has a history of being used in statistics).\nIf you are not comfortable attaching your name to something public-facing and this solution doesn’t work for you, please contact me on slack at least 72 hours before the due date so we can make an alternative plan.\n\nThe improved graph has made changes to at least four of the layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\n\nAll changes to aesthetics, geometries, etc. should be faithful representations of the underlying data (e.g. changes for the sake of making a change don’t count!)\n\n\nFor this portfolio project, you may work individually or in pairs. If you choose to work in a pair, let me know as soon as you decide so I can make a group repo for you. Both partners should have a record of committing and pushing to the repo.\n\n\nFAQ\nIf you have any questions, please post them to the #portfolio-projects channel on slack.",
+    "text": "Note: This code reads the same dataset in that we used last time and then creates two new columns based on an old one. Make sure to run this chunk before trying to make your graph!\n\nseason_summary = readr::read_csv(\"https://math.carleton.edu/aluby/stat220/survivor_season_summary.csv\") |&gt;\n  separate(timeslot, into = c(\"day_of_week\", \"time\"))\n\nRows: 47 Columns: 30\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (13): version, version_season, season_name, location, country, tribe_se...\ndbl  (13): season, n_cast, n_tribes, n_finalists, n_jury, viewers_reunion, v...\ndate  (4): premiered, ended, filming_started, filming_ended\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nWarning: Expected 2 pieces. Additional pieces discarded in 42 rows [1, 2, 3, 4, 5, 6, 7,\n8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...]."
+  },
+  {
+    "objectID": "activities/04-customizing-plots.html#load-data",
+    "href": "activities/04-customizing-plots.html#load-data",
+    "title": "Customizing plots",
+    "section": "",
+    "text": "Note: This code reads the same dataset in that we used last time and then creates two new columns based on an old one. Make sure to run this chunk before trying to make your graph!\n\nseason_summary = readr::read_csv(\"https://math.carleton.edu/aluby/stat220/survivor_season_summary.csv\") |&gt;\n  separate(timeslot, into = c(\"day_of_week\", \"time\"))\n\nRows: 47 Columns: 30\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (13): version, version_season, season_name, location, country, tribe_se...\ndbl  (13): season, n_cast, n_tribes, n_finalists, n_jury, viewers_reunion, v...\ndate  (4): premiered, ended, filming_started, filming_ended\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nWarning: Expected 2 pieces. Additional pieces discarded in 42 rows [1, 2, 3, 4, 5, 6, 7,\n8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...]."
+  },
+  {
+    "objectID": "activities/04-customizing-plots.html#make-histogram",
+    "href": "activities/04-customizing-plots.html#make-histogram",
+    "title": "Customizing plots",
+    "section": "Make histogram",
+    "text": "Make histogram\n\n# Include your code here"
+  },
+  {
+    "objectID": "notes/01-r-basics.html",
+    "href": "notes/01-r-basics.html",
+    "title": "R Basics",
+    "section": "",
+    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#loading-r-packages",
+    "href": "notes/01-r-basics.html#loading-r-packages",
+    "title": "R Basics",
+    "section": "",
+    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#creating-and-naming-objects",
+    "href": "notes/01-r-basics.html#creating-and-naming-objects",
+    "title": "R Basics",
+    "section": "Creating and naming objects",
+    "text": "Creating and naming objects\nAll R statements where you create objects have the form:\n\nobject_name &lt;- value\n\nAt first, we’ll be creating a lot of data objects. For example, we an load a data set containing the ratings for each episode of The Office using the code\n\noffice_ratings &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-17/office_ratings.csv\")\n\nIn this class you will be creating a lot of objects, so you’ll need to come up with names for those objects. Trying to think of informative/meaningful names for objects is hard, but necessary work! Below are the fundamental rules for naming objects in R:\n\nnames can’t start with a number\nnames are case-sensitive\nsome common letters are used internally by R and should be avoided as variable names (c, q, t, C, D, F, T, I)\nThere are reserved words that R won’t let you use for variable names (for, in, while, if, else, repeat, break, next)\nR will let you use the name of a predefined function—but don’t do it!\n\nYou can always check to see if you the name you want to use is already taken via exists():\nFor example lm exists\n\nexists(\"lm\")\n\n[1] TRUE\n\n\nbut carleton_college doesn’t.\n\nexists(\"carleton_college\")\n\n[1] FALSE\n\n\nThere are also a lot of naming styles out there, and if you have coded in another language, you may have already developed a preference. Below is an illustration by Allison Horst\n\n\n\n\n\n\n\n\nI generally following the tidyverse style guide, so you’ll see that I use only lowercase letters, numbers, and _ (snake case)."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#overviews-of-data-frames",
+    "href": "notes/01-r-basics.html#overviews-of-data-frames",
+    "title": "R Basics",
+    "section": "Overviews of data frames",
+    "text": "Overviews of data frames\nAbove, you loaded in a data set called office_ratings. Data sets are stored as a special data structure called a data frame. Data frames are the most-commonly used data structure for data analysis in R. For now, think of them like spreadsheets.\nOnce you have your data frame, you can get a quick overview of it using a few commands (below I use data_set as a generic placeholder for the data frame’s name):\n\n\n\n\n\n\nCommand\nDescription\n\n\n\nhead(data_set)\nprint the first 6 rows\n\n\ntail(data_set)\nprint the last 6 rows\n\n\nglimpse(data_set)\na quick overview where columns run down the screen and the data values run across. This allows you to see every column in the data frame.\n\n\nstr(data_set)\na quick overview like glimpse(), but without some of the formatting\n\n\nsummary(data_set)\nquick summary statistics for each column\n\n\ndim(data_set)\nthe number of rows and columns\n\n\nnrow(data_set)\nthe number of rows\n\n\nncol(data_set)\nthe number of columns"
+  },
+  {
+    "objectID": "notes/01-r-basics.html#tibbles",
+    "href": "notes/01-r-basics.html#tibbles",
+    "title": "R Basics",
+    "section": "Tibbles",
+    "text": "Tibbles\nA tibble, or a tbl_df is another version of a data frame which is used by default in a lot of the tidyverse packages that we’ll use.\n\nTibbles are data.frames that are lazy and surly: they do less (i.e. they don’t change variable names or types, and don’t do partial matching) and complain more (e.g. when a variable does not exist). This forces you to confront problems earlier, typically leading to cleaner, more expressive code. Tibbles also have an enhanced print() method which makes them easier to use with large datasets containing complex objects.\n\n\n\n\n\n\n\n Check point\n\n\n\nRun the above commands on the office_ratings data set. Compare and contrast the information returned by each command.\n\n\n\n\n\n\n\n\nGetting a spreadsheet\n\n\n\nIn RStudio, you can run the command View(data_set) to pull up a spreadsheet representation of a data frame. You can also click on the name of the data frame in the Environment pane. This can be a great way help you think about the data, and even has some interactive functions (e.g., filtering and searching); however, never include View(data_set) in an .Rmd file!!\n\n\n\n\n\n\n\n\nReview from intro stats\n\n\n\nIn intro stats we used the terms cases (or observations) and variables to describe the rows and columns of a data frame, respectively."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
+    "href": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
+    "title": "R Basics",
+    "section": "Extracting pieces of data frames",
+    "text": "Extracting pieces of data frames\nSince data frames are the fundamental data structure for most analyses in R, it’s important to know how to work with them. You already know how to get an overview of a data frame, but that isn’t always very informative. Often, you want to extract pieces of a data frame, such as a specific column or row.\nExtracting rows\nData frames can be indexed by their row/column numbers. To extract elements of a data frame, the basic syntax is data_set[row.index, column.index]. So, to extract the 10th row of office_ratings we run\n\noffice_ratings[10, ]\n\n# A tibble: 1 × 6\n  season episode title    imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      2       4 The Fire         8.4        2713 2005-10-11\n\n\nNotice that to extract an entire row, we leave the column index position blank.\nWe can also extract multiple rows by creating a vector of row indices. For example, we can extract the first 5 rows via\n\noffice_ratings[1:5, ]\n\n# A tibble: 5 × 6\n  season episode title         imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                 7.6        3706 2005-03-24\n2      1       2 Diversity Day         8.3        3566 2005-03-29\n3      1       3 Health Care           7.9        2983 2005-04-05\n4      1       4 The Alliance          8.1        2886 2005-04-12\n5      1       5 Basketball            8.4        3179 2005-04-19\n\n\nHere, 1:5 create a sequence of integers from 1 to 5.\nWe could also specify arbitrary row index values by combing the values into a vector. For example, we could extract the 1st, 13th, 64th, and 128th rows via\n\noffice_ratings[c(1, 13, 64, 128), ]\n\n# A tibble: 4 × 6\n  season episode title            imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                    7.6        3706 2005-03-24\n2      2       7 The Client               8.6        2631 2005-11-08\n3      4      13 Job Fair                 7.9        1977 2008-05-08\n4      7      11 Classy Christmas         8.9        2138 2010-12-09\n\n\nExtracting columns\nSimilar to extracting rows, we can use a numeric index to extract the columns of a data frame. For example, to extract the 3rd column, we can run\n\noffice_ratings[,3]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nAlternatively, we can pass in the column name in quotes instead of the column number\n\noffice_ratings[,\"title\"]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nNotice that the extracted column is still formatted as a data frame (or tibble). If you want to extract the contents of the column and just have a vector of titles, you have a few options.\n\nYou could use double brackets with the column number:\n\n\noffice_ratings[[3]]\n\n\nYou could use double brackets with the column name in quotes:\n\n\noffice_ratings[[\"title\"]]\n\n\nYou could use the $ extractor with the column name (not in quotes):\n\n\noffice_ratings$title\n\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract the 35th row of office_ratings.\nExtract rows 35, 36, 37, and 38 of office_ratings.\nExtract the imdb_rating column from office ratings using the column index number.\nExtract the imdb_rating column from office ratings using the column name."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#lists",
+    "href": "notes/01-r-basics.html#lists",
+    "title": "R Basics",
+    "section": "Lists",
+    "text": "Lists\nIt turns out that data frames are special cases of lists, a more general data structure. In a data frame, each column is an element of the data list and each column must be of the same length. In general, lists can be comprised of elements of vastly different lengths and data types.\nAs an example, let’s construct a list of the faculty in the MAST department and what is being taught this winter.\n\nstat_faculty &lt;- c(\"Kelling\", \"Loy\", \"Luby\", \"Poppick\", \"St. Clair\", \"Wadsworth\")\nstat_courses &lt;- c(120, 220, 230, 250, 285, 330)\nmath_faculty &lt;- c(\"Brooke\", \"Davis\", \"Egge\", \"Gomez-Gonzales\", \"Haunsperger\", \"Johnson\", \n                  \"Meyer\", \"Montee\", \"Shrestha\",\"Terry\", \"Thompson\", \"Turnage-Butterbaugh\")\nmath_courses &lt;- c(101, 106, 111, 120, 210, 211, 232, 236, 240, 241, 251, 321, 333, 395)\n\nmast &lt;- list(stat_faculty = stat_faculty, stat_courses = stat_courses, \n             math_faculty = math_faculty, math_courses = math_courses)\n\nOverview of a list\nYou can get an overview of a list a few ways:\n\n\nglimpse(list_name) and str(list_name) list the elements of the list and the first few entries of each element.\n\n\nglimpse(mast)\n\nList of 4\n $ stat_faculty: chr [1:6] \"Kelling\" \"Loy\" \"Luby\" \"Poppick\" ...\n $ stat_courses: num [1:6] 120 220 230 250 285 330\n $ math_faculty: chr [1:12] \"Brooke\" \"Davis\" \"Egge\" \"Gomez-Gonzales\" ...\n $ math_courses: num [1:14] 101 106 111 120 210 211 232 236 240 241 ...\n\n\n\n\nlength(list_name) will tell you how many elements are in the list\n\n\nlength(mast)\n\n[1] 4\n\n\nExtracting elements of a list\nSince data frames are lists, you’ve already seen how to extract elements of a list. For example, to extract the stat_faculty you could run\n\nmast[[1]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\nor\n\nmast[[\"stat_faculty\"]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you had only used a single bracket above, the returned object would still be a list, which is typically not what we would want.\n\nmast[1]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\n\n\n Check point\n\n\n\nExtract the statistics courses offered this term."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#vectors",
+    "href": "notes/01-r-basics.html#vectors",
+    "title": "R Basics",
+    "section": "Vectors",
+    "text": "Vectors\nThe columns of the office_ratings data frame and the elements of the mast list were comprised of (atomic) vectors. Unlike lists, all elements within a vector share the same type. For example, all names in the stat_faculty vector were character strings and all ratings in the imdb_rating column were numeric. We’ll deal with a variety of types of vectors in this course, including:\n\nnumeric\ncharacter (text)\nlogical (TRUE/FALSE)\n\nExtracting elements of a vector\nJust like with lists (and therefore data frames), we use brackets to extract elements from a vector. As an example, let’s work with the title column from office_ratings.\n\ntitle &lt;- office_ratings$title # vector of titles\n\nTo extract the 111th title, we run\n\ntitle[111]\n\n[1] \"New Leads\"\n\n\nor two extract the 100th through 111th titles, we run\n\ntitle[100:111]\n\n [1] \"Double Date\"          \"Murder\"               \"Shareholder Meeting\" \n [4] \"Scott's Tots\"         \"Secret Santa\"         \"The Banker\"          \n [7] \"Sabre\"                \"Manager and Salesman\" \"The Delivery: Part 1\"\n[10] \"The Delivery: Part 2\" \"St. Patrick's Day\"    \"New Leads\"           \n\n\nNegative indices\nSometimes, we want to “kick out” elements of our vector. To do this, we can use a negative index value. For example,\n\ntitle[-1]\n\nreturns all but the first title—that is, it kicks out the first title. To kick out multiple elements, we need to negate a vector of indices. For example, below we kick out the first 10 titles\n\ntitle[-c(1:10)]\n\nAnd now we kick out the 5th, 50th, and 150th titles\n\ntitle[-c(5, 50, 150)]\n\nThis idea can be adapted to lists and data frames. For example, to kick out the first row of office_ratings, we run\n\noffice_ratings[-1,]\n\n# A tibble: 187 × 6\n   season episode title             imdb_rating total_votes air_date  \n    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n 1      1       2 Diversity Day             8.3        3566 2005-03-29\n 2      1       3 Health Care               7.9        2983 2005-04-05\n 3      1       4 The Alliance              8.1        2886 2005-04-12\n 4      1       5 Basketball                8.4        3179 2005-04-19\n 5      1       6 Hot Girl                  7.8        2852 2005-04-26\n 6      2       1 The Dundies               8.7        3213 2005-09-20\n 7      2       2 Sexual Harassment         8.2        2736 2005-09-27\n 8      2       3 Office Olympics           8.4        2742 2005-10-04\n 9      2       4 The Fire                  8.4        2713 2005-10-11\n10      2       5 Halloween                 8.2        2561 2005-10-18\n# ℹ 177 more rows\n\n\nor to kick out the math courses from the mast list we run\n\nmast[-4]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n$stat_courses\n[1] 120 220 230 250 285 330\n\n$math_faculty\n [1] \"Brooke\"              \"Davis\"               \"Egge\"               \n [4] \"Gomez-Gonzales\"      \"Haunsperger\"         \"Johnson\"            \n [7] \"Meyer\"               \"Montee\"              \"Shrestha\"           \n[10] \"Terry\"               \"Thompson\"            \"Turnage-Butterbaugh\"\n\n\nLogical indices\nIt’s great to be able to extract (or omit) elements using indices, but sometimes we don’t know what index value we should use. For example, if you wanted to extract all of the 300-level statistics courses from the stat_courses vector, you would need to manually determine that positions 2:5 meet that requirement. That’s a lot of work! A better alternative is to allow R to find the elements meeting that requirement using logical operators. Below is a table summarizing common logical operators in R.\n\n\nComparison\nMeaning\n\n\n\n&lt;\nless than\n\n\n&gt;\ngreater than\n\n\n&lt;=\nless than or equal to\n\n\n&gt;=\ngreater than or equal to\n\n\n==\nis equal to\n\n\n!=\nnot equal to\n\n\n\nIn order to extract the 300-level statistics courses, we’ll take two steps:\n\nWe’ll determine whether each course is numbered at least 300,\nthen we’ll use that sequence of TRUEs/FALSEs to extract the course.\n\nSo, first we use the logical operator &gt;= to compare stat_courses and 300. This returns TRUE if the element meets the specification and FALSE otherwise.\n\nstat_courses &gt;= 300\n\n[1] FALSE FALSE FALSE FALSE FALSE  TRUE\n\n\nNow, we can use this vector as our index. Only the TRUE elements will be extracted:\n\nstat_courses[stat_courses &gt;= 300]\n\n[1] 330\n\n\nThe same idea can be used with data frames and lists, just remember how to format the brackets and indices!\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract all statistics courses below 250 from stat_courses.\nExtract all math courses except for 240 (probability) from math_courses.\nExtract all rows from season 3 of The Office."
+  },
+  {
+    "objectID": "course-faq.html",
+    "href": "course-faq.html",
+    "title": "FAQ",
+    "section": "",
+    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
     "crumbs": [
-      "Portfolio Projects",
-      "Portfolio Project 1"
+      "Course information",
+      "FAQ"
     ]
   },
   {
-    "objectID": "notes/02-full-lego-report.html",
-    "href": "notes/02-full-lego-report.html",
-    "title": "An Overview of Lego Sets on Rebrickable",
+    "objectID": "course-faq.html#where-can-i-get-help",
+    "href": "course-faq.html#where-can-i-get-help",
+    "title": "FAQ",
     "section": "",
-    "text": "Rebrickable is a website that shows you which LEGO sets you can build from the LEGO sets and parts that you already own. To do this, Rebrickable maintains a database of the entire LEGO catalog. In this document, we’ll summarize the LEGO sets in this database.\nThe data set was originally obtained from the 2022-09-09 repository on Tidy Tuesday.\n\nIn the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
+    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
+    "crumbs": [
+      "Course information",
+      "FAQ"
+    ]
   },
   {
-    "objectID": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
-    "href": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
-    "title": "An Overview of Lego Sets on Rebrickable",
+    "objectID": "slides/02/slides02.html#plan-for-today",
+    "href": "slides/02/slides02.html#plan-for-today",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Plan for today:",
+    "text": "Plan for today:\n\nQuestions from syllabus quiz\nGithub\n\nAccessing your private repos\nknit 🧶 commit ✅ push ⤴️\n\nReproducible Reporting"
+  },
+  {
+    "objectID": "slides/02/slides02.html#questions-from-syllabus-quiz",
+    "href": "slides/02/slides02.html#questions-from-syllabus-quiz",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Questions from syllabus quiz",
+    "text": "Questions from syllabus quiz\n\nWill the course build off of Stat120 concepts?\nClarification of what gets submitted to gradescope and what to GitHub\nRMarkdown versus Quarto?\nExamples of previous final projects?\nInfo about portfolio projects?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#git-github",
+    "href": "slides/02/slides02.html#git-github",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Git + GitHub",
+    "text": "Git + GitHub\n\n\n\nGit is a version control system - like “Track Changes”, on steroids\nIt’s not the only version control system, but it’s a very popular one\n\n\n\nGitHub is the home for your Git-based projects on the internet—like DropBox but much, much better\nWe will use GitHub as a platform for web hosting and collaboration"
+  },
+  {
+    "objectID": "slides/02/slides02.html#why-do-we-need-it",
+    "href": "slides/02/slides02.html#why-do-we-need-it",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Why do we need it?",
+    "text": "Why do we need it?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#versioning",
+    "href": "slides/02/slides02.html#versioning",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Versioning",
+    "text": "Versioning"
+  },
+  {
+    "objectID": "slides/02/slides02.html#versioning-with-human-readable-messages",
+    "href": "slides/02/slides02.html#versioning-with-human-readable-messages",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Versioning (with human-readable messages)",
+    "text": "Versioning (with human-readable messages)"
+  },
+  {
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#lets-try-it",
+    "href": "slides/02/slides02.html#lets-try-it",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Let’s try it!",
+    "text": "Let’s try it!\n\n\n\nFollow the “Individual Assignment” directions at https://stat220-w25.github.io/computing/git-stat220.html to access your day02 repo and create an R project\nEdit the .Rmd file:\n\nChange “author” to your name\nUse # to add descriptive section headers for each code chunk\nAdd a sentence or two describing the summary statistics of the dataset\n\nknit 🧶 commit ✅ push ⤴️\nView on github.com/stat220-w25/day02yourusername and confirm you can see your changes\n\n\n\n\n\n\n−+\n15:00"
+  },
+  {
+    "objectID": "slides/02/slides02.html#why-do-we-need-it-1",
+    "href": "slides/02/slides02.html#why-do-we-need-it-1",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Why do we need it?",
+    "text": "Why do we need it?\nOops! I gave you the wrong set of data."
+  },
+  {
+    "objectID": "slides/02/slides02.html#why-do-we-need-it-2",
+    "href": "slides/02/slides02.html#why-do-we-need-it-2",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Why do we need it?",
+    "text": "Why do we need it?\n\nKarl – this is very interesting , however you used an old version of the data (n=143 rather than n=226). I’m really sorry you did all that work on the incomplete dataset.\nBruce\n\n\n\nAdapted from Karl Broman"
+  },
+  {
+    "objectID": "slides/02/slides02.html#other-examples",
+    "href": "slides/02/slides02.html#other-examples",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Other examples:",
+    "text": "Other examples:\n\nThe results in Table 1 don’t seem to correspond to those in Figure 2.\nIn what order do I run these scripts?\nWhere did we get this data file?\nWhy did I omit those samples?\nHow did I make that figure?\n“Your script is now giving an error.”\n“The attached is similar to the code we used.”\n\n\n\nAdapted from Karl Broman"
+  },
+  {
+    "objectID": "slides/02/slides02.html#reproducible-data-science",
+    "href": "slides/02/slides02.html#reproducible-data-science",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Reproducible data science",
+    "text": "Reproducible data science\n\n\nShort Term Impact\n\nAre the tables and figures reproducible from the code and data?\nDoes the code actually do what you think it does?\nIn addition to what was done, is it clear why it was done? (e.g., how were parameter settings chosen?)\n\n\nLong Term Impact\n\nCan the code be used for other data?\nCan you extend the code to other things?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#the-toolkit",
+    "href": "slides/02/slides02.html#the-toolkit",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "The toolkit",
+    "text": "The toolkit\n\n\n\n\n\n\n\n\n\n\nScriptability \\(\\rightarrow\\) R\nCode environment \\(\\rightarrow\\) RStudio\nLiterate programming (code, narrative, output in one place) \\(\\rightarrow\\) R Markdown\nVersion control \\(\\rightarrow\\) Git / GitHub"
+  },
+  {
+    "objectID": "slides/02/slides02.html#what-is-r-markdown",
+    "href": "slides/02/slides02.html#what-is-r-markdown",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "What is R Markdown?",
+    "text": "What is R Markdown?\n\nAn authoring framework for data science.\nA document format (.Rmd).\nAn R package named rmarkdown.\nA file format for making dynamic documents with R.\nA tool for integrating prose, code, and results.\nA computational document."
+  },
+  {
+    "objectID": "slides/02/slides02.html#what-about-quarto",
+    "href": "slides/02/slides02.html#what-about-quarto",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "What about quarto?",
+    "text": "What about quarto?\n\n“Next Gen” RMarkdown\nMore compatibility with other languages (python, observable.js, etc.)\nnot an R package/separate software\nI’m going to distribute HW, etc. via RMarkdown, but you are welcome to use either!"
+  },
+  {
+    "objectID": "slides/02/slides02.html#the-setup-chunk",
+    "href": "slides/02/slides02.html#the-setup-chunk",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "The setup chunk",
+    "text": "The setup chunk\n\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(\n  collapse = TRUE,   \n  comment = \"#&gt;\", \n  out.width = \"100%\" \n)\n```\n\n\nA special chunk label: setup\nTypically #1\nAll following chunks will use these options (i.e., sets global chunk options)\nTip: set include=FALSE\nYou can (and should) use individual chunk options too"
+  },
+  {
+    "objectID": "slides/02/slides02.html#parameters",
+    "href": "slides/02/slides02.html#parameters",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n---\ntitle: Survivor\noutput:\n  html_document:\n    toc: true\n    toc_float: true\n    theme: flatly\nparams:\n  season: '20'\n---"
+  },
+  {
+    "objectID": "slides/02/slides02.html#your-task",
+    "href": "slides/02/slides02.html#your-task",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Your Task",
+    "text": "Your Task\n\n\nThere’s an example HTML report on the schedule\nYour task is to reproduce it in 02-example-lego.rmd (or .qmd, if you prefer).\nTo be as reproducible as possible, you’ll need to use:\n\nYAML metadata\nYAML parameters\nCode chunks with appropriate options\nInline R code"
+  },
+  {
+    "objectID": "slides/02/slides02.html#hints",
+    "href": "slides/02/slides02.html#hints",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Hints",
+    "text": "Hints\n\n\nTo begin, use inline R code to replace “hard coding” the quantities that are highlighted below.\n\n\nFor example, instead of typing 19798 you would include nrow(sets) as an inline code chunk. Make sure the report knits and you get the right values.\n\nNext, add a parameter to your YAML header that stores the location of the data set. Make sure the report knits.\nChange the code chunk where you load the data set to use the data parameter you just defined rather than the hard-coded URL. Make sure the report knits.\nNow, let’s make a parameter for the source of the data set so you don’t have to search where every mention of it in the report, it will be with the other metadata (where it belongs). To do this, add a parameter that gives the source of your data (call it data_source) and set it equal to “the 2022-09-09 repository on Tidy Tuesday.” Make sure the report knits.\nAt this point it looks like everything is working—awesome job! To put it to the test, let’s update the parameters of your report and knit it to see if everything changes as we would expect. Here are the new parameter values:\n\ndata: \"http://math.carleton.edu/aluby/stat220/lego_subset.csv\"\ndata_source: \"Amanda's website\"\n\n(optional) If you have time, or would like to try outside of class, I’ve created a practice gradescope assignment space. First, add .pdf output to your document and knit to PDF. Commit the PDF and push to github. Then, log into gradescope (you may have to go through the link on moodle the first time) and link your github repo. You should then be able to submit your .pdf\n\noutput: \n  html_document:\n    default\n  pdf_document:\n    default"
+  },
+  {
+    "objectID": "slides/03/slides03.html#plan-for-today",
+    "href": "slides/03/slides03.html#plan-for-today",
+    "title": "ggplot2",
+    "section": "Plan for today:",
+    "text": "Plan for today:\n\nSuper quick grammar of graphics recap\nSpeed Groupwork\nIntro to portfolio project 1"
+  },
+  {
+    "objectID": "slides/03/slides03.html#what-are-the-essential-elements-of-this-scatterplot",
+    "href": "slides/03/slides03.html#what-are-the-essential-elements-of-this-scatterplot",
+    "title": "ggplot2",
+    "section": "What are the essential elements of this scatterplot?",
+    "text": "What are the essential elements of this scatterplot?"
+  },
+  {
+    "objectID": "slides/03/slides03.html#data",
+    "href": "slides/03/slides03.html#data",
+    "title": "ggplot2",
+    "section": "Data",
+    "text": "Data\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\nAdelie\nTorgersen\n39.1\n18.7\n181\n3750\nmale\n2007\n\n\nAdelie\nTorgersen\n39.5\n17.4\n186\n3800\nfemale\n2007\n\n\nAdelie\nTorgersen\n40.3\n18.0\n195\n3250\nfemale\n2007\n\n\nAdelie\nTorgersen\nNA\nNA\nNA\nNA\nNA\n2007\n\n\nAdelie\nTorgersen\n36.7\n19.3\n193\n3450\nfemale\n2007\n\n\nAdelie\nTorgersen\n39.3\n20.6\n190\n3650\nmale\n2007\n\n\nAdelie\nTorgersen\n38.9\n17.8\n181\n3625\nfemale\n2007\n\n\nAdelie\nTorgersen\n39.2\n19.6\n195\n4675\nmale\n2007\n\n\nAdelie\nTorgersen\n34.1\n18.1\n193\n3475\nNA\n2007\n\n\nAdelie\nTorgersen\n42.0\n20.2\n190\n4250\nNA\n2007\n\n\nAdelie\nTorgersen\n37.8\n17.1\n186\n3300\nNA\n2007\n\n\nAdelie\nTorgersen\n37.8\n17.3\n180\n3700\nNA\n2007\n\n\nAdelie\nTorgersen\n41.1\n17.6\n182\n3200\nfemale\n2007\n\n\nAdelie\nTorgersen\n38.6\n21.2\n191\n3800\nmale\n2007\n\n\nAdelie\nTorgersen\n34.6\n21.1\n198\n4400\nmale\n2007\n\n\nAdelie\nTorgersen\n36.6\n17.8\n185\n3700\nfemale\n2007\n\n\nAdelie\nTorgersen\n38.7\n19.0\n195\n3450\nfemale\n2007\n\n\nAdelie\nTorgersen\n42.5\n20.7\n197\n4500\nmale\n2007\n\n\nAdelie\nTorgersen\n34.4\n18.4\n184\n3325\nfemale\n2007\n\n\nAdelie\nTorgersen\n46.0\n21.5\n194\n4200\nmale\n2007\n\n\nAdelie\nBiscoe\n37.8\n18.3\n174\n3400\nfemale\n2007\n\n\nAdelie\nBiscoe\n37.7\n18.7\n180\n3600\nmale\n2007\n\n\nAdelie\nBiscoe\n35.9\n19.2\n189\n3800\nfemale\n2007\n\n\nAdelie\nBiscoe\n38.2\n18.1\n185\n3950\nmale\n2007\n\n\nAdelie\nBiscoe\n38.8\n17.2\n180\n3800\nmale\n2007\n\n\nAdelie\nBiscoe\n35.3\n18.9\n187\n3800\nfemale\n2007\n\n\nAdelie\nBiscoe\n40.6\n18.6\n183\n3550\nmale\n2007\n\n\nAdelie\nBiscoe\n40.5\n17.9\n187\n3200\nfemale\n2007\n\n\nAdelie\nBiscoe\n37.9\n18.6\n172\n3150\nfemale\n2007\n\n\nAdelie\nBiscoe\n40.5\n18.9\n180\n3950\nmale\n2007\n\n\nAdelie\nDream\n39.5\n16.7\n178\n3250\nfemale\n2007\n\n\nAdelie\nDream\n37.2\n18.1\n178\n3900\nmale\n2007\n\n\nAdelie\nDream\n39.5\n17.8\n188\n3300\nfemale\n2007\n\n\nAdelie\nDream\n40.9\n18.9\n184\n3900\nmale\n2007\n\n\nAdelie\nDream\n36.4\n17.0\n195\n3325\nfemale\n2007\n\n\nAdelie\nDream\n39.2\n21.1\n196\n4150\nmale\n2007\n\n\nAdelie\nDream\n38.8\n20.0\n190\n3950\nmale\n2007\n\n\nAdelie\nDream\n42.2\n18.5\n180\n3550\nfemale\n2007\n\n\nAdelie\nDream\n37.6\n19.3\n181\n3300\nfemale\n2007\n\n\nAdelie\nDream\n39.8\n19.1\n184\n4650\nmale\n2007\n\n\nAdelie\nDream\n36.5\n18.0\n182\n3150\nfemale\n2007\n\n\nAdelie\nDream\n40.8\n18.4\n195\n3900\nmale\n2007\n\n\nAdelie\nDream\n36.0\n18.5\n186\n3100\nfemale\n2007\n\n\nAdelie\nDream\n44.1\n19.7\n196\n4400\nmale\n2007\n\n\nAdelie\nDream\n37.0\n16.9\n185\n3000\nfemale\n2007\n\n\nAdelie\nDream\n39.6\n18.8\n190\n4600\nmale\n2007\n\n\nAdelie\nDream\n41.1\n19.0\n182\n3425\nmale\n2007\n\n\nAdelie\nDream\n37.5\n18.9\n179\n2975\nNA\n2007\n\n\nAdelie\nDream\n36.0\n17.9\n190\n3450\nfemale\n2007\n\n\nAdelie\nDream\n42.3\n21.2\n191\n4150\nmale\n2007\n\n\nAdelie\nBiscoe\n39.6\n17.7\n186\n3500\nfemale\n2008\n\n\nAdelie\nBiscoe\n40.1\n18.9\n188\n4300\nmale\n2008\n\n\nAdelie\nBiscoe\n35.0\n17.9\n190\n3450\nfemale\n2008\n\n\nAdelie\nBiscoe\n42.0\n19.5\n200\n4050\nmale\n2008\n\n\nAdelie\nBiscoe\n34.5\n18.1\n187\n2900\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.4\n18.6\n191\n3700\nmale\n2008\n\n\nAdelie\nBiscoe\n39.0\n17.5\n186\n3550\nfemale\n2008\n\n\nAdelie\nBiscoe\n40.6\n18.8\n193\n3800\nmale\n2008\n\n\nAdelie\nBiscoe\n36.5\n16.6\n181\n2850\nfemale\n2008\n\n\nAdelie\nBiscoe\n37.6\n19.1\n194\n3750\nmale\n2008\n\n\nAdelie\nBiscoe\n35.7\n16.9\n185\n3150\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.3\n21.1\n195\n4400\nmale\n2008\n\n\nAdelie\nBiscoe\n37.6\n17.0\n185\n3600\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.1\n18.2\n192\n4050\nmale\n2008\n\n\nAdelie\nBiscoe\n36.4\n17.1\n184\n2850\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.6\n18.0\n192\n3950\nmale\n2008\n\n\nAdelie\nBiscoe\n35.5\n16.2\n195\n3350\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.1\n19.1\n188\n4100\nmale\n2008\n\n\nAdelie\nTorgersen\n35.9\n16.6\n190\n3050\nfemale\n2008\n\n\nAdelie\nTorgersen\n41.8\n19.4\n198\n4450\nmale\n2008\n\n\nAdelie\nTorgersen\n33.5\n19.0\n190\n3600\nfemale\n2008\n\n\nAdelie\nTorgersen\n39.7\n18.4\n190\n3900\nmale\n2008\n\n\nAdelie\nTorgersen\n39.6\n17.2\n196\n3550\nfemale\n2008\n\n\nAdelie\nTorgersen\n45.8\n18.9\n197\n4150\nmale\n2008\n\n\nAdelie\nTorgersen\n35.5\n17.5\n190\n3700\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.8\n18.5\n195\n4250\nmale\n2008\n\n\nAdelie\nTorgersen\n40.9\n16.8\n191\n3700\nfemale\n2008\n\n\nAdelie\nTorgersen\n37.2\n19.4\n184\n3900\nmale\n2008\n\n\nAdelie\nTorgersen\n36.2\n16.1\n187\n3550\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.1\n19.1\n195\n4000\nmale\n2008\n\n\nAdelie\nTorgersen\n34.6\n17.2\n189\n3200\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.9\n17.6\n196\n4700\nmale\n2008\n\n\nAdelie\nTorgersen\n36.7\n18.8\n187\n3800\nfemale\n2008\n\n\nAdelie\nTorgersen\n35.1\n19.4\n193\n4200\nmale\n2008\n\n\nAdelie\nDream\n37.3\n17.8\n191\n3350\nfemale\n2008\n\n\nAdelie\nDream\n41.3\n20.3\n194\n3550\nmale\n2008\n\n\nAdelie\nDream\n36.3\n19.5\n190\n3800\nmale\n2008\n\n\nAdelie\nDream\n36.9\n18.6\n189\n3500\nfemale\n2008\n\n\nAdelie\nDream\n38.3\n19.2\n189\n3950\nmale\n2008\n\n\nAdelie\nDream\n38.9\n18.8\n190\n3600\nfemale\n2008\n\n\nAdelie\nDream\n35.7\n18.0\n202\n3550\nfemale\n2008\n\n\nAdelie\nDream\n41.1\n18.1\n205\n4300\nmale\n2008\n\n\nAdelie\nDream\n34.0\n17.1\n185\n3400\nfemale\n2008\n\n\nAdelie\nDream\n39.6\n18.1\n186\n4450\nmale\n2008\n\n\nAdelie\nDream\n36.2\n17.3\n187\n3300\nfemale\n2008\n\n\nAdelie\nDream\n40.8\n18.9\n208\n4300\nmale\n2008\n\n\nAdelie\nDream\n38.1\n18.6\n190\n3700\nfemale\n2008\n\n\nAdelie\nDream\n40.3\n18.5\n196\n4350\nmale\n2008\n\n\nAdelie\nDream\n33.1\n16.1\n178\n2900\nfemale\n2008\n\n\nAdelie\nDream\n43.2\n18.5\n192\n4100\nmale\n2008\n\n\nAdelie\nBiscoe\n35.0\n17.9\n192\n3725\nfemale\n2009\n\n\nAdelie\nBiscoe\n41.0\n20.0\n203\n4725\nmale\n2009\n\n\nAdelie\nBiscoe\n37.7\n16.0\n183\n3075\nfemale\n2009\n\n\nAdelie\nBiscoe\n37.8\n20.0\n190\n4250\nmale\n2009\n\n\nAdelie\nBiscoe\n37.9\n18.6\n193\n2925\nfemale\n2009\n\n\nAdelie\nBiscoe\n39.7\n18.9\n184\n3550\nmale\n2009\n\n\nAdelie\nBiscoe\n38.6\n17.2\n199\n3750\nfemale\n2009\n\n\nAdelie\nBiscoe\n38.2\n20.0\n190\n3900\nmale\n2009\n\n\nAdelie\nBiscoe\n38.1\n17.0\n181\n3175\nfemale\n2009\n\n\nAdelie\nBiscoe\n43.2\n19.0\n197\n4775\nmale\n2009\n\n\nAdelie\nBiscoe\n38.1\n16.5\n198\n3825\nfemale\n2009\n\n\nAdelie\nBiscoe\n45.6\n20.3\n191\n4600\nmale\n2009\n\n\nAdelie\nBiscoe\n39.7\n17.7\n193\n3200\nfemale\n2009\n\n\nAdelie\nBiscoe\n42.2\n19.5\n197\n4275\nmale\n2009\n\n\nAdelie\nBiscoe\n39.6\n20.7\n191\n3900\nfemale\n2009\n\n\nAdelie\nBiscoe\n42.7\n18.3\n196\n4075\nmale\n2009\n\n\nAdelie\nTorgersen\n38.6\n17.0\n188\n2900\nfemale\n2009\n\n\nAdelie\nTorgersen\n37.3\n20.5\n199\n3775\nmale\n2009\n\n\nAdelie\nTorgersen\n35.7\n17.0\n189\n3350\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.1\n18.6\n189\n3325\nmale\n2009\n\n\nAdelie\nTorgersen\n36.2\n17.2\n187\n3150\nfemale\n2009\n\n\nAdelie\nTorgersen\n37.7\n19.8\n198\n3500\nmale\n2009\n\n\nAdelie\nTorgersen\n40.2\n17.0\n176\n3450\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.4\n18.5\n202\n3875\nmale\n2009\n\n\nAdelie\nTorgersen\n35.2\n15.9\n186\n3050\nfemale\n2009\n\n\nAdelie\nTorgersen\n40.6\n19.0\n199\n4000\nmale\n2009\n\n\nAdelie\nTorgersen\n38.8\n17.6\n191\n3275\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.5\n18.3\n195\n4300\nmale\n2009\n\n\nAdelie\nTorgersen\n39.0\n17.1\n191\n3050\nfemale\n2009\n\n\nAdelie\nTorgersen\n44.1\n18.0\n210\n4000\nmale\n2009\n\n\nAdelie\nTorgersen\n38.5\n17.9\n190\n3325\nfemale\n2009\n\n\nAdelie\nTorgersen\n43.1\n19.2\n197\n3500\nmale\n2009\n\n\nAdelie\nDream\n36.8\n18.5\n193\n3500\nfemale\n2009\n\n\nAdelie\nDream\n37.5\n18.5\n199\n4475\nmale\n2009\n\n\nAdelie\nDream\n38.1\n17.6\n187\n3425\nfemale\n2009\n\n\nAdelie\nDream\n41.1\n17.5\n190\n3900\nmale\n2009\n\n\nAdelie\nDream\n35.6\n17.5\n191\n3175\nfemale\n2009\n\n\nAdelie\nDream\n40.2\n20.1\n200\n3975\nmale\n2009\n\n\nAdelie\nDream\n37.0\n16.5\n185\n3400\nfemale\n2009\n\n\nAdelie\nDream\n39.7\n17.9\n193\n4250\nmale\n2009\n\n\nAdelie\nDream\n40.2\n17.1\n193\n3400\nfemale\n2009\n\n\nAdelie\nDream\n40.6\n17.2\n187\n3475\nmale\n2009\n\n\nAdelie\nDream\n32.1\n15.5\n188\n3050\nfemale\n2009\n\n\nAdelie\nDream\n40.7\n17.0\n190\n3725\nmale\n2009\n\n\nAdelie\nDream\n37.3\n16.8\n192\n3000\nfemale\n2009\n\n\nAdelie\nDream\n39.0\n18.7\n185\n3650\nmale\n2009\n\n\nAdelie\nDream\n39.2\n18.6\n190\n4250\nmale\n2009\n\n\nAdelie\nDream\n36.6\n18.4\n184\n3475\nfemale\n2009\n\n\nAdelie\nDream\n36.0\n17.8\n195\n3450\nfemale\n2009\n\n\nAdelie\nDream\n37.8\n18.1\n193\n3750\nmale\n2009\n\n\nAdelie\nDream\n36.0\n17.1\n187\n3700\nfemale\n2009\n\n\nAdelie\nDream\n41.5\n18.5\n201\n4000\nmale\n2009\n\n\nGentoo\nBiscoe\n46.1\n13.2\n211\n4500\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n16.3\n230\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n48.7\n14.1\n210\n4450\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n15.2\n218\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n47.6\n14.5\n215\n5400\nmale\n2007\n\n\nGentoo\nBiscoe\n46.5\n13.5\n210\n4550\nfemale\n2007\n\n\nGentoo\nBiscoe\n45.4\n14.6\n211\n4800\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.7\n15.3\n219\n5200\nmale\n2007\n\n\nGentoo\nBiscoe\n43.3\n13.4\n209\n4400\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.8\n15.4\n215\n5150\nmale\n2007\n\n\nGentoo\nBiscoe\n40.9\n13.7\n214\n4650\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.0\n16.1\n216\n5550\nmale\n2007\n\n\nGentoo\nBiscoe\n45.5\n13.7\n214\n4650\nfemale\n2007\n\n\nGentoo\nBiscoe\n48.4\n14.6\n213\n5850\nmale\n2007\n\n\nGentoo\nBiscoe\n45.8\n14.6\n210\n4200\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.3\n15.7\n217\n5850\nmale\n2007\n\n\nGentoo\nBiscoe\n42.0\n13.5\n210\n4150\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.2\n15.2\n221\n6300\nmale\n2007\n\n\nGentoo\nBiscoe\n46.2\n14.5\n209\n4800\nfemale\n2007\n\n\nGentoo\nBiscoe\n48.7\n15.1\n222\n5350\nmale\n2007\n\n\nGentoo\nBiscoe\n50.2\n14.3\n218\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n45.1\n14.5\n215\n5000\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.5\n14.5\n213\n4400\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.3\n15.8\n215\n5050\nmale\n2007\n\n\nGentoo\nBiscoe\n42.9\n13.1\n215\n5000\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.1\n15.1\n215\n5100\nmale\n2007\n\n\nGentoo\nBiscoe\n44.5\n14.3\n216\n4100\nNA\n2007\n\n\nGentoo\nBiscoe\n47.8\n15.0\n215\n5650\nmale\n2007\n\n\nGentoo\nBiscoe\n48.2\n14.3\n210\n4600\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n15.3\n220\n5550\nmale\n2007\n\n\nGentoo\nBiscoe\n47.3\n15.3\n222\n5250\nmale\n2007\n\n\nGentoo\nBiscoe\n42.8\n14.2\n209\n4700\nfemale\n2007\n\n\nGentoo\nBiscoe\n45.1\n14.5\n207\n5050\nfemale\n2007\n\n\nGentoo\nBiscoe\n59.6\n17.0\n230\n6050\nmale\n2007\n\n\nGentoo\nBiscoe\n49.1\n14.8\n220\n5150\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.4\n16.3\n220\n5400\nmale\n2008\n\n\nGentoo\nBiscoe\n42.6\n13.7\n213\n4950\nfemale\n2008\n\n\nGentoo\nBiscoe\n44.4\n17.3\n219\n5250\nmale\n2008\n\n\nGentoo\nBiscoe\n44.0\n13.6\n208\n4350\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.7\n15.7\n208\n5350\nmale\n2008\n\n\nGentoo\nBiscoe\n42.7\n13.7\n208\n3950\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.6\n16.0\n225\n5700\nmale\n2008\n\n\nGentoo\nBiscoe\n45.3\n13.7\n210\n4300\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.6\n15.0\n216\n4750\nmale\n2008\n\n\nGentoo\nBiscoe\n50.5\n15.9\n222\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n43.6\n13.9\n217\n4900\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.5\n13.9\n210\n4200\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.5\n15.9\n225\n5400\nmale\n2008\n\n\nGentoo\nBiscoe\n44.9\n13.3\n213\n5100\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.2\n15.8\n215\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n46.6\n14.2\n210\n4850\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.5\n14.1\n220\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n45.1\n14.4\n210\n4400\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.1\n15.0\n225\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n46.5\n14.4\n217\n4900\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.0\n15.4\n220\n5050\nmale\n2008\n\n\nGentoo\nBiscoe\n43.8\n13.9\n208\n4300\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.5\n15.0\n220\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n43.2\n14.5\n208\n4450\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.4\n15.3\n224\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n45.3\n13.8\n208\n4200\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.2\n14.9\n221\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n45.7\n13.9\n214\n4400\nfemale\n2008\n\n\nGentoo\nBiscoe\n54.3\n15.7\n231\n5650\nmale\n2008\n\n\nGentoo\nBiscoe\n45.8\n14.2\n219\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.8\n16.8\n230\n5700\nmale\n2008\n\n\nGentoo\nBiscoe\n46.2\n14.4\n214\n4650\nNA\n2008\n\n\nGentoo\nBiscoe\n49.5\n16.2\n229\n5800\nmale\n2008\n\n\nGentoo\nBiscoe\n43.5\n14.2\n220\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.7\n15.0\n223\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n47.7\n15.0\n216\n4750\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.4\n15.6\n221\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n48.2\n15.6\n221\n5100\nmale\n2008\n\n\nGentoo\nBiscoe\n46.5\n14.8\n217\n5200\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.4\n15.0\n216\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.6\n16.0\n230\n5800\nmale\n2008\n\n\nGentoo\nBiscoe\n47.5\n14.2\n209\n4600\nfemale\n2008\n\n\nGentoo\nBiscoe\n51.1\n16.3\n220\n6000\nmale\n2008\n\n\nGentoo\nBiscoe\n45.2\n13.8\n215\n4750\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.2\n16.4\n223\n5950\nmale\n2008\n\n\nGentoo\nBiscoe\n49.1\n14.5\n212\n4625\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.5\n15.6\n221\n5450\nmale\n2009\n\n\nGentoo\nBiscoe\n47.4\n14.6\n212\n4725\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.0\n15.9\n224\n5350\nmale\n2009\n\n\nGentoo\nBiscoe\n44.9\n13.8\n212\n4750\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.8\n17.3\n228\n5600\nmale\n2009\n\n\nGentoo\nBiscoe\n43.4\n14.4\n218\n4600\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.3\n14.2\n218\n5300\nmale\n2009\n\n\nGentoo\nBiscoe\n47.5\n14.0\n212\n4875\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.1\n17.0\n230\n5550\nmale\n2009\n\n\nGentoo\nBiscoe\n47.5\n15.0\n218\n4950\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.2\n17.1\n228\n5400\nmale\n2009\n\n\nGentoo\nBiscoe\n45.5\n14.5\n212\n4750\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.5\n16.1\n224\n5650\nmale\n2009\n\n\nGentoo\nBiscoe\n44.5\n14.7\n214\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.8\n15.7\n226\n5200\nmale\n2009\n\n\nGentoo\nBiscoe\n49.4\n15.8\n216\n4925\nmale\n2009\n\n\nGentoo\nBiscoe\n46.9\n14.6\n222\n4875\nfemale\n2009\n\n\nGentoo\nBiscoe\n48.4\n14.4\n203\n4625\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.1\n16.5\n225\n5250\nmale\n2009\n\n\nGentoo\nBiscoe\n48.5\n15.0\n219\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n55.9\n17.0\n228\n5600\nmale\n2009\n\n\nGentoo\nBiscoe\n47.2\n15.5\n215\n4975\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.1\n15.0\n228\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n47.3\n13.8\n216\n4725\nNA\n2009\n\n\nGentoo\nBiscoe\n46.8\n16.1\n215\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n41.7\n14.7\n210\n4700\nfemale\n2009\n\n\nGentoo\nBiscoe\n53.4\n15.8\n219\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n43.3\n14.0\n208\n4575\nfemale\n2009\n\n\nGentoo\nBiscoe\n48.1\n15.1\n209\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n50.5\n15.2\n216\n5000\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.8\n15.9\n229\n5950\nmale\n2009\n\n\nGentoo\nBiscoe\n43.5\n15.2\n213\n4650\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.5\n16.3\n230\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n46.2\n14.1\n217\n4375\nfemale\n2009\n\n\nGentoo\nBiscoe\n55.1\n16.0\n230\n5850\nmale\n2009\n\n\nGentoo\nBiscoe\n44.5\n15.7\n217\n4875\nNA\n2009\n\n\nGentoo\nBiscoe\n48.8\n16.2\n222\n6000\nmale\n2009\n\n\nGentoo\nBiscoe\n47.2\n13.7\n214\n4925\nfemale\n2009\n\n\nGentoo\nBiscoe\nNA\nNA\nNA\nNA\nNA\n2009\n\n\nGentoo\nBiscoe\n46.8\n14.3\n215\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.4\n15.7\n222\n5750\nmale\n2009\n\n\nGentoo\nBiscoe\n45.2\n14.8\n212\n5200\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.9\n16.1\n213\n5400\nmale\n2009\n\n\nChinstrap\nDream\n46.5\n17.9\n192\n3500\nfemale\n2007\n\n\nChinstrap\nDream\n50.0\n19.5\n196\n3900\nmale\n2007\n\n\nChinstrap\nDream\n51.3\n19.2\n193\n3650\nmale\n2007\n\n\nChinstrap\nDream\n45.4\n18.7\n188\n3525\nfemale\n2007\n\n\nChinstrap\nDream\n52.7\n19.8\n197\n3725\nmale\n2007\n\n\nChinstrap\nDream\n45.2\n17.8\n198\n3950\nfemale\n2007\n\n\nChinstrap\nDream\n46.1\n18.2\n178\n3250\nfemale\n2007\n\n\nChinstrap\nDream\n51.3\n18.2\n197\n3750\nmale\n2007\n\n\nChinstrap\nDream\n46.0\n18.9\n195\n4150\nfemale\n2007\n\n\nChinstrap\nDream\n51.3\n19.9\n198\n3700\nmale\n2007\n\n\nChinstrap\nDream\n46.6\n17.8\n193\n3800\nfemale\n2007\n\n\nChinstrap\nDream\n51.7\n20.3\n194\n3775\nmale\n2007\n\n\nChinstrap\nDream\n47.0\n17.3\n185\n3700\nfemale\n2007\n\n\nChinstrap\nDream\n52.0\n18.1\n201\n4050\nmale\n2007\n\n\nChinstrap\nDream\n45.9\n17.1\n190\n3575\nfemale\n2007\n\n\nChinstrap\nDream\n50.5\n19.6\n201\n4050\nmale\n2007\n\n\nChinstrap\nDream\n50.3\n20.0\n197\n3300\nmale\n2007\n\n\nChinstrap\nDream\n58.0\n17.8\n181\n3700\nfemale\n2007\n\n\nChinstrap\nDream\n46.4\n18.6\n190\n3450\nfemale\n2007\n\n\nChinstrap\nDream\n49.2\n18.2\n195\n4400\nmale\n2007\n\n\nChinstrap\nDream\n42.4\n17.3\n181\n3600\nfemale\n2007\n\n\nChinstrap\nDream\n48.5\n17.5\n191\n3400\nmale\n2007\n\n\nChinstrap\nDream\n43.2\n16.6\n187\n2900\nfemale\n2007\n\n\nChinstrap\nDream\n50.6\n19.4\n193\n3800\nmale\n2007\n\n\nChinstrap\nDream\n46.7\n17.9\n195\n3300\nfemale\n2007\n\n\nChinstrap\nDream\n52.0\n19.0\n197\n4150\nmale\n2007\n\n\nChinstrap\nDream\n50.5\n18.4\n200\n3400\nfemale\n2008\n\n\nChinstrap\nDream\n49.5\n19.0\n200\n3800\nmale\n2008\n\n\nChinstrap\nDream\n46.4\n17.8\n191\n3700\nfemale\n2008\n\n\nChinstrap\nDream\n52.8\n20.0\n205\n4550\nmale\n2008\n\n\nChinstrap\nDream\n40.9\n16.6\n187\n3200\nfemale\n2008\n\n\nChinstrap\nDream\n54.2\n20.8\n201\n4300\nmale\n2008\n\n\nChinstrap\nDream\n42.5\n16.7\n187\n3350\nfemale\n2008\n\n\nChinstrap\nDream\n51.0\n18.8\n203\n4100\nmale\n2008\n\n\nChinstrap\nDream\n49.7\n18.6\n195\n3600\nmale\n2008\n\n\nChinstrap\nDream\n47.5\n16.8\n199\n3900\nfemale\n2008\n\n\nChinstrap\nDream\n47.6\n18.3\n195\n3850\nfemale\n2008\n\n\nChinstrap\nDream\n52.0\n20.7\n210\n4800\nmale\n2008\n\n\nChinstrap\nDream\n46.9\n16.6\n192\n2700\nfemale\n2008\n\n\nChinstrap\nDream\n53.5\n19.9\n205\n4500\nmale\n2008\n\n\nChinstrap\nDream\n49.0\n19.5\n210\n3950\nmale\n2008\n\n\nChinstrap\nDream\n46.2\n17.5\n187\n3650\nfemale\n2008\n\n\nChinstrap\nDream\n50.9\n19.1\n196\n3550\nmale\n2008\n\n\nChinstrap\nDream\n45.5\n17.0\n196\n3500\nfemale\n2008\n\n\nChinstrap\nDream\n50.9\n17.9\n196\n3675\nfemale\n2009\n\n\nChinstrap\nDream\n50.8\n18.5\n201\n4450\nmale\n2009\n\n\nChinstrap\nDream\n50.1\n17.9\n190\n3400\nfemale\n2009\n\n\nChinstrap\nDream\n49.0\n19.6\n212\n4300\nmale\n2009\n\n\nChinstrap\nDream\n51.5\n18.7\n187\n3250\nmale\n2009\n\n\nChinstrap\nDream\n49.8\n17.3\n198\n3675\nfemale\n2009\n\n\nChinstrap\nDream\n48.1\n16.4\n199\n3325\nfemale\n2009\n\n\nChinstrap\nDream\n51.4\n19.0\n201\n3950\nmale\n2009\n\n\nChinstrap\nDream\n45.7\n17.3\n193\n3600\nfemale\n2009\n\n\nChinstrap\nDream\n50.7\n19.7\n203\n4050\nmale\n2009\n\n\nChinstrap\nDream\n42.5\n17.3\n187\n3350\nfemale\n2009\n\n\nChinstrap\nDream\n52.2\n18.8\n197\n3450\nmale\n2009\n\n\nChinstrap\nDream\n45.2\n16.6\n191\n3250\nfemale\n2009\n\n\nChinstrap\nDream\n49.3\n19.9\n203\n4050\nmale\n2009\n\n\nChinstrap\nDream\n50.2\n18.8\n202\n3800\nmale\n2009\n\n\nChinstrap\nDream\n45.6\n19.4\n194\n3525\nfemale\n2009\n\n\nChinstrap\nDream\n51.9\n19.5\n206\n3950\nmale\n2009\n\n\nChinstrap\nDream\n46.8\n16.5\n189\n3650\nfemale\n2009\n\n\nChinstrap\nDream\n45.7\n17.0\n195\n3650\nfemale\n2009\n\n\nChinstrap\nDream\n55.8\n19.8\n207\n4000\nmale\n2009\n\n\nChinstrap\nDream\n43.5\n18.1\n202\n3400\nfemale\n2009\n\n\nChinstrap\nDream\n49.6\n18.2\n193\n3775\nmale\n2009\n\n\nChinstrap\nDream\n50.8\n19.0\n210\n4100\nmale\n2009\n\n\nChinstrap\nDream\n50.2\n18.7\n198\n3775\nfemale\n2009"
+  },
+  {
+    "objectID": "slides/03/slides03.html#aesthetic",
+    "href": "slides/03/slides03.html#aesthetic",
+    "title": "ggplot2",
+    "section": "Aesthetic",
+    "text": "Aesthetic\n\n\nA visual property of the objects in the plot\n\nx → body mass\ny → flipper length\ncolor → species"
+  },
+  {
+    "objectID": "slides/03/slides03.html#geometric-object",
+    "href": "slides/03/slides03.html#geometric-object",
+    "title": "ggplot2",
+    "section": "Geometric Object",
+    "text": "Geometric Object\n\n\nHow the data are represented\n\npoints!"
+  },
+  {
+    "objectID": "slides/03/slides03.html#the-basic-ggplot-template",
+    "href": "slides/03/slides03.html#the-basic-ggplot-template",
+    "title": "ggplot2",
+    "section": "The basic ggplot template:",
+    "text": "The basic ggplot template:\n\nggplot(data = &lt;dataset_name&gt;) + \n  &lt;geom_function&gt;(mapping = aes(&lt;mappings&gt;))"
+  },
+  {
+    "objectID": "slides/03/slides03.html#facets",
+    "href": "slides/03/slides03.html#facets",
+    "title": "ggplot2",
+    "section": "Facets",
+    "text": "Facets\n\nggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm, col = species)) + \n  geom_point() + \n  facet_wrap(vars(species)) +\n  theme(legend.position = \"none\")"
+  },
+  {
+    "objectID": "slides/03/slides03.html#statistical-transformations",
+    "href": "slides/03/slides03.html#statistical-transformations",
+    "title": "ggplot2",
+    "section": "Statistical Transformations",
+    "text": "Statistical Transformations"
+  },
+  {
+    "objectID": "slides/03/slides03.html#coordinates",
+    "href": "slides/03/slides03.html#coordinates",
+    "title": "ggplot2",
+    "section": "Coordinates",
+    "text": "Coordinates\n\n\nSource: Nathan Yau, Data Points"
+  },
+  {
+    "objectID": "slides/03/slides03.html#scalesguides",
+    "href": "slides/03/slides03.html#scalesguides",
+    "title": "ggplot2",
+    "section": "Scales/guides",
+    "text": "Scales/guides\n\n\nSource: Nathan Yau, Data Points"
+  },
+  {
+    "objectID": "slides/03/slides03.html#themes",
+    "href": "slides/03/slides03.html#themes",
+    "title": "ggplot2",
+    "section": "Themes",
+    "text": "Themes\nAll non-data ink (e.g. background color, appearance of grid lines)"
+  },
+  {
+    "objectID": "slides/03/slides03.html#how-it-works",
+    "href": "slides/03/slides03.html#how-it-works",
+    "title": "ggplot2",
+    "section": "How it works",
+    "text": "How it works\n\nDraw a card\nFind your number’s location\nIntroduce yourselves\nGet to work!"
+  },
+  {
+    "objectID": "slides/03/slides03.html#round-1-view-the-data-pipes",
+    "href": "slides/03/slides03.html#round-1-view-the-data-pipes",
+    "title": "ggplot2",
+    "section": "Round 1: View the data + pipes",
+    "text": "Round 1: View the data + pipes\n\n\n\n−+\n08:00"
+  },
+  {
+    "objectID": "slides/03/slides03.html#round-2-scatterplots",
+    "href": "slides/03/slides03.html#round-2-scatterplots",
+    "title": "ggplot2",
+    "section": "Round 2: Scatterplots",
+    "text": "Round 2: Scatterplots\n\n\n\n−+\n08:00"
+  },
+  {
+    "objectID": "slides/03/slides03.html#round-3-additional-aesthetics",
+    "href": "slides/03/slides03.html#round-3-additional-aesthetics",
+    "title": "ggplot2",
+    "section": "Round 3: Additional Aesthetics",
+    "text": "Round 3: Additional Aesthetics\n\n\n\n−+\n08:00"
+  },
+  {
+    "objectID": "slides/03/slides03.html#round-4-visualizing-distributions",
+    "href": "slides/03/slides03.html#round-4-visualizing-distributions",
+    "title": "ggplot2",
+    "section": "Round 4: Visualizing Distributions",
+    "text": "Round 4: Visualizing Distributions\n\n\n\n−+\n08:00"
+  },
+  {
+    "objectID": "slides/03/slides03.html#round-5-bar-and-column-charts-labeling",
+    "href": "slides/03/slides03.html#round-5-bar-and-column-charts-labeling",
+    "title": "ggplot2",
+    "section": "Round 5: Bar and column charts + Labeling",
+    "text": "Round 5: Bar and column charts + Labeling\n\n\n\n−+\n08:00"
+  },
+  {
+    "objectID": "course-links.html",
+    "href": "course-links.html",
+    "title": "Useful links",
     "section": "",
-    "text": "In the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
+    "text": "RStudio Server\n🔗 Carleton’s Maize Server\n\n\nCourse GitHub organization\n🔗 GitHub\n\n\nGradebook\n🔗 on Moodle\n\n\nSpend a Token\n🔗 Spend a token\n\n\nTextbooks\n🔗 Modern Data Science with R (MDS)\n🔗 R for Data Science (R4DS)\n🔗 Fundamentals of Data Visualization\n\n\nPackage documentation\n🔗 ggplot2: ggplot2.tidyverse.org\n🔗 dplyr: dplyr.tidyverse.org\n🔗 tidyr: tidyr.tidyverse.org\n🔗 forcats: forcats.tidyverse.org\n🔗 stringr: stringr.tidyverse.org\n🔗 lubridate: lubridate.tidyverse.org\n🔗 readr: readr.tidyverse.org",
+    "crumbs": [
+      "Course information",
+      "Useful links"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 220: Intro to Data Science",
+    "section": "",
+    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n📝complete welcome survey\n\nWelcome + data, R review\n\nslides01 01-example-unvotes\n\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\n\nslides02 02-reproducible-reports 02-lego-report\n\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1  📺 intro to ggplot\n\nggplot\n\nslides03 03-ggplot-intro and .rmd\n\nHW 1 (on moodle)\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04  04-customizing-plots .rmd\n\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\nslides05  05-making-a-map\nHW 2\n\n\n2\nF\nFri, Jan 17\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\nslides07  07-verbs\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\nslides08  08-group_by\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4  📚 R4DS 19.1-19.3\n\nTidy data/pivots and joins\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 16 \n\nWorking with factors\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\n\n\n\n5\nM\nMon, Feb 3\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nText Analysis\n\nPortfolio 2\n\n\n5\nW\nWed, Feb 5\nTBA\nCatch up + Ethics II\n\nHW 5\n\n\n5\nF\nFri, Feb 7\nTBA\nTBA\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\n❌ Midterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n📚What is an API? 📝 work through tidycensus basic usage vignette (including signing up for a census API key!)\nAPIs\n\n\n\n\n7\nW\nWed, Feb 19\nTBA\nScraping\n\nHW7  Final Project Proposal\n\n\n7\nF\nFri, Feb 21\n\nEthics III\n\nLab Quiz 3\n\n\n8\nM\nMon, Feb 24\nTBA\nIntro to Interactivity\n\nPortfolio 3\n\n\n8\nW\nWed, Feb 26\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\nShiny 1\n\nHW8\n\n\n8\nF\nFri, Feb 28\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nM\nMon, Mar 3\n\nShiny 3\n\nFinal Project sketch draft\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\n\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "slides/04/slides04.html#today",
+    "href": "slides/04/slides04.html#today",
+    "title": "Plot design",
+    "section": "Today",
+    "text": "Today\n\nggplot2 review\ncustomizations in ggplot2\nSome guidelines for plot design"
+  },
+  {
+    "objectID": "slides/04/slides04.html#what-we-know",
+    "href": "slides/04/slides04.html#what-we-know",
+    "title": "Plot design",
+    "section": "What we know:",
+    "text": "What we know:\n\n\n\nA basic set of geometries\n\n\ngeom_point()\ngeom_histogram()\ngeom_boxplot()\ngeom_violin()\ngeom_bar()\n\n\n\nHow to map variables to aesthetics\n\n\nx and y axis\ncolor\nshape\nalpha\nsize\n\n\n\nHow to change axis labels and titles\n\n\nlabs()"
+  },
+  {
+    "objectID": "slides/04/slides04.html#what-next",
+    "href": "slides/04/slides04.html#what-next",
+    "title": "Plot design",
+    "section": "What next?",
+    "text": "What next?\n\nSetting aesthetics\nUsing facets\nChanging scales\nChanging coordinates\nChanging themes\nAdding annotations"
+  },
+  {
+    "objectID": "slides/04/slides04.html#warm-up",
+    "href": "slides/04/slides04.html#warm-up",
+    "title": "Plot design",
+    "section": "Warm Up",
+    "text": "Warm Up\n\n\n\n\nLog into maize\n\nIf you have to type your PAT in everytime you push to GitHub, follow the directions at Getting Set up with Git and GitHub #4 to tell RStudio to save your credentials\n\nFind the .rmd template for today at the course website\nChoose your favorite way to open it up in maize/Rstudio\nWork with a neighbor to recreate this graph –&gt; (use 15 bins)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n−+\n08:00"
+  },
+  {
+    "objectID": "slides/04/slides04.html#polishing-plots",
+    "href": "slides/04/slides04.html#polishing-plots",
+    "title": "Plot design",
+    "section": "Polishing plots",
+    "text": "Polishing plots\n\n\n\n\n\n\n\n\n\n\n\n\nWe’re not quite satisfied….\n\nI want the bars to have a border that stands out\nLet’s try a facetted graph\nI don’t like the default color scheme\nI don’t like the gray background"
+  },
+  {
+    "objectID": "slides/04/slides04.html#setting-aesthetics",
+    "href": "slides/04/slides04.html#setting-aesthetics",
+    "title": "Plot design",
+    "section": "Setting aesthetics",
+    "text": "Setting aesthetics\nSetting = choosing a certain value for an aesthetic\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    )"
+  },
+  {
+    "objectID": "slides/04/slides04.html#facets",
+    "href": "slides/04/slides04.html#facets",
+    "title": "Plot design",
+    "section": "Facets",
+    "text": "Facets\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) +\n  facet_wrap(vars(day_of_week))"
+  },
+  {
+    "objectID": "slides/04/slides04.html#changing-scales",
+    "href": "slides/04/slides04.html#changing-scales",
+    "title": "Plot design",
+    "section": "Changing scales",
+    "text": "Changing scales\n\nscale_&lt;aes&gt;_&lt;method&gt;()\n\n\n\nExamples:\n\nscale_fill_manual()\nscale_fill_brewer()\nscale_color_viridis()\nscale_shape_manual()\n\n\nRecommended reading:\n\nUsing colors in R\nTaking control of qualitative colors in ggplot2"
+  },
+  {
+    "objectID": "slides/04/slides04.html#example-built-in-scale",
+    "href": "slides/04/slides04.html#example-built-in-scale",
+    "title": "Plot design",
+    "section": "Example (built-in scale)",
+    "text": "Example (built-in scale)\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_brewer(palette = \"Greens\")"
+  },
+  {
+    "objectID": "slides/04/slides04.html#example-built-in-scale-1",
+    "href": "slides/04/slides04.html#example-built-in-scale-1",
+    "title": "Plot design",
+    "section": "Example (built-in scale)",
+    "text": "Example (built-in scale)\n\nRColorBrewer::display.brewer.all()"
+  },
+  {
+    "objectID": "slides/04/slides04.html#example-built-in-scale-2",
+    "href": "slides/04/slides04.html#example-built-in-scale-2",
+    "title": "Plot design",
+    "section": "Example (built-in scale)",
+    "text": "Example (built-in scale)\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_viridis_d(option = \"mako\")\n\n\n\n\n\n\n\n\n\n\n\nTo see all the options built into R (or add-on packages): Color Palette Finder"
+  },
+  {
+    "objectID": "slides/04/slides04.html#example-manual-color-palette",
+    "href": "slides/04/slides04.html#example-manual-color-palette",
+    "title": "Plot design",
+    "section": "Example (manual color palette)",
+    "text": "Example (manual color palette)\nLet’s make Wednesdays navyblue and Thursdays gold2\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\"))"
+  },
+  {
+    "objectID": "slides/04/slides04.html#can-also-change-non-color-scales",
+    "href": "slides/04/slides04.html#can-also-change-non-color-scales",
+    "title": "Plot design",
+    "section": "Can also change non-color scales",
+    "text": "Can also change non-color scales\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  scale_x_continuous(limits = c(1,10))"
+  },
+  {
+    "objectID": "slides/04/slides04.html#can-also-change-non-color-scales-1",
+    "href": "slides/04/slides04.html#can-also-change-non-color-scales-1",
+    "title": "Plot design",
+    "section": "Can also change non-color scales",
+    "text": "Can also change non-color scales\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  scale_x_log10(limits = c(1,10))"
+  },
+  {
+    "objectID": "slides/04/slides04.html#can-also-change-non-color-scales-2",
+    "href": "slides/04/slides04.html#can-also-change-non-color-scales-2",
+    "title": "Plot design",
+    "section": "Can also change non-color scales",
+    "text": "Can also change non-color scales\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  scale_x_reverse()"
+  },
+  {
+    "objectID": "slides/04/slides04.html#changing-themes",
+    "href": "slides/04/slides04.html#changing-themes",
+    "title": "Plot design",
+    "section": "Changing Themes",
+    "text": "Changing Themes\nTheme: The non-data ink on your plots\n\n\n\nbackground\ntick marks\ngrid lines\nfont\nlegend position\nlegend appearance"
+  },
+  {
+    "objectID": "slides/04/slides04.html#prepackaged-themes",
+    "href": "slides/04/slides04.html#prepackaged-themes",
+    "title": "Plot design",
+    "section": "Prepackaged themes",
+    "text": "Prepackaged themes\n\n\nggplot2 themes\n\ntheme_grey()\ntheme_bw()\ntheme_linedraw()\ntheme_light()\ntheme_dark()\ntheme_minimal()\ntheme_classic()\ntheme_void()\ntheme_test()\n\n\nggthemes themes\n\ntheme_clean()\ntheme_economist()\ntheme_excel()\ntheme_fivethirtyeight()\ntheme_gdocs()\ntheme_solarized()\ntheme_stata()\ntheme_tufte()\ntheme_wsj()\nAnd more!"
+  },
+  {
+    "objectID": "slides/04/slides04.html#using-a-prepackaged-theme",
+    "href": "slides/04/slides04.html#using-a-prepackaged-theme",
+    "title": "Plot design",
+    "section": "Using a prepackaged theme",
+    "text": "Using a prepackaged theme\n\nggplot(data = &lt;DATA&gt;) + \n  &lt;GEOM_FUNCTION&gt;(\n     mapping = aes(&lt;MAPPINGS&gt;)\n  ) +\n  &lt;FACET_FUNCTION&gt; +\n  theme_&lt;name&gt;()"
+  },
+  {
+    "objectID": "slides/04/slides04.html#try-it",
+    "href": "slides/04/slides04.html#try-it",
+    "title": "Plot design",
+    "section": "Try it",
+    "text": "Try it\nApply theme_light() to the histogram\n\n\n\n\n\n\n\n\n\n\n\n\n−+\n00:30"
+  },
+  {
+    "objectID": "slides/04/slides04.html#even-more-customizations",
+    "href": "slides/04/slides04.html#even-more-customizations",
+    "title": "Plot design",
+    "section": "Even more customizations",
+    "text": "Even more customizations\n\nMove legend\nClean up labels and title\nGet rid of .5’s in x-axis\nAnnotations"
+  },
+  {
+    "objectID": "slides/04/slides04.html#theme",
+    "href": "slides/04/slides04.html#theme",
+    "title": "Plot design",
+    "section": "?theme",
+    "text": "?theme\n\ntheme(line, rect, text, title, aspect.ratio, axis.title, axis.title.x,\n  axis.title.x.top, axis.title.x.bottom, axis.title.y, axis.title.y.left,\n  axis.title.y.right, axis.text, axis.text.x, axis.text.x.top,\n  axis.text.x.bottom, axis.text.y, axis.text.y.left, axis.text.y.right,\n  axis.ticks, axis.ticks.x, axis.ticks.x.top, axis.ticks.x.bottom,\n  axis.ticks.y, axis.ticks.y.left, axis.ticks.y.right, axis.ticks.length,\n  axis.line, axis.line.x, axis.line.x.top, axis.line.x.bottom, axis.line.y,\n  axis.line.y.left, axis.line.y.right, legend.background, legend.margin,\n  legend.spacing, legend.spacing.x, legend.spacing.y, legend.key,\n  legend.key.size, legend.key.height, legend.key.width, legend.text,\n  legend.text.align, legend.title, legend.title.align, legend.position,\n  legend.direction, legend.justification, legend.box, legend.box.just,\n  legend.box.margin, legend.box.background, legend.box.spacing,\n  panel.background, panel.border, panel.spacing, panel.spacing.x,\n  panel.spacing.y, panel.grid, panel.grid.major, panel.grid.minor,\n  panel.grid.major.x, panel.grid.major.y, panel.grid.minor.x,\n  panel.grid.minor.y, panel.ontop, plot.background, plot.title,\n  plot.subtitle, plot.caption, plot.tag, plot.tag.position, plot.margin,\n  strip.background, strip.background.x, strip.background.y,\n  strip.placement, strip.text, strip.text.x, strip.text.y,\n  strip.switch.pad.grid, strip.switch.pad.wrap, ..., complete = FALSE,\n  validate = TRUE)\n\n\n\nTo see examples in action, see “Theme Elements” of the ggplot2 book"
+  },
+  {
+    "objectID": "slides/04/slides04.html#move-legend-and-make-the-background-transparent",
+    "href": "slides/04/slides04.html#move-legend-and-make-the-background-transparent",
+    "title": "Plot design",
+    "section": "Move legend and make the background transparent",
+    "text": "Move legend and make the background transparent\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  theme_minimal() + \n  theme(\n    legend.position = c(.15, .85),\n    legend.background = element_blank()\n  )"
+  },
+  {
+    "objectID": "slides/04/slides04.html#clean-up-labels-and-title",
+    "href": "slides/04/slides04.html#clean-up-labels-and-title",
+    "title": "Plot design",
+    "section": "Clean up labels and title",
+    "text": "Clean up labels and title\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  theme_minimal() + \n  theme(\n    legend.position = c(.15, .85),\n    legend.background = element_blank()\n  ) + \n  labs(\n    x = \"Season Average IMDB Rating\",\n    y = \"\",\n    fill = \"\",\n    title = \"Survivor is better on Thursdays\"\n  )"
+  },
+  {
+    "objectID": "slides/04/slides04.html#remove-minor-gridlines",
+    "href": "slides/04/slides04.html#remove-minor-gridlines",
+    "title": "Plot design",
+    "section": "Remove minor gridlines",
+    "text": "Remove minor gridlines\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  theme_minimal() + \n  theme(\n    legend.position = c(.15, .85),\n    legend.background = element_blank(),\n    panel.grid.minor = element_blank()\n  ) + \n  labs(\n    x = \"Season Average IMDB Rating\",\n    y = \"\",\n    fill = \"\",\n    title = \"Survivor is better on Thursdays\"\n  )"
+  },
+  {
+    "objectID": "slides/04/slides04.html#get-rid-of-.5s",
+    "href": "slides/04/slides04.html#get-rid-of-.5s",
+    "title": "Plot design",
+    "section": "Get rid of .5’s",
+    "text": "Get rid of .5’s\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  scale_x_continuous(breaks = c(6, 7, 8, 9)) +\n  theme_minimal() + \n  theme(\n    legend.position = c(.15, .85),\n    legend.background = element_blank(),\n    panel.grid.minor = element_blank()\n  ) + \n  labs(\n    x = \"Season Average IMDB Rating\",\n    y = \"\",\n    fill = \"\",\n    title = \"Survivor is better on Thursdays\"\n  )"
+  },
+  {
+    "objectID": "slides/04/slides04.html#add-an-annotation",
+    "href": "slides/04/slides04.html#add-an-annotation",
+    "title": "Plot design",
+    "section": "Add an annotation",
+    "text": "Add an annotation\n\n\nggplot(season_summary) + \n  geom_histogram(\n    aes(x = imdb_mean, fill = day_of_week), \n    bins = 15,\n    color = \"white\"\n    ) + \n  scale_fill_manual(values = c(\"gold2\", \"navyblue\")) + \n  scale_x_continuous(breaks = c(6, 7, 8, 9)) +\n  theme_minimal() + \n  theme(\n    legend.position = c(.15, .85),\n    legend.background = element_blank(),\n    panel.grid.minor = element_blank()\n  ) + \n  labs(\n    x = \"Season Average IMDB Rating\",\n    y = \"\",\n    fill = \"\",\n    title = \"Survivor is better on Thursdays\"\n  ) +\n  annotate(\"text\", \n           x = 6, \n           y = 3, \n           label = \"Lowest ratings \\n occur on \\n Wednesdays\",\n           col = \"navyblue\")"
+  },
+  {
+    "objectID": "slides/04/slides04.html#which-do-you-prefer",
+    "href": "slides/04/slides04.html#which-do-you-prefer",
+    "title": "Plot design",
+    "section": "Which do you prefer?",
+    "text": "Which do you prefer?\nPlot A:"
+  },
+  {
+    "objectID": "slides/04/slides04.html#which-do-you-prefer-1",
+    "href": "slides/04/slides04.html#which-do-you-prefer-1",
+    "title": "Plot design",
+    "section": "Which do you prefer?",
+    "text": "Which do you prefer?\nPlot B:"
+  },
+  {
+    "objectID": "slides/04/slides04.html#general-guidelines",
+    "href": "slides/04/slides04.html#general-guidelines",
+    "title": "Plot design",
+    "section": "General guidelines",
+    "text": "General guidelines\n\nShow the data, don’t distort it\nChoose the right plot\nUse color meaningfully and with restraint\nTell a story\nLeave out non-story details"
+  },
+  {
+    "objectID": "slides/04/slides04.html#show-the-data-dont-distort-it",
+    "href": "slides/04/slides04.html#show-the-data-dont-distort-it",
+    "title": "Plot design",
+    "section": "Show the data, don’t distort it",
+    "text": "Show the data, don’t distort it"
+  },
+  {
+    "objectID": "slides/04/slides04.html#show-the-data-dont-distort-it-1",
+    "href": "slides/04/slides04.html#show-the-data-dont-distort-it-1",
+    "title": "Plot design",
+    "section": "Show the data, don’t distort it",
+    "text": "Show the data, don’t distort it\n\n\nWhat a huge effect! \n\nBut it isn’t the whole story"
+  },
+  {
+    "objectID": "slides/04/slides04.html#choose-the-right-plot",
+    "href": "slides/04/slides04.html#choose-the-right-plot",
+    "title": "Plot design",
+    "section": "Choose the right plot",
+    "text": "Choose the right plot\n\n\n\nWilke has good suggestions in chapters 5-16\nAlways stop and think about how easy it is to see the story\nTry a few different options"
+  },
+  {
+    "objectID": "slides/04/slides04.html#example-which-slice-is-the-biggestsmallest",
+    "href": "slides/04/slides04.html#example-which-slice-is-the-biggestsmallest",
+    "title": "Plot design",
+    "section": "Example: Which slice is the biggest/smallest?",
+    "text": "Example: Which slice is the biggest/smallest?\n\n\n\n\n\n\n\n\n−+\n00:30\n\n\n\n\n\n\n\n\n\n\n\n\nThe issue with pie chart by Data to Viz"
+  },
+  {
+    "objectID": "slides/04/slides04.html#use-color-meaningfully-and-with-restraint",
+    "href": "slides/04/slides04.html#use-color-meaningfully-and-with-restraint",
+    "title": "Plot design",
+    "section": "Use color meaningfully and with restraint",
+    "text": "Use color meaningfully and with restraint"
+  },
+  {
+    "objectID": "slides/04/slides04.html#use-color-meaningfully-and-with-restraint-1",
+    "href": "slides/04/slides04.html#use-color-meaningfully-and-with-restraint-1",
+    "title": "Plot design",
+    "section": "Use color meaningfully and with restraint",
+    "text": "Use color meaningfully and with restraint"
+  },
+  {
+    "objectID": "slides/04/slides04.html#tell-a-story",
+    "href": "slides/04/slides04.html#tell-a-story",
+    "title": "Plot design",
+    "section": "Tell a story",
+    "text": "Tell a story\nOne way to do this is by highlighting the important parts"
+  },
+  {
+    "objectID": "slides/04/slides04.html#leave-out-non-story-details",
+    "href": "slides/04/slides04.html#leave-out-non-story-details",
+    "title": "Plot design",
+    "section": "Leave out non-story details",
+    "text": "Leave out non-story details\nIs this train schedule easy to read?"
+  },
+  {
+    "objectID": "slides/04/slides04.html#avoid-distractions",
+    "href": "slides/04/slides04.html#avoid-distractions",
+    "title": "Plot design",
+    "section": "Avoid distractions",
+    "text": "Avoid distractions\nDoes removing gridlines make it somewhat easier?"
+  },
+  {
+    "objectID": "slides/04/slides04.html#data-visualizations-have-an-aura-of-objectivity",
+    "href": "slides/04/slides04.html#data-visualizations-have-an-aura-of-objectivity",
+    "title": "Plot design",
+    "section": "Data visualizations have an aura of objectivity",
+    "text": "Data visualizations have an aura of objectivity\n\n\n\n“We focus on four conventions which imbue visualisations with a sense of objectivity, transparency and facticity. These include: a) two-dimensional viewpoints; b) clean layouts; c) geometric shapes and lines; d) the inclusion of data sources.”\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFrom Kennedy, Hill, Aiello & Allen. (2016) The work that visualisation conventions do. Information, Communication and Society, 19 (6). pp. 715-735. ISSN 1369-118X"
+  },
+  {
+    "objectID": "slides/04/slides04.html#good-graphs-can-also-break-these-guidelines",
+    "href": "slides/04/slides04.html#good-graphs-can-also-break-these-guidelines",
+    "title": "Plot design",
+    "section": "Good graphs can also break these guidelines",
+    "text": "Good graphs can also break these guidelines\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSource: Mona Chalabi @monachalabi"
+  },
+  {
+    "objectID": "slides/04/slides04.html#good-graphs-can-also-break-these-guidelines-1",
+    "href": "slides/04/slides04.html#good-graphs-can-also-break-these-guidelines-1",
+    "title": "Plot design",
+    "section": "Good graphs can also break these guidelines",
+    "text": "Good graphs can also break these guidelines\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSource: Mona Chalabi @monachalabi"
+  },
+  {
+    "objectID": "slides/04/slides04.html#your-turn",
+    "href": "slides/04/slides04.html#your-turn",
+    "title": "Plot design",
+    "section": "Your turn",
+    "text": "Your turn\nNow that we have the toolkit to make customizations to our plots, and some “rules” for good graphs, let’s break them!\n\n\nChoose a graph (the one from class today, one from last class, one from homework, etc.)\nMake it ugly\n\n\nChange the color scale\nChoose a complete theme\nMake at least 3 custom tweaks to the theme options\n\n\nExplain why it’s ugly (what “rules” are you breaking? what makes it an ineffective graph?)\nPost to our slack #social channel when you’re done (you don’t have to post your explanation)"
   },
   {
     "objectID": "slides/01/slides01.html#about-me",
@@ -465,384 +1128,36 @@
     "text": "Your tasks before next class\n\nCreate a GitHub account if you don’t have one\nComplete the welcome survey if you haven’t already\nRead the syllabus and pass syllabus quiz\nMake sure you can login in to the maize server or update your local R/RStudio versions\nComplete the readings for next class"
   },
   {
-    "objectID": "slides/03/slides03.html#plan-for-today",
-    "href": "slides/03/slides03.html#plan-for-today",
-    "title": "ggplot2",
-    "section": "Plan for today:",
-    "text": "Plan for today:\n\nSuper quick grammar of graphics recap\nSpeed Groupwork\nIntro to portfolio project 1"
-  },
-  {
-    "objectID": "slides/03/slides03.html#what-are-the-essential-elements-of-this-scatterplot",
-    "href": "slides/03/slides03.html#what-are-the-essential-elements-of-this-scatterplot",
-    "title": "ggplot2",
-    "section": "What are the essential elements of this scatterplot?",
-    "text": "What are the essential elements of this scatterplot?"
-  },
-  {
-    "objectID": "slides/03/slides03.html#data",
-    "href": "slides/03/slides03.html#data",
-    "title": "ggplot2",
-    "section": "Data",
-    "text": "Data\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\nAdelie\nTorgersen\n39.1\n18.7\n181\n3750\nmale\n2007\n\n\nAdelie\nTorgersen\n39.5\n17.4\n186\n3800\nfemale\n2007\n\n\nAdelie\nTorgersen\n40.3\n18.0\n195\n3250\nfemale\n2007\n\n\nAdelie\nTorgersen\nNA\nNA\nNA\nNA\nNA\n2007\n\n\nAdelie\nTorgersen\n36.7\n19.3\n193\n3450\nfemale\n2007\n\n\nAdelie\nTorgersen\n39.3\n20.6\n190\n3650\nmale\n2007\n\n\nAdelie\nTorgersen\n38.9\n17.8\n181\n3625\nfemale\n2007\n\n\nAdelie\nTorgersen\n39.2\n19.6\n195\n4675\nmale\n2007\n\n\nAdelie\nTorgersen\n34.1\n18.1\n193\n3475\nNA\n2007\n\n\nAdelie\nTorgersen\n42.0\n20.2\n190\n4250\nNA\n2007\n\n\nAdelie\nTorgersen\n37.8\n17.1\n186\n3300\nNA\n2007\n\n\nAdelie\nTorgersen\n37.8\n17.3\n180\n3700\nNA\n2007\n\n\nAdelie\nTorgersen\n41.1\n17.6\n182\n3200\nfemale\n2007\n\n\nAdelie\nTorgersen\n38.6\n21.2\n191\n3800\nmale\n2007\n\n\nAdelie\nTorgersen\n34.6\n21.1\n198\n4400\nmale\n2007\n\n\nAdelie\nTorgersen\n36.6\n17.8\n185\n3700\nfemale\n2007\n\n\nAdelie\nTorgersen\n38.7\n19.0\n195\n3450\nfemale\n2007\n\n\nAdelie\nTorgersen\n42.5\n20.7\n197\n4500\nmale\n2007\n\n\nAdelie\nTorgersen\n34.4\n18.4\n184\n3325\nfemale\n2007\n\n\nAdelie\nTorgersen\n46.0\n21.5\n194\n4200\nmale\n2007\n\n\nAdelie\nBiscoe\n37.8\n18.3\n174\n3400\nfemale\n2007\n\n\nAdelie\nBiscoe\n37.7\n18.7\n180\n3600\nmale\n2007\n\n\nAdelie\nBiscoe\n35.9\n19.2\n189\n3800\nfemale\n2007\n\n\nAdelie\nBiscoe\n38.2\n18.1\n185\n3950\nmale\n2007\n\n\nAdelie\nBiscoe\n38.8\n17.2\n180\n3800\nmale\n2007\n\n\nAdelie\nBiscoe\n35.3\n18.9\n187\n3800\nfemale\n2007\n\n\nAdelie\nBiscoe\n40.6\n18.6\n183\n3550\nmale\n2007\n\n\nAdelie\nBiscoe\n40.5\n17.9\n187\n3200\nfemale\n2007\n\n\nAdelie\nBiscoe\n37.9\n18.6\n172\n3150\nfemale\n2007\n\n\nAdelie\nBiscoe\n40.5\n18.9\n180\n3950\nmale\n2007\n\n\nAdelie\nDream\n39.5\n16.7\n178\n3250\nfemale\n2007\n\n\nAdelie\nDream\n37.2\n18.1\n178\n3900\nmale\n2007\n\n\nAdelie\nDream\n39.5\n17.8\n188\n3300\nfemale\n2007\n\n\nAdelie\nDream\n40.9\n18.9\n184\n3900\nmale\n2007\n\n\nAdelie\nDream\n36.4\n17.0\n195\n3325\nfemale\n2007\n\n\nAdelie\nDream\n39.2\n21.1\n196\n4150\nmale\n2007\n\n\nAdelie\nDream\n38.8\n20.0\n190\n3950\nmale\n2007\n\n\nAdelie\nDream\n42.2\n18.5\n180\n3550\nfemale\n2007\n\n\nAdelie\nDream\n37.6\n19.3\n181\n3300\nfemale\n2007\n\n\nAdelie\nDream\n39.8\n19.1\n184\n4650\nmale\n2007\n\n\nAdelie\nDream\n36.5\n18.0\n182\n3150\nfemale\n2007\n\n\nAdelie\nDream\n40.8\n18.4\n195\n3900\nmale\n2007\n\n\nAdelie\nDream\n36.0\n18.5\n186\n3100\nfemale\n2007\n\n\nAdelie\nDream\n44.1\n19.7\n196\n4400\nmale\n2007\n\n\nAdelie\nDream\n37.0\n16.9\n185\n3000\nfemale\n2007\n\n\nAdelie\nDream\n39.6\n18.8\n190\n4600\nmale\n2007\n\n\nAdelie\nDream\n41.1\n19.0\n182\n3425\nmale\n2007\n\n\nAdelie\nDream\n37.5\n18.9\n179\n2975\nNA\n2007\n\n\nAdelie\nDream\n36.0\n17.9\n190\n3450\nfemale\n2007\n\n\nAdelie\nDream\n42.3\n21.2\n191\n4150\nmale\n2007\n\n\nAdelie\nBiscoe\n39.6\n17.7\n186\n3500\nfemale\n2008\n\n\nAdelie\nBiscoe\n40.1\n18.9\n188\n4300\nmale\n2008\n\n\nAdelie\nBiscoe\n35.0\n17.9\n190\n3450\nfemale\n2008\n\n\nAdelie\nBiscoe\n42.0\n19.5\n200\n4050\nmale\n2008\n\n\nAdelie\nBiscoe\n34.5\n18.1\n187\n2900\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.4\n18.6\n191\n3700\nmale\n2008\n\n\nAdelie\nBiscoe\n39.0\n17.5\n186\n3550\nfemale\n2008\n\n\nAdelie\nBiscoe\n40.6\n18.8\n193\n3800\nmale\n2008\n\n\nAdelie\nBiscoe\n36.5\n16.6\n181\n2850\nfemale\n2008\n\n\nAdelie\nBiscoe\n37.6\n19.1\n194\n3750\nmale\n2008\n\n\nAdelie\nBiscoe\n35.7\n16.9\n185\n3150\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.3\n21.1\n195\n4400\nmale\n2008\n\n\nAdelie\nBiscoe\n37.6\n17.0\n185\n3600\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.1\n18.2\n192\n4050\nmale\n2008\n\n\nAdelie\nBiscoe\n36.4\n17.1\n184\n2850\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.6\n18.0\n192\n3950\nmale\n2008\n\n\nAdelie\nBiscoe\n35.5\n16.2\n195\n3350\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.1\n19.1\n188\n4100\nmale\n2008\n\n\nAdelie\nTorgersen\n35.9\n16.6\n190\n3050\nfemale\n2008\n\n\nAdelie\nTorgersen\n41.8\n19.4\n198\n4450\nmale\n2008\n\n\nAdelie\nTorgersen\n33.5\n19.0\n190\n3600\nfemale\n2008\n\n\nAdelie\nTorgersen\n39.7\n18.4\n190\n3900\nmale\n2008\n\n\nAdelie\nTorgersen\n39.6\n17.2\n196\n3550\nfemale\n2008\n\n\nAdelie\nTorgersen\n45.8\n18.9\n197\n4150\nmale\n2008\n\n\nAdelie\nTorgersen\n35.5\n17.5\n190\n3700\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.8\n18.5\n195\n4250\nmale\n2008\n\n\nAdelie\nTorgersen\n40.9\n16.8\n191\n3700\nfemale\n2008\n\n\nAdelie\nTorgersen\n37.2\n19.4\n184\n3900\nmale\n2008\n\n\nAdelie\nTorgersen\n36.2\n16.1\n187\n3550\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.1\n19.1\n195\n4000\nmale\n2008\n\n\nAdelie\nTorgersen\n34.6\n17.2\n189\n3200\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.9\n17.6\n196\n4700\nmale\n2008\n\n\nAdelie\nTorgersen\n36.7\n18.8\n187\n3800\nfemale\n2008\n\n\nAdelie\nTorgersen\n35.1\n19.4\n193\n4200\nmale\n2008\n\n\nAdelie\nDream\n37.3\n17.8\n191\n3350\nfemale\n2008\n\n\nAdelie\nDream\n41.3\n20.3\n194\n3550\nmale\n2008\n\n\nAdelie\nDream\n36.3\n19.5\n190\n3800\nmale\n2008\n\n\nAdelie\nDream\n36.9\n18.6\n189\n3500\nfemale\n2008\n\n\nAdelie\nDream\n38.3\n19.2\n189\n3950\nmale\n2008\n\n\nAdelie\nDream\n38.9\n18.8\n190\n3600\nfemale\n2008\n\n\nAdelie\nDream\n35.7\n18.0\n202\n3550\nfemale\n2008\n\n\nAdelie\nDream\n41.1\n18.1\n205\n4300\nmale\n2008\n\n\nAdelie\nDream\n34.0\n17.1\n185\n3400\nfemale\n2008\n\n\nAdelie\nDream\n39.6\n18.1\n186\n4450\nmale\n2008\n\n\nAdelie\nDream\n36.2\n17.3\n187\n3300\nfemale\n2008\n\n\nAdelie\nDream\n40.8\n18.9\n208\n4300\nmale\n2008\n\n\nAdelie\nDream\n38.1\n18.6\n190\n3700\nfemale\n2008\n\n\nAdelie\nDream\n40.3\n18.5\n196\n4350\nmale\n2008\n\n\nAdelie\nDream\n33.1\n16.1\n178\n2900\nfemale\n2008\n\n\nAdelie\nDream\n43.2\n18.5\n192\n4100\nmale\n2008\n\n\nAdelie\nBiscoe\n35.0\n17.9\n192\n3725\nfemale\n2009\n\n\nAdelie\nBiscoe\n41.0\n20.0\n203\n4725\nmale\n2009\n\n\nAdelie\nBiscoe\n37.7\n16.0\n183\n3075\nfemale\n2009\n\n\nAdelie\nBiscoe\n37.8\n20.0\n190\n4250\nmale\n2009\n\n\nAdelie\nBiscoe\n37.9\n18.6\n193\n2925\nfemale\n2009\n\n\nAdelie\nBiscoe\n39.7\n18.9\n184\n3550\nmale\n2009\n\n\nAdelie\nBiscoe\n38.6\n17.2\n199\n3750\nfemale\n2009\n\n\nAdelie\nBiscoe\n38.2\n20.0\n190\n3900\nmale\n2009\n\n\nAdelie\nBiscoe\n38.1\n17.0\n181\n3175\nfemale\n2009\n\n\nAdelie\nBiscoe\n43.2\n19.0\n197\n4775\nmale\n2009\n\n\nAdelie\nBiscoe\n38.1\n16.5\n198\n3825\nfemale\n2009\n\n\nAdelie\nBiscoe\n45.6\n20.3\n191\n4600\nmale\n2009\n\n\nAdelie\nBiscoe\n39.7\n17.7\n193\n3200\nfemale\n2009\n\n\nAdelie\nBiscoe\n42.2\n19.5\n197\n4275\nmale\n2009\n\n\nAdelie\nBiscoe\n39.6\n20.7\n191\n3900\nfemale\n2009\n\n\nAdelie\nBiscoe\n42.7\n18.3\n196\n4075\nmale\n2009\n\n\nAdelie\nTorgersen\n38.6\n17.0\n188\n2900\nfemale\n2009\n\n\nAdelie\nTorgersen\n37.3\n20.5\n199\n3775\nmale\n2009\n\n\nAdelie\nTorgersen\n35.7\n17.0\n189\n3350\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.1\n18.6\n189\n3325\nmale\n2009\n\n\nAdelie\nTorgersen\n36.2\n17.2\n187\n3150\nfemale\n2009\n\n\nAdelie\nTorgersen\n37.7\n19.8\n198\n3500\nmale\n2009\n\n\nAdelie\nTorgersen\n40.2\n17.0\n176\n3450\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.4\n18.5\n202\n3875\nmale\n2009\n\n\nAdelie\nTorgersen\n35.2\n15.9\n186\n3050\nfemale\n2009\n\n\nAdelie\nTorgersen\n40.6\n19.0\n199\n4000\nmale\n2009\n\n\nAdelie\nTorgersen\n38.8\n17.6\n191\n3275\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.5\n18.3\n195\n4300\nmale\n2009\n\n\nAdelie\nTorgersen\n39.0\n17.1\n191\n3050\nfemale\n2009\n\n\nAdelie\nTorgersen\n44.1\n18.0\n210\n4000\nmale\n2009\n\n\nAdelie\nTorgersen\n38.5\n17.9\n190\n3325\nfemale\n2009\n\n\nAdelie\nTorgersen\n43.1\n19.2\n197\n3500\nmale\n2009\n\n\nAdelie\nDream\n36.8\n18.5\n193\n3500\nfemale\n2009\n\n\nAdelie\nDream\n37.5\n18.5\n199\n4475\nmale\n2009\n\n\nAdelie\nDream\n38.1\n17.6\n187\n3425\nfemale\n2009\n\n\nAdelie\nDream\n41.1\n17.5\n190\n3900\nmale\n2009\n\n\nAdelie\nDream\n35.6\n17.5\n191\n3175\nfemale\n2009\n\n\nAdelie\nDream\n40.2\n20.1\n200\n3975\nmale\n2009\n\n\nAdelie\nDream\n37.0\n16.5\n185\n3400\nfemale\n2009\n\n\nAdelie\nDream\n39.7\n17.9\n193\n4250\nmale\n2009\n\n\nAdelie\nDream\n40.2\n17.1\n193\n3400\nfemale\n2009\n\n\nAdelie\nDream\n40.6\n17.2\n187\n3475\nmale\n2009\n\n\nAdelie\nDream\n32.1\n15.5\n188\n3050\nfemale\n2009\n\n\nAdelie\nDream\n40.7\n17.0\n190\n3725\nmale\n2009\n\n\nAdelie\nDream\n37.3\n16.8\n192\n3000\nfemale\n2009\n\n\nAdelie\nDream\n39.0\n18.7\n185\n3650\nmale\n2009\n\n\nAdelie\nDream\n39.2\n18.6\n190\n4250\nmale\n2009\n\n\nAdelie\nDream\n36.6\n18.4\n184\n3475\nfemale\n2009\n\n\nAdelie\nDream\n36.0\n17.8\n195\n3450\nfemale\n2009\n\n\nAdelie\nDream\n37.8\n18.1\n193\n3750\nmale\n2009\n\n\nAdelie\nDream\n36.0\n17.1\n187\n3700\nfemale\n2009\n\n\nAdelie\nDream\n41.5\n18.5\n201\n4000\nmale\n2009\n\n\nGentoo\nBiscoe\n46.1\n13.2\n211\n4500\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n16.3\n230\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n48.7\n14.1\n210\n4450\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n15.2\n218\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n47.6\n14.5\n215\n5400\nmale\n2007\n\n\nGentoo\nBiscoe\n46.5\n13.5\n210\n4550\nfemale\n2007\n\n\nGentoo\nBiscoe\n45.4\n14.6\n211\n4800\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.7\n15.3\n219\n5200\nmale\n2007\n\n\nGentoo\nBiscoe\n43.3\n13.4\n209\n4400\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.8\n15.4\n215\n5150\nmale\n2007\n\n\nGentoo\nBiscoe\n40.9\n13.7\n214\n4650\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.0\n16.1\n216\n5550\nmale\n2007\n\n\nGentoo\nBiscoe\n45.5\n13.7\n214\n4650\nfemale\n2007\n\n\nGentoo\nBiscoe\n48.4\n14.6\n213\n5850\nmale\n2007\n\n\nGentoo\nBiscoe\n45.8\n14.6\n210\n4200\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.3\n15.7\n217\n5850\nmale\n2007\n\n\nGentoo\nBiscoe\n42.0\n13.5\n210\n4150\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.2\n15.2\n221\n6300\nmale\n2007\n\n\nGentoo\nBiscoe\n46.2\n14.5\n209\n4800\nfemale\n2007\n\n\nGentoo\nBiscoe\n48.7\n15.1\n222\n5350\nmale\n2007\n\n\nGentoo\nBiscoe\n50.2\n14.3\n218\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n45.1\n14.5\n215\n5000\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.5\n14.5\n213\n4400\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.3\n15.8\n215\n5050\nmale\n2007\n\n\nGentoo\nBiscoe\n42.9\n13.1\n215\n5000\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.1\n15.1\n215\n5100\nmale\n2007\n\n\nGentoo\nBiscoe\n44.5\n14.3\n216\n4100\nNA\n2007\n\n\nGentoo\nBiscoe\n47.8\n15.0\n215\n5650\nmale\n2007\n\n\nGentoo\nBiscoe\n48.2\n14.3\n210\n4600\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n15.3\n220\n5550\nmale\n2007\n\n\nGentoo\nBiscoe\n47.3\n15.3\n222\n5250\nmale\n2007\n\n\nGentoo\nBiscoe\n42.8\n14.2\n209\n4700\nfemale\n2007\n\n\nGentoo\nBiscoe\n45.1\n14.5\n207\n5050\nfemale\n2007\n\n\nGentoo\nBiscoe\n59.6\n17.0\n230\n6050\nmale\n2007\n\n\nGentoo\nBiscoe\n49.1\n14.8\n220\n5150\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.4\n16.3\n220\n5400\nmale\n2008\n\n\nGentoo\nBiscoe\n42.6\n13.7\n213\n4950\nfemale\n2008\n\n\nGentoo\nBiscoe\n44.4\n17.3\n219\n5250\nmale\n2008\n\n\nGentoo\nBiscoe\n44.0\n13.6\n208\n4350\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.7\n15.7\n208\n5350\nmale\n2008\n\n\nGentoo\nBiscoe\n42.7\n13.7\n208\n3950\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.6\n16.0\n225\n5700\nmale\n2008\n\n\nGentoo\nBiscoe\n45.3\n13.7\n210\n4300\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.6\n15.0\n216\n4750\nmale\n2008\n\n\nGentoo\nBiscoe\n50.5\n15.9\n222\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n43.6\n13.9\n217\n4900\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.5\n13.9\n210\n4200\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.5\n15.9\n225\n5400\nmale\n2008\n\n\nGentoo\nBiscoe\n44.9\n13.3\n213\n5100\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.2\n15.8\n215\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n46.6\n14.2\n210\n4850\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.5\n14.1\n220\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n45.1\n14.4\n210\n4400\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.1\n15.0\n225\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n46.5\n14.4\n217\n4900\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.0\n15.4\n220\n5050\nmale\n2008\n\n\nGentoo\nBiscoe\n43.8\n13.9\n208\n4300\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.5\n15.0\n220\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n43.2\n14.5\n208\n4450\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.4\n15.3\n224\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n45.3\n13.8\n208\n4200\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.2\n14.9\n221\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n45.7\n13.9\n214\n4400\nfemale\n2008\n\n\nGentoo\nBiscoe\n54.3\n15.7\n231\n5650\nmale\n2008\n\n\nGentoo\nBiscoe\n45.8\n14.2\n219\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.8\n16.8\n230\n5700\nmale\n2008\n\n\nGentoo\nBiscoe\n46.2\n14.4\n214\n4650\nNA\n2008\n\n\nGentoo\nBiscoe\n49.5\n16.2\n229\n5800\nmale\n2008\n\n\nGentoo\nBiscoe\n43.5\n14.2\n220\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.7\n15.0\n223\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n47.7\n15.0\n216\n4750\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.4\n15.6\n221\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n48.2\n15.6\n221\n5100\nmale\n2008\n\n\nGentoo\nBiscoe\n46.5\n14.8\n217\n5200\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.4\n15.0\n216\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.6\n16.0\n230\n5800\nmale\n2008\n\n\nGentoo\nBiscoe\n47.5\n14.2\n209\n4600\nfemale\n2008\n\n\nGentoo\nBiscoe\n51.1\n16.3\n220\n6000\nmale\n2008\n\n\nGentoo\nBiscoe\n45.2\n13.8\n215\n4750\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.2\n16.4\n223\n5950\nmale\n2008\n\n\nGentoo\nBiscoe\n49.1\n14.5\n212\n4625\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.5\n15.6\n221\n5450\nmale\n2009\n\n\nGentoo\nBiscoe\n47.4\n14.6\n212\n4725\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.0\n15.9\n224\n5350\nmale\n2009\n\n\nGentoo\nBiscoe\n44.9\n13.8\n212\n4750\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.8\n17.3\n228\n5600\nmale\n2009\n\n\nGentoo\nBiscoe\n43.4\n14.4\n218\n4600\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.3\n14.2\n218\n5300\nmale\n2009\n\n\nGentoo\nBiscoe\n47.5\n14.0\n212\n4875\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.1\n17.0\n230\n5550\nmale\n2009\n\n\nGentoo\nBiscoe\n47.5\n15.0\n218\n4950\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.2\n17.1\n228\n5400\nmale\n2009\n\n\nGentoo\nBiscoe\n45.5\n14.5\n212\n4750\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.5\n16.1\n224\n5650\nmale\n2009\n\n\nGentoo\nBiscoe\n44.5\n14.7\n214\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.8\n15.7\n226\n5200\nmale\n2009\n\n\nGentoo\nBiscoe\n49.4\n15.8\n216\n4925\nmale\n2009\n\n\nGentoo\nBiscoe\n46.9\n14.6\n222\n4875\nfemale\n2009\n\n\nGentoo\nBiscoe\n48.4\n14.4\n203\n4625\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.1\n16.5\n225\n5250\nmale\n2009\n\n\nGentoo\nBiscoe\n48.5\n15.0\n219\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n55.9\n17.0\n228\n5600\nmale\n2009\n\n\nGentoo\nBiscoe\n47.2\n15.5\n215\n4975\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.1\n15.0\n228\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n47.3\n13.8\n216\n4725\nNA\n2009\n\n\nGentoo\nBiscoe\n46.8\n16.1\n215\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n41.7\n14.7\n210\n4700\nfemale\n2009\n\n\nGentoo\nBiscoe\n53.4\n15.8\n219\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n43.3\n14.0\n208\n4575\nfemale\n2009\n\n\nGentoo\nBiscoe\n48.1\n15.1\n209\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n50.5\n15.2\n216\n5000\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.8\n15.9\n229\n5950\nmale\n2009\n\n\nGentoo\nBiscoe\n43.5\n15.2\n213\n4650\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.5\n16.3\n230\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n46.2\n14.1\n217\n4375\nfemale\n2009\n\n\nGentoo\nBiscoe\n55.1\n16.0\n230\n5850\nmale\n2009\n\n\nGentoo\nBiscoe\n44.5\n15.7\n217\n4875\nNA\n2009\n\n\nGentoo\nBiscoe\n48.8\n16.2\n222\n6000\nmale\n2009\n\n\nGentoo\nBiscoe\n47.2\n13.7\n214\n4925\nfemale\n2009\n\n\nGentoo\nBiscoe\nNA\nNA\nNA\nNA\nNA\n2009\n\n\nGentoo\nBiscoe\n46.8\n14.3\n215\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.4\n15.7\n222\n5750\nmale\n2009\n\n\nGentoo\nBiscoe\n45.2\n14.8\n212\n5200\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.9\n16.1\n213\n5400\nmale\n2009\n\n\nChinstrap\nDream\n46.5\n17.9\n192\n3500\nfemale\n2007\n\n\nChinstrap\nDream\n50.0\n19.5\n196\n3900\nmale\n2007\n\n\nChinstrap\nDream\n51.3\n19.2\n193\n3650\nmale\n2007\n\n\nChinstrap\nDream\n45.4\n18.7\n188\n3525\nfemale\n2007\n\n\nChinstrap\nDream\n52.7\n19.8\n197\n3725\nmale\n2007\n\n\nChinstrap\nDream\n45.2\n17.8\n198\n3950\nfemale\n2007\n\n\nChinstrap\nDream\n46.1\n18.2\n178\n3250\nfemale\n2007\n\n\nChinstrap\nDream\n51.3\n18.2\n197\n3750\nmale\n2007\n\n\nChinstrap\nDream\n46.0\n18.9\n195\n4150\nfemale\n2007\n\n\nChinstrap\nDream\n51.3\n19.9\n198\n3700\nmale\n2007\n\n\nChinstrap\nDream\n46.6\n17.8\n193\n3800\nfemale\n2007\n\n\nChinstrap\nDream\n51.7\n20.3\n194\n3775\nmale\n2007\n\n\nChinstrap\nDream\n47.0\n17.3\n185\n3700\nfemale\n2007\n\n\nChinstrap\nDream\n52.0\n18.1\n201\n4050\nmale\n2007\n\n\nChinstrap\nDream\n45.9\n17.1\n190\n3575\nfemale\n2007\n\n\nChinstrap\nDream\n50.5\n19.6\n201\n4050\nmale\n2007\n\n\nChinstrap\nDream\n50.3\n20.0\n197\n3300\nmale\n2007\n\n\nChinstrap\nDream\n58.0\n17.8\n181\n3700\nfemale\n2007\n\n\nChinstrap\nDream\n46.4\n18.6\n190\n3450\nfemale\n2007\n\n\nChinstrap\nDream\n49.2\n18.2\n195\n4400\nmale\n2007\n\n\nChinstrap\nDream\n42.4\n17.3\n181\n3600\nfemale\n2007\n\n\nChinstrap\nDream\n48.5\n17.5\n191\n3400\nmale\n2007\n\n\nChinstrap\nDream\n43.2\n16.6\n187\n2900\nfemale\n2007\n\n\nChinstrap\nDream\n50.6\n19.4\n193\n3800\nmale\n2007\n\n\nChinstrap\nDream\n46.7\n17.9\n195\n3300\nfemale\n2007\n\n\nChinstrap\nDream\n52.0\n19.0\n197\n4150\nmale\n2007\n\n\nChinstrap\nDream\n50.5\n18.4\n200\n3400\nfemale\n2008\n\n\nChinstrap\nDream\n49.5\n19.0\n200\n3800\nmale\n2008\n\n\nChinstrap\nDream\n46.4\n17.8\n191\n3700\nfemale\n2008\n\n\nChinstrap\nDream\n52.8\n20.0\n205\n4550\nmale\n2008\n\n\nChinstrap\nDream\n40.9\n16.6\n187\n3200\nfemale\n2008\n\n\nChinstrap\nDream\n54.2\n20.8\n201\n4300\nmale\n2008\n\n\nChinstrap\nDream\n42.5\n16.7\n187\n3350\nfemale\n2008\n\n\nChinstrap\nDream\n51.0\n18.8\n203\n4100\nmale\n2008\n\n\nChinstrap\nDream\n49.7\n18.6\n195\n3600\nmale\n2008\n\n\nChinstrap\nDream\n47.5\n16.8\n199\n3900\nfemale\n2008\n\n\nChinstrap\nDream\n47.6\n18.3\n195\n3850\nfemale\n2008\n\n\nChinstrap\nDream\n52.0\n20.7\n210\n4800\nmale\n2008\n\n\nChinstrap\nDream\n46.9\n16.6\n192\n2700\nfemale\n2008\n\n\nChinstrap\nDream\n53.5\n19.9\n205\n4500\nmale\n2008\n\n\nChinstrap\nDream\n49.0\n19.5\n210\n3950\nmale\n2008\n\n\nChinstrap\nDream\n46.2\n17.5\n187\n3650\nfemale\n2008\n\n\nChinstrap\nDream\n50.9\n19.1\n196\n3550\nmale\n2008\n\n\nChinstrap\nDream\n45.5\n17.0\n196\n3500\nfemale\n2008\n\n\nChinstrap\nDream\n50.9\n17.9\n196\n3675\nfemale\n2009\n\n\nChinstrap\nDream\n50.8\n18.5\n201\n4450\nmale\n2009\n\n\nChinstrap\nDream\n50.1\n17.9\n190\n3400\nfemale\n2009\n\n\nChinstrap\nDream\n49.0\n19.6\n212\n4300\nmale\n2009\n\n\nChinstrap\nDream\n51.5\n18.7\n187\n3250\nmale\n2009\n\n\nChinstrap\nDream\n49.8\n17.3\n198\n3675\nfemale\n2009\n\n\nChinstrap\nDream\n48.1\n16.4\n199\n3325\nfemale\n2009\n\n\nChinstrap\nDream\n51.4\n19.0\n201\n3950\nmale\n2009\n\n\nChinstrap\nDream\n45.7\n17.3\n193\n3600\nfemale\n2009\n\n\nChinstrap\nDream\n50.7\n19.7\n203\n4050\nmale\n2009\n\n\nChinstrap\nDream\n42.5\n17.3\n187\n3350\nfemale\n2009\n\n\nChinstrap\nDream\n52.2\n18.8\n197\n3450\nmale\n2009\n\n\nChinstrap\nDream\n45.2\n16.6\n191\n3250\nfemale\n2009\n\n\nChinstrap\nDream\n49.3\n19.9\n203\n4050\nmale\n2009\n\n\nChinstrap\nDream\n50.2\n18.8\n202\n3800\nmale\n2009\n\n\nChinstrap\nDream\n45.6\n19.4\n194\n3525\nfemale\n2009\n\n\nChinstrap\nDream\n51.9\n19.5\n206\n3950\nmale\n2009\n\n\nChinstrap\nDream\n46.8\n16.5\n189\n3650\nfemale\n2009\n\n\nChinstrap\nDream\n45.7\n17.0\n195\n3650\nfemale\n2009\n\n\nChinstrap\nDream\n55.8\n19.8\n207\n4000\nmale\n2009\n\n\nChinstrap\nDream\n43.5\n18.1\n202\n3400\nfemale\n2009\n\n\nChinstrap\nDream\n49.6\n18.2\n193\n3775\nmale\n2009\n\n\nChinstrap\nDream\n50.8\n19.0\n210\n4100\nmale\n2009\n\n\nChinstrap\nDream\n50.2\n18.7\n198\n3775\nfemale\n2009"
-  },
-  {
-    "objectID": "slides/03/slides03.html#aesthetic",
-    "href": "slides/03/slides03.html#aesthetic",
-    "title": "ggplot2",
-    "section": "Aesthetic",
-    "text": "Aesthetic\n\n\nA visual property of the objects in the plot\n\nx → body mass\ny → flipper length\ncolor → species"
-  },
-  {
-    "objectID": "slides/03/slides03.html#geometric-object",
-    "href": "slides/03/slides03.html#geometric-object",
-    "title": "ggplot2",
-    "section": "Geometric Object",
-    "text": "Geometric Object\n\n\nHow the data are represented\n\npoints!"
-  },
-  {
-    "objectID": "slides/03/slides03.html#the-basic-ggplot-template",
-    "href": "slides/03/slides03.html#the-basic-ggplot-template",
-    "title": "ggplot2",
-    "section": "The basic ggplot template:",
-    "text": "The basic ggplot template:\n\nggplot(data = &lt;dataset_name&gt;) + \n  &lt;geom_function&gt;(mapping = aes(&lt;mappings&gt;))"
-  },
-  {
-    "objectID": "slides/03/slides03.html#facets",
-    "href": "slides/03/slides03.html#facets",
-    "title": "ggplot2",
-    "section": "Facets",
-    "text": "Facets\n\nggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm, col = species)) + \n  geom_point() + \n  facet_wrap(vars(species)) +\n  theme(legend.position = \"none\")"
-  },
-  {
-    "objectID": "slides/03/slides03.html#statistical-transformations",
-    "href": "slides/03/slides03.html#statistical-transformations",
-    "title": "ggplot2",
-    "section": "Statistical Transformations",
-    "text": "Statistical Transformations"
-  },
-  {
-    "objectID": "slides/03/slides03.html#coordinates",
-    "href": "slides/03/slides03.html#coordinates",
-    "title": "ggplot2",
-    "section": "Coordinates",
-    "text": "Coordinates\n\n\nSource: Nathan Yau, Data Points"
-  },
-  {
-    "objectID": "slides/03/slides03.html#scalesguides",
-    "href": "slides/03/slides03.html#scalesguides",
-    "title": "ggplot2",
-    "section": "Scales/guides",
-    "text": "Scales/guides\n\n\nSource: Nathan Yau, Data Points"
-  },
-  {
-    "objectID": "slides/03/slides03.html#themes",
-    "href": "slides/03/slides03.html#themes",
-    "title": "ggplot2",
-    "section": "Themes",
-    "text": "Themes\nAll non-data ink (e.g. background color, appearance of grid lines)"
-  },
-  {
-    "objectID": "slides/03/slides03.html#how-it-works",
-    "href": "slides/03/slides03.html#how-it-works",
-    "title": "ggplot2",
-    "section": "How it works",
-    "text": "How it works\n\nDraw a card\nFind your number’s location\nIntroduce yourselves\nGet to work!"
-  },
-  {
-    "objectID": "slides/03/slides03.html#round-1-view-the-data-pipes",
-    "href": "slides/03/slides03.html#round-1-view-the-data-pipes",
-    "title": "ggplot2",
-    "section": "Round 1: View the data + pipes",
-    "text": "Round 1: View the data + pipes\n\n\n\n−+\n08:00"
-  },
-  {
-    "objectID": "slides/03/slides03.html#round-2-scatterplots",
-    "href": "slides/03/slides03.html#round-2-scatterplots",
-    "title": "ggplot2",
-    "section": "Round 2: Scatterplots",
-    "text": "Round 2: Scatterplots\n\n\n\n−+\n08:00"
-  },
-  {
-    "objectID": "slides/03/slides03.html#round-3-additional-aesthetics",
-    "href": "slides/03/slides03.html#round-3-additional-aesthetics",
-    "title": "ggplot2",
-    "section": "Round 3: Additional Aesthetics",
-    "text": "Round 3: Additional Aesthetics\n\n\n\n−+\n08:00"
-  },
-  {
-    "objectID": "slides/03/slides03.html#round-4-visualizing-distributions",
-    "href": "slides/03/slides03.html#round-4-visualizing-distributions",
-    "title": "ggplot2",
-    "section": "Round 4: Visualizing Distributions",
-    "text": "Round 4: Visualizing Distributions\n\n\n\n−+\n08:00"
-  },
-  {
-    "objectID": "slides/03/slides03.html#round-5-bar-and-column-charts-labeling",
-    "href": "slides/03/slides03.html#round-5-bar-and-column-charts-labeling",
-    "title": "ggplot2",
-    "section": "Round 5: Bar and column charts + Labeling",
-    "text": "Round 5: Bar and column charts + Labeling\n\n\n\n−+\n08:00"
-  },
-  {
-    "objectID": "course-links.html",
-    "href": "course-links.html",
-    "title": "Useful links",
+    "objectID": "notes/02-full-lego-report.html",
+    "href": "notes/02-full-lego-report.html",
+    "title": "An Overview of Lego Sets on Rebrickable",
     "section": "",
-    "text": "RStudio Server\n🔗 Carleton’s Maize Server\n\n\nCourse GitHub organization\n🔗 GitHub\n\n\nGradebook\n🔗 on Moodle\n\n\nSpend a Token\n🔗 Spend a token\n\n\nTextbooks\n🔗 Modern Data Science with R (MDS)\n🔗 R for Data Science (R4DS)\n🔗 Fundamentals of Data Visualization\n\n\nPackage documentation\n🔗 ggplot2: ggplot2.tidyverse.org\n🔗 dplyr: dplyr.tidyverse.org\n🔗 tidyr: tidyr.tidyverse.org\n🔗 forcats: forcats.tidyverse.org\n🔗 stringr: stringr.tidyverse.org\n🔗 lubridate: lubridate.tidyverse.org\n🔗 readr: readr.tidyverse.org",
+    "text": "Rebrickable is a website that shows you which LEGO sets you can build from the LEGO sets and parts that you already own. To do this, Rebrickable maintains a database of the entire LEGO catalog. In this document, we’ll summarize the LEGO sets in this database.\nThe data set was originally obtained from the 2022-09-09 repository on Tidy Tuesday.\n\nIn the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
+  },
+  {
+    "objectID": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
+    "href": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
+    "title": "An Overview of Lego Sets on Rebrickable",
+    "section": "",
+    "text": "In the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
+  },
+  {
+    "objectID": "portfolio/portfolio-1.html",
+    "href": "portfolio/portfolio-1.html",
+    "title": "Portfolio Project 1",
+    "section": "",
+    "text": "Overview\nIn your first mini-project, you’ll apply what you’ve learned about ggplot2 and design principles to replicate and redesign a published graph. This project consists of three parts:\n\nReplicating an existing graph using ggplot2. Depending on the graph you choose, this may require some creativity in recreating data.\nUsing design principles from class, re-design the original graph to be better. This should include, at minimum, changes to two of the “layers” of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme).\nA written summary (no more than 1 printed page) including (1) an evaluation of the original graph and (2) reasoning for your design choices in improving the graph. This should include references to readings and discussions from class.\n\n\n\nOptions and Examples\nThe list below includes some good places to get started finding a graph. You do not have to choose a graph from one of these sources. It can be hard to find associated data with some published graphs, so don’t spend too much time trying to find data for a specific graph before moving on.\n\nOur World In Data\nFiveThirtyEight + Associated R Package (See available data here).\nHelpMeViz\nDataIsPlural\nTidyTuesday – If you choose this option, please be especially kind in your critique. This is a weekly R community activity, and many submissions are by beginners.\nr/dataisbeautiful\nr/dataisugly\n\n\n\nSubmission\nYour submission should include two visualizations (replication and improvement), a written overview of your work, and all associated code. You should work in a rmarkdown or quarto file. Your knitted/rendered file can be either pdf or html. I will distribute GitHub skeleton repos that you should fill in as you work. You should commit your final code and output file to your repo and link your repo to gradescope to submit.\n\n\nRubric\nA successful project will:\n\nInclude all necessary components pushed to GitHub and linked to gradescope\nContain code, plots, and written summary in a single .rmd document\nThe .rmd with all necessary code for recreation\nThe .rmd does not include unnecessary code\nProvide a thoughtful summary and critique\nThe replication matches the original graph on all layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\nThe improved graph has made changes to at least two of the layers\n\nAesthetics faithfully represent the representation of the underlying data\n\nMeet minimum submission quality standards\n\nVery few grammatical mistakes, spelling mistakes, or typos\nAppropriate labels and font sizes\nA readable theme\nThe rendered document does not contain any unnecessary content (package loading messages, warnings, etc.)\n\n\nAn excellent project will meet all of the requirements for a successful project, plus\n\nBe published (publicly!) to the web. (It is a portfolio project, after all). I recommend using RPubs as it’s very easy to publish a standalone website through RStudio, but if you have a public-facing website, that’s great too! Please include a URL in your YAML header so I can find it when grading.\n\nThere are lots of reasons you might not want the world to know that you are enrolled in this class, and this is one of your rights under FERPA. If you’re not comfortable including your name, you don’t have to! Your public document can be authored by “Student” (which has a history of being used in statistics).\nIf you are not comfortable attaching your name to something public-facing and this solution doesn’t work for you, please contact me on slack at least 72 hours before the due date so we can make an alternative plan.\n\nThe improved graph has made changes to at least four of the layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\n\nAll changes to aesthetics, geometries, etc. should be faithful representations of the underlying data (e.g. changes for the sake of making a change don’t count!)\n\n\nFor this portfolio project, you may work individually or in pairs. If you choose to work in a pair, let me know as soon as you decide so I can make a group repo for you. Both partners should have a record of committing and pushing to the repo.\n\n\nFAQ\nIf you have any questions, please post them to the #portfolio-projects channel on slack.",
     "crumbs": [
-      "Course information",
-      "Useful links"
+      "Portfolio Projects",
+      "Portfolio Project 1"
     ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Stat 220: Intro to Data Science",
-    "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n📝complete welcome survey\n\nWelcome + data, R review\n\nslides01 01-example-unvotes\n\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\n\nslides02 02-reproducible-reports 02-lego-report\n\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1  📺 intro to ggplot\n\nggplot\n\nslides03 03-ggplot-intro .rmd\n\nHW 1 (on moodle)\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nTheming + Design\nslides04  04-polishing-your-plots\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\nslides05  05-making-a-map\nHW 2\n\n\n2\nF\nFri, Jan 17\n\nCatch up + Ethics I\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\nslides07  07-verbs\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\nslides08  08-group_by\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4  📚 R4DS 19.1-19.3\n\nTidy data/pivots and joins\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 16 \n\nWorking with factors\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\n\n\n\n5\nM\nMon, Feb 3\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nText Analysis\n\nPortfolio 2\n\n\n5\nW\nWed, Feb 5\nTBA\nCatch up + Ethics II\n\nHW 5\n\n\n5\nF\nFri, Feb 7\nTBA\nTBA\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\nMidterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n📚What is an API? 📝 work through tidycensus basic usage vignette (including signing up for a census API key!)\nAPIs\n\n\n\n\n7\nW\nWed, Feb 19\nTBA\nScraping\n\nHW7  Final Project Proposal\n\n\n7\nF\nFri, Feb 21\n\nEthics III\n\nLab Quiz 3\n\n\n8\nM\nMon, Feb 24\nTBA\nIntro to Interactivity\n\nPortfolio 3\n\n\n8\nW\nWed, Feb 26\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\nShiny 1\n\nHW8\n\n\n8\nF\nFri, Feb 28\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nM\nMon, Mar 3\n\nShiny 3\n\nFinal Project sketch draft\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\n\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
-    "crumbs": [
-      "Course information",
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "slides/02/slides02.html#plan-for-today",
-    "href": "slides/02/slides02.html#plan-for-today",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Plan for today:",
-    "text": "Plan for today:\n\nQuestions from syllabus quiz\nGithub\n\nAccessing your private repos\nknit 🧶 commit ✅ push ⤴️\n\nReproducible Reporting"
-  },
-  {
-    "objectID": "slides/02/slides02.html#questions-from-syllabus-quiz",
-    "href": "slides/02/slides02.html#questions-from-syllabus-quiz",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Questions from syllabus quiz",
-    "text": "Questions from syllabus quiz\n\nWill the course build off of Stat120 concepts?\nClarification of what gets submitted to gradescope and what to GitHub\nRMarkdown versus Quarto?\nExamples of previous final projects?\nInfo about portfolio projects?"
-  },
-  {
-    "objectID": "slides/02/slides02.html#git-github",
-    "href": "slides/02/slides02.html#git-github",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Git + GitHub",
-    "text": "Git + GitHub\n\n\n\nGit is a version control system - like “Track Changes”, on steroids\nIt’s not the only version control system, but it’s a very popular one\n\n\n\nGitHub is the home for your Git-based projects on the internet—like DropBox but much, much better\nWe will use GitHub as a platform for web hosting and collaboration"
-  },
-  {
-    "objectID": "slides/02/slides02.html#why-do-we-need-it",
-    "href": "slides/02/slides02.html#why-do-we-need-it",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Why do we need it?",
-    "text": "Why do we need it?"
-  },
-  {
-    "objectID": "slides/02/slides02.html#versioning",
-    "href": "slides/02/slides02.html#versioning",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Versioning",
-    "text": "Versioning"
-  },
-  {
-    "objectID": "slides/02/slides02.html#versioning-with-human-readable-messages",
-    "href": "slides/02/slides02.html#versioning-with-human-readable-messages",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Versioning (with human-readable messages)",
-    "text": "Versioning (with human-readable messages)"
-  },
-  {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
-  },
-  {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
-  },
-  {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
-  },
-  {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
-  },
-  {
-    "objectID": "slides/02/slides02.html#lets-try-it",
-    "href": "slides/02/slides02.html#lets-try-it",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Let’s try it!",
-    "text": "Let’s try it!\n\n\n\nFollow the “Individual Assignment” directions at https://stat220-w25.github.io/computing/git-stat220.html to access your day02 repo and create an R project\nEdit the .Rmd file:\n\nChange “author” to your name\nUse # to add descriptive section headers for each code chunk\nAdd a sentence or two describing the summary statistics of the dataset\n\nknit 🧶 commit ✅ push ⤴️\nView on github.com/stat220-w25/day02yourusername and confirm you can see your changes\n\n\n\n\n\n\n−+\n15:00"
-  },
-  {
-    "objectID": "slides/02/slides02.html#why-do-we-need-it-1",
-    "href": "slides/02/slides02.html#why-do-we-need-it-1",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Why do we need it?",
-    "text": "Why do we need it?\nOops! I gave you the wrong set of data."
-  },
-  {
-    "objectID": "slides/02/slides02.html#why-do-we-need-it-2",
-    "href": "slides/02/slides02.html#why-do-we-need-it-2",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Why do we need it?",
-    "text": "Why do we need it?\n\nKarl – this is very interesting , however you used an old version of the data (n=143 rather than n=226). I’m really sorry you did all that work on the incomplete dataset.\nBruce\n\n\n\nAdapted from Karl Broman"
-  },
-  {
-    "objectID": "slides/02/slides02.html#other-examples",
-    "href": "slides/02/slides02.html#other-examples",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Other examples:",
-    "text": "Other examples:\n\nThe results in Table 1 don’t seem to correspond to those in Figure 2.\nIn what order do I run these scripts?\nWhere did we get this data file?\nWhy did I omit those samples?\nHow did I make that figure?\n“Your script is now giving an error.”\n“The attached is similar to the code we used.”\n\n\n\nAdapted from Karl Broman"
-  },
-  {
-    "objectID": "slides/02/slides02.html#reproducible-data-science",
-    "href": "slides/02/slides02.html#reproducible-data-science",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Reproducible data science",
-    "text": "Reproducible data science\n\n\nShort Term Impact\n\nAre the tables and figures reproducible from the code and data?\nDoes the code actually do what you think it does?\nIn addition to what was done, is it clear why it was done? (e.g., how were parameter settings chosen?)\n\n\nLong Term Impact\n\nCan the code be used for other data?\nCan you extend the code to other things?"
-  },
-  {
-    "objectID": "slides/02/slides02.html#the-toolkit",
-    "href": "slides/02/slides02.html#the-toolkit",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "The toolkit",
-    "text": "The toolkit\n\n\n\n\n\n\n\n\n\n\nScriptability \\(\\rightarrow\\) R\nCode environment \\(\\rightarrow\\) RStudio\nLiterate programming (code, narrative, output in one place) \\(\\rightarrow\\) R Markdown\nVersion control \\(\\rightarrow\\) Git / GitHub"
-  },
-  {
-    "objectID": "slides/02/slides02.html#what-is-r-markdown",
-    "href": "slides/02/slides02.html#what-is-r-markdown",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "What is R Markdown?",
-    "text": "What is R Markdown?\n\nAn authoring framework for data science.\nA document format (.Rmd).\nAn R package named rmarkdown.\nA file format for making dynamic documents with R.\nA tool for integrating prose, code, and results.\nA computational document."
-  },
-  {
-    "objectID": "slides/02/slides02.html#what-about-quarto",
-    "href": "slides/02/slides02.html#what-about-quarto",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "What about quarto?",
-    "text": "What about quarto?\n\n“Next Gen” RMarkdown\nMore compatibility with other languages (python, observable.js, etc.)\nnot an R package/separate software\nI’m going to distribute HW, etc. via RMarkdown, but you are welcome to use either!"
-  },
-  {
-    "objectID": "slides/02/slides02.html#the-setup-chunk",
-    "href": "slides/02/slides02.html#the-setup-chunk",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "The setup chunk",
-    "text": "The setup chunk\n\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(\n  collapse = TRUE,   \n  comment = \"#&gt;\", \n  out.width = \"100%\" \n)\n```\n\n\nA special chunk label: setup\nTypically #1\nAll following chunks will use these options (i.e., sets global chunk options)\nTip: set include=FALSE\nYou can (and should) use individual chunk options too"
-  },
-  {
-    "objectID": "slides/02/slides02.html#parameters",
-    "href": "slides/02/slides02.html#parameters",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Parameters",
-    "text": "Parameters\n\n\n---\ntitle: Survivor\noutput:\n  html_document:\n    toc: true\n    toc_float: true\n    theme: flatly\nparams:\n  season: '20'\n---"
-  },
-  {
-    "objectID": "slides/02/slides02.html#your-task",
-    "href": "slides/02/slides02.html#your-task",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Your Task",
-    "text": "Your Task\n\n\nThere’s an example HTML report on the schedule\nYour task is to reproduce it in 02-example-lego.rmd (or .qmd, if you prefer).\nTo be as reproducible as possible, you’ll need to use:\n\nYAML metadata\nYAML parameters\nCode chunks with appropriate options\nInline R code"
-  },
-  {
-    "objectID": "slides/02/slides02.html#hints",
-    "href": "slides/02/slides02.html#hints",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Hints",
-    "text": "Hints\n\n\nTo begin, use inline R code to replace “hard coding” the quantities that are highlighted below.\n\n\nFor example, instead of typing 19798 you would include nrow(sets) as an inline code chunk. Make sure the report knits and you get the right values.\n\nNext, add a parameter to your YAML header that stores the location of the data set. Make sure the report knits.\nChange the code chunk where you load the data set to use the data parameter you just defined rather than the hard-coded URL. Make sure the report knits.\nNow, let’s make a parameter for the source of the data set so you don’t have to search where every mention of it in the report, it will be with the other metadata (where it belongs). To do this, add a parameter that gives the source of your data (call it data_source) and set it equal to “the 2022-09-09 repository on Tidy Tuesday.” Make sure the report knits.\nAt this point it looks like everything is working—awesome job! To put it to the test, let’s update the parameters of your report and knit it to see if everything changes as we would expect. Here are the new parameter values:\n\ndata: \"http://math.carleton.edu/aluby/stat220/lego_subset.csv\"\ndata_source: \"Amanda's website\"\n\n(optional) If you have time, or would like to try outside of class, I’ve created a practice gradescope assignment space. First, add .pdf output to your document and knit to PDF. Commit the PDF and push to github. Then, log into gradescope (you may have to go through the link on moodle the first time) and link your github repo. You should then be able to submit your .pdf\n\noutput: \n  html_document:\n    default\n  pdf_document:\n    default"
-  },
-  {
-    "objectID": "course-faq.html",
-    "href": "course-faq.html",
-    "title": "FAQ",
-    "section": "",
-    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
-    "crumbs": [
-      "Course information",
-      "FAQ"
-    ]
-  },
-  {
-    "objectID": "course-faq.html#where-can-i-get-help",
-    "href": "course-faq.html#where-can-i-get-help",
-    "title": "FAQ",
-    "section": "",
-    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
-    "crumbs": [
-      "Course information",
-      "FAQ"
-    ]
-  },
-  {
-    "objectID": "notes/01-r-basics.html",
-    "href": "notes/01-r-basics.html",
-    "title": "R Basics",
-    "section": "",
-    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#loading-r-packages",
-    "href": "notes/01-r-basics.html#loading-r-packages",
-    "title": "R Basics",
-    "section": "",
-    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#creating-and-naming-objects",
-    "href": "notes/01-r-basics.html#creating-and-naming-objects",
-    "title": "R Basics",
-    "section": "Creating and naming objects",
-    "text": "Creating and naming objects\nAll R statements where you create objects have the form:\n\nobject_name &lt;- value\n\nAt first, we’ll be creating a lot of data objects. For example, we an load a data set containing the ratings for each episode of The Office using the code\n\noffice_ratings &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-17/office_ratings.csv\")\n\nIn this class you will be creating a lot of objects, so you’ll need to come up with names for those objects. Trying to think of informative/meaningful names for objects is hard, but necessary work! Below are the fundamental rules for naming objects in R:\n\nnames can’t start with a number\nnames are case-sensitive\nsome common letters are used internally by R and should be avoided as variable names (c, q, t, C, D, F, T, I)\nThere are reserved words that R won’t let you use for variable names (for, in, while, if, else, repeat, break, next)\nR will let you use the name of a predefined function—but don’t do it!\n\nYou can always check to see if you the name you want to use is already taken via exists():\nFor example lm exists\n\nexists(\"lm\")\n\n[1] TRUE\n\n\nbut carleton_college doesn’t.\n\nexists(\"carleton_college\")\n\n[1] FALSE\n\n\nThere are also a lot of naming styles out there, and if you have coded in another language, you may have already developed a preference. Below is an illustration by Allison Horst\n\n\n\n\n\n\n\n\nI generally following the tidyverse style guide, so you’ll see that I use only lowercase letters, numbers, and _ (snake case)."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#overviews-of-data-frames",
-    "href": "notes/01-r-basics.html#overviews-of-data-frames",
-    "title": "R Basics",
-    "section": "Overviews of data frames",
-    "text": "Overviews of data frames\nAbove, you loaded in a data set called office_ratings. Data sets are stored as a special data structure called a data frame. Data frames are the most-commonly used data structure for data analysis in R. For now, think of them like spreadsheets.\nOnce you have your data frame, you can get a quick overview of it using a few commands (below I use data_set as a generic placeholder for the data frame’s name):\n\n\n\n\n\n\nCommand\nDescription\n\n\n\nhead(data_set)\nprint the first 6 rows\n\n\ntail(data_set)\nprint the last 6 rows\n\n\nglimpse(data_set)\na quick overview where columns run down the screen and the data values run across. This allows you to see every column in the data frame.\n\n\nstr(data_set)\na quick overview like glimpse(), but without some of the formatting\n\n\nsummary(data_set)\nquick summary statistics for each column\n\n\ndim(data_set)\nthe number of rows and columns\n\n\nnrow(data_set)\nthe number of rows\n\n\nncol(data_set)\nthe number of columns"
-  },
-  {
-    "objectID": "notes/01-r-basics.html#tibbles",
-    "href": "notes/01-r-basics.html#tibbles",
-    "title": "R Basics",
-    "section": "Tibbles",
-    "text": "Tibbles\nA tibble, or a tbl_df is another version of a data frame which is used by default in a lot of the tidyverse packages that we’ll use.\n\nTibbles are data.frames that are lazy and surly: they do less (i.e. they don’t change variable names or types, and don’t do partial matching) and complain more (e.g. when a variable does not exist). This forces you to confront problems earlier, typically leading to cleaner, more expressive code. Tibbles also have an enhanced print() method which makes them easier to use with large datasets containing complex objects.\n\n\n\n\n\n\n\n Check point\n\n\n\nRun the above commands on the office_ratings data set. Compare and contrast the information returned by each command.\n\n\n\n\n\n\n\n\nGetting a spreadsheet\n\n\n\nIn RStudio, you can run the command View(data_set) to pull up a spreadsheet representation of a data frame. You can also click on the name of the data frame in the Environment pane. This can be a great way help you think about the data, and even has some interactive functions (e.g., filtering and searching); however, never include View(data_set) in an .Rmd file!!\n\n\n\n\n\n\n\n\nReview from intro stats\n\n\n\nIn intro stats we used the terms cases (or observations) and variables to describe the rows and columns of a data frame, respectively."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
-    "href": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
-    "title": "R Basics",
-    "section": "Extracting pieces of data frames",
-    "text": "Extracting pieces of data frames\nSince data frames are the fundamental data structure for most analyses in R, it’s important to know how to work with them. You already know how to get an overview of a data frame, but that isn’t always very informative. Often, you want to extract pieces of a data frame, such as a specific column or row.\nExtracting rows\nData frames can be indexed by their row/column numbers. To extract elements of a data frame, the basic syntax is data_set[row.index, column.index]. So, to extract the 10th row of office_ratings we run\n\noffice_ratings[10, ]\n\n# A tibble: 1 × 6\n  season episode title    imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      2       4 The Fire         8.4        2713 2005-10-11\n\n\nNotice that to extract an entire row, we leave the column index position blank.\nWe can also extract multiple rows by creating a vector of row indices. For example, we can extract the first 5 rows via\n\noffice_ratings[1:5, ]\n\n# A tibble: 5 × 6\n  season episode title         imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                 7.6        3706 2005-03-24\n2      1       2 Diversity Day         8.3        3566 2005-03-29\n3      1       3 Health Care           7.9        2983 2005-04-05\n4      1       4 The Alliance          8.1        2886 2005-04-12\n5      1       5 Basketball            8.4        3179 2005-04-19\n\n\nHere, 1:5 create a sequence of integers from 1 to 5.\nWe could also specify arbitrary row index values by combing the values into a vector. For example, we could extract the 1st, 13th, 64th, and 128th rows via\n\noffice_ratings[c(1, 13, 64, 128), ]\n\n# A tibble: 4 × 6\n  season episode title            imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                    7.6        3706 2005-03-24\n2      2       7 The Client               8.6        2631 2005-11-08\n3      4      13 Job Fair                 7.9        1977 2008-05-08\n4      7      11 Classy Christmas         8.9        2138 2010-12-09\n\n\nExtracting columns\nSimilar to extracting rows, we can use a numeric index to extract the columns of a data frame. For example, to extract the 3rd column, we can run\n\noffice_ratings[,3]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nAlternatively, we can pass in the column name in quotes instead of the column number\n\noffice_ratings[,\"title\"]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nNotice that the extracted column is still formatted as a data frame (or tibble). If you want to extract the contents of the column and just have a vector of titles, you have a few options.\n\nYou could use double brackets with the column number:\n\n\noffice_ratings[[3]]\n\n\nYou could use double brackets with the column name in quotes:\n\n\noffice_ratings[[\"title\"]]\n\n\nYou could use the $ extractor with the column name (not in quotes):\n\n\noffice_ratings$title\n\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract the 35th row of office_ratings.\nExtract rows 35, 36, 37, and 38 of office_ratings.\nExtract the imdb_rating column from office ratings using the column index number.\nExtract the imdb_rating column from office ratings using the column name."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#lists",
-    "href": "notes/01-r-basics.html#lists",
-    "title": "R Basics",
-    "section": "Lists",
-    "text": "Lists\nIt turns out that data frames are special cases of lists, a more general data structure. In a data frame, each column is an element of the data list and each column must be of the same length. In general, lists can be comprised of elements of vastly different lengths and data types.\nAs an example, let’s construct a list of the faculty in the MAST department and what is being taught this winter.\n\nstat_faculty &lt;- c(\"Kelling\", \"Loy\", \"Luby\", \"Poppick\", \"St. Clair\", \"Wadsworth\")\nstat_courses &lt;- c(120, 220, 230, 250, 285, 330)\nmath_faculty &lt;- c(\"Brooke\", \"Davis\", \"Egge\", \"Gomez-Gonzales\", \"Haunsperger\", \"Johnson\", \n                  \"Meyer\", \"Montee\", \"Shrestha\",\"Terry\", \"Thompson\", \"Turnage-Butterbaugh\")\nmath_courses &lt;- c(101, 106, 111, 120, 210, 211, 232, 236, 240, 241, 251, 321, 333, 395)\n\nmast &lt;- list(stat_faculty = stat_faculty, stat_courses = stat_courses, \n             math_faculty = math_faculty, math_courses = math_courses)\n\nOverview of a list\nYou can get an overview of a list a few ways:\n\n\nglimpse(list_name) and str(list_name) list the elements of the list and the first few entries of each element.\n\n\nglimpse(mast)\n\nList of 4\n $ stat_faculty: chr [1:6] \"Kelling\" \"Loy\" \"Luby\" \"Poppick\" ...\n $ stat_courses: num [1:6] 120 220 230 250 285 330\n $ math_faculty: chr [1:12] \"Brooke\" \"Davis\" \"Egge\" \"Gomez-Gonzales\" ...\n $ math_courses: num [1:14] 101 106 111 120 210 211 232 236 240 241 ...\n\n\n\n\nlength(list_name) will tell you how many elements are in the list\n\n\nlength(mast)\n\n[1] 4\n\n\nExtracting elements of a list\nSince data frames are lists, you’ve already seen how to extract elements of a list. For example, to extract the stat_faculty you could run\n\nmast[[1]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\nor\n\nmast[[\"stat_faculty\"]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you had only used a single bracket above, the returned object would still be a list, which is typically not what we would want.\n\nmast[1]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\n\n\n Check point\n\n\n\nExtract the statistics courses offered this term."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#vectors",
-    "href": "notes/01-r-basics.html#vectors",
-    "title": "R Basics",
-    "section": "Vectors",
-    "text": "Vectors\nThe columns of the office_ratings data frame and the elements of the mast list were comprised of (atomic) vectors. Unlike lists, all elements within a vector share the same type. For example, all names in the stat_faculty vector were character strings and all ratings in the imdb_rating column were numeric. We’ll deal with a variety of types of vectors in this course, including:\n\nnumeric\ncharacter (text)\nlogical (TRUE/FALSE)\n\nExtracting elements of a vector\nJust like with lists (and therefore data frames), we use brackets to extract elements from a vector. As an example, let’s work with the title column from office_ratings.\n\ntitle &lt;- office_ratings$title # vector of titles\n\nTo extract the 111th title, we run\n\ntitle[111]\n\n[1] \"New Leads\"\n\n\nor two extract the 100th through 111th titles, we run\n\ntitle[100:111]\n\n [1] \"Double Date\"          \"Murder\"               \"Shareholder Meeting\" \n [4] \"Scott's Tots\"         \"Secret Santa\"         \"The Banker\"          \n [7] \"Sabre\"                \"Manager and Salesman\" \"The Delivery: Part 1\"\n[10] \"The Delivery: Part 2\" \"St. Patrick's Day\"    \"New Leads\"           \n\n\nNegative indices\nSometimes, we want to “kick out” elements of our vector. To do this, we can use a negative index value. For example,\n\ntitle[-1]\n\nreturns all but the first title—that is, it kicks out the first title. To kick out multiple elements, we need to negate a vector of indices. For example, below we kick out the first 10 titles\n\ntitle[-c(1:10)]\n\nAnd now we kick out the 5th, 50th, and 150th titles\n\ntitle[-c(5, 50, 150)]\n\nThis idea can be adapted to lists and data frames. For example, to kick out the first row of office_ratings, we run\n\noffice_ratings[-1,]\n\n# A tibble: 187 × 6\n   season episode title             imdb_rating total_votes air_date  \n    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n 1      1       2 Diversity Day             8.3        3566 2005-03-29\n 2      1       3 Health Care               7.9        2983 2005-04-05\n 3      1       4 The Alliance              8.1        2886 2005-04-12\n 4      1       5 Basketball                8.4        3179 2005-04-19\n 5      1       6 Hot Girl                  7.8        2852 2005-04-26\n 6      2       1 The Dundies               8.7        3213 2005-09-20\n 7      2       2 Sexual Harassment         8.2        2736 2005-09-27\n 8      2       3 Office Olympics           8.4        2742 2005-10-04\n 9      2       4 The Fire                  8.4        2713 2005-10-11\n10      2       5 Halloween                 8.2        2561 2005-10-18\n# ℹ 177 more rows\n\n\nor to kick out the math courses from the mast list we run\n\nmast[-4]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n$stat_courses\n[1] 120 220 230 250 285 330\n\n$math_faculty\n [1] \"Brooke\"              \"Davis\"               \"Egge\"               \n [4] \"Gomez-Gonzales\"      \"Haunsperger\"         \"Johnson\"            \n [7] \"Meyer\"               \"Montee\"              \"Shrestha\"           \n[10] \"Terry\"               \"Thompson\"            \"Turnage-Butterbaugh\"\n\n\nLogical indices\nIt’s great to be able to extract (or omit) elements using indices, but sometimes we don’t know what index value we should use. For example, if you wanted to extract all of the 300-level statistics courses from the stat_courses vector, you would need to manually determine that positions 2:5 meet that requirement. That’s a lot of work! A better alternative is to allow R to find the elements meeting that requirement using logical operators. Below is a table summarizing common logical operators in R.\n\n\nComparison\nMeaning\n\n\n\n&lt;\nless than\n\n\n&gt;\ngreater than\n\n\n&lt;=\nless than or equal to\n\n\n&gt;=\ngreater than or equal to\n\n\n==\nis equal to\n\n\n!=\nnot equal to\n\n\n\nIn order to extract the 300-level statistics courses, we’ll take two steps:\n\nWe’ll determine whether each course is numbered at least 300,\nthen we’ll use that sequence of TRUEs/FALSEs to extract the course.\n\nSo, first we use the logical operator &gt;= to compare stat_courses and 300. This returns TRUE if the element meets the specification and FALSE otherwise.\n\nstat_courses &gt;= 300\n\n[1] FALSE FALSE FALSE FALSE FALSE  TRUE\n\n\nNow, we can use this vector as our index. Only the TRUE elements will be extracted:\n\nstat_courses[stat_courses &gt;= 300]\n\n[1] 330\n\n\nThe same idea can be used with data frames and lists, just remember how to format the brackets and indices!\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract all statistics courses below 250 from stat_courses.\nExtract all math courses except for 240 (probability) from math_courses.\nExtract all rows from season 3 of The Office."
   },
   {
     "objectID": "activities/03-ggplot-intro.html",
     "href": "activities/03-ggplot-intro.html",
     "title": "Intro to ggplot2\n",
     "section": "",
-    "text": "Note: the setup chunk includes the line eval = FALSE. Make sure to delete this when you are ready to knit your file.\nThe data we’re using today contains information about all seasons of Survivor and comes from the survivoR R package. In the show, a group of people (called castaways) are placed in an isolated location, where they must provide food, fire, and shelter for themselves. The castaways compete in challenges testing the contestants’ physical abilities like running and swimming or their mental abilities like puzzles and endurance challenges for rewards and immunity from elimination. The castaways are progressively eliminated from the game as they are voted out by their fellow contestants until only two or three remain. At that point, the players who were eliminated (the “jury”) vote for the winner. The winner is given the title of “Sole Survivor” and is awarded the grand prize of $1,000,000\nseason_summary = readr::read_csv(\"survivor_season_summary.csv\")\n#&gt; Rows: 47 Columns: 30\n#&gt; ── Column specification ────────────────────────────────────────────────────────\n#&gt; Delimiter: \",\"\n#&gt; chr  (13): version, version_season, season_name, location, country, tribe_se...\n#&gt; dbl  (13): season, n_cast, n_tribes, n_finalists, n_jury, viewers_reunion, v...\n#&gt; date  (4): premiered, ended, filming_started, filming_ended\n#&gt; \n#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.\n#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
+    "text": "Note: the setup chunk includes the line eval = FALSE. Make sure to delete this when you are ready to knit your file.\nThe data we’re using today contains information about all seasons of Survivor and comes from the survivoR R package. In the show, a group of people (called castaways) are placed in an isolated location, where they must provide food, fire, and shelter for themselves. The castaways compete in challenges testing the contestants’ physical abilities like running and swimming or their mental abilities like puzzles and endurance challenges for rewards and immunity from elimination. The castaways are progressively eliminated from the game as they are voted out by their fellow contestants until only two or three remain. At that point, the players who were eliminated (the “jury”) vote for the winner. The winner is given the title of “Sole Survivor” and is awarded the grand prize of $1,000,000\nseason_summary = readr::read_csv(\"https://math.carleton.edu/aluby/stat220/survivor_season_summary.csv\")\n#&gt; Rows: 47 Columns: 30\n#&gt; ── Column specification ────────────────────────────────────────────────────────\n#&gt; Delimiter: \",\"\n#&gt; chr  (13): version, version_season, season_name, location, country, tribe_se...\n#&gt; dbl  (13): season, n_cast, n_tribes, n_finalists, n_jury, viewers_reunion, v...\n#&gt; date  (4): premiered, ended, filming_started, filming_ended\n#&gt; \n#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.\n#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
   },
   {
     "objectID": "activities/03-ggplot-intro.html#round-1-view-the-data-pipes",
