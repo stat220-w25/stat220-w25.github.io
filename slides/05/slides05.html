@@ -674,7 +674,7 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_cac299d9" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_f41493ad" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -692,6 +692,13 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
 </div></div>
 </section>
 <section id="section-6" class="slide level2">
+<h2></h2>
+<iframe data-external="1" src="https://www.youtube.com/embed/vVX-PrBRtTY?start=45" width="100%" height="100%" title="West Wing: Gall-Peters Projection" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<aside><div>
+<p>From <em>The West Wing</em> Season 2 Episode 16</p>
+</div></aside></section>
+<section id="section-7" class="slide level2">
 <h2></h2>
 <img data-src="../img/africa-greenland-distortions.png" class="r-stretch">
 </section>
@@ -740,7 +747,7 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
 <span id="cb8-2"><a></a></span>
 <span id="cb8-3"><a></a><span class="fu">ggplot</span>(world, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
 <span id="cb8-4"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb8-5"><a></a>  <span class="fu">coord_map</span>(<span class="at">projection =</span> <span class="st">"mercator"</span>) <span class="sc">+</span> </span>
+<span id="cb8-5"><a></a>  <span class="fu">coord_map</span>(<span class="at">projection =</span> <span class="st">"mercator"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>)) <span class="sc">+</span> </span>
 <span id="cb8-6"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div>
@@ -770,7 +777,12 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
 <p>Fill in regions with variable values</p>
 <div class="columns">
 <div class="column" style="width:40%;">
-<p>Need two data sources: 1. map data with lat, long, region 2. data with measurements for each region 3. you don’t need to join them!</p>
+<p>Need two data sources:</p>
+<ol type="1">
+<li>map data with lat, long, region</li>
+<li>data with measurements for each region</li>
+</ol>
+<p>you don’t need to join them!</p>
 </div><div class="column" style="width:60%;">
 <p><img data-src="../img/wilke-chloropleth.png"></p>
 </div></div>
@@ -781,10 +793,10 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
 <section id="proportional-symbol" class="slide level2">
 <h2>Proportional Symbol</h2>
 <p>Overlay symbols on an existing map, where the size of the shape is proportional to the variable</p>
-<p><img data-src="../img/airport-ggmap.png"></p>
+<img data-src="../img/airport-ggmap.png" class="r-stretch">
 
 <aside><div>
-<p>Made with <code>ggmap</code> and <code>nycflights13</code></p>
+<p>Made with {ggmap} and {nycflights23}</p>
 </div></aside></section>
 <section id="cartogram" class="slide level2">
 <h2>Cartogram</h2>
@@ -800,7 +812,7 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
 <div class="task">
 <p>You should:</p>
 <ul>
-<li>Use the starter code provided</li>
+<li>Use the starter code provided in <code>05-maps.rmd</code></li>
 <li>Choose a different variable</li>
 <li>Change the color scale</li>
 <li>Update the title, axis labels, and legend</li>

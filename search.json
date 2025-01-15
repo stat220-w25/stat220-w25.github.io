@@ -616,7 +616,7 @@
     "href": "slides/05/slides05.html#mercator-vs-sinusoidal-projection-world-map",
     "title": "Intro to Maps  and Spatial Data",
     "section": "Mercator vs Sinusoidal projection (world map)",
-    "text": "Mercator vs Sinusoidal projection (world map)\n\nworld &lt;- map_data(\"world\")\n\nggplot(world, aes(x=long, y=lat, group=group)) + \n  geom_polygon(color=\"gold2\", fill=\"navyblue\") + \n  coord_map(projection = \"mercator\") + \n  theme_map()"
+    "text": "Mercator vs Sinusoidal projection (world map)\n\nworld &lt;- map_data(\"world\")\n\nggplot(world, aes(x=long, y=lat, group=group)) + \n  geom_polygon(color=\"gold2\", fill=\"navyblue\") + \n  coord_map(projection = \"mercator\", xlim = c(-180, 180)) + \n  theme_map()"
   },
   {
     "objectID": "slides/05/slides05.html#common-types-of-maps",
@@ -630,14 +630,14 @@
     "href": "slides/05/slides05.html#chloropleth",
     "title": "Intro to Maps  and Spatial Data",
     "section": "Chloropleth",
-    "text": "Chloropleth\nFill in regions with variable values\n\n\nNeed two data sources: 1. map data with lat, long, region 2. data with measurements for each region 3. you don’t need to join them!\n\n\n\n\n\nFundamentals of Data Visualization"
+    "text": "Chloropleth\nFill in regions with variable values\n\n\nNeed two data sources:\n\nmap data with lat, long, region\ndata with measurements for each region\n\nyou don’t need to join them!\n\n\n\n\n\nFundamentals of Data Visualization"
   },
   {
     "objectID": "slides/05/slides05.html#proportional-symbol",
     "href": "slides/05/slides05.html#proportional-symbol",
     "title": "Intro to Maps  and Spatial Data",
     "section": "Proportional Symbol",
-    "text": "Proportional Symbol\nOverlay symbols on an existing map, where the size of the shape is proportional to the variable\n\n\n\nMade with ggmap and nycflights13"
+    "text": "Proportional Symbol\nOverlay symbols on an existing map, where the size of the shape is proportional to the variable\n\n\n\nMade with {ggmap} and {nycflights23}"
   },
   {
     "objectID": "slides/05/slides05.html#cartogram",
@@ -651,7 +651,7 @@
     "href": "slides/05/slides05.html#your-task",
     "title": "Intro to Maps  and Spatial Data",
     "section": "Your task",
-    "text": "Your task\nYour task is to use the American Community Survey data to make a chloropleth map of the US\n\nYou should:\n\nUse the starter code provided\nChoose a different variable\nChange the color scale\nUpdate the title, axis labels, and legend"
+    "text": "Your task\nYour task is to use the American Community Survey data to make a chloropleth map of the US\n\nYou should:\n\nUse the starter code provided in 05-maps.rmd\nChoose a different variable\nChange the color scale\nUpdate the title, axis labels, and legend"
   },
   {
     "objectID": "slides/03/slides03.html#plan-for-today",
@@ -1557,5 +1557,12 @@
     "title": "Stat 220: Introduction to Data Science",
     "section": "Software",
     "text": "Software\nThe use of the R programming language, with the RStudio interface is an essential component of this course. You have two options for using RStudio:\n\nThe server version of RStudio on the web at https://maize.mathcs.carleton.edu. The advantage of using the server version is that all of your work will be stored in the cloud, where it is automatically saved and backed up. This means that you can access your work from any computer on campus using a web browser. The downside is that you have to share limited computational resources with each other!\nA local version of RStudio installed on your machine.The downside to this approach is that your work is only stored locally, but I get around this problem by keeping all of my work on GitHub. You will learn how to use GitHub throughout the course.\n\nNote that you do not have to choose one or the other, you may use both. However, it is important that you understand the distinction so that you can keep track of your work. Both R and RStudio are free and open-source."
+  },
+  {
+    "objectID": "slides/05/slides05.html#section-6",
+    "href": "slides/05/slides05.html#section-6",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "From The West Wing Season 2 Episode 16"
   }
 ]
