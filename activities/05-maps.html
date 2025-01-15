@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.6.32">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>GitHub Classroom Guide for Stat 220 – Stat 220</title>
+<meta name="author" content="Stat220 – W25">
+<title>Maps – Stat 220</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,8 +60,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../computing/computing-cheatsheets.html" rel="next">
-<link href="../computing/rstudio-stat220.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -106,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../computing/computing-access.html">Computing</a></li><li class="breadcrumb-item"><a href="../computing/git-stat220.html">Git/Github in Stat 220</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Maps</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -169,13 +168,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Computing</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../computing/computing-access.html" class="sidebar-item-text sidebar-link">
@@ -190,7 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../computing/git-stat220.html" class="sidebar-item-text sidebar-link active">
+  <a href="../computing/git-stat220.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Git/Github in Stat 220</span></a>
   </div>
 </li>
@@ -237,32 +236,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#getting-setup-with-git-and-github" id="toc-getting-setup-with-git-and-github" class="nav-link active" data-scroll-target="#getting-setup-with-git-and-github">Getting setup with Git and GitHub</a></li>
-  <li>
-<a href="#individual-assignments" id="toc-individual-assignments" class="nav-link" data-scroll-target="#individual-assignments">Individual assignments</a>
+<li>
+<a href="#create-original-map" id="toc-create-original-map" class="nav-link active" data-scroll-target="#create-original-map">Create Original Map</a>
   <ul class="collapse">
-<li><a href="#creating-an-individual-assignment-repo-and-project" id="toc-creating-an-individual-assignment-repo-and-project" class="nav-link" data-scroll-target="#creating-an-individual-assignment-repo-and-project">Creating an individual assignment repo and project</a></li>
-  <li><a href="#working-on-your-assignment" id="toc-working-on-your-assignment" class="nav-link" data-scroll-target="#working-on-your-assignment">Working on your assignment</a></li>
+<li><a href="#your-turn" id="toc-your-turn" class="nav-link" data-scroll-target="#your-turn">Your turn</a></li>
   </ul>
 </li>
-  <li>
-<a href="#group-work" id="toc-group-work" class="nav-link" data-scroll-target="#group-work">Group work</a>
-  <ul class="collapse">
-<li><a href="#creating-a-grouppartner-assignment-repo-and-project" id="toc-creating-a-grouppartner-assignment-repo-and-project" class="nav-link" data-scroll-target="#creating-a-grouppartner-assignment-repo-and-project">Creating a group/partner assignment repo and project</a></li>
-  </ul>
-</li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional resources</a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data">Load Data</a></li>
+  <li><a href="#acs-data-starter-map" id="toc-acs-data-starter-map" class="nav-link" data-scroll-target="#acs-data-starter-map">ACS Data Starter Map</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../computing/computing-access.html">Computing</a></li><li class="breadcrumb-item"><a href="../computing/git-stat220.html">Git/Github in Stat 220</a></li></ol></nav><div class="quarto-title">
-<h1 class="title">GitHub Classroom Guide for Stat 220</h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">Maps</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stat220 – W25 </p>
+          </div>
+  </div>
     
   
     
@@ -270,148 +268,82 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><p>Jump to… <a href="#individual-assignments">Individual assignments</a> | <a href="#group-work">Group work</a> | <a href="#additional-resources">Additional resources</a></p>
-<p>This is a guide for students to setup Git and GitHub for use in Stat 220.</p>
-<p>If you are using the maize RStudio server, then you can connect to GitHub without any extra software downloads. If you are using RStudio on your computer, then you will need to download Git software (as directed in <a href="../computing/computing-access.html">Computing Access</a>) to use GitHub connected projects.</p>
-<p>I will host all of our course materials on GitHub, and you will use GitHub to submit homework and collaborate on projects.</p>
-<hr>
-<section id="getting-setup-with-git-and-github" class="level2"><h2 class="anchored" data-anchor-id="getting-setup-with-git-and-github">Getting setup with Git and GitHub</h2>
-<p>If you are <strong>not</strong> working on the maize RStudio server, then make sure that you have installed all of the software mentioned in <a href="../computing/computing-access.html">Computing Access</a>. In addition, you should install the <code>usethis</code> and <code>gitcreds</code> R packages.</p>
-<p>Everyone needs to connect Git and GitHub by doing the following:</p>
-<ol type="1">
-<li><p>Register for account on GitHub (<a href="https://github.com/" class="uri">https://github.com/</a>). I recommend using a username that incorporates your name (e.g.&nbsp;aluby). Please use your Carleton email with this account (you can connect multiple emails to a single GitHub account)</p></li>
+</header><section id="create-original-map" class="level1"><h1>Create Original Map</h1>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">"state"</span><span class="op">)</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">states</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">long</span>, y<span class="op">=</span><span class="va">lat</span>, group<span class="op">=</span><span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu">geom_polygon</span><span class="op">(</span>color<span class="op">=</span><span class="st">"gold2"</span>, fill<span class="op">=</span><span class="st">"navyblue"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="05-maps_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="your-turn" class="level2"><h2 class="anchored" data-anchor-id="your-turn">Your turn</h2>
+<p>Edit the code so that each state is a different color</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">"state"</span><span class="op">)</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">states</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">long</span>, y<span class="op">=</span><span class="va">lat</span>, group<span class="op">=</span><span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu">geom_polygon</span><span class="op">(</span>color<span class="op">=</span><span class="st">"gold2"</span>, fill<span class="op">=</span><span class="st">"navyblue"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="05-maps_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="load-data" class="level1"><h1>Load Data</h1>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">acs_state_data</span> <span class="op">=</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"acs_state_data_2022_5y.csv"</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 52 Columns: 23
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (1): NAME
+dbl (22): med_age, total_pop, race_white, race_black_afam, race_am_indian, r...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">acs_state_data</span><span class="op">$</span><span class="va">state</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="va">acs_state_data</span><span class="op">$</span><span class="va">NAME</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Variable information:</p>
+<ul>
 <li>
-<p>Setup options in Git by running the following code chunk in your console:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org">usethis</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_git_config.html">use_git_config</a></span><span class="op">(</span>user.name <span class="op">=</span> <span class="st">"Jane Doe"</span>, user.email <span class="op">=</span> <span class="st">"jane@example.org"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>changing the first two lines to your own name and email (this should be the email associated with your GitHub account).</p>
-</li>
+<code>med_age</code>: median age</li>
 <li>
-<p>In order to commit and push to GitHub via R, you need to create a <strong>PAT (Personal Access Token)</strong>. This is like a Password 2.0. When RStudio prompts you for your GitHub username and password, use your PAT instead.</p>
-<ul>
-<li>Complete the steps in <a href="https://happygitwithr.com/https-pat">Happy Git with R Ch 9.3</a> to get a personal access token. I recommend using the “classic” token, but either should work. You will need <code>workflow</code>, <code>user</code>, and <code>repo</code> scopes (permissions) for this class, and I recommend setting it for 90 days so you won’t need a new one through the end of the term. Make sure to save this somewhere safe!</li>
-</ul>
-</li>
-<li><p>It will be annoying to type your PAT in anytime you want to push to github. Instead, tell R to store your git credentials. First, save your name and email:</p></li>
-</ol>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_git_config.html">use_git_config</a></span><span class="op">(</span>user.name <span class="op">=</span> <span class="st">"Jane Doe"</span>, user.email <span class="op">=</span> <span class="st">"jane@example.org"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then, run the following command:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">gitcreds</span><span class="fu">::</span><span class="fu"><a href="https://gitcreds.r-lib.org/reference/gitcreds_get.html">gitcreds_set</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When prompted for your password, use your PAT from Step 3.</p>
-<pre><code>&gt; gitcreds::gitcreds_set()
-
-? Enter password or token: ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
--&gt; Adding new credentials...
--&gt; Removing credentials from cache...
--&gt; Done.</code></pre>
-<p>To see if things are set up correctly, run</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/git_sitrep.html">git_sitrep</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>and one of the results should be something like the following:</p>
-<pre><code>── GitHub user 
-• Default GitHub host: "https://github.com"
-• Personal access token for "https://github.com": &lt;discovered&gt;
-• GitHub user: "aluby"
-• Token scopes: "admin:org", "repo", "user", and "workflow"
-• Email(s): "aluby@carleton.edu"</code></pre>
-<p>if instead of <code>&lt;discovered&gt;</code> you see <code>&lt;unset&gt;</code>, you may need to enter your PAT again. (I have no idea why it sometimes needs it twice)</p>
-<hr></section><section id="individual-assignments" class="level2"><h2 class="anchored" data-anchor-id="individual-assignments">Individual assignments</h2>
-<p>If you followed the suggestions in the <a href="../computing/rstudio-stat220.html">Using Rstudio in Stat 220</a> page, then you should already have an assignments folder on your computer or maize account.</p>
-<p>Each new assignment/project will be posted as a repository on GitHub and added directly to your account (within the Stat220 organization). This repository will contain assignment details (README, .Rmd).</p>
-<section id="creating-an-individual-assignment-repo-and-project" class="level3"><h3 class="anchored" data-anchor-id="creating-an-individual-assignment-repo-and-project">Creating an individual assignment repo and project</h3>
-<ol type="1">
-<li>Go to our course GitHub organization page and find your homework repo, such as <code>hw-1-username</code> (where your username is attached).</li>
-<li>Enter the online assignment repository on GitHub. Click the green <strong>“Code”</strong> button. Most of you should just use the default setting which is to “clone” (copy) using HTTPS. Click the clipboard to the right of the URL to copy the repo location. (If you are using SSH, make sure it says “Clone with SSH” in bold in the top left of the pop-up box. If not, click the “SSH” button and copy the link in the box to your clipboard.)</li>
-<li>Now open up RStudio and create a project as follows:</li>
-</ol>
-<ul>
-<li>Click the <strong>Project</strong> button in the upper right corner of your RStudio window and select <strong>New Project…</strong>.</li>
-</ul>
-<p>&nbsp;</p>
-<div class="cell" data-layout-align="center">
+<code>med_income</code>: median age</li>
+<li>
+<code>race_X</code>: estimated population of (self-reported) race</li>
+<li>
+<code>born_in_state</code>: estimated population who were born in state</li>
+<li>
+<code>X_age_married</code>: average age at first marriage for self-reported male and female respondents</li>
+<li>
+<code>hs_diploma</code>, <code>associate_degree</code>, <code>prof_degree</code>, etc.: estimated number with a high school diploma, associate’s degree, professional degree, etc.</li>
+<li>
+<code>internet_X</code>: estimated number of people who have internet services</li>
+</ul></section><section id="acs-data-starter-map" class="level1"><h1>ACS Data Starter Map</h1>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">acs_state_data</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_map</span><span class="op">(</span></span>
+<span>    <span class="fu">aes</span><span class="op">(</span>map_id <span class="op">=</span> <span class="va">state</span>, fill <span class="op">=</span> <span class="va">total_pop</span><span class="op">)</span>, </span>
+<span>    map <span class="op">=</span> <span class="va">states</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">expand_limits</span><span class="op">(</span>x <span class="op">=</span> <span class="va">states</span><span class="op">$</span><span class="va">long</span>, y <span class="op">=</span> <span class="va">states</span><span class="op">$</span><span class="va">lat</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">coord_map</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_map</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/maize_project.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="164"></p>
+<div>
+<figure class="figure"><p><img src="05-maps_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<ul>
-<li>Select <strong>Version Control</strong> and then <strong>New Project</strong>
-</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/maize_version.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/maize_git.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>Paste the link you just copied into the Repository URL box. Leave the Project directory name blank (or keep the auto-filled name). Use the <strong>Browse</strong> button to find your <strong>assignments</strong> folder, then click <strong>Create Project</strong>
-</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/maize_clone.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>&nbsp; &nbsp;</p>
-<p><strong>Warning:</strong> If you received an error in the above steps, you may have to clone with HTTPS instead of SSH (or vice versa). You can do this by again clicking on the “Clone or Download” button in the repository page, then clicking “Use HTTPS” in the top right of the pop-up box. Now copy the link and repeat this step.</p>
-</section><section id="working-on-your-assignment" class="level3"><h3 class="anchored" data-anchor-id="working-on-your-assignment">Working on your assignment</h3>
-<p>An RStudio project should now open, which will allow you to start working on your homework assignment. You should see the project assignment name in the top right side of Rstudio. You will probably see a blank console screen when you open a new project. Look in the <strong>Files</strong> tab for your homework .Rmd file. Click on whatever file you want to edit (probably the .Rmd file) and edit away. Make sure that your current assignment’s project is the one open and showing in the upper rightproject name. To <strong>open</strong> a project, click on the <code>.Rproj</code> file or use the <strong>Open Project…</strong> option available in the upper right project link.</p>
-<section id="commits" class="level4"><h4 class="anchored" data-anchor-id="commits">Commits</h4>
-<p>After you make changes to the homework assignment, commit them. What are commits you ask? Commits are essentially taking a snapshot of your projects. Commits save this snapshot to your local version of Git (located on your hard drive or the maize server). For example, if I make changes to a code so that it prints “Hello world”, and then commit them with an informative message, I can look at the history of my commits and view the code that I wrote at that time. If I made some more changes to the function that resulted in an error, I could go back to the commit where the code was originally working. This prevents you from creating several versions of your homework (homework-v1, homework-v2, …) or from trying to remember what your code originally looked like.</p>
-<p>You can make commits in the Git tab in RStudio.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/maize_gittab.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="232"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Click the <strong>Commit</strong> button in the Git tab. Check the boxes of the files that you want to commit, enter your commit message (briefly state what changes have been made), then hit <strong>Commit</strong>. You can read how to do this in RStudio in more detail here: <a href="http://r-pkgs.had.co.nz/git.html#git-commit" class="uri">http://r-pkgs.had.co.nz/git.html#git-commit</a>.</p>
-<p>Two things about committing.</p>
-<ul>
-<li>You should <strong>commit somewhat frequently</strong>. At minimum, if you’re doing a homework assignment, you should make a commit each time that you’ve finished a question.</li>
-<li>Leave <strong>informative commit messages</strong>. “Added stuff” will not help you if you’re looking at your commit history in a year. A message like “Added initial version of hello-world function” will be more useful.</li>
-</ul></section><section id="pushing-changes-to-github" class="level4"><h4 class="anchored" data-anchor-id="pushing-changes-to-github">Pushing changes to Github</h4>
-<p>At some point you’ll want to get the updated version of the assignment back onto GitHub, either so that we can help you with your code or so that it can be graded. You will also want to push work frequently when you have a shared GitHub repo for project collaborations (i.e.&nbsp;more than one person is working on a project and code). If you are ready to push, you can again click on the “Up” <strong>Push</strong> arrow in the Git tab or in the Commit pop-up window or in the Git tab (shown above).</p>
-<p>To “turn in” an assignment, all you need to do is push all your relevant files to Github by the deadline.</p>
-<hr></section></section></section><section id="group-work" class="level2"><h2 class="anchored" data-anchor-id="group-work">Group work</h2>
-<p>Collaborative Github assignments are pretty similar to individual assignments.</p>
-<section id="creating-a-grouppartner-assignment-repo-and-project" class="level3"><h3 class="anchored" data-anchor-id="creating-a-grouppartner-assignment-repo-and-project">Creating a group/partner assignment repo and project</h3>
-<p>Go to our course GitHub organization page and find the repo for your group, for example if your group name is “team01” the you might find the <code>mp1-team01</code> repo. Clone this repo to your computer/maize account using the same steps done for an individual assignment (see steps 2-3).</p>
-<section id="working-with-collaborative-repos" class="level4"><h4 class="anchored" data-anchor-id="working-with-collaborative-repos">Working with collaborative repos</h4>
-<p>For group homework, I suggest that only the <em>recorder</em> edit the group-homework-x.Rmd file to avoid merge conflicts! Other group members can create a new Markdown doc to run and save commands. Only the recorder needs to <strong>push</strong> changes (answers) to the Github repo and all others can then <strong>pull</strong> these changes (i.e.&nbsp;the final answers) after the HW is submitted.</p>
-<p>When you are working together on a Github project, you should commit and push your modifications frequently. You will also need to frequently <strong>pull</strong> updates from Github down to your local version of RStudio. These updates are changes that your teammates have made since your last pull. To pull in changes, click the “Down” <strong>Pull</strong> arrow in the Git tab (shown above).</p>
-<p>If you get an error about conflict after pulling or pushing, don’t freak out! This can happen if you edit a file (usually an .Rmd or .R file) in a location that was also changed by a teammate. When this happens you should attempt to fix the <strong>merge conflict</strong>. Take a look at <a href="http://r-pkgs.had.co.nz/git.html#git-pull">this resource site</a> and try to fix the merge conflict in Rstudio. If that doesn’t work contact me!</p>
-<hr></section></section></section><section id="additional-resources" class="level2"><h2 class="anchored" data-anchor-id="additional-resources">Additional resources</h2>
-<ul>
-<li><a href="http://happygitwithr.com/">Happy Git and GitHub for the useR</a></li>
-<li><a href="http://r-pkgs.had.co.nz/git.html#git-rstudio">Rstudio, Git and GitHub</a></li>
-<li><a href="http://learngitbranching.js.org/">Interactive learning guide for Git</a></li>
-<li><a href="https://guides.github.com/">GitHub Guides</a></li>
-<li><a href="https://youtu.be/F_fPEMnr1OQ">Git setup for Windows (video)</a></li>
-<li><a href="https://www.youtube.com/watch?v=kbmSZwK0k-A&amp;t">Git setup for Mac (video)</a></li>
-<li><a href="https://youtu.be/pAcMgGbCtQw">How to clone, edit, and push homework assignments with GitHub Classroom (video)</a></li>
-</ul>
-<hr>
-<section id="acknowledgements" class="level4"><h4 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h4>
-<p>Most of this content in this guide was taken from <a href="https://github.com/jfiksel/github-classroom-for-students" class="uri">https://github.com/jfiksel/github-classroom-for-students</a> and edited by Adam Loy for our classroom use. and is licensed under the CC BY-NC 3.0 Creative Commons License.</p>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -974,17 +906,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="../computing/rstudio-stat220.html" class="pagination-link" aria-label="Rstudio in Stat 220">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Rstudio in Stat 220</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../computing/computing-cheatsheets.html" class="pagination-link" aria-label="Cheatsheets">
-        <span class="nav-page-text">Cheatsheets</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
+</script>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">

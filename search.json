@@ -225,7 +225,7 @@
     "href": "computing/git-stat220.html#getting-setup-with-git-and-github",
     "title": "GitHub Classroom Guide for Stat 220",
     "section": "Getting setup with Git and GitHub",
-    "text": "Getting setup with Git and GitHub\nIf you are not working on the maize RStudio server, then make sure that you have installed all of the software mentioned in Computing Access. In addition, you should install the usethis and gitcreds R packages.\nEveryone needs to connect Git and GitHub by doing the following:\n\nRegister for account on GitHub (https://github.com/). I recommend using a username that incorporates your name (e.g. aluby). Please use your Carleton email with this account (you can connect multiple emails to a single GitHub account)\n\nSetup options in Git by running the following code chunk in your console:\nlibrary(usethis)\nuse_git_config(user.name = \"Jane Doe\", user.email = \"jane@example.org\")\nchanging the first two lines to your own name and email (this should be the email associated with your GitHub account).\n\n\nIn order to commit and push to GitHub via R, you need to create a PAT (Personal Access Token). This is like a Password 2.0. When RStudio prompts you for your GitHub username and password, use your PAT instead.\n\nComplete the steps in Happy Git with R Ch 9.3 to get a personal access token. I recommend using the “classic” token, but either should work. You will need workflow, user, and repo scopes (permissions) for this class, and I recommend setting it for 90 days so you won’t need a new one through the end of the term. Make sure to save this somewhere safe!\n\n\nIt will be annoying to type your PAT in anytime you want to push to github. Instead, tell R to store your git credentials with gitcreds::gitcreds_set(). When prompted for your password, use your PAT from Step 3.\n\n&gt; gitcreds::gitcreds_set()\n\n? Enter password or token: ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n-&gt; Adding new credentials...\n-&gt; Removing credentials from cache...\n-&gt; Done.\nTo see if things are set up correctly, run\nusethis::git_sitrep()",
+    "text": "Getting setup with Git and GitHub\nIf you are not working on the maize RStudio server, then make sure that you have installed all of the software mentioned in Computing Access. In addition, you should install the usethis and gitcreds R packages.\nEveryone needs to connect Git and GitHub by doing the following:\n\nRegister for account on GitHub (https://github.com/). I recommend using a username that incorporates your name (e.g. aluby). Please use your Carleton email with this account (you can connect multiple emails to a single GitHub account)\n\nSetup options in Git by running the following code chunk in your console:\nlibrary(usethis)\nuse_git_config(user.name = \"Jane Doe\", user.email = \"jane@example.org\")\nchanging the first two lines to your own name and email (this should be the email associated with your GitHub account).\n\n\nIn order to commit and push to GitHub via R, you need to create a PAT (Personal Access Token). This is like a Password 2.0. When RStudio prompts you for your GitHub username and password, use your PAT instead.\n\nComplete the steps in Happy Git with R Ch 9.3 to get a personal access token. I recommend using the “classic” token, but either should work. You will need workflow, user, and repo scopes (permissions) for this class, and I recommend setting it for 90 days so you won’t need a new one through the end of the term. Make sure to save this somewhere safe!\n\n\nIt will be annoying to type your PAT in anytime you want to push to github. Instead, tell R to store your git credentials. First, save your name and email:\n\nuse_git_config(user.name = \"Jane Doe\", user.email = \"jane@example.org\")\nThen, run the following command:\ngitcreds::gitcreds_set()\nWhen prompted for your password, use your PAT from Step 3.\n&gt; gitcreds::gitcreds_set()\n\n? Enter password or token: ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n-&gt; Adding new credentials...\n-&gt; Removing credentials from cache...\n-&gt; Done.\nTo see if things are set up correctly, run\nusethis::git_sitrep()\nand one of the results should be something like the following:\n── GitHub user \n• Default GitHub host: \"https://github.com\"\n• Personal access token for \"https://github.com\": &lt;discovered&gt;\n• GitHub user: \"aluby\"\n• Token scopes: \"admin:org\", \"repo\", \"user\", and \"workflow\"\n• Email(s): \"aluby@carleton.edu\"\nif instead of &lt;discovered&gt; you see &lt;unset&gt;, you may need to enter your PAT again. (I have no idea why it sometimes needs it twice)",
     "crumbs": [
       "Computing",
       "Git/Github in Stat 220"
@@ -286,236 +286,372 @@
     "text": "Make histogram\n\n# Include your code here"
   },
   {
-    "objectID": "notes/01-r-basics.html",
-    "href": "notes/01-r-basics.html",
-    "title": "R Basics",
+    "objectID": "portfolio/portfolio-1.html",
+    "href": "portfolio/portfolio-1.html",
+    "title": "Portfolio Project 1",
     "section": "",
-    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#loading-r-packages",
-    "href": "notes/01-r-basics.html#loading-r-packages",
-    "title": "R Basics",
-    "section": "",
-    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#creating-and-naming-objects",
-    "href": "notes/01-r-basics.html#creating-and-naming-objects",
-    "title": "R Basics",
-    "section": "Creating and naming objects",
-    "text": "Creating and naming objects\nAll R statements where you create objects have the form:\n\nobject_name &lt;- value\n\nAt first, we’ll be creating a lot of data objects. For example, we an load a data set containing the ratings for each episode of The Office using the code\n\noffice_ratings &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-17/office_ratings.csv\")\n\nIn this class you will be creating a lot of objects, so you’ll need to come up with names for those objects. Trying to think of informative/meaningful names for objects is hard, but necessary work! Below are the fundamental rules for naming objects in R:\n\nnames can’t start with a number\nnames are case-sensitive\nsome common letters are used internally by R and should be avoided as variable names (c, q, t, C, D, F, T, I)\nThere are reserved words that R won’t let you use for variable names (for, in, while, if, else, repeat, break, next)\nR will let you use the name of a predefined function—but don’t do it!\n\nYou can always check to see if you the name you want to use is already taken via exists():\nFor example lm exists\n\nexists(\"lm\")\n\n[1] TRUE\n\n\nbut carleton_college doesn’t.\n\nexists(\"carleton_college\")\n\n[1] FALSE\n\n\nThere are also a lot of naming styles out there, and if you have coded in another language, you may have already developed a preference. Below is an illustration by Allison Horst\n\n\n\n\n\n\n\n\nI generally following the tidyverse style guide, so you’ll see that I use only lowercase letters, numbers, and _ (snake case)."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#overviews-of-data-frames",
-    "href": "notes/01-r-basics.html#overviews-of-data-frames",
-    "title": "R Basics",
-    "section": "Overviews of data frames",
-    "text": "Overviews of data frames\nAbove, you loaded in a data set called office_ratings. Data sets are stored as a special data structure called a data frame. Data frames are the most-commonly used data structure for data analysis in R. For now, think of them like spreadsheets.\nOnce you have your data frame, you can get a quick overview of it using a few commands (below I use data_set as a generic placeholder for the data frame’s name):\n\n\n\n\n\n\nCommand\nDescription\n\n\n\nhead(data_set)\nprint the first 6 rows\n\n\ntail(data_set)\nprint the last 6 rows\n\n\nglimpse(data_set)\na quick overview where columns run down the screen and the data values run across. This allows you to see every column in the data frame.\n\n\nstr(data_set)\na quick overview like glimpse(), but without some of the formatting\n\n\nsummary(data_set)\nquick summary statistics for each column\n\n\ndim(data_set)\nthe number of rows and columns\n\n\nnrow(data_set)\nthe number of rows\n\n\nncol(data_set)\nthe number of columns"
-  },
-  {
-    "objectID": "notes/01-r-basics.html#tibbles",
-    "href": "notes/01-r-basics.html#tibbles",
-    "title": "R Basics",
-    "section": "Tibbles",
-    "text": "Tibbles\nA tibble, or a tbl_df is another version of a data frame which is used by default in a lot of the tidyverse packages that we’ll use.\n\nTibbles are data.frames that are lazy and surly: they do less (i.e. they don’t change variable names or types, and don’t do partial matching) and complain more (e.g. when a variable does not exist). This forces you to confront problems earlier, typically leading to cleaner, more expressive code. Tibbles also have an enhanced print() method which makes them easier to use with large datasets containing complex objects.\n\n\n\n\n\n\n\n Check point\n\n\n\nRun the above commands on the office_ratings data set. Compare and contrast the information returned by each command.\n\n\n\n\n\n\n\n\nGetting a spreadsheet\n\n\n\nIn RStudio, you can run the command View(data_set) to pull up a spreadsheet representation of a data frame. You can also click on the name of the data frame in the Environment pane. This can be a great way help you think about the data, and even has some interactive functions (e.g., filtering and searching); however, never include View(data_set) in an .Rmd file!!\n\n\n\n\n\n\n\n\nReview from intro stats\n\n\n\nIn intro stats we used the terms cases (or observations) and variables to describe the rows and columns of a data frame, respectively."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
-    "href": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
-    "title": "R Basics",
-    "section": "Extracting pieces of data frames",
-    "text": "Extracting pieces of data frames\nSince data frames are the fundamental data structure for most analyses in R, it’s important to know how to work with them. You already know how to get an overview of a data frame, but that isn’t always very informative. Often, you want to extract pieces of a data frame, such as a specific column or row.\nExtracting rows\nData frames can be indexed by their row/column numbers. To extract elements of a data frame, the basic syntax is data_set[row.index, column.index]. So, to extract the 10th row of office_ratings we run\n\noffice_ratings[10, ]\n\n# A tibble: 1 × 6\n  season episode title    imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      2       4 The Fire         8.4        2713 2005-10-11\n\n\nNotice that to extract an entire row, we leave the column index position blank.\nWe can also extract multiple rows by creating a vector of row indices. For example, we can extract the first 5 rows via\n\noffice_ratings[1:5, ]\n\n# A tibble: 5 × 6\n  season episode title         imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                 7.6        3706 2005-03-24\n2      1       2 Diversity Day         8.3        3566 2005-03-29\n3      1       3 Health Care           7.9        2983 2005-04-05\n4      1       4 The Alliance          8.1        2886 2005-04-12\n5      1       5 Basketball            8.4        3179 2005-04-19\n\n\nHere, 1:5 create a sequence of integers from 1 to 5.\nWe could also specify arbitrary row index values by combing the values into a vector. For example, we could extract the 1st, 13th, 64th, and 128th rows via\n\noffice_ratings[c(1, 13, 64, 128), ]\n\n# A tibble: 4 × 6\n  season episode title            imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                    7.6        3706 2005-03-24\n2      2       7 The Client               8.6        2631 2005-11-08\n3      4      13 Job Fair                 7.9        1977 2008-05-08\n4      7      11 Classy Christmas         8.9        2138 2010-12-09\n\n\nExtracting columns\nSimilar to extracting rows, we can use a numeric index to extract the columns of a data frame. For example, to extract the 3rd column, we can run\n\noffice_ratings[,3]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nAlternatively, we can pass in the column name in quotes instead of the column number\n\noffice_ratings[,\"title\"]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nNotice that the extracted column is still formatted as a data frame (or tibble). If you want to extract the contents of the column and just have a vector of titles, you have a few options.\n\nYou could use double brackets with the column number:\n\n\noffice_ratings[[3]]\n\n\nYou could use double brackets with the column name in quotes:\n\n\noffice_ratings[[\"title\"]]\n\n\nYou could use the $ extractor with the column name (not in quotes):\n\n\noffice_ratings$title\n\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract the 35th row of office_ratings.\nExtract rows 35, 36, 37, and 38 of office_ratings.\nExtract the imdb_rating column from office ratings using the column index number.\nExtract the imdb_rating column from office ratings using the column name."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#lists",
-    "href": "notes/01-r-basics.html#lists",
-    "title": "R Basics",
-    "section": "Lists",
-    "text": "Lists\nIt turns out that data frames are special cases of lists, a more general data structure. In a data frame, each column is an element of the data list and each column must be of the same length. In general, lists can be comprised of elements of vastly different lengths and data types.\nAs an example, let’s construct a list of the faculty in the MAST department and what is being taught this winter.\n\nstat_faculty &lt;- c(\"Kelling\", \"Loy\", \"Luby\", \"Poppick\", \"St. Clair\", \"Wadsworth\")\nstat_courses &lt;- c(120, 220, 230, 250, 285, 330)\nmath_faculty &lt;- c(\"Brooke\", \"Davis\", \"Egge\", \"Gomez-Gonzales\", \"Haunsperger\", \"Johnson\", \n                  \"Meyer\", \"Montee\", \"Shrestha\",\"Terry\", \"Thompson\", \"Turnage-Butterbaugh\")\nmath_courses &lt;- c(101, 106, 111, 120, 210, 211, 232, 236, 240, 241, 251, 321, 333, 395)\n\nmast &lt;- list(stat_faculty = stat_faculty, stat_courses = stat_courses, \n             math_faculty = math_faculty, math_courses = math_courses)\n\nOverview of a list\nYou can get an overview of a list a few ways:\n\n\nglimpse(list_name) and str(list_name) list the elements of the list and the first few entries of each element.\n\n\nglimpse(mast)\n\nList of 4\n $ stat_faculty: chr [1:6] \"Kelling\" \"Loy\" \"Luby\" \"Poppick\" ...\n $ stat_courses: num [1:6] 120 220 230 250 285 330\n $ math_faculty: chr [1:12] \"Brooke\" \"Davis\" \"Egge\" \"Gomez-Gonzales\" ...\n $ math_courses: num [1:14] 101 106 111 120 210 211 232 236 240 241 ...\n\n\n\n\nlength(list_name) will tell you how many elements are in the list\n\n\nlength(mast)\n\n[1] 4\n\n\nExtracting elements of a list\nSince data frames are lists, you’ve already seen how to extract elements of a list. For example, to extract the stat_faculty you could run\n\nmast[[1]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\nor\n\nmast[[\"stat_faculty\"]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you had only used a single bracket above, the returned object would still be a list, which is typically not what we would want.\n\nmast[1]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\n\n\n Check point\n\n\n\nExtract the statistics courses offered this term."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#vectors",
-    "href": "notes/01-r-basics.html#vectors",
-    "title": "R Basics",
-    "section": "Vectors",
-    "text": "Vectors\nThe columns of the office_ratings data frame and the elements of the mast list were comprised of (atomic) vectors. Unlike lists, all elements within a vector share the same type. For example, all names in the stat_faculty vector were character strings and all ratings in the imdb_rating column were numeric. We’ll deal with a variety of types of vectors in this course, including:\n\nnumeric\ncharacter (text)\nlogical (TRUE/FALSE)\n\nExtracting elements of a vector\nJust like with lists (and therefore data frames), we use brackets to extract elements from a vector. As an example, let’s work with the title column from office_ratings.\n\ntitle &lt;- office_ratings$title # vector of titles\n\nTo extract the 111th title, we run\n\ntitle[111]\n\n[1] \"New Leads\"\n\n\nor two extract the 100th through 111th titles, we run\n\ntitle[100:111]\n\n [1] \"Double Date\"          \"Murder\"               \"Shareholder Meeting\" \n [4] \"Scott's Tots\"         \"Secret Santa\"         \"The Banker\"          \n [7] \"Sabre\"                \"Manager and Salesman\" \"The Delivery: Part 1\"\n[10] \"The Delivery: Part 2\" \"St. Patrick's Day\"    \"New Leads\"           \n\n\nNegative indices\nSometimes, we want to “kick out” elements of our vector. To do this, we can use a negative index value. For example,\n\ntitle[-1]\n\nreturns all but the first title—that is, it kicks out the first title. To kick out multiple elements, we need to negate a vector of indices. For example, below we kick out the first 10 titles\n\ntitle[-c(1:10)]\n\nAnd now we kick out the 5th, 50th, and 150th titles\n\ntitle[-c(5, 50, 150)]\n\nThis idea can be adapted to lists and data frames. For example, to kick out the first row of office_ratings, we run\n\noffice_ratings[-1,]\n\n# A tibble: 187 × 6\n   season episode title             imdb_rating total_votes air_date  \n    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n 1      1       2 Diversity Day             8.3        3566 2005-03-29\n 2      1       3 Health Care               7.9        2983 2005-04-05\n 3      1       4 The Alliance              8.1        2886 2005-04-12\n 4      1       5 Basketball                8.4        3179 2005-04-19\n 5      1       6 Hot Girl                  7.8        2852 2005-04-26\n 6      2       1 The Dundies               8.7        3213 2005-09-20\n 7      2       2 Sexual Harassment         8.2        2736 2005-09-27\n 8      2       3 Office Olympics           8.4        2742 2005-10-04\n 9      2       4 The Fire                  8.4        2713 2005-10-11\n10      2       5 Halloween                 8.2        2561 2005-10-18\n# ℹ 177 more rows\n\n\nor to kick out the math courses from the mast list we run\n\nmast[-4]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n$stat_courses\n[1] 120 220 230 250 285 330\n\n$math_faculty\n [1] \"Brooke\"              \"Davis\"               \"Egge\"               \n [4] \"Gomez-Gonzales\"      \"Haunsperger\"         \"Johnson\"            \n [7] \"Meyer\"               \"Montee\"              \"Shrestha\"           \n[10] \"Terry\"               \"Thompson\"            \"Turnage-Butterbaugh\"\n\n\nLogical indices\nIt’s great to be able to extract (or omit) elements using indices, but sometimes we don’t know what index value we should use. For example, if you wanted to extract all of the 300-level statistics courses from the stat_courses vector, you would need to manually determine that positions 2:5 meet that requirement. That’s a lot of work! A better alternative is to allow R to find the elements meeting that requirement using logical operators. Below is a table summarizing common logical operators in R.\n\n\nComparison\nMeaning\n\n\n\n&lt;\nless than\n\n\n&gt;\ngreater than\n\n\n&lt;=\nless than or equal to\n\n\n&gt;=\ngreater than or equal to\n\n\n==\nis equal to\n\n\n!=\nnot equal to\n\n\n\nIn order to extract the 300-level statistics courses, we’ll take two steps:\n\nWe’ll determine whether each course is numbered at least 300,\nthen we’ll use that sequence of TRUEs/FALSEs to extract the course.\n\nSo, first we use the logical operator &gt;= to compare stat_courses and 300. This returns TRUE if the element meets the specification and FALSE otherwise.\n\nstat_courses &gt;= 300\n\n[1] FALSE FALSE FALSE FALSE FALSE  TRUE\n\n\nNow, we can use this vector as our index. Only the TRUE elements will be extracted:\n\nstat_courses[stat_courses &gt;= 300]\n\n[1] 330\n\n\nThe same idea can be used with data frames and lists, just remember how to format the brackets and indices!\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract all statistics courses below 250 from stat_courses.\nExtract all math courses except for 240 (probability) from math_courses.\nExtract all rows from season 3 of The Office."
-  },
-  {
-    "objectID": "course-faq.html",
-    "href": "course-faq.html",
-    "title": "FAQ",
-    "section": "",
-    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
+    "text": "Overview\nIn your first mini-project, you’ll apply what you’ve learned about ggplot2 and design principles to replicate and redesign a published graph. This project consists of three parts:\n\nReplicating an existing graph using ggplot2. Depending on the graph you choose, this may require some creativity in recreating data.\nUsing design principles from class, re-design the original graph to be better. This should include, at minimum, changes to two of the “layers” of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme).\nA written summary (no more than 1 printed page) including (1) an evaluation of the original graph and (2) reasoning for your design choices in improving the graph. This should include references to readings and discussions from class.\n\n\n\nOptions and Examples\nThe list below includes some good places to get started finding a graph. You do not have to choose a graph from one of these sources. It can be hard to find associated data with some published graphs, so don’t spend too much time trying to find data for a specific graph before moving on.\n\nOur World In Data\nFiveThirtyEight + Associated R Package (See available data here).\nHelpMeViz\nDataIsPlural\nTidyTuesday – If you choose this option, please be especially kind in your critique. This is a weekly R community activity, and many submissions are by beginners.\nr/dataisbeautiful\nr/dataisugly\n\n\n\nSubmission\nYour submission should include two visualizations (replication and improvement), a written overview of your work, and all associated code. You should work in a rmarkdown or quarto file. Your knitted/rendered file can be either pdf or html. I will distribute GitHub skeleton repos that you should fill in as you work. You should commit your final code and output file to your repo and link your repo to gradescope to submit.\n\n\nRubric\nA successful project will:\n\nInclude all necessary components pushed to GitHub and linked to gradescope\nContain code, plots, and written summary in a single .rmd document\nThe .rmd with all necessary code for recreation\nThe .rmd does not include unnecessary code\nProvide a thoughtful summary and critique\nThe replication matches the original graph on all layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\nThe improved graph has made changes to at least two of the layers\n\nAesthetics faithfully represent the representation of the underlying data\n\nMeet minimum submission quality standards\n\nVery few grammatical mistakes, spelling mistakes, or typos\nAppropriate labels and font sizes\nA readable theme\nThe rendered document does not contain any unnecessary content (package loading messages, warnings, etc.)\n\n\nAn excellent project will meet all of the requirements for a successful project, plus\n\nBe published (publicly!) to the web. (It is a portfolio project, after all). I recommend using RPubs as it’s very easy to publish a standalone website through RStudio, but if you have a public-facing website, that’s great too! Please include a URL in your YAML header so I can find it when grading.\n\nThere are lots of reasons you might not want the world to know that you are enrolled in this class, and this is one of your rights under FERPA. If you’re not comfortable including your name, you don’t have to! Your public document can be authored by “Student” (which has a history of being used in statistics).\nIf you are not comfortable attaching your name to something public-facing and this solution doesn’t work for you, please contact me on slack at least 72 hours before the due date so we can make an alternative plan.\n\nThe improved graph has made changes to at least four of the layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\n\nAll changes to aesthetics, geometries, etc. should be faithful representations of the underlying data (e.g. changes for the sake of making a change don’t count!)\n\n\nFor this portfolio project, you may work individually or in pairs. If you choose to work in a pair, let me know as soon as you decide so I can make a group repo for you. Both partners should have a record of committing and pushing to the repo.\n\n\nFAQ\nIf you have any questions, please post them to the #portfolio-projects channel on slack.",
     "crumbs": [
-      "Course information",
-      "FAQ"
+      "Portfolio Projects",
+      "Portfolio Project 1"
     ]
   },
   {
-    "objectID": "course-faq.html#where-can-i-get-help",
-    "href": "course-faq.html#where-can-i-get-help",
-    "title": "FAQ",
+    "objectID": "notes/02-full-lego-report.html",
+    "href": "notes/02-full-lego-report.html",
+    "title": "An Overview of Lego Sets on Rebrickable",
     "section": "",
-    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
-    "crumbs": [
-      "Course information",
-      "FAQ"
-    ]
+    "text": "Rebrickable is a website that shows you which LEGO sets you can build from the LEGO sets and parts that you already own. To do this, Rebrickable maintains a database of the entire LEGO catalog. In this document, we’ll summarize the LEGO sets in this database.\nThe data set was originally obtained from the 2022-09-09 repository on Tidy Tuesday.\n\nIn the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
   },
   {
-    "objectID": "slides/02/slides02.html#plan-for-today",
-    "href": "slides/02/slides02.html#plan-for-today",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Plan for today:",
-    "text": "Plan for today:\n\nQuestions from syllabus quiz\nGithub\n\nAccessing your private repos\nknit 🧶 commit ✅ push ⤴️\n\nReproducible Reporting"
+    "objectID": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
+    "href": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
+    "title": "An Overview of Lego Sets on Rebrickable",
+    "section": "",
+    "text": "In the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
   },
   {
-    "objectID": "slides/02/slides02.html#questions-from-syllabus-quiz",
-    "href": "slides/02/slides02.html#questions-from-syllabus-quiz",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Questions from syllabus quiz",
-    "text": "Questions from syllabus quiz\n\nWill the course build off of Stat120 concepts?\nClarification of what gets submitted to gradescope and what to GitHub\nRMarkdown versus Quarto?\nExamples of previous final projects?\nInfo about portfolio projects?"
+    "objectID": "slides/01/slides01.html#about-me",
+    "href": "slides/01/slides01.html#about-me",
+    "title": "Welcome to Stat 220",
+    "section": "About me",
+    "text": "About me\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
   },
   {
-    "objectID": "slides/02/slides02.html#git-github",
-    "href": "slides/02/slides02.html#git-github",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Git + GitHub",
-    "text": "Git + GitHub\n\n\n\nGit is a version control system - like “Track Changes”, on steroids\nIt’s not the only version control system, but it’s a very popular one\n\n\n\nGitHub is the home for your Git-based projects on the internet—like DropBox but much, much better\nWe will use GitHub as a platform for web hosting and collaboration"
+    "objectID": "slides/01/slides01.html#what-is-data-science",
+    "href": "slides/01/slides01.html#what-is-data-science",
+    "title": "Welcome to Stat 220",
+    "section": "What is “data science”?",
+    "text": "What is “data science”?"
   },
   {
-    "objectID": "slides/02/slides02.html#why-do-we-need-it",
-    "href": "slides/02/slides02.html#why-do-we-need-it",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Why do we need it?",
-    "text": "Why do we need it?"
+    "objectID": "slides/01/slides01.html#what-is-this-class-about",
+    "href": "slides/01/slides01.html#what-is-this-class-about",
+    "title": "Welcome to Stat 220",
+    "section": "What is this class about?",
+    "text": "What is this class about?\n\nDevelop research questions that can be answered with data\nAcquire data from multiple sources\nWrangle common types of data\nVisualize data to provide insight\nCommunicate your findings\nDocument your code and collaborate on coding projects"
   },
   {
-    "objectID": "slides/02/slides02.html#versioning",
-    "href": "slides/02/slides02.html#versioning",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Versioning",
-    "text": "Versioning"
+    "objectID": "slides/01/slides01.html#section",
+    "href": "slides/01/slides01.html#section",
+    "title": "Welcome to Stat 220",
+    "section": "",
+    "text": "What skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
   },
   {
-    "objectID": "slides/02/slides02.html#versioning-with-human-readable-messages",
-    "href": "slides/02/slides02.html#versioning-with-human-readable-messages",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Versioning (with human-readable messages)",
-    "text": "Versioning (with human-readable messages)"
+    "objectID": "slides/01/slides01.html#what-is-this-class-all-about",
+    "href": "slides/01/slides01.html#what-is-this-class-all-about",
+    "title": "Welcome to Stat 220",
+    "section": "What is this class all about?",
+    "text": "What is this class all about?\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
   },
   {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
+    "objectID": "slides/01/slides01.html#why-r",
+    "href": "slides/01/slides01.html#why-r",
+    "title": "Welcome to Stat 220",
+    "section": "Why R?",
+    "text": "Why R?\n\nAnd the second reason, which is both a huge strength of R and a bit of a weakness, is that R is not just a programming language. It was designed from day 1 to be an environment that can do data analysis. So, compared to the other options like Python, you can get up and running in R doing data science, learning much, much less about programming to get started. And that generally makes it like easier to get up and running if you don’t have formal training in computer science or software engineering.\n\n\n-Hadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham"
   },
   {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
+    "objectID": "slides/01/slides01.html#advice",
+    "href": "slides/01/slides01.html#advice",
+    "title": "Welcome to Stat 220",
+    "section": "Advice",
+    "text": "Advice\n\n\n\n\n\n\n\n\nIt’s easy when you start out programming to get really frustrated and think, “Oh it’s me, I’m really stupid,” or, “I’m not made out to program.” But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It’s just a natural part of programming. So, it happens to everyone and gets less and less over time. Don’t blame yourself. Just take a break, do something fun, and then come back and try again later.\n\n\n\nHadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham; Artwork by Allison Horst"
   },
   {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
+    "objectID": "slides/01/slides01.html#on-your-own",
+    "href": "slides/01/slides01.html#on-your-own",
+    "title": "Welcome to Stat 220",
+    "section": "On your own:",
+    "text": "On your own:\n\n\nLog into the maize server: maize.mathcs.carleton.edu\nFollow the directions at stat220-w25.github.io/computing/rstudio-stat220 to create a “content” folder\nLoad the .Rmd file with: download.file(     \"https://math.carleton.edu/aluby/stat220/01-example-unvotes.rmd\",      destfile = \"01-example-unvotes.rmd\")\nSkim the file without running any code:\n\nWhere is the code?\nWhere is the narrative?\n\nRun each code chunk in order. What does this analysis do?\n\n\n\n\n\n−+\n10:00"
   },
   {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
+    "objectID": "slides/01/slides01.html#what-steps-went-into-this-analysis",
+    "href": "slides/01/slides01.html#what-steps-went-into-this-analysis",
+    "title": "Welcome to Stat 220",
+    "section": "What steps went into this analysis?",
+    "text": "What steps went into this analysis?\n\nRecording the original data\nAccessing data via an R package\nCombining multiple datasets into one\nData cleaning: filtering, creating new columns, grouping, summarizing\nMaking a graph\nFitting a smooth line model"
   },
   {
-    "objectID": "slides/02/slides02.html#lets-try-it",
-    "href": "slides/02/slides02.html#lets-try-it",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Let’s try it!",
-    "text": "Let’s try it!\n\n\n\nFollow the “Individual Assignment” directions at https://stat220-w25.github.io/computing/git-stat220.html to access your day02 repo and create an R project\nEdit the .Rmd file:\n\nChange “author” to your name\nUse # to add descriptive section headers for each code chunk\nAdd a sentence or two describing the summary statistics of the dataset\n\nknit 🧶 commit ✅ push ⤴️\nView on github.com/stat220-w25/day02yourusername and confirm you can see your changes\n\n\n\n\n\n\n−+\n15:00"
+    "objectID": "slides/01/slides01.html#your-turn",
+    "href": "slides/01/slides01.html#your-turn",
+    "title": "Welcome to Stat 220",
+    "section": "Your turn:",
+    "text": "Your turn:\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
   },
   {
-    "objectID": "slides/02/slides02.html#why-do-we-need-it-1",
-    "href": "slides/02/slides02.html#why-do-we-need-it-1",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Why do we need it?",
-    "text": "Why do we need it?\nOops! I gave you the wrong set of data."
+    "objectID": "slides/01/slides01.html#course-github",
+    "href": "slides/01/slides01.html#course-github",
+    "title": "Welcome to Stat 220",
+    "section": "Course github",
+    "text": "Course github\n\nhttps://github.com/stat220-w25/\n\n\naka “the one link to rule them all”\n\n\naccess slides\nsee schedule\naccess repositories for homework and projects"
   },
   {
-    "objectID": "slides/02/slides02.html#why-do-we-need-it-2",
-    "href": "slides/02/slides02.html#why-do-we-need-it-2",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Why do we need it?",
-    "text": "Why do we need it?\n\nKarl – this is very interesting , however you used an old version of the data (n=143 rather than n=226). I’m really sorry you did all that work on the incomplete dataset.\nBruce\n\n\n\nAdapted from Karl Broman"
+    "objectID": "slides/01/slides01.html#office-hours-tentative",
+    "href": "slides/01/slides01.html#office-hours-tentative",
+    "title": "Welcome to Stat 220",
+    "section": "Office hours (tentative)",
+    "text": "Office hours (tentative)\n\n\n\nDay\nTime\nType\nLocation\n\n\n\n\nMonday\n11-12\nDrop-in\nCMC 307\n\n\nTuesday\n2-3\nDrop-in\nCMC 307\n\n\nWednesday\n4-5\nDrop-in\nCMC 307\n\n\nFriday\n11-12\nBy appt\nCMC 223"
   },
   {
-    "objectID": "slides/02/slides02.html#other-examples",
-    "href": "slides/02/slides02.html#other-examples",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Other examples:",
-    "text": "Other examples:\n\nThe results in Table 1 don’t seem to correspond to those in Figure 2.\nIn what order do I run these scripts?\nWhere did we get this data file?\nWhy did I omit those samples?\nHow did I make that figure?\n“Your script is now giving an error.”\n“The attached is similar to the code we used.”\n\n\n\nAdapted from Karl Broman"
+    "objectID": "slides/01/slides01.html#where-is-amanda-in-january",
+    "href": "slides/01/slides01.html#where-is-amanda-in-january",
+    "title": "Welcome to Stat 220",
+    "section": "Where is Amanda in January?",
+    "text": "Where is Amanda in January?"
   },
   {
-    "objectID": "slides/02/slides02.html#reproducible-data-science",
-    "href": "slides/02/slides02.html#reproducible-data-science",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Reproducible data science",
-    "text": "Reproducible data science\n\n\nShort Term Impact\n\nAre the tables and figures reproducible from the code and data?\nDoes the code actually do what you think it does?\nIn addition to what was done, is it clear why it was done? (e.g., how were parameter settings chosen?)\n\n\nLong Term Impact\n\nCan the code be used for other data?\nCan you extend the code to other things?"
+    "objectID": "slides/01/slides01.html#what-will-you-do-in-this-course",
+    "href": "slides/01/slides01.html#what-will-you-do-in-this-course",
+    "title": "Welcome to Stat 220",
+    "section": "What will you do in this course?",
+    "text": "What will you do in this course?\n\n\nGraded work:\n\nHomework\nLab Quizzes\nPortfolio Projects\nFinal Project\n\n\nUngraded work:\n\nDaily prep for class: read/watch/review/try\nIn-class exercises and group work\nEngagement in small and large group discussions"
   },
   {
-    "objectID": "slides/02/slides02.html#the-toolkit",
-    "href": "slides/02/slides02.html#the-toolkit",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "The toolkit",
-    "text": "The toolkit\n\n\n\n\n\n\n\n\n\n\nScriptability \\(\\rightarrow\\) R\nCode environment \\(\\rightarrow\\) RStudio\nLiterate programming (code, narrative, output in one place) \\(\\rightarrow\\) R Markdown\nVersion control \\(\\rightarrow\\) Git / GitHub"
+    "objectID": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
+    "href": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
+    "title": "Welcome to Stat 220",
+    "section": "What will a typical day/week look like?",
+    "text": "What will a typical day/week look like?\n\n\nBefore class:\n\nWatch a video or read a chapter\nCome with questions\nBe prepared to try what was covered\n\n\nIn class:\n\nMini lecture\n\nSometimes review\nSometimes new\n\nHands-on coding in R\n\n\nAfter class:\n\nFinish any in-class exercises\nWork on homework and portfolio projects"
   },
   {
-    "objectID": "slides/02/slides02.html#what-is-r-markdown",
-    "href": "slides/02/slides02.html#what-is-r-markdown",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "What is R Markdown?",
-    "text": "What is R Markdown?\n\nAn authoring framework for data science.\nA document format (.Rmd).\nAn R package named rmarkdown.\nA file format for making dynamic documents with R.\nA tool for integrating prose, code, and results.\nA computational document."
+    "objectID": "slides/01/slides01.html#grading-system",
+    "href": "slides/01/slides01.html#grading-system",
+    "title": "Welcome to Stat 220",
+    "section": "Grading system",
+    "text": "Grading system\nHomework and lab quiz problems will be graded as successful or not successful. Projects will be graded as excellent, successful, or retry. You will have the opportunity to resubmit the lab quizzes outside of class.\nTo earn a course grade, you must meet all of the requirements in a given row:\n\n\n\n\n\n\n\n\n\n\n\nHomework Problems\nLab Quiz Problems\nPortfolio Projects (4 total)\nFinal Project\n\n\n\n\nA\n85%\n90%\n2 Excellent\nExcellent\n\n\nB\n75%\n80%\n4 Successful\nSuccessful\n\n\nC\n65%\n70%\n3 Successful\nSuccessful\n\n\nD\n55%\n50%\n2 Successful\nSuccessful\n\n\n\n“+” and “-” grades are determined by partially meeting the requirements in a given row."
   },
   {
-    "objectID": "slides/02/slides02.html#what-about-quarto",
-    "href": "slides/02/slides02.html#what-about-quarto",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "What about quarto?",
-    "text": "What about quarto?\n\n“Next Gen” RMarkdown\nMore compatibility with other languages (python, observable.js, etc.)\nnot an R package/separate software\nI’m going to distribute HW, etc. via RMarkdown, but you are welcome to use either!"
+    "objectID": "slides/01/slides01.html#benefits",
+    "href": "slides/01/slides01.html#benefits",
+    "title": "Welcome to Stat 220",
+    "section": "Benefits",
+    "text": "Benefits\n\nYou decide what grade you’re aiming for, and what you have to do to earn it\nClear guidelines for “successful” and “excellent” marks\nOpportunity to revise and resubmit"
   },
   {
-    "objectID": "slides/02/slides02.html#the-setup-chunk",
-    "href": "slides/02/slides02.html#the-setup-chunk",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "The setup chunk",
-    "text": "The setup chunk\n\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(\n  collapse = TRUE,   \n  comment = \"#&gt;\", \n  out.width = \"100%\" \n)\n```\n\n\nA special chunk label: setup\nTypically #1\nAll following chunks will use these options (i.e., sets global chunk options)\nTip: set include=FALSE\nYou can (and should) use individual chunk options too"
+    "objectID": "slides/01/slides01.html#possible-drawbacks",
+    "href": "slides/01/slides01.html#possible-drawbacks",
+    "title": "Welcome to Stat 220",
+    "section": "Possible drawbacks",
+    "text": "Possible drawbacks\n\nNo partial credit!\nRevisions take time\nCategories don’t “average out”"
   },
   {
-    "objectID": "slides/02/slides02.html#parameters",
-    "href": "slides/02/slides02.html#parameters",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Parameters",
-    "text": "Parameters\n\n\n---\ntitle: Survivor\noutput:\n  html_document:\n    toc: true\n    toc_float: true\n    theme: flatly\nparams:\n  season: '20'\n---"
+    "objectID": "slides/01/slides01.html#tokens",
+    "href": "slides/01/slides01.html#tokens",
+    "title": "Welcome to Stat 220",
+    "section": "Tokens",
+    "text": "Tokens\nYou can use a token to:\n\nRevise a portfolio project that did not earn a “successful”\n72-hour extension on a homework assignment (the request must be submitted before the deadline)\n72-hour extension on lab quiz resubmissions (the request must be submitted before the deadline)\nBy passing the syllabus quiz, you’ll activate your 5 tokens for the term. I will track token balances in the moodle gradebook (updated weekly)"
   },
   {
-    "objectID": "slides/02/slides02.html#your-task",
-    "href": "slides/02/slides02.html#your-task",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Your Task",
-    "text": "Your Task\n\n\nThere’s an example HTML report on the schedule\nYour task is to reproduce it in 02-example-lego.rmd (or .qmd, if you prefer).\nTo be as reproducible as possible, you’ll need to use:\n\nYAML metadata\nYAML parameters\nCode chunks with appropriate options\nInline R code"
+    "objectID": "slides/01/slides01.html#collaboration-policy",
+    "href": "slides/01/slides01.html#collaboration-policy",
+    "title": "Welcome to Stat 220",
+    "section": "Collaboration policy",
+    "text": "Collaboration policy\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
   },
   {
-    "objectID": "slides/02/slides02.html#hints",
-    "href": "slides/02/slides02.html#hints",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Hints",
-    "text": "Hints\n\n\nTo begin, use inline R code to replace “hard coding” the quantities that are highlighted below.\n\n\nFor example, instead of typing 19798 you would include nrow(sets) as an inline code chunk. Make sure the report knits and you get the right values.\n\nNext, add a parameter to your YAML header that stores the location of the data set. Make sure the report knits.\nChange the code chunk where you load the data set to use the data parameter you just defined rather than the hard-coded URL. Make sure the report knits.\nNow, let’s make a parameter for the source of the data set so you don’t have to search where every mention of it in the report, it will be with the other metadata (where it belongs). To do this, add a parameter that gives the source of your data (call it data_source) and set it equal to “the 2022-09-09 repository on Tidy Tuesday.” Make sure the report knits.\nAt this point it looks like everything is working—awesome job! To put it to the test, let’s update the parameters of your report and knit it to see if everything changes as we would expect. Here are the new parameter values:\n\ndata: \"http://math.carleton.edu/aluby/stat220/lego_subset.csv\"\ndata_source: \"Amanda's website\"\n\n(optional) If you have time, or would like to try outside of class, I’ve created a practice gradescope assignment space. First, add .pdf output to your document and knit to PDF. Commit the PDF and push to github. Then, log into gradescope (you may have to go through the link on moodle the first time) and link your github repo. You should then be able to submit your .pdf\n\noutput: \n  html_document:\n    default\n  pdf_document:\n    default"
+    "objectID": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
+    "href": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
+    "title": "Welcome to Stat 220",
+    "section": "Use of generative artificial intelligence (AI)",
+    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT or Gemini, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.\n\n\n\nAdapted from Mine Çetinkaya-Rundel"
+  },
+  {
+    "objectID": "slides/01/slides01.html#tools",
+    "href": "slides/01/slides01.html#tools",
+    "title": "Welcome to Stat 220",
+    "section": "Tools",
+    "text": "Tools\n\nhttps://maize.mathcs.carleton.edu\n\n\nBrowser based RStudio instance(s) provided by Carleton\nRequires internet connection to access\nProvides consistency in hardware and software environments\nLocal R installations are also fine! But it may be harder for me to provide support"
+  },
+  {
+    "objectID": "slides/01/slides01.html#github",
+    "href": "slides/01/slides01.html#github",
+    "title": "Welcome to Stat 220",
+    "section": "GitHub",
+    "text": "GitHub\n\nhttps://github.com/stat220-w25\n\n\nGitHub organization for the course\nAll of your work and your membership (enrollment) in the organization is private\nEach assignment is a private repo on GitHub, I distribute the assignments on GitHub.\nYou will work on your assignment, then “knit 🧶 commit ✅ push ⤴️”\nYou’ll then be able to submit your PDF via gradescope\n\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
+  },
+  {
+    "objectID": "slides/01/slides01.html#username-advice",
+    "href": "slides/01/slides01.html#username-advice",
+    "title": "Welcome to Stat 220",
+    "section": "Username advice",
+    "text": "Username advice\n\nin case you don’t yet have a GitHub account…\n\nSome brief advice about selecting your account names (particularly for GitHub),\n\nIncorporate your actual name! People like to know who they’re dealing with and makes your username easier for people to guess or remember\nReuse your username from other contexts, e.g., Twitter or Slack\nPick a username you will be comfortable revealing to your future boss\nShorter is better than longer, but be as unique as possible\nMake it timeless. Avoid highlighting your current university, employer, or place of residence"
+  },
+  {
+    "objectID": "slides/01/slides01.html#your-tasks-before-next-class",
+    "href": "slides/01/slides01.html#your-tasks-before-next-class",
+    "title": "Welcome to Stat 220",
+    "section": "Your tasks before next class",
+    "text": "Your tasks before next class\n\nCreate a GitHub account if you don’t have one\nComplete the welcome survey if you haven’t already\nRead the syllabus and pass syllabus quiz\nMake sure you can login in to the maize server or update your local R/RStudio versions\nComplete the readings for next class"
+  },
+  {
+    "objectID": "slides/05/slides05.html#today",
+    "href": "slides/05/slides05.html#today",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Today",
+    "text": "Today\n\ngit/GitHub\nIntro to Spatial Data\nMaking Maps in ggplot2"
+  },
+  {
+    "objectID": "slides/05/slides05.html#section",
+    "href": "slides/05/slides05.html#section",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "Think of the state on GitHub as “worst case scenario”\nIf you screw things up, copy your important files (eg. hw.Rmd) to a safe place.\n\nUsually your files are JUST FINE. But it is easy to goof up the Git infrastructure when you’re new at this. And it can be hard to get that straightened out on your own.\n\nRename the existing local repo as a temporary measure, i.e. before you do something radical, like delete it.\nClone the original repo from GitHub to RStudio (follow the directions to create a new project). You are back to a happy state.\nCopy all relevant files back over from your safe space. The ones whose updated state you need to commit.\nKnit, commit, push\nCarry on with your life.\n\n\n\n\n\n\nBurn It All Down from Happy Git with R"
+  },
+  {
+    "objectID": "slides/05/slides05.html#cholera",
+    "href": "slides/05/slides05.html#cholera",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Cholera",
+    "text": "Cholera\nIn 1854, a Cholera outbreak killed 127 people in 3 days in a London neighborhood, resulting in a mass exodus of local residents. At the time, people thought that Cholera w as an airborne disease. John Snow was a physician who was critical of the airborne theory, and set out to investigate.\n\nWhat might this data look like?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndate\nlast_name\nfirst_name\naddress\nage\ncause_of_death\n\n\n\n\nAug 31, 1854\nJones\nThomas\n26 Broad St.\n37\ncholera\n\n\nAug 31, 1854\nJones\nMary\n26 Broad St.\n11\ncholera\n\n\nSept 1, 1854\nWarwick\nMartin\n14 Broad St.\n23\ncholera\n\n\n\n\n\n\n\n\nSource: MDSR Ch17.1"
+  },
+  {
+    "objectID": "slides/05/slides05.html#section-2",
+    "href": "slides/05/slides05.html#section-2",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "What makes “address” a useful variable is that it is linked to a specific location in the physical world. If we plot these addresses, we get something like the following:\n\n\n\n\n\n\n\n\n\n\n\nSource: MDSR Ch17.1"
+  },
+  {
+    "objectID": "slides/05/slides05.html#section-3",
+    "href": "slides/05/slides05.html#section-3",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "While we can see patterns in the last plot, the underlying map of the London streets provides helpful context that makes it more intelligble:\n\n\n\n\n\n\n\nSource: MDSR Ch17.1"
+  },
+  {
+    "objectID": "slides/05/slides05.html#section-4",
+    "href": "slides/05/slides05.html#section-4",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "Snow’s insight was driven by another set of data—the locations of the street-side water pumps (it’s kind of hard to see, but they are labelled on the map). Nearly all of the cases were clustered around a single pump on the center of Broad Street.\nJohn Snow’s map (and water pump) are now “famous” among epidemiologists and statisticians.\n\n\n\n\nJohn Snow’s water pump (and pub) from a 2019 visit\n\n\n\n\n\nSource: MDSR Ch17.1"
+  },
+  {
+    "objectID": "slides/05/slides05.html#a-successful-data-science-episode",
+    "href": "slides/05/slides05.html#a-successful-data-science-episode",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "A successful data science episode:",
+    "text": "A successful data science episode:\n\nCombine three sources of data (Cholera deaths, water pump locations, and street map)\nWhile a model might have come to the same conclusion, simply plotting the data is much simpler (and more convincing to lots of people)\nThe problem was resolved when the data-based evidence was combined with a plausible model that explained the physical phenomenon.\n\n\n\nSource: MDSR Ch17.1"
+  },
+  {
+    "objectID": "slides/05/slides05.html#what-is-a-map",
+    "href": "slides/05/slides05.html#what-is-a-map",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "What is a map?",
+    "text": "What is a map?\nA bunch of latitude longitude points…"
+  },
+  {
+    "objectID": "slides/05/slides05.html#what-is-a-map-1",
+    "href": "slides/05/slides05.html#what-is-a-map-1",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "What is a map?",
+    "text": "What is a map?\n… that are connected with lines in a very specific order."
+  },
+  {
+    "objectID": "slides/05/slides05.html#necessary-map-data",
+    "href": "slides/05/slides05.html#necessary-map-data",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Necessary map data",
+    "text": "Necessary map data\n\nlatitude/longitude points for all map boundaries\nwhich boundary group all lat/long points belong\nthe order to connect points within each group"
+  },
+  {
+    "objectID": "slides/05/slides05.html#state-map-data",
+    "href": "slides/05/slides05.html#state-map-data",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "State map data",
+    "text": "State map data\nggplot2::map_data() provides the necessary information\n\nstates &lt;- map_data(\"state\")\nglimpse(states)\n\nRows: 15,537\nColumns: 6\n$ long      &lt;dbl&gt; -87.46201, -87.48493, -87.52503, -87.53076, -87.57087, -87.5…\n$ lat       &lt;dbl&gt; 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30.32665, …\n$ group     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …\n$ order     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1…\n$ region    &lt;chr&gt; \"alabama\", \"alabama\", \"alabama\", \"alabama\", \"alabama\", \"alab…\n$ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …"
+  },
+  {
+    "objectID": "slides/05/slides05.html#using-geom_polygon",
+    "href": "slides/05/slides05.html#using-geom_polygon",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Using geom_polygon()",
+    "text": "Using geom_polygon()\nUsing geom_polygon() will treat states as solid shapes, making it easier to add color\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")"
+  },
+  {
+    "objectID": "slides/05/slides05.html#using-coord_fixed",
+    "href": "slides/05/slides05.html#using-coord_fixed",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Using coord_fixed()",
+    "text": "Using coord_fixed()\nUsing coord_fixed() forces x and y units to be equal\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\") +\n  coord_fixed()"
+  },
+  {
+    "objectID": "slides/05/slides05.html#your-turn",
+    "href": "slides/05/slides05.html#your-turn",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Your turn",
+    "text": "Your turn\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\") +\n    coord_fixed()\n\n\n\nEdit this code so that each shape is colored in with a different color.\nYou only need the 3 variables used: long, lat, and group\n05-maps.Rmd file available in the activities repo\n\n\n\n\n\n−+\n03:00"
+  },
+  {
+    "objectID": "slides/05/slides05.html#coordinate-systems-and-projections",
+    "href": "slides/05/slides05.html#coordinate-systems-and-projections",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Coordinate Systems and Projections",
+    "text": "Coordinate Systems and Projections"
+  },
+  {
+    "objectID": "slides/05/slides05.html#section-5",
+    "href": "slides/05/slides05.html#section-5",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "Geospatial data exists on the globe and is generally described with a latitude and longitude. Any projection from the globe to euclidean space (X-Y plane) is going to cause some distortion."
+  },
+  {
+    "objectID": "slides/05/slides05.html#changing-the-coordinate-system",
+    "href": "slides/05/slides05.html#changing-the-coordinate-system",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Changing the coordinate system",
+    "text": "Changing the coordinate system\ncoord_map function provides a Mercator projection (mapproj package has more options)\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n  geom_polygon(color=\"gold2\", fill=\"navyblue\") + \n  coord_map() + \n  theme_map()"
+  },
+  {
+    "objectID": "slides/05/slides05.html#changing-the-coordinate-system-1",
+    "href": "slides/05/slides05.html#changing-the-coordinate-system-1",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Changing the coordinate system",
+    "text": "Changing the coordinate system\ncoord_map function provides a Mercator projection (mapproj package has more options)\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n  geom_polygon(color=\"gold2\", fill=\"navyblue\") + \n  coord_map(projection = \"sinusoidal\") + \n  theme_map()"
+  },
+  {
+    "objectID": "slides/05/slides05.html#mercator-vs-sinusoidal-projection-world-map",
+    "href": "slides/05/slides05.html#mercator-vs-sinusoidal-projection-world-map",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Mercator vs Sinusoidal projection (world map)",
+    "text": "Mercator vs Sinusoidal projection (world map)\n\nworld &lt;- map_data(\"world\")\n\nggplot(world, aes(x=long, y=lat, group=group)) + \n  geom_polygon(color=\"gold2\", fill=\"navyblue\") + \n  coord_map(projection = \"mercator\") + \n  theme_map()"
+  },
+  {
+    "objectID": "slides/05/slides05.html#common-types-of-maps",
+    "href": "slides/05/slides05.html#common-types-of-maps",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Common Types of Maps",
+    "text": "Common Types of Maps\n\nChloropleth\nProportional Symbol\nCartograms/Geofacets"
+  },
+  {
+    "objectID": "slides/05/slides05.html#chloropleth",
+    "href": "slides/05/slides05.html#chloropleth",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Chloropleth",
+    "text": "Chloropleth\nFill in regions with variable values\n\n\nNeed two data sources: 1. map data with lat, long, region 2. data with measurements for each region 3. you don’t need to join them!\n\n\n\n\n\nFundamentals of Data Visualization"
+  },
+  {
+    "objectID": "slides/05/slides05.html#proportional-symbol",
+    "href": "slides/05/slides05.html#proportional-symbol",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Proportional Symbol",
+    "text": "Proportional Symbol\nOverlay symbols on an existing map, where the size of the shape is proportional to the variable\n\n\n\nMade with ggmap and nycflights13"
+  },
+  {
+    "objectID": "slides/05/slides05.html#cartogram",
+    "href": "slides/05/slides05.html#cartogram",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Cartogram",
+    "text": "Cartogram\nUse approximate geographical position to encode information, but not lat/long directly\n\n\n\nFundamentals of Data Visualization"
+  },
+  {
+    "objectID": "slides/05/slides05.html#your-task",
+    "href": "slides/05/slides05.html#your-task",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Your task",
+    "text": "Your task\nYour task is to use the American Community Survey data to make a chloropleth map of the US\n\nYou should:\n\nUse the starter code provided\nChoose a different variable\nChange the color scale\nUpdate the title, axis labels, and legend"
   },
   {
     "objectID": "slides/03/slides03.html#plan-for-today",
@@ -652,7 +788,7 @@
     "href": "index.html",
     "title": "Stat 220: Intro to Data Science",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n📝complete welcome survey\n\nWelcome + data, R review\n\nslides01 01-example-unvotes\n\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\n\nslides02 02-reproducible-reports 02-lego-report\n\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1  📺 intro to ggplot\n\nggplot\n\nslides03 03-ggplot-intro and .rmd\n\nHW 1 (on moodle)\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04  04-customizing-plots .rmd\n\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\nslides05  05-making-a-map\nHW 2\n\n\n2\nF\nFri, Jan 17\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\nslides07  07-verbs\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\nslides08  08-group_by\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4  📚 R4DS 19.1-19.3\n\nTidy data/pivots and joins\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 16 \n\nWorking with factors\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\n\n\n\n5\nM\nMon, Feb 3\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nText Analysis\n\nPortfolio 2\n\n\n5\nW\nWed, Feb 5\nTBA\nCatch up + Ethics II\n\nHW 5\n\n\n5\nF\nFri, Feb 7\nTBA\nTBA\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\n❌ Midterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n📚What is an API? 📝 work through tidycensus basic usage vignette (including signing up for a census API key!)\nAPIs\n\n\n\n\n7\nW\nWed, Feb 19\nTBA\nScraping\n\nHW7  Final Project Proposal\n\n\n7\nF\nFri, Feb 21\n\nEthics III\n\nLab Quiz 3\n\n\n8\nM\nMon, Feb 24\nTBA\nIntro to Interactivity\n\nPortfolio 3\n\n\n8\nW\nWed, Feb 26\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\nShiny 1\n\nHW8\n\n\n8\nF\nFri, Feb 28\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nM\nMon, Mar 3\n\nShiny 3\n\nFinal Project sketch draft\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\n\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
+    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n📝complete welcome survey\n\nWelcome + data, R review\n\nslides01 01-example-unvotes\n\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\n\nslides02 02-reproducible-reports 02-lego-report\n\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1  📺 intro to ggplot\n\nggplot\n\nslides03 03-ggplot-intro and .rmd\n\nHW 1 (on moodle)\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04  04-customizing-plots .rmd\n\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\n\nslides05  05-maps .rmd\n\nHW 2\n\n\n2\nF\nFri, Jan 17\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\nslides07  07-verbs\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\nslides08  08-group_by\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4  📚 R4DS 19.1-19.3\n\nTidy data/pivots and joins\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 16 \n\nWorking with factors\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\n\n\n\n5\nM\nMon, Feb 3\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nText Analysis\n\nPortfolio 2\n\n\n5\nW\nWed, Feb 5\nTBA\nCatch up + Ethics II\n\nHW 5\n\n\n5\nF\nFri, Feb 7\nTBA\nTBA\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\n❌ Midterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n📚What is an API? 📝 work through tidycensus basic usage vignette (including signing up for a census API key!)\nAPIs\n\n\n\n\n7\nW\nWed, Feb 19\nTBA\nScraping\n\nHW7  Final Project Proposal\n\n\n7\nF\nFri, Feb 21\n\nEthics III\n\nLab Quiz 3\n\n\n8\nM\nMon, Feb 24\nTBA\nIntro to Interactivity\n\nPortfolio 3\n\n\n8\nW\nWed, Feb 26\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\nShiny 1\n\nHW8\n\n\n8\nF\nFri, Feb 28\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nM\nMon, Mar 3\n\nShiny 3\n\nFinal Project sketch draft\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\n\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
     "crumbs": [
       "Course information",
       "Schedule"
@@ -953,204 +1089,250 @@
     "text": "Your turn\nNow that we have the toolkit to make customizations to our plots, and some “rules” for good graphs, let’s break them!\n\n\nChoose a graph (the one from class today, one from last class, one from homework, etc.)\nMake it ugly\n\n\nChange the color scale\nChoose a complete theme\nMake at least 3 custom tweaks to the theme options\n\n\nExplain why it’s ugly (what “rules” are you breaking? what makes it an ineffective graph?)\nPost to our slack #social channel when you’re done (you don’t have to post your explanation)"
   },
   {
-    "objectID": "slides/01/slides01.html#about-me",
-    "href": "slides/01/slides01.html#about-me",
-    "title": "Welcome to Stat 220",
-    "section": "About me",
-    "text": "About me\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
+    "objectID": "slides/02/slides02.html#plan-for-today",
+    "href": "slides/02/slides02.html#plan-for-today",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Plan for today:",
+    "text": "Plan for today:\n\nQuestions from syllabus quiz\nGithub\n\nAccessing your private repos\nknit 🧶 commit ✅ push ⤴️\n\nReproducible Reporting"
   },
   {
-    "objectID": "slides/01/slides01.html#what-is-data-science",
-    "href": "slides/01/slides01.html#what-is-data-science",
-    "title": "Welcome to Stat 220",
-    "section": "What is “data science”?",
-    "text": "What is “data science”?"
+    "objectID": "slides/02/slides02.html#questions-from-syllabus-quiz",
+    "href": "slides/02/slides02.html#questions-from-syllabus-quiz",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Questions from syllabus quiz",
+    "text": "Questions from syllabus quiz\n\nWill the course build off of Stat120 concepts?\nClarification of what gets submitted to gradescope and what to GitHub\nRMarkdown versus Quarto?\nExamples of previous final projects?\nInfo about portfolio projects?"
   },
   {
-    "objectID": "slides/01/slides01.html#what-is-this-class-about",
-    "href": "slides/01/slides01.html#what-is-this-class-about",
-    "title": "Welcome to Stat 220",
-    "section": "What is this class about?",
-    "text": "What is this class about?\n\nDevelop research questions that can be answered with data\nAcquire data from multiple sources\nWrangle common types of data\nVisualize data to provide insight\nCommunicate your findings\nDocument your code and collaborate on coding projects"
+    "objectID": "slides/02/slides02.html#git-github",
+    "href": "slides/02/slides02.html#git-github",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Git + GitHub",
+    "text": "Git + GitHub\n\n\n\nGit is a version control system - like “Track Changes”, on steroids\nIt’s not the only version control system, but it’s a very popular one\n\n\n\nGitHub is the home for your Git-based projects on the internet—like DropBox but much, much better\nWe will use GitHub as a platform for web hosting and collaboration"
   },
   {
-    "objectID": "slides/01/slides01.html#section",
-    "href": "slides/01/slides01.html#section",
-    "title": "Welcome to Stat 220",
+    "objectID": "slides/02/slides02.html#why-do-we-need-it",
+    "href": "slides/02/slides02.html#why-do-we-need-it",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Why do we need it?",
+    "text": "Why do we need it?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#versioning",
+    "href": "slides/02/slides02.html#versioning",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Versioning",
+    "text": "Versioning"
+  },
+  {
+    "objectID": "slides/02/slides02.html#versioning-with-human-readable-messages",
+    "href": "slides/02/slides02.html#versioning-with-human-readable-messages",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Versioning (with human-readable messages)",
+    "text": "Versioning (with human-readable messages)"
+  },
+  {
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#lets-try-it",
+    "href": "slides/02/slides02.html#lets-try-it",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Let’s try it!",
+    "text": "Let’s try it!\n\n\n\nFollow the “Individual Assignment” directions at https://stat220-w25.github.io/computing/git-stat220.html to access your day02 repo and create an R project\nEdit the .Rmd file:\n\nChange “author” to your name\nUse # to add descriptive section headers for each code chunk\nAdd a sentence or two describing the summary statistics of the dataset\n\nknit 🧶 commit ✅ push ⤴️\nView on github.com/stat220-w25/day02yourusername and confirm you can see your changes\n\n\n\n\n\n\n−+\n15:00"
+  },
+  {
+    "objectID": "slides/02/slides02.html#why-do-we-need-it-1",
+    "href": "slides/02/slides02.html#why-do-we-need-it-1",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Why do we need it?",
+    "text": "Why do we need it?\nOops! I gave you the wrong set of data."
+  },
+  {
+    "objectID": "slides/02/slides02.html#why-do-we-need-it-2",
+    "href": "slides/02/slides02.html#why-do-we-need-it-2",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Why do we need it?",
+    "text": "Why do we need it?\n\nKarl – this is very interesting , however you used an old version of the data (n=143 rather than n=226). I’m really sorry you did all that work on the incomplete dataset.\nBruce\n\n\n\nAdapted from Karl Broman"
+  },
+  {
+    "objectID": "slides/02/slides02.html#other-examples",
+    "href": "slides/02/slides02.html#other-examples",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Other examples:",
+    "text": "Other examples:\n\nThe results in Table 1 don’t seem to correspond to those in Figure 2.\nIn what order do I run these scripts?\nWhere did we get this data file?\nWhy did I omit those samples?\nHow did I make that figure?\n“Your script is now giving an error.”\n“The attached is similar to the code we used.”\n\n\n\nAdapted from Karl Broman"
+  },
+  {
+    "objectID": "slides/02/slides02.html#reproducible-data-science",
+    "href": "slides/02/slides02.html#reproducible-data-science",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Reproducible data science",
+    "text": "Reproducible data science\n\n\nShort Term Impact\n\nAre the tables and figures reproducible from the code and data?\nDoes the code actually do what you think it does?\nIn addition to what was done, is it clear why it was done? (e.g., how were parameter settings chosen?)\n\n\nLong Term Impact\n\nCan the code be used for other data?\nCan you extend the code to other things?"
+  },
+  {
+    "objectID": "slides/02/slides02.html#the-toolkit",
+    "href": "slides/02/slides02.html#the-toolkit",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "The toolkit",
+    "text": "The toolkit\n\n\n\n\n\n\n\n\n\n\nScriptability \\(\\rightarrow\\) R\nCode environment \\(\\rightarrow\\) RStudio\nLiterate programming (code, narrative, output in one place) \\(\\rightarrow\\) R Markdown\nVersion control \\(\\rightarrow\\) Git / GitHub"
+  },
+  {
+    "objectID": "slides/02/slides02.html#what-is-r-markdown",
+    "href": "slides/02/slides02.html#what-is-r-markdown",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "What is R Markdown?",
+    "text": "What is R Markdown?\n\nAn authoring framework for data science.\nA document format (.Rmd).\nAn R package named rmarkdown.\nA file format for making dynamic documents with R.\nA tool for integrating prose, code, and results.\nA computational document."
+  },
+  {
+    "objectID": "slides/02/slides02.html#what-about-quarto",
+    "href": "slides/02/slides02.html#what-about-quarto",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "What about quarto?",
+    "text": "What about quarto?\n\n“Next Gen” RMarkdown\nMore compatibility with other languages (python, observable.js, etc.)\nnot an R package/separate software\nI’m going to distribute HW, etc. via RMarkdown, but you are welcome to use either!"
+  },
+  {
+    "objectID": "slides/02/slides02.html#the-setup-chunk",
+    "href": "slides/02/slides02.html#the-setup-chunk",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "The setup chunk",
+    "text": "The setup chunk\n\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(\n  collapse = TRUE,   \n  comment = \"#&gt;\", \n  out.width = \"100%\" \n)\n```\n\n\nA special chunk label: setup\nTypically #1\nAll following chunks will use these options (i.e., sets global chunk options)\nTip: set include=FALSE\nYou can (and should) use individual chunk options too"
+  },
+  {
+    "objectID": "slides/02/slides02.html#parameters",
+    "href": "slides/02/slides02.html#parameters",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n---\ntitle: Survivor\noutput:\n  html_document:\n    toc: true\n    toc_float: true\n    theme: flatly\nparams:\n  season: '20'\n---"
+  },
+  {
+    "objectID": "slides/02/slides02.html#your-task",
+    "href": "slides/02/slides02.html#your-task",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Your Task",
+    "text": "Your Task\n\n\nThere’s an example HTML report on the schedule\nYour task is to reproduce it in 02-example-lego.rmd (or .qmd, if you prefer).\nTo be as reproducible as possible, you’ll need to use:\n\nYAML metadata\nYAML parameters\nCode chunks with appropriate options\nInline R code"
+  },
+  {
+    "objectID": "slides/02/slides02.html#hints",
+    "href": "slides/02/slides02.html#hints",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Hints",
+    "text": "Hints\n\n\nTo begin, use inline R code to replace “hard coding” the quantities that are highlighted below.\n\n\nFor example, instead of typing 19798 you would include nrow(sets) as an inline code chunk. Make sure the report knits and you get the right values.\n\nNext, add a parameter to your YAML header that stores the location of the data set. Make sure the report knits.\nChange the code chunk where you load the data set to use the data parameter you just defined rather than the hard-coded URL. Make sure the report knits.\nNow, let’s make a parameter for the source of the data set so you don’t have to search where every mention of it in the report, it will be with the other metadata (where it belongs). To do this, add a parameter that gives the source of your data (call it data_source) and set it equal to “the 2022-09-09 repository on Tidy Tuesday.” Make sure the report knits.\nAt this point it looks like everything is working—awesome job! To put it to the test, let’s update the parameters of your report and knit it to see if everything changes as we would expect. Here are the new parameter values:\n\ndata: \"http://math.carleton.edu/aluby/stat220/lego_subset.csv\"\ndata_source: \"Amanda's website\"\n\n(optional) If you have time, or would like to try outside of class, I’ve created a practice gradescope assignment space. First, add .pdf output to your document and knit to PDF. Commit the PDF and push to github. Then, log into gradescope (you may have to go through the link on moodle the first time) and link your github repo. You should then be able to submit your .pdf\n\noutput: \n  html_document:\n    default\n  pdf_document:\n    default"
+  },
+  {
+    "objectID": "course-faq.html",
+    "href": "course-faq.html",
+    "title": "FAQ",
     "section": "",
-    "text": "What skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
-  },
-  {
-    "objectID": "slides/01/slides01.html#what-is-this-class-all-about",
-    "href": "slides/01/slides01.html#what-is-this-class-all-about",
-    "title": "Welcome to Stat 220",
-    "section": "What is this class all about?",
-    "text": "What is this class all about?\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
-  },
-  {
-    "objectID": "slides/01/slides01.html#why-r",
-    "href": "slides/01/slides01.html#why-r",
-    "title": "Welcome to Stat 220",
-    "section": "Why R?",
-    "text": "Why R?\n\nAnd the second reason, which is both a huge strength of R and a bit of a weakness, is that R is not just a programming language. It was designed from day 1 to be an environment that can do data analysis. So, compared to the other options like Python, you can get up and running in R doing data science, learning much, much less about programming to get started. And that generally makes it like easier to get up and running if you don’t have formal training in computer science or software engineering.\n\n\n-Hadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham"
-  },
-  {
-    "objectID": "slides/01/slides01.html#advice",
-    "href": "slides/01/slides01.html#advice",
-    "title": "Welcome to Stat 220",
-    "section": "Advice",
-    "text": "Advice\n\n\n\n\n\n\n\n\nIt’s easy when you start out programming to get really frustrated and think, “Oh it’s me, I’m really stupid,” or, “I’m not made out to program.” But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It’s just a natural part of programming. So, it happens to everyone and gets less and less over time. Don’t blame yourself. Just take a break, do something fun, and then come back and try again later.\n\n\n\nHadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham; Artwork by Allison Horst"
-  },
-  {
-    "objectID": "slides/01/slides01.html#on-your-own",
-    "href": "slides/01/slides01.html#on-your-own",
-    "title": "Welcome to Stat 220",
-    "section": "On your own:",
-    "text": "On your own:\n\n\nLog into the maize server: maize.mathcs.carleton.edu\nFollow the directions at stat220-w25.github.io/computing/rstudio-stat220 to create a “content” folder\nLoad the .Rmd file with: download.file(     \"https://math.carleton.edu/aluby/stat220/01-example-unvotes.rmd\",      destfile = \"01-example-unvotes.rmd\")\nSkim the file without running any code:\n\nWhere is the code?\nWhere is the narrative?\n\nRun each code chunk in order. What does this analysis do?\n\n\n\n\n\n−+\n10:00"
-  },
-  {
-    "objectID": "slides/01/slides01.html#what-steps-went-into-this-analysis",
-    "href": "slides/01/slides01.html#what-steps-went-into-this-analysis",
-    "title": "Welcome to Stat 220",
-    "section": "What steps went into this analysis?",
-    "text": "What steps went into this analysis?\n\nRecording the original data\nAccessing data via an R package\nCombining multiple datasets into one\nData cleaning: filtering, creating new columns, grouping, summarizing\nMaking a graph\nFitting a smooth line model"
-  },
-  {
-    "objectID": "slides/01/slides01.html#your-turn",
-    "href": "slides/01/slides01.html#your-turn",
-    "title": "Welcome to Stat 220",
-    "section": "Your turn:",
-    "text": "Your turn:\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
-  },
-  {
-    "objectID": "slides/01/slides01.html#course-github",
-    "href": "slides/01/slides01.html#course-github",
-    "title": "Welcome to Stat 220",
-    "section": "Course github",
-    "text": "Course github\n\nhttps://github.com/stat220-w25/\n\n\naka “the one link to rule them all”\n\n\naccess slides\nsee schedule\naccess repositories for homework and projects"
-  },
-  {
-    "objectID": "slides/01/slides01.html#office-hours-tentative",
-    "href": "slides/01/slides01.html#office-hours-tentative",
-    "title": "Welcome to Stat 220",
-    "section": "Office hours (tentative)",
-    "text": "Office hours (tentative)\n\n\n\nDay\nTime\nType\nLocation\n\n\n\n\nMonday\n11-12\nDrop-in\nCMC 307\n\n\nTuesday\n2-3\nDrop-in\nCMC 307\n\n\nWednesday\n4-5\nDrop-in\nCMC 307\n\n\nFriday\n11-12\nBy appt\nCMC 223"
-  },
-  {
-    "objectID": "slides/01/slides01.html#where-is-amanda-in-january",
-    "href": "slides/01/slides01.html#where-is-amanda-in-january",
-    "title": "Welcome to Stat 220",
-    "section": "Where is Amanda in January?",
-    "text": "Where is Amanda in January?"
-  },
-  {
-    "objectID": "slides/01/slides01.html#what-will-you-do-in-this-course",
-    "href": "slides/01/slides01.html#what-will-you-do-in-this-course",
-    "title": "Welcome to Stat 220",
-    "section": "What will you do in this course?",
-    "text": "What will you do in this course?\n\n\nGraded work:\n\nHomework\nLab Quizzes\nPortfolio Projects\nFinal Project\n\n\nUngraded work:\n\nDaily prep for class: read/watch/review/try\nIn-class exercises and group work\nEngagement in small and large group discussions"
-  },
-  {
-    "objectID": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
-    "href": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
-    "title": "Welcome to Stat 220",
-    "section": "What will a typical day/week look like?",
-    "text": "What will a typical day/week look like?\n\n\nBefore class:\n\nWatch a video or read a chapter\nCome with questions\nBe prepared to try what was covered\n\n\nIn class:\n\nMini lecture\n\nSometimes review\nSometimes new\n\nHands-on coding in R\n\n\nAfter class:\n\nFinish any in-class exercises\nWork on homework and portfolio projects"
-  },
-  {
-    "objectID": "slides/01/slides01.html#grading-system",
-    "href": "slides/01/slides01.html#grading-system",
-    "title": "Welcome to Stat 220",
-    "section": "Grading system",
-    "text": "Grading system\nHomework and lab quiz problems will be graded as successful or not successful. Projects will be graded as excellent, successful, or retry. You will have the opportunity to resubmit the lab quizzes outside of class.\nTo earn a course grade, you must meet all of the requirements in a given row:\n\n\n\n\n\n\n\n\n\n\n\nHomework Problems\nLab Quiz Problems\nPortfolio Projects (4 total)\nFinal Project\n\n\n\n\nA\n85%\n90%\n2 Excellent\nExcellent\n\n\nB\n75%\n80%\n4 Successful\nSuccessful\n\n\nC\n65%\n70%\n3 Successful\nSuccessful\n\n\nD\n55%\n50%\n2 Successful\nSuccessful\n\n\n\n“+” and “-” grades are determined by partially meeting the requirements in a given row."
-  },
-  {
-    "objectID": "slides/01/slides01.html#benefits",
-    "href": "slides/01/slides01.html#benefits",
-    "title": "Welcome to Stat 220",
-    "section": "Benefits",
-    "text": "Benefits\n\nYou decide what grade you’re aiming for, and what you have to do to earn it\nClear guidelines for “successful” and “excellent” marks\nOpportunity to revise and resubmit"
-  },
-  {
-    "objectID": "slides/01/slides01.html#possible-drawbacks",
-    "href": "slides/01/slides01.html#possible-drawbacks",
-    "title": "Welcome to Stat 220",
-    "section": "Possible drawbacks",
-    "text": "Possible drawbacks\n\nNo partial credit!\nRevisions take time\nCategories don’t “average out”"
-  },
-  {
-    "objectID": "slides/01/slides01.html#tokens",
-    "href": "slides/01/slides01.html#tokens",
-    "title": "Welcome to Stat 220",
-    "section": "Tokens",
-    "text": "Tokens\nYou can use a token to:\n\nRevise a portfolio project that did not earn a “successful”\n72-hour extension on a homework assignment (the request must be submitted before the deadline)\n72-hour extension on lab quiz resubmissions (the request must be submitted before the deadline)\nBy passing the syllabus quiz, you’ll activate your 5 tokens for the term. I will track token balances in the moodle gradebook (updated weekly)"
-  },
-  {
-    "objectID": "slides/01/slides01.html#collaboration-policy",
-    "href": "slides/01/slides01.html#collaboration-policy",
-    "title": "Welcome to Stat 220",
-    "section": "Collaboration policy",
-    "text": "Collaboration policy\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
-  },
-  {
-    "objectID": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
-    "href": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
-    "title": "Welcome to Stat 220",
-    "section": "Use of generative artificial intelligence (AI)",
-    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT or Gemini, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.\n\n\n\nAdapted from Mine Çetinkaya-Rundel"
-  },
-  {
-    "objectID": "slides/01/slides01.html#tools",
-    "href": "slides/01/slides01.html#tools",
-    "title": "Welcome to Stat 220",
-    "section": "Tools",
-    "text": "Tools\n\nhttps://maize.mathcs.carleton.edu\n\n\nBrowser based RStudio instance(s) provided by Carleton\nRequires internet connection to access\nProvides consistency in hardware and software environments\nLocal R installations are also fine! But it may be harder for me to provide support"
-  },
-  {
-    "objectID": "slides/01/slides01.html#github",
-    "href": "slides/01/slides01.html#github",
-    "title": "Welcome to Stat 220",
-    "section": "GitHub",
-    "text": "GitHub\n\nhttps://github.com/stat220-w25\n\n\nGitHub organization for the course\nAll of your work and your membership (enrollment) in the organization is private\nEach assignment is a private repo on GitHub, I distribute the assignments on GitHub.\nYou will work on your assignment, then “knit 🧶 commit ✅ push ⤴️”\nYou’ll then be able to submit your PDF via gradescope\n\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
-  },
-  {
-    "objectID": "slides/01/slides01.html#username-advice",
-    "href": "slides/01/slides01.html#username-advice",
-    "title": "Welcome to Stat 220",
-    "section": "Username advice",
-    "text": "Username advice\n\nin case you don’t yet have a GitHub account…\n\nSome brief advice about selecting your account names (particularly for GitHub),\n\nIncorporate your actual name! People like to know who they’re dealing with and makes your username easier for people to guess or remember\nReuse your username from other contexts, e.g., Twitter or Slack\nPick a username you will be comfortable revealing to your future boss\nShorter is better than longer, but be as unique as possible\nMake it timeless. Avoid highlighting your current university, employer, or place of residence"
-  },
-  {
-    "objectID": "slides/01/slides01.html#your-tasks-before-next-class",
-    "href": "slides/01/slides01.html#your-tasks-before-next-class",
-    "title": "Welcome to Stat 220",
-    "section": "Your tasks before next class",
-    "text": "Your tasks before next class\n\nCreate a GitHub account if you don’t have one\nComplete the welcome survey if you haven’t already\nRead the syllabus and pass syllabus quiz\nMake sure you can login in to the maize server or update your local R/RStudio versions\nComplete the readings for next class"
-  },
-  {
-    "objectID": "notes/02-full-lego-report.html",
-    "href": "notes/02-full-lego-report.html",
-    "title": "An Overview of Lego Sets on Rebrickable",
-    "section": "",
-    "text": "Rebrickable is a website that shows you which LEGO sets you can build from the LEGO sets and parts that you already own. To do this, Rebrickable maintains a database of the entire LEGO catalog. In this document, we’ll summarize the LEGO sets in this database.\nThe data set was originally obtained from the 2022-09-09 repository on Tidy Tuesday.\n\nIn the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
-  },
-  {
-    "objectID": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
-    "href": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
-    "title": "An Overview of Lego Sets on Rebrickable",
-    "section": "",
-    "text": "In the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
-  },
-  {
-    "objectID": "portfolio/portfolio-1.html",
-    "href": "portfolio/portfolio-1.html",
-    "title": "Portfolio Project 1",
-    "section": "",
-    "text": "Overview\nIn your first mini-project, you’ll apply what you’ve learned about ggplot2 and design principles to replicate and redesign a published graph. This project consists of three parts:\n\nReplicating an existing graph using ggplot2. Depending on the graph you choose, this may require some creativity in recreating data.\nUsing design principles from class, re-design the original graph to be better. This should include, at minimum, changes to two of the “layers” of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme).\nA written summary (no more than 1 printed page) including (1) an evaluation of the original graph and (2) reasoning for your design choices in improving the graph. This should include references to readings and discussions from class.\n\n\n\nOptions and Examples\nThe list below includes some good places to get started finding a graph. You do not have to choose a graph from one of these sources. It can be hard to find associated data with some published graphs, so don’t spend too much time trying to find data for a specific graph before moving on.\n\nOur World In Data\nFiveThirtyEight + Associated R Package (See available data here).\nHelpMeViz\nDataIsPlural\nTidyTuesday – If you choose this option, please be especially kind in your critique. This is a weekly R community activity, and many submissions are by beginners.\nr/dataisbeautiful\nr/dataisugly\n\n\n\nSubmission\nYour submission should include two visualizations (replication and improvement), a written overview of your work, and all associated code. You should work in a rmarkdown or quarto file. Your knitted/rendered file can be either pdf or html. I will distribute GitHub skeleton repos that you should fill in as you work. You should commit your final code and output file to your repo and link your repo to gradescope to submit.\n\n\nRubric\nA successful project will:\n\nInclude all necessary components pushed to GitHub and linked to gradescope\nContain code, plots, and written summary in a single .rmd document\nThe .rmd with all necessary code for recreation\nThe .rmd does not include unnecessary code\nProvide a thoughtful summary and critique\nThe replication matches the original graph on all layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\nThe improved graph has made changes to at least two of the layers\n\nAesthetics faithfully represent the representation of the underlying data\n\nMeet minimum submission quality standards\n\nVery few grammatical mistakes, spelling mistakes, or typos\nAppropriate labels and font sizes\nA readable theme\nThe rendered document does not contain any unnecessary content (package loading messages, warnings, etc.)\n\n\nAn excellent project will meet all of the requirements for a successful project, plus\n\nBe published (publicly!) to the web. (It is a portfolio project, after all). I recommend using RPubs as it’s very easy to publish a standalone website through RStudio, but if you have a public-facing website, that’s great too! Please include a URL in your YAML header so I can find it when grading.\n\nThere are lots of reasons you might not want the world to know that you are enrolled in this class, and this is one of your rights under FERPA. If you’re not comfortable including your name, you don’t have to! Your public document can be authored by “Student” (which has a history of being used in statistics).\nIf you are not comfortable attaching your name to something public-facing and this solution doesn’t work for you, please contact me on slack at least 72 hours before the due date so we can make an alternative plan.\n\nThe improved graph has made changes to at least four of the layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\n\nAll changes to aesthetics, geometries, etc. should be faithful representations of the underlying data (e.g. changes for the sake of making a change don’t count!)\n\n\nFor this portfolio project, you may work individually or in pairs. If you choose to work in a pair, let me know as soon as you decide so I can make a group repo for you. Both partners should have a record of committing and pushing to the repo.\n\n\nFAQ\nIf you have any questions, please post them to the #portfolio-projects channel on slack.",
+    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
     "crumbs": [
-      "Portfolio Projects",
-      "Portfolio Project 1"
+      "Course information",
+      "FAQ"
     ]
+  },
+  {
+    "objectID": "course-faq.html#where-can-i-get-help",
+    "href": "course-faq.html#where-can-i-get-help",
+    "title": "FAQ",
+    "section": "",
+    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
+    "crumbs": [
+      "Course information",
+      "FAQ"
+    ]
+  },
+  {
+    "objectID": "notes/01-r-basics.html",
+    "href": "notes/01-r-basics.html",
+    "title": "R Basics",
+    "section": "",
+    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#loading-r-packages",
+    "href": "notes/01-r-basics.html#loading-r-packages",
+    "title": "R Basics",
+    "section": "",
+    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#creating-and-naming-objects",
+    "href": "notes/01-r-basics.html#creating-and-naming-objects",
+    "title": "R Basics",
+    "section": "Creating and naming objects",
+    "text": "Creating and naming objects\nAll R statements where you create objects have the form:\n\nobject_name &lt;- value\n\nAt first, we’ll be creating a lot of data objects. For example, we an load a data set containing the ratings for each episode of The Office using the code\n\noffice_ratings &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-17/office_ratings.csv\")\n\nIn this class you will be creating a lot of objects, so you’ll need to come up with names for those objects. Trying to think of informative/meaningful names for objects is hard, but necessary work! Below are the fundamental rules for naming objects in R:\n\nnames can’t start with a number\nnames are case-sensitive\nsome common letters are used internally by R and should be avoided as variable names (c, q, t, C, D, F, T, I)\nThere are reserved words that R won’t let you use for variable names (for, in, while, if, else, repeat, break, next)\nR will let you use the name of a predefined function—but don’t do it!\n\nYou can always check to see if you the name you want to use is already taken via exists():\nFor example lm exists\n\nexists(\"lm\")\n\n[1] TRUE\n\n\nbut carleton_college doesn’t.\n\nexists(\"carleton_college\")\n\n[1] FALSE\n\n\nThere are also a lot of naming styles out there, and if you have coded in another language, you may have already developed a preference. Below is an illustration by Allison Horst\n\n\n\n\n\n\n\n\nI generally following the tidyverse style guide, so you’ll see that I use only lowercase letters, numbers, and _ (snake case)."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#overviews-of-data-frames",
+    "href": "notes/01-r-basics.html#overviews-of-data-frames",
+    "title": "R Basics",
+    "section": "Overviews of data frames",
+    "text": "Overviews of data frames\nAbove, you loaded in a data set called office_ratings. Data sets are stored as a special data structure called a data frame. Data frames are the most-commonly used data structure for data analysis in R. For now, think of them like spreadsheets.\nOnce you have your data frame, you can get a quick overview of it using a few commands (below I use data_set as a generic placeholder for the data frame’s name):\n\n\n\n\n\n\nCommand\nDescription\n\n\n\nhead(data_set)\nprint the first 6 rows\n\n\ntail(data_set)\nprint the last 6 rows\n\n\nglimpse(data_set)\na quick overview where columns run down the screen and the data values run across. This allows you to see every column in the data frame.\n\n\nstr(data_set)\na quick overview like glimpse(), but without some of the formatting\n\n\nsummary(data_set)\nquick summary statistics for each column\n\n\ndim(data_set)\nthe number of rows and columns\n\n\nnrow(data_set)\nthe number of rows\n\n\nncol(data_set)\nthe number of columns"
+  },
+  {
+    "objectID": "notes/01-r-basics.html#tibbles",
+    "href": "notes/01-r-basics.html#tibbles",
+    "title": "R Basics",
+    "section": "Tibbles",
+    "text": "Tibbles\nA tibble, or a tbl_df is another version of a data frame which is used by default in a lot of the tidyverse packages that we’ll use.\n\nTibbles are data.frames that are lazy and surly: they do less (i.e. they don’t change variable names or types, and don’t do partial matching) and complain more (e.g. when a variable does not exist). This forces you to confront problems earlier, typically leading to cleaner, more expressive code. Tibbles also have an enhanced print() method which makes them easier to use with large datasets containing complex objects.\n\n\n\n\n\n\n\n Check point\n\n\n\nRun the above commands on the office_ratings data set. Compare and contrast the information returned by each command.\n\n\n\n\n\n\n\n\nGetting a spreadsheet\n\n\n\nIn RStudio, you can run the command View(data_set) to pull up a spreadsheet representation of a data frame. You can also click on the name of the data frame in the Environment pane. This can be a great way help you think about the data, and even has some interactive functions (e.g., filtering and searching); however, never include View(data_set) in an .Rmd file!!\n\n\n\n\n\n\n\n\nReview from intro stats\n\n\n\nIn intro stats we used the terms cases (or observations) and variables to describe the rows and columns of a data frame, respectively."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
+    "href": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
+    "title": "R Basics",
+    "section": "Extracting pieces of data frames",
+    "text": "Extracting pieces of data frames\nSince data frames are the fundamental data structure for most analyses in R, it’s important to know how to work with them. You already know how to get an overview of a data frame, but that isn’t always very informative. Often, you want to extract pieces of a data frame, such as a specific column or row.\nExtracting rows\nData frames can be indexed by their row/column numbers. To extract elements of a data frame, the basic syntax is data_set[row.index, column.index]. So, to extract the 10th row of office_ratings we run\n\noffice_ratings[10, ]\n\n# A tibble: 1 × 6\n  season episode title    imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      2       4 The Fire         8.4        2713 2005-10-11\n\n\nNotice that to extract an entire row, we leave the column index position blank.\nWe can also extract multiple rows by creating a vector of row indices. For example, we can extract the first 5 rows via\n\noffice_ratings[1:5, ]\n\n# A tibble: 5 × 6\n  season episode title         imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                 7.6        3706 2005-03-24\n2      1       2 Diversity Day         8.3        3566 2005-03-29\n3      1       3 Health Care           7.9        2983 2005-04-05\n4      1       4 The Alliance          8.1        2886 2005-04-12\n5      1       5 Basketball            8.4        3179 2005-04-19\n\n\nHere, 1:5 create a sequence of integers from 1 to 5.\nWe could also specify arbitrary row index values by combing the values into a vector. For example, we could extract the 1st, 13th, 64th, and 128th rows via\n\noffice_ratings[c(1, 13, 64, 128), ]\n\n# A tibble: 4 × 6\n  season episode title            imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                    7.6        3706 2005-03-24\n2      2       7 The Client               8.6        2631 2005-11-08\n3      4      13 Job Fair                 7.9        1977 2008-05-08\n4      7      11 Classy Christmas         8.9        2138 2010-12-09\n\n\nExtracting columns\nSimilar to extracting rows, we can use a numeric index to extract the columns of a data frame. For example, to extract the 3rd column, we can run\n\noffice_ratings[,3]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nAlternatively, we can pass in the column name in quotes instead of the column number\n\noffice_ratings[,\"title\"]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nNotice that the extracted column is still formatted as a data frame (or tibble). If you want to extract the contents of the column and just have a vector of titles, you have a few options.\n\nYou could use double brackets with the column number:\n\n\noffice_ratings[[3]]\n\n\nYou could use double brackets with the column name in quotes:\n\n\noffice_ratings[[\"title\"]]\n\n\nYou could use the $ extractor with the column name (not in quotes):\n\n\noffice_ratings$title\n\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract the 35th row of office_ratings.\nExtract rows 35, 36, 37, and 38 of office_ratings.\nExtract the imdb_rating column from office ratings using the column index number.\nExtract the imdb_rating column from office ratings using the column name."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#lists",
+    "href": "notes/01-r-basics.html#lists",
+    "title": "R Basics",
+    "section": "Lists",
+    "text": "Lists\nIt turns out that data frames are special cases of lists, a more general data structure. In a data frame, each column is an element of the data list and each column must be of the same length. In general, lists can be comprised of elements of vastly different lengths and data types.\nAs an example, let’s construct a list of the faculty in the MAST department and what is being taught this winter.\n\nstat_faculty &lt;- c(\"Kelling\", \"Loy\", \"Luby\", \"Poppick\", \"St. Clair\", \"Wadsworth\")\nstat_courses &lt;- c(120, 220, 230, 250, 285, 330)\nmath_faculty &lt;- c(\"Brooke\", \"Davis\", \"Egge\", \"Gomez-Gonzales\", \"Haunsperger\", \"Johnson\", \n                  \"Meyer\", \"Montee\", \"Shrestha\",\"Terry\", \"Thompson\", \"Turnage-Butterbaugh\")\nmath_courses &lt;- c(101, 106, 111, 120, 210, 211, 232, 236, 240, 241, 251, 321, 333, 395)\n\nmast &lt;- list(stat_faculty = stat_faculty, stat_courses = stat_courses, \n             math_faculty = math_faculty, math_courses = math_courses)\n\nOverview of a list\nYou can get an overview of a list a few ways:\n\n\nglimpse(list_name) and str(list_name) list the elements of the list and the first few entries of each element.\n\n\nglimpse(mast)\n\nList of 4\n $ stat_faculty: chr [1:6] \"Kelling\" \"Loy\" \"Luby\" \"Poppick\" ...\n $ stat_courses: num [1:6] 120 220 230 250 285 330\n $ math_faculty: chr [1:12] \"Brooke\" \"Davis\" \"Egge\" \"Gomez-Gonzales\" ...\n $ math_courses: num [1:14] 101 106 111 120 210 211 232 236 240 241 ...\n\n\n\n\nlength(list_name) will tell you how many elements are in the list\n\n\nlength(mast)\n\n[1] 4\n\n\nExtracting elements of a list\nSince data frames are lists, you’ve already seen how to extract elements of a list. For example, to extract the stat_faculty you could run\n\nmast[[1]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\nor\n\nmast[[\"stat_faculty\"]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you had only used a single bracket above, the returned object would still be a list, which is typically not what we would want.\n\nmast[1]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\n\n\n Check point\n\n\n\nExtract the statistics courses offered this term."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#vectors",
+    "href": "notes/01-r-basics.html#vectors",
+    "title": "R Basics",
+    "section": "Vectors",
+    "text": "Vectors\nThe columns of the office_ratings data frame and the elements of the mast list were comprised of (atomic) vectors. Unlike lists, all elements within a vector share the same type. For example, all names in the stat_faculty vector were character strings and all ratings in the imdb_rating column were numeric. We’ll deal with a variety of types of vectors in this course, including:\n\nnumeric\ncharacter (text)\nlogical (TRUE/FALSE)\n\nExtracting elements of a vector\nJust like with lists (and therefore data frames), we use brackets to extract elements from a vector. As an example, let’s work with the title column from office_ratings.\n\ntitle &lt;- office_ratings$title # vector of titles\n\nTo extract the 111th title, we run\n\ntitle[111]\n\n[1] \"New Leads\"\n\n\nor two extract the 100th through 111th titles, we run\n\ntitle[100:111]\n\n [1] \"Double Date\"          \"Murder\"               \"Shareholder Meeting\" \n [4] \"Scott's Tots\"         \"Secret Santa\"         \"The Banker\"          \n [7] \"Sabre\"                \"Manager and Salesman\" \"The Delivery: Part 1\"\n[10] \"The Delivery: Part 2\" \"St. Patrick's Day\"    \"New Leads\"           \n\n\nNegative indices\nSometimes, we want to “kick out” elements of our vector. To do this, we can use a negative index value. For example,\n\ntitle[-1]\n\nreturns all but the first title—that is, it kicks out the first title. To kick out multiple elements, we need to negate a vector of indices. For example, below we kick out the first 10 titles\n\ntitle[-c(1:10)]\n\nAnd now we kick out the 5th, 50th, and 150th titles\n\ntitle[-c(5, 50, 150)]\n\nThis idea can be adapted to lists and data frames. For example, to kick out the first row of office_ratings, we run\n\noffice_ratings[-1,]\n\n# A tibble: 187 × 6\n   season episode title             imdb_rating total_votes air_date  \n    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n 1      1       2 Diversity Day             8.3        3566 2005-03-29\n 2      1       3 Health Care               7.9        2983 2005-04-05\n 3      1       4 The Alliance              8.1        2886 2005-04-12\n 4      1       5 Basketball                8.4        3179 2005-04-19\n 5      1       6 Hot Girl                  7.8        2852 2005-04-26\n 6      2       1 The Dundies               8.7        3213 2005-09-20\n 7      2       2 Sexual Harassment         8.2        2736 2005-09-27\n 8      2       3 Office Olympics           8.4        2742 2005-10-04\n 9      2       4 The Fire                  8.4        2713 2005-10-11\n10      2       5 Halloween                 8.2        2561 2005-10-18\n# ℹ 177 more rows\n\n\nor to kick out the math courses from the mast list we run\n\nmast[-4]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n$stat_courses\n[1] 120 220 230 250 285 330\n\n$math_faculty\n [1] \"Brooke\"              \"Davis\"               \"Egge\"               \n [4] \"Gomez-Gonzales\"      \"Haunsperger\"         \"Johnson\"            \n [7] \"Meyer\"               \"Montee\"              \"Shrestha\"           \n[10] \"Terry\"               \"Thompson\"            \"Turnage-Butterbaugh\"\n\n\nLogical indices\nIt’s great to be able to extract (or omit) elements using indices, but sometimes we don’t know what index value we should use. For example, if you wanted to extract all of the 300-level statistics courses from the stat_courses vector, you would need to manually determine that positions 2:5 meet that requirement. That’s a lot of work! A better alternative is to allow R to find the elements meeting that requirement using logical operators. Below is a table summarizing common logical operators in R.\n\n\nComparison\nMeaning\n\n\n\n&lt;\nless than\n\n\n&gt;\ngreater than\n\n\n&lt;=\nless than or equal to\n\n\n&gt;=\ngreater than or equal to\n\n\n==\nis equal to\n\n\n!=\nnot equal to\n\n\n\nIn order to extract the 300-level statistics courses, we’ll take two steps:\n\nWe’ll determine whether each course is numbered at least 300,\nthen we’ll use that sequence of TRUEs/FALSEs to extract the course.\n\nSo, first we use the logical operator &gt;= to compare stat_courses and 300. This returns TRUE if the element meets the specification and FALSE otherwise.\n\nstat_courses &gt;= 300\n\n[1] FALSE FALSE FALSE FALSE FALSE  TRUE\n\n\nNow, we can use this vector as our index. Only the TRUE elements will be extracted:\n\nstat_courses[stat_courses &gt;= 300]\n\n[1] 330\n\n\nThe same idea can be used with data frames and lists, just remember how to format the brackets and indices!\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract all statistics courses below 250 from stat_courses.\nExtract all math courses except for 240 (probability) from math_courses.\nExtract all rows from season 3 of The Office."
+  },
+  {
+    "objectID": "activities/05-maps.html",
+    "href": "activities/05-maps.html",
+    "title": "Maps",
+    "section": "",
+    "text": "states &lt;- map_data(\"state\")\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")\n\n\n\n\n\n\n\n\nEdit the code so that each state is a different color\n\nstates &lt;- map_data(\"state\")\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")"
+  },
+  {
+    "objectID": "activities/05-maps.html#your-turn",
+    "href": "activities/05-maps.html#your-turn",
+    "title": "Maps",
+    "section": "",
+    "text": "Edit the code so that each state is a different color\n\nstates &lt;- map_data(\"state\")\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")"
   },
   {
     "objectID": "activities/03-ggplot-intro.html",
