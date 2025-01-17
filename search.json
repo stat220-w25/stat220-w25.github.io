@@ -311,179 +311,340 @@
     "text": "In the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
   },
   {
-    "objectID": "slides/01/slides01.html#about-me",
-    "href": "slides/01/slides01.html#about-me",
-    "title": "Welcome to Stat 220",
-    "section": "About me",
-    "text": "About me\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
+    "objectID": "slides/06/slides06.html#today",
+    "href": "slides/06/slides06.html#today",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Today",
+    "text": "Today\n\n{patchwork}\nColorblind-friendly color palettes\nWriting alt-text"
   },
   {
-    "objectID": "slides/01/slides01.html#what-is-data-science",
-    "href": "slides/01/slides01.html#what-is-data-science",
-    "title": "Welcome to Stat 220",
-    "section": "What is “data science”?",
-    "text": "What is “data science”?"
+    "objectID": "slides/06/slides06.html#small-multiples",
+    "href": "slides/06/slides06.html#small-multiples",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Small Multiples",
+    "text": "Small Multiples\nEach plot shares aesthetics but shows different subsets of data"
   },
   {
-    "objectID": "slides/01/slides01.html#what-is-this-class-about",
-    "href": "slides/01/slides01.html#what-is-this-class-about",
-    "title": "Welcome to Stat 220",
-    "section": "What is this class about?",
-    "text": "What is this class about?\n\nDevelop research questions that can be answered with data\nAcquire data from multiple sources\nWrangle common types of data\nVisualize data to provide insight\nCommunicate your findings\nDocument your code and collaborate on coding projects"
+    "objectID": "slides/06/slides06.html#compound-plots",
+    "href": "slides/06/slides06.html#compound-plots",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Compound Plots",
+    "text": "Compound Plots\nThe plots might share data, but don’t share aesthetics"
   },
   {
-    "objectID": "slides/01/slides01.html#section",
-    "href": "slides/01/slides01.html#section",
-    "title": "Welcome to Stat 220",
+    "objectID": "slides/06/slides06.html#compound-plot-example",
+    "href": "slides/06/slides06.html#compound-plot-example",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Compound Plot Example",
+    "text": "Compound Plot Example\n\nlibrary(palmerpenguins)\nggplot(penguins) + \n  geom_histogram(bins = 20, col = \"white\", aes(x = body_mass_g))\n\n\n\n\n\n\n\nggplot(penguins) + \n  geom_histogram(bins = 20, col = \"white\", aes(x = flipper_length_mm))\n\n\n\n\n\n\n\nggplot(penguins) + \n  geom_point(aes(x = body_mass_g, y = flipper_length_mm))"
+  },
+  {
+    "objectID": "slides/06/slides06.html#patchwork",
+    "href": "slides/06/slides06.html#patchwork",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Patchwork",
+    "text": "Patchwork\n\nlibrary(patchwork)\np1 = ggplot(penguins) + \n  geom_histogram(bins = 20, col = \"white\", aes(x = body_mass_g))\n\np2 = ggplot(penguins) + \n  geom_histogram(bins = 20, col = \"white\", aes(x = flipper_length_mm))\n\np3 = ggplot(penguins) + \n  geom_point(aes(x = body_mass_g, y = flipper_length_mm))\n\n(p1 + p2)/p3"
+  },
+  {
+    "objectID": "slides/06/slides06.html#patchwork-layout-2",
+    "href": "slides/06/slides06.html#patchwork-layout-2",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Patchwork (layout 2)",
+    "text": "Patchwork (layout 2)\n\np3 + (p1/p2)\n\n\n\n\n\n\n\n\n\n\nFor more complex layouts, see the “Controlling Layouts” vignette"
+  },
+  {
+    "objectID": "slides/06/slides06.html#patchwork-with-a-shared-legend",
+    "href": "slides/06/slides06.html#patchwork-with-a-shared-legend",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Patchwork (with a shared legend)",
+    "text": "Patchwork (with a shared legend)\n\np1 = ggplot(penguins) + \n  geom_histogram(bins = 20, col = \"white\", aes(x = body_mass_g, fill = species))\n\np2 = ggplot(penguins) + \n  geom_histogram(bins = 20,  col = \"white\", aes(x = flipper_length_mm, fill = species))\n\np3 = ggplot(penguins) + \n  geom_point(pch = 21, alpha = .9, col = \"white\", aes(x = body_mass_g, y = flipper_length_mm, fill = species)) +\n  theme(legend.position = \"none\")\n\np3 + (p1/p2) + \n  plot_layout(guides = 'collect')"
+  },
+  {
+    "objectID": "slides/06/slides06.html#patchwork-with-annotation",
+    "href": "slides/06/slides06.html#patchwork-with-annotation",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Patchwork (with annotation)",
+    "text": "Patchwork (with annotation)\n\np3 + (p1/p2) + \n  plot_layout(guides = 'collect') + \n  plot_annotation(\n    title = \"Penguin Plot\",\n    tag_levels = \"A\"\n  )"
+  },
+  {
+    "objectID": "slides/06/slides06.html#patchwork-with-a-common-theme",
+    "href": "slides/06/slides06.html#patchwork-with-a-common-theme",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Patchwork (with a common theme)",
+    "text": "Patchwork (with a common theme)\n\np3 + (p1/p2) + \n  plot_layout(guides = 'collect') & \n  theme_minimal() &\n  scale_fill_viridis_d()"
+  },
+  {
+    "objectID": "slides/06/slides06.html#but-what-does-this-have-to-do-with-accessibility",
+    "href": "slides/06/slides06.html#but-what-does-this-have-to-do-with-accessibility",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "But what does this have to do with accessibility?",
+    "text": "But what does this have to do with accessibility?\n\nOutput (knitted files, slides, websites, etc.) should be designed to make it as easy as possible for the user to understand your content\nThere’s a cognitive load involved with scrolling or turning a physical page and trying to remember a visual from the previous page\nWhen plots belong together, we should put them together"
+  },
+  {
+    "objectID": "slides/06/slides06.html#color-scales",
+    "href": "slides/06/slides06.html#color-scales",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Color scales",
+    "text": "Color scales\nUse colorblind friendly color scales (e.g., Okabe Ito, viridis)"
+  },
+  {
+    "objectID": "slides/06/slides06.html#section-1",
+    "href": "slides/06/slides06.html#section-1",
+    "title": "(Closer to) Accessible Data Viz",
     "section": "",
-    "text": "What skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
+    "text": "colorBlindness::displayAllColors(scales::hue_pal()(10))"
   },
   {
-    "objectID": "slides/01/slides01.html#what-is-this-class-all-about",
-    "href": "slides/01/slides01.html#what-is-this-class-all-about",
-    "title": "Welcome to Stat 220",
-    "section": "What is this class all about?",
-    "text": "What is this class all about?\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
+    "objectID": "slides/06/slides06.html#section-2",
+    "href": "slides/06/slides06.html#section-2",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "",
+    "text": "colorBlindness::displayAllColors(rainbow(10))"
   },
   {
-    "objectID": "slides/01/slides01.html#why-r",
-    "href": "slides/01/slides01.html#why-r",
-    "title": "Welcome to Stat 220",
-    "section": "Why R?",
-    "text": "Why R?\n\nAnd the second reason, which is both a huge strength of R and a bit of a weakness, is that R is not just a programming language. It was designed from day 1 to be an environment that can do data analysis. So, compared to the other options like Python, you can get up and running in R doing data science, learning much, much less about programming to get started. And that generally makes it like easier to get up and running if you don’t have formal training in computer science or software engineering.\n\n\n-Hadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham"
+    "objectID": "slides/06/slides06.html#section-3",
+    "href": "slides/06/slides06.html#section-3",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "",
+    "text": "colorBlindness::displayAllColors(colorblindr::palette_OkabeIto)"
   },
   {
-    "objectID": "slides/01/slides01.html#advice",
-    "href": "slides/01/slides01.html#advice",
-    "title": "Welcome to Stat 220",
-    "section": "Advice",
-    "text": "Advice\n\n\n\n\n\n\n\n\nIt’s easy when you start out programming to get really frustrated and think, “Oh it’s me, I’m really stupid,” or, “I’m not made out to program.” But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It’s just a natural part of programming. So, it happens to everyone and gets less and less over time. Don’t blame yourself. Just take a break, do something fun, and then come back and try again later.\n\n\n\nHadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham; Artwork by Allison Horst"
+    "objectID": "slides/06/slides06.html#section-4",
+    "href": "slides/06/slides06.html#section-4",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "",
+    "text": "colorBlindness::displayAllColors(viridisLite::viridis(10))"
   },
   {
-    "objectID": "slides/01/slides01.html#on-your-own",
-    "href": "slides/01/slides01.html#on-your-own",
-    "title": "Welcome to Stat 220",
-    "section": "On your own:",
-    "text": "On your own:\n\n\nLog into the maize server: maize.mathcs.carleton.edu\nFollow the directions at stat220-w25.github.io/computing/rstudio-stat220 to create a “content” folder\nLoad the .Rmd file with: download.file(     \"https://math.carleton.edu/aluby/stat220/01-example-unvotes.rmd\",      destfile = \"01-example-unvotes.rmd\")\nSkim the file without running any code:\n\nWhere is the code?\nWhere is the narrative?\n\nRun each code chunk in order. What does this analysis do?\n\n\n\n\n\n−+\n10:00"
+    "objectID": "slides/06/slides06.html#double-encoding",
+    "href": "slides/06/slides06.html#double-encoding",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Double encoding",
+    "text": "Double encoding\nUse shape and color where possible\n\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with deuteranopia\n\n\n\n\n\n\n\n\n\n\n\n\n\nIdea by Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
   },
   {
-    "objectID": "slides/01/slides01.html#what-steps-went-into-this-analysis",
-    "href": "slides/01/slides01.html#what-steps-went-into-this-analysis",
-    "title": "Welcome to Stat 220",
-    "section": "What steps went into this analysis?",
-    "text": "What steps went into this analysis?\n\nRecording the original data\nAccessing data via an R package\nCombining multiple datasets into one\nData cleaning: filtering, creating new columns, grouping, summarizing\nMaking a graph\nFitting a smooth line model"
+    "objectID": "slides/06/slides06.html#use-direct-labeling",
+    "href": "slides/06/slides06.html#use-direct-labeling",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Use direct labeling",
+    "text": "Use direct labeling\n\nPrefer direct labeling where color is used to display information over a legend\nQuicker to read\nEnsures graph can be understood without reliance on color\n\n\n\nIdea by Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
   },
   {
-    "objectID": "slides/01/slides01.html#your-turn",
-    "href": "slides/01/slides01.html#your-turn",
-    "title": "Welcome to Stat 220",
-    "section": "Your turn:",
-    "text": "Your turn:\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
+    "objectID": "slides/06/slides06.html#without-direct-labeling",
+    "href": "slides/06/slides06.html#without-direct-labeling",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Without direct labeling",
+    "text": "Without direct labeling\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with deuteranopia\n\n\n\n\n\n\n\n\n\n\n\n\nIdea by Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
   },
   {
-    "objectID": "slides/01/slides01.html#course-github",
-    "href": "slides/01/slides01.html#course-github",
-    "title": "Welcome to Stat 220",
-    "section": "Course github",
-    "text": "Course github\n\nhttps://github.com/stat220-w25/\n\n\naka “the one link to rule them all”\n\n\naccess slides\nsee schedule\naccess repositories for homework and projects"
+    "objectID": "slides/06/slides06.html#with-direct-labeling",
+    "href": "slides/06/slides06.html#with-direct-labeling",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "With direct labeling",
+    "text": "With direct labeling\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with deuteranopia\n\n\n\n\n\n\n\n\n\n\n\n\nIdea by Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
   },
   {
-    "objectID": "slides/01/slides01.html#office-hours-tentative",
-    "href": "slides/01/slides01.html#office-hours-tentative",
-    "title": "Welcome to Stat 220",
-    "section": "Office hours (tentative)",
-    "text": "Office hours (tentative)\n\n\n\nDay\nTime\nType\nLocation\n\n\n\n\nMonday\n11-12\nDrop-in\nCMC 307\n\n\nTuesday\n2-3\nDrop-in\nCMC 307\n\n\nWednesday\n4-5\nDrop-in\nCMC 307\n\n\nFriday\n11-12\nBy appt\nCMC 223"
+    "objectID": "slides/06/slides06.html#use-whitespace-or-pattern-to-separate-elements",
+    "href": "slides/06/slides06.html#use-whitespace-or-pattern-to-separate-elements",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Use whitespace or pattern to separate elements",
+    "text": "Use whitespace or pattern to separate elements\n\nSeparate elements with whitespace or pattern\nAllows for distinguishing between data without entirely relying on contrast between colors\n\n\n\nSource: Mine Çetinkaya-Rundel, Sta313"
   },
   {
-    "objectID": "slides/01/slides01.html#where-is-amanda-in-january",
-    "href": "slides/01/slides01.html#where-is-amanda-in-january",
-    "title": "Welcome to Stat 220",
-    "section": "Where is Amanda in January?",
-    "text": "Where is Amanda in January?"
+    "objectID": "slides/06/slides06.html#without-whitespace",
+    "href": "slides/06/slides06.html#without-whitespace",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Without whitespace",
+    "text": "Without whitespace\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with tritanopia\n\n\n\n\n\n\n\n\n\n\n\n\nIdea by Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
   },
   {
-    "objectID": "slides/01/slides01.html#what-will-you-do-in-this-course",
-    "href": "slides/01/slides01.html#what-will-you-do-in-this-course",
-    "title": "Welcome to Stat 220",
-    "section": "What will you do in this course?",
-    "text": "What will you do in this course?\n\n\nGraded work:\n\nHomework\nLab Quizzes\nPortfolio Projects\nFinal Project\n\n\nUngraded work:\n\nDaily prep for class: read/watch/review/try\nIn-class exercises and group work\nEngagement in small and large group discussions"
+    "objectID": "slides/06/slides06.html#with-whitespace",
+    "href": "slides/06/slides06.html#with-whitespace",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "With whitespace",
+    "text": "With whitespace\n\n\nDefault ggplot2 scale\n\n\n\n\n\n\n\n\n\n\nDefault ggplot2 scale with tritanopia\n\n\n\n\n\n\n\n\n\n\n\n\nIdea by Mine Çetinkaya-Rundel, Sta313. Generated with {colorblindr}."
   },
   {
-    "objectID": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
-    "href": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
-    "title": "Welcome to Stat 220",
-    "section": "What will a typical day/week look like?",
-    "text": "What will a typical day/week look like?\n\n\nBefore class:\n\nWatch a video or read a chapter\nCome with questions\nBe prepared to try what was covered\n\n\nIn class:\n\nMini lecture\n\nSometimes review\nSometimes new\n\nHands-on coding in R\n\n\nAfter class:\n\nFinish any in-class exercises\nWork on homework and portfolio projects"
+    "objectID": "slides/06/slides06.html#alternative-text",
+    "href": "slides/06/slides06.html#alternative-text",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Alternative text",
+    "text": "Alternative text\n\nIt is read by screen readers in place of images allowing the content and function of the image to be accessible to those with visual or certain cognitive disabilities.\nIt is displayed in place of the image in browsers if the image file is not loaded or when the user has chosen not to view images.\nIt provides a semantic meaning and description to images which can be read by search engines or be used to later determine the content of the image from page context alone.\n\n\n\nSource: WebAIM"
   },
   {
-    "objectID": "slides/01/slides01.html#grading-system",
-    "href": "slides/01/slides01.html#grading-system",
-    "title": "Welcome to Stat 220",
-    "section": "Grading system",
-    "text": "Grading system\nHomework and lab quiz problems will be graded as successful or not successful. Projects will be graded as excellent, successful, or retry. You will have the opportunity to resubmit the lab quizzes outside of class.\nTo earn a course grade, you must meet all of the requirements in a given row:\n\n\n\n\n\n\n\n\n\n\n\nHomework Problems\nLab Quiz Problems\nPortfolio Projects (4 total)\nFinal Project\n\n\n\n\nA\n85%\n90%\n2 Excellent\nExcellent\n\n\nB\n75%\n80%\n4 Successful\nSuccessful\n\n\nC\n65%\n70%\n3 Successful\nSuccessful\n\n\nD\n55%\n50%\n2 Successful\nSuccessful\n\n\n\n“+” and “-” grades are determined by partially meeting the requirements in a given row."
+    "objectID": "slides/06/slides06.html#alt-and-surrounding-text",
+    "href": "slides/06/slides06.html#alt-and-surrounding-text",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Alt and surrounding text",
+    "text": "Alt and surrounding text\nCHART TYPE of TYPE OF DATA where REASON FOR INCLUDING CHART\n(plus link to data source somewhere in the text)\n\nCHART TYPE: It’s helpful for people with partial sight to know what chart type it is and gives context for understanding the rest of the visual.\nTYPE OF DATA: What data is included in the chart? The x and y axis labels may help you figure this out.\nREASON FOR INCLUDING CHART: Think about why you’re including this visual. What does it show that’s meaningful. There should be a point to every visual and you should tell people what to look for.\nLink to data source: Don’t include this in your alt text, but it should be included somewhere in the surrounding text.\n\n\n\nSource: Writing Alt Text for Data Visualization"
   },
   {
-    "objectID": "slides/01/slides01.html#benefits",
-    "href": "slides/01/slides01.html#benefits",
-    "title": "Welcome to Stat 220",
-    "section": "Benefits",
-    "text": "Benefits\n\nYou decide what grade you’re aiming for, and what you have to do to earn it\nClear guidelines for “successful” and “excellent” marks\nOpportunity to revise and resubmit"
+    "objectID": "slides/06/slides06.html#alt-text-practice",
+    "href": "slides/06/slides06.html#alt-text-practice",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Alt Text Practice",
+    "text": "Alt Text Practice\nCHART TYPE of TYPE OF DATA where REASON FOR INCLUDING CHART\n\n\n\n\n\n\n\n\n\n\n\n\n\nA scatterplot\nof median hourly wage of RN’s by year in California, Minnesota, and New York. The x-axis starts at the year 1996 and ends at the year 2020.\nThe three states follow the same linear increasing trend until about 2007, when New York and Minnesota begin to flatten.\n\n\n\n\n\n−+\n01:30"
   },
   {
-    "objectID": "slides/01/slides01.html#possible-drawbacks",
-    "href": "slides/01/slides01.html#possible-drawbacks",
-    "title": "Welcome to Stat 220",
-    "section": "Possible drawbacks",
-    "text": "Possible drawbacks\n\nNo partial credit!\nRevisions take time\nCategories don’t “average out”"
+    "objectID": "slides/06/slides06.html#section-5",
+    "href": "slides/06/slides06.html#section-5",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "",
+    "text": "Accessible Visualization via Natural Language Descriptions: A Four-Level Model of Semantic Content\nAlan Lundgard, MIT CSAIL\nArvind Satyanarayan, MIT CSAIL\nIEEE Transactions on Visualization & Computer Graphics (Proceedings of IEEE VIS), 2021\n\nTo demonstrate how our model can be applied to evaluate the effectiveness of visualization descriptions, we conduct a mixed-methods evaluation with 30 blind and 90 sighted readers, and find that these reader groups differ significantly on which semantic content they rank as most useful. Together, our model and findings suggest that access to meaningful information is strongly reader-specific, and that research in automatic visualization captioning should orient toward descriptions that more richly communicate overall trends and statistics, sensitive to reader preferences."
   },
   {
-    "objectID": "slides/01/slides01.html#tokens",
-    "href": "slides/01/slides01.html#tokens",
-    "title": "Welcome to Stat 220",
-    "section": "Tokens",
-    "text": "Tokens\nYou can use a token to:\n\nRevise a portfolio project that did not earn a “successful”\n72-hour extension on a homework assignment (the request must be submitted before the deadline)\n72-hour extension on lab quiz resubmissions (the request must be submitted before the deadline)\nBy passing the syllabus quiz, you’ll activate your 5 tokens for the term. I will track token balances in the moodle gradebook (updated weekly)"
+    "objectID": "slides/06/slides06.html#lets-try-it",
+    "href": "slides/06/slides06.html#lets-try-it",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Let’s try it!",
+    "text": "Let’s try it!\nCHART TYPE of TYPE OF DATA where REASON FOR INCLUDING CHART\n\n\nTake one graph and two blank cards\nWrite an alt text description of your graph on one of your blank cards.\n\nPlease label with your plot number!\n\nIn two’s or three’s, trade alt text descriptions only\nOn your second blank card, try to draw the graph based on the alt text provided.\nNow, look at the original graph. How’d you do?\nTape the original graphs, alt text, and hand drawn graphs up on the board and have a look around\n\n\n\n\n\n−+\n04:00"
   },
   {
-    "objectID": "slides/01/slides01.html#collaboration-policy",
-    "href": "slides/01/slides01.html#collaboration-policy",
-    "title": "Welcome to Stat 220",
-    "section": "Collaboration policy",
-    "text": "Collaboration policy\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
+    "objectID": "slides/06/slides06.html#recap",
+    "href": "slides/06/slides06.html#recap",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Recap",
+    "text": "Recap\n\nWhat was hard about writing alt text?\nLooking at the graphs, do you notice things that make it harder/easier to write alt text?\nWhat was hard about recreating from the alt text?"
   },
   {
-    "objectID": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
-    "href": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
-    "title": "Welcome to Stat 220",
+    "objectID": "slides/06/slides06.html#adding-alt-text-to-plots",
+    "href": "slides/06/slides06.html#adding-alt-text-to-plots",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Adding alt text to plots",
+    "text": "Adding alt text to plots\nShort:\n\n```{r}\n#| fig-alt: Alt text goes here.\n\n# code for plot goes here\n```\n\n\nLonger:\n\n```{r}\n#| fig-alt: |\n#|   Longer alt text goes here. Make sure to add line breaks ~roughly\n#|   80 characters.\n\n# code for plot goes here\n```"
+  },
+  {
+    "objectID": "slides/06/slides06.html#using-okabe-ito-palette",
+    "href": "slides/06/slides06.html#using-okabe-ito-palette",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Using Okabe Ito palette",
+    "text": "Using Okabe Ito palette\n\n\nnurses_subset |&gt;\n  ggplot(aes(x = year, y = hourly_wage_median, color = state)) +\n  geom_point(size = 2) +\n  ggthemes::scale_color_colorblind() +\n  scale_y_continuous(labels = scales::label_dollar()) +\n  labs(\n    x = \"Year\", y = \"Median hourly wage\", color = \"State\",\n    title = \"Median hourly wage of Registered Nurses\"\n  ) +\n  theme(\n    legend.position = c(0.15, 0.75),\n    legend.background = element_rect(fill = \"white\", color = \"white\")\n  )"
+  },
+  {
+    "objectID": "slides/06/slides06.html#double-encoding-1",
+    "href": "slides/06/slides06.html#double-encoding-1",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Double Encoding",
+    "text": "Double Encoding\nUse both color and shape aesthetics\n\n\nnurses_subset |&gt;\n  ggplot(aes(x = year, y = hourly_wage_median, color = state, shape = state)) +\n  geom_point(size = 2) +\n  scale_y_continuous(labels = scales::label_dollar()) +\n  labs(\n    x = \"Year\", y = \"Median hourly wage\", color = \"State\", shape = \"State\",\n    title = \"Median hourly wage of Registered Nurses\"\n  ) +\n  theme(\n    legend.position = c(0.15, 0.75),\n    legend.background = element_rect(fill = \"white\", color = \"white\")\n    )"
+  },
+  {
+    "objectID": "slides/06/slides06.html#direct-labeling",
+    "href": "slides/06/slides06.html#direct-labeling",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Direct Labeling",
+    "text": "Direct Labeling\nCould do “by hand” with annotate(). Alternatively, use geom_text()\n\n\nnurses_subset |&gt;\n  ggplot(aes(x = year, y = annual_salary_median, color = state)) +\n  geom_line(show.legend = FALSE, linewidth = 2) +\n  geom_text(\n    data = nurses_subset |&gt; filter(year == max(year)),\n    aes(label = state), hjust = 0, nudge_x = 1,\n    show.legend = FALSE, size = 6\n  ) +\n  scale_y_continuous(labels = scales::label_dollar(scale = 1/1000, suffix = \"K\")) +\n  labs(\n    x = \"Year\", y = \"Annual median salary\", color = \"State\",\n    title = \"Annual median salary of Registered Nurses\"\n  ) +\n  coord_cartesian(clip = \"off\") +\n  theme(\n    plot.margin = margin(0.1, 0.9, 0.1, 0.1, \"in\")\n    )"
+  },
+  {
+    "objectID": "slides/06/slides06.html#direct-labeling-1",
+    "href": "slides/06/slides06.html#direct-labeling-1",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Direct Labeling",
+    "text": "Direct Labeling\nFirst, filter the data to include the endpoints only. Use the label aesthetic to map to the label in your data (in this case, state). geom_label by default will use the x and y aesthetics defined in ggplot()\n\n\nnurses_subset |&gt;\n  ggplot(aes(x = year, y = annual_salary_median, color = state)) +\n  geom_line(show.legend = FALSE, linewidth = 2) +\n  geom_text(\n    data = nurses_subset |&gt; filter(year == max(year)),\n    aes(label = state)\n  ) +\n  scale_y_continuous(labels = scales::label_dollar(scale = 1/1000, suffix = \"K\")) +\n  labs(\n    x = \"Year\", y = \"Annual median salary\", color = \"State\",\n    title = \"Annual median salary of Registered Nurses\"\n  ) +\n  coord_cartesian(clip = \"off\") +\n  theme(\n    plot.margin = margin(0.1, 0.9, 0.1, 0.1, \"in\")\n    )"
+  },
+  {
+    "objectID": "slides/06/slides06.html#direct-labeling-2",
+    "href": "slides/06/slides06.html#direct-labeling-2",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Direct Labeling",
+    "text": "Direct Labeling\n(Here’s what it looks like if we don’t filter to the endpoints)\n\n\nnurses_subset |&gt;\n  ggplot(aes(x = year, y = annual_salary_median, color = state)) +\n  geom_line(show.legend = FALSE, linewidth = 2) +\n  geom_text(\n    aes(label = state)\n  ) +\n  scale_y_continuous(labels = scales::label_dollar(scale = 1/1000, suffix = \"K\")) +\n  labs(\n    x = \"Year\", y = \"Annual median salary\", color = \"State\",\n    title = \"Annual median salary of Registered Nurses\"\n  ) +\n  coord_cartesian(clip = \"off\") +\n  theme(\n    plot.margin = margin(0.1, 0.9, 0.1, 0.1, \"in\")\n    )"
+  },
+  {
+    "objectID": "slides/06/slides06.html#direct-labeling-3",
+    "href": "slides/06/slides06.html#direct-labeling-3",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Direct Labeling",
+    "text": "Direct Labeling\nhjust=0 means “left justified”, or make the label start at the x-y coordinate you gave it. size = 6 makes the label bigger\n\n\nnurses_subset |&gt;\n  ggplot(aes(x = year, y = annual_salary_median, color = state)) +\n  geom_line(show.legend = FALSE, linewidth = 2) +\n  geom_text(\n    data = nurses_subset |&gt; filter(year == max(year)),\n    aes(label = state), \n    hjust = 0, \n    size = 6\n  ) +\n  scale_y_continuous(labels = scales::label_dollar(scale = 1/1000, suffix = \"K\")) +\n  labs(\n    x = \"Year\", y = \"Annual median salary\", color = \"State\",\n    title = \"Annual median salary of Registered Nurses\"\n  ) +\n  coord_cartesian(clip = \"off\") +\n  theme(\n    plot.margin = margin(0.1, 0.9, 0.1, 0.1, \"in\")\n    )"
+  },
+  {
+    "objectID": "slides/06/slides06.html#direct-labeling-4",
+    "href": "slides/06/slides06.html#direct-labeling-4",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Direct Labeling",
+    "text": "Direct Labeling\nnudge_x = 1 “nudges” each label one unit in the x-direction (so each label is a small distance away from what it’s labeling). show.legend=FALSE tells ggplot not to include the aesthetics for geom_text in the legend\n\n\nnurses_subset |&gt;\n  ggplot(aes(x = year, y = annual_salary_median, color = state)) +\n  geom_line(show.legend = FALSE, linewidth = 2) +\n  geom_text(\n    data = nurses_subset |&gt; filter(year == max(year)),\n    aes(label = state), \n    hjust = 0, \n    size = 6,\n    nudge_x = 1,\n    show.legend = FALSE,\n  ) +\n  scale_y_continuous(labels = scales::label_dollar(scale = 1/1000, suffix = \"K\")) +\n  labs(\n    x = \"Year\", y = \"Annual median salary\", color = \"State\",\n    title = \"Annual median salary of Registered Nurses\"\n  ) +\n  coord_cartesian(clip = \"off\") +\n  theme(\n    plot.margin = margin(0.1, 0.9, 0.1, 0.1, \"in\")\n    )"
+  },
+  {
+    "objectID": "slides/06/slides06.html#direct-labeling-5",
+    "href": "slides/06/slides06.html#direct-labeling-5",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Direct Labeling",
+    "text": "Direct Labeling\nFinally, we have to tell ggplot not to trim the plot, and leave room in the right margin for the labels themselves\n\n\nnurses_subset |&gt;\n  ggplot(aes(x = year, y = annual_salary_median, color = state)) +\n  geom_line(show.legend = FALSE, linewidth = 2) +\n  geom_text(\n    data = nurses_subset |&gt; filter(year == max(year)),\n    aes(label = state), \n    hjust = 0, \n    size = 6,\n    nudge_x = 1,\n    show.legend = FALSE,\n  ) +\n  scale_y_continuous(labels = scales::label_dollar(scale = 1/1000, suffix = \"K\")) +\n  labs(\n    x = \"Year\", y = \"Annual median salary\", color = \"State\",\n    title = \"Annual median salary of Registered Nurses\"\n  ) +\n  coord_cartesian(clip = \"off\") +\n  theme(\n    plot.margin = margin(0.1, 0.9, 0.1, 0.1, \"in\")\n    )"
+  },
+  {
+    "objectID": "slides/06/slides06.html#add-whitespace",
+    "href": "slides/06/slides06.html#add-whitespace",
+    "title": "(Closer to) Accessible Data Viz",
+    "section": "Add whitespace",
+    "text": "Add whitespace\nSet the color aesthetic to white\n\n\nnurses_subset |&gt;\n  filter(year %in% c(2000, 2010, 2020)) |&gt;\n  ggplot(aes(x = factor(year), y = total_employed_rn, fill = state)) +\n  geom_col(position = \"fill\", color = \"white\", linewidth = 1) +\n  labs(\n    x = \"Year\", y = \"Proportion of Registered Nurses\", fill = \"State\",\n    title = \"Total employed Registered Nurses\"\n  )"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#columns",
+    "href": "slides/slides-cheat-sheet.html#columns",
+    "title": "Slides Cheat Sheet",
+    "section": "Columns",
+    "text": "Columns\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#only-graph-from-code",
+    "href": "slides/slides-cheat-sheet.html#only-graph-from-code",
+    "title": "Slides Cheat Sheet",
+    "section": "Only graph from code",
+    "text": "Only graph from code"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#background-image-half",
+    "href": "slides/slides-cheat-sheet.html#background-image-half",
+    "title": "Slides Cheat Sheet",
+    "section": "Background Image (half)",
+    "text": "Background Image (half)\n\n\nWhat skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#full-size-image",
+    "href": "slides/slides-cheat-sheet.html#full-size-image",
+    "title": "Slides Cheat Sheet",
+    "section": "Full size image",
+    "text": "Full size image\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#background-image-full-size",
+    "href": "slides/slides-cheat-sheet.html#background-image-full-size",
+    "title": "Slides Cheat Sheet",
+    "section": "Background image (full size)",
+    "text": "Background image (full size)"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#countdown",
+    "href": "slides/slides-cheat-sheet.html#countdown",
+    "title": "Slides Cheat Sheet",
+    "section": "Countdown",
+    "text": "Countdown\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#table-column-widths",
+    "href": "slides/slides-cheat-sheet.html#table-column-widths",
+    "title": "Slides Cheat Sheet",
+    "section": "table column widths",
+    "text": "table column widths\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
+    "href": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
+    "title": "Slides Cheat Sheet",
     "section": "Use of generative artificial intelligence (AI)",
     "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT or Gemini, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.\n\n\n\nAdapted from Mine Çetinkaya-Rundel"
   },
   {
-    "objectID": "slides/01/slides01.html#tools",
-    "href": "slides/01/slides01.html#tools",
-    "title": "Welcome to Stat 220",
-    "section": "Tools",
-    "text": "Tools\n\nhttps://maize.mathcs.carleton.edu\n\n\nBrowser based RStudio instance(s) provided by Carleton\nRequires internet connection to access\nProvides consistency in hardware and software environments\nLocal R installations are also fine! But it may be harder for me to provide support"
+    "objectID": "slides/slides-cheat-sheet.html#linktask",
+    "href": "slides/slides-cheat-sheet.html#linktask",
+    "title": "Slides Cheat Sheet",
+    "section": "Link/task",
+    "text": "Link/task\n\nhttps://github.com/stat220-w25\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
   },
   {
-    "objectID": "slides/01/slides01.html#github",
-    "href": "slides/01/slides01.html#github",
-    "title": "Welcome to Stat 220",
-    "section": "GitHub",
-    "text": "GitHub\n\nhttps://github.com/stat220-w25\n\n\nGitHub organization for the course\nAll of your work and your membership (enrollment) in the organization is private\nEach assignment is a private repo on GitHub, I distribute the assignments on GitHub.\nYou will work on your assignment, then “knit 🧶 commit ✅ push ⤴️”\nYou’ll then be able to submit your PDF via gradescope\n\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
-  },
-  {
-    "objectID": "slides/01/slides01.html#username-advice",
-    "href": "slides/01/slides01.html#username-advice",
-    "title": "Welcome to Stat 220",
-    "section": "Username advice",
-    "text": "Username advice\n\nin case you don’t yet have a GitHub account…\n\nSome brief advice about selecting your account names (particularly for GitHub),\n\nIncorporate your actual name! People like to know who they’re dealing with and makes your username easier for people to guess or remember\nReuse your username from other contexts, e.g., Twitter or Slack\nPick a username you will be comfortable revealing to your future boss\nShorter is better than longer, but be as unique as possible\nMake it timeless. Avoid highlighting your current university, employer, or place of residence"
-  },
-  {
-    "objectID": "slides/01/slides01.html#your-tasks-before-next-class",
-    "href": "slides/01/slides01.html#your-tasks-before-next-class",
-    "title": "Welcome to Stat 220",
-    "section": "Your tasks before next class",
-    "text": "Your tasks before next class\n\nCreate a GitHub account if you don’t have one\nComplete the welcome survey if you haven’t already\nRead the syllabus and pass syllabus quiz\nMake sure you can login in to the maize server or update your local R/RStudio versions\nComplete the readings for next class"
+    "objectID": "slides/slides-cheat-sheet.html#handwriting-font",
+    "href": "slides/slides-cheat-sheet.html#handwriting-font",
+    "title": "Slides Cheat Sheet",
+    "section": "handwriting font",
+    "text": "handwriting font\n\nin case you don’t yet have a GitHub account…"
   },
   {
     "objectID": "slides/05/slides05.html#today",
@@ -596,6 +757,13 @@
     "title": "Intro to Maps  and Spatial Data",
     "section": "",
     "text": "Geospatial data exists on the globe and is generally described with a latitude and longitude. Any projection from the globe to euclidean space (X-Y plane) is going to cause some distortion."
+  },
+  {
+    "objectID": "slides/05/slides05.html#section-6",
+    "href": "slides/05/slides05.html#section-6",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "From The West Wing Season 2 Episode 16"
   },
   {
     "objectID": "slides/05/slides05.html#changing-the-coordinate-system",
@@ -788,7 +956,7 @@
     "href": "index.html",
     "title": "Stat 220: Intro to Data Science",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n📝complete welcome survey\n\nWelcome + data, R review\n\nslides01 01-example-unvotes\n\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\n\nslides02 02-reproducible-reports 02-lego-report\n\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1  📺 intro to ggplot\n\nggplot\n\nslides03 03-ggplot-intro and .rmd\n\nHW 1 (on moodle)\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04  04-customizing-plots .rmd\n\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\n\nslides05  05-maps .rmd\n\nHW 2\n\n\n2\nF\nFri, Jan 17\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\nslides07  07-verbs\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\nslides08  08-group_by\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4  📚 R4DS 19.1-19.3\n\nTidy data/pivots and joins\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 16 \n\nWorking with factors\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\n\n\n\n5\nM\nMon, Feb 3\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nText Analysis\n\nPortfolio 2\n\n\n5\nW\nWed, Feb 5\nTBA\nCatch up + Ethics II\n\nHW 5\n\n\n5\nF\nFri, Feb 7\nTBA\nTBA\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\n❌ Midterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n📚What is an API? 📝 work through tidycensus basic usage vignette (including signing up for a census API key!)\nAPIs\n\n\n\n\n7\nW\nWed, Feb 19\nTBA\nScraping\n\nHW7  Final Project Proposal\n\n\n7\nF\nFri, Feb 21\n\nEthics III\n\nLab Quiz 3\n\n\n8\nM\nMon, Feb 24\nTBA\nIntro to Interactivity\n\nPortfolio 3\n\n\n8\nW\nWed, Feb 26\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\nShiny 1\n\nHW8\n\n\n8\nF\nFri, Feb 28\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nM\nMon, Mar 3\n\nShiny 3\n\nFinal Project sketch draft\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\n\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
+    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n📝complete welcome survey\n\nWelcome + data, R review\n\nslides01 01-example-unvotes\n\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\n\nslides02 02-reproducible-reports 02-lego-report\n\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1  📺 intro to ggplot\n\nggplot\n\nslides03 03-ggplot-intro and .rmd\n\nHW 1 (on moodle)\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04  04-customizing-plots .rmd\n\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\n\nslides05  05-maps .rmd\n\n[HW 2]((https://github.com/stat220-w25)\n\n\n2\nF\nFri, Jan 17\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\nslides07  07-verbs\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\nslides08  08-group_by\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4  📚 R4DS 19.1-19.3\n\nTidy data/pivots and joins\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 16 \n\nWorking with factors\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\n\n\n\n5\nM\nMon, Feb 3\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nText Analysis\n\nPortfolio 2\n\n\n5\nW\nWed, Feb 5\nTBA\nCatch up + Ethics II\n\nHW 5\n\n\n5\nF\nFri, Feb 7\nTBA\nTBA\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\n❌ Midterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n📚What is an API? 📝 work through tidycensus basic usage vignette (including signing up for a census API key!)\nAPIs\n\n\n\n\n7\nW\nWed, Feb 19\nTBA\nScraping\n\nHW7  Final Project Proposal\n\n\n7\nF\nFri, Feb 21\n\nEthics III\n\nLab Quiz 3\n\n\n8\nM\nMon, Feb 24\nTBA\nIntro to Interactivity\n\nPortfolio 3\n\n\n8\nW\nWed, Feb 26\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\nShiny 1\n\nHW8\n\n\n8\nF\nFri, Feb 28\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nM\nMon, Mar 3\n\nShiny 3\n\nFinal Project sketch draft\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\n\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
     "crumbs": [
       "Course information",
       "Schedule"
@@ -1243,6 +1411,181 @@
     "text": "Hints\n\n\nTo begin, use inline R code to replace “hard coding” the quantities that are highlighted below.\n\n\nFor example, instead of typing 19798 you would include nrow(sets) as an inline code chunk. Make sure the report knits and you get the right values.\n\nNext, add a parameter to your YAML header that stores the location of the data set. Make sure the report knits.\nChange the code chunk where you load the data set to use the data parameter you just defined rather than the hard-coded URL. Make sure the report knits.\nNow, let’s make a parameter for the source of the data set so you don’t have to search where every mention of it in the report, it will be with the other metadata (where it belongs). To do this, add a parameter that gives the source of your data (call it data_source) and set it equal to “the 2022-09-09 repository on Tidy Tuesday.” Make sure the report knits.\nAt this point it looks like everything is working—awesome job! To put it to the test, let’s update the parameters of your report and knit it to see if everything changes as we would expect. Here are the new parameter values:\n\ndata: \"http://math.carleton.edu/aluby/stat220/lego_subset.csv\"\ndata_source: \"Amanda's website\"\n\n(optional) If you have time, or would like to try outside of class, I’ve created a practice gradescope assignment space. First, add .pdf output to your document and knit to PDF. Commit the PDF and push to github. Then, log into gradescope (you may have to go through the link on moodle the first time) and link your github repo. You should then be able to submit your .pdf\n\noutput: \n  html_document:\n    default\n  pdf_document:\n    default"
   },
   {
+    "objectID": "slides/01/slides01.html#about-me",
+    "href": "slides/01/slides01.html#about-me",
+    "title": "Welcome to Stat 220",
+    "section": "About me",
+    "text": "About me\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-is-data-science",
+    "href": "slides/01/slides01.html#what-is-data-science",
+    "title": "Welcome to Stat 220",
+    "section": "What is “data science”?",
+    "text": "What is “data science”?"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-is-this-class-about",
+    "href": "slides/01/slides01.html#what-is-this-class-about",
+    "title": "Welcome to Stat 220",
+    "section": "What is this class about?",
+    "text": "What is this class about?\n\nDevelop research questions that can be answered with data\nAcquire data from multiple sources\nWrangle common types of data\nVisualize data to provide insight\nCommunicate your findings\nDocument your code and collaborate on coding projects"
+  },
+  {
+    "objectID": "slides/01/slides01.html#section",
+    "href": "slides/01/slides01.html#section",
+    "title": "Welcome to Stat 220",
+    "section": "",
+    "text": "What skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-is-this-class-all-about",
+    "href": "slides/01/slides01.html#what-is-this-class-all-about",
+    "title": "Welcome to Stat 220",
+    "section": "What is this class all about?",
+    "text": "What is this class all about?\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
+  },
+  {
+    "objectID": "slides/01/slides01.html#why-r",
+    "href": "slides/01/slides01.html#why-r",
+    "title": "Welcome to Stat 220",
+    "section": "Why R?",
+    "text": "Why R?\n\nAnd the second reason, which is both a huge strength of R and a bit of a weakness, is that R is not just a programming language. It was designed from day 1 to be an environment that can do data analysis. So, compared to the other options like Python, you can get up and running in R doing data science, learning much, much less about programming to get started. And that generally makes it like easier to get up and running if you don’t have formal training in computer science or software engineering.\n\n\n-Hadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham"
+  },
+  {
+    "objectID": "slides/01/slides01.html#advice",
+    "href": "slides/01/slides01.html#advice",
+    "title": "Welcome to Stat 220",
+    "section": "Advice",
+    "text": "Advice\n\n\n\n\n\n\n\n\nIt’s easy when you start out programming to get really frustrated and think, “Oh it’s me, I’m really stupid,” or, “I’m not made out to program.” But, that is absolutely not the case. Everyone gets frustrated. I still get frustrated occasionally when writing R code. It’s just a natural part of programming. So, it happens to everyone and gets less and less over time. Don’t blame yourself. Just take a break, do something fun, and then come back and try again later.\n\n\n\nHadley Wickham, Advice to Young (and Old) Programmers: A Conversation with Hadley Wickham; Artwork by Allison Horst"
+  },
+  {
+    "objectID": "slides/01/slides01.html#on-your-own",
+    "href": "slides/01/slides01.html#on-your-own",
+    "title": "Welcome to Stat 220",
+    "section": "On your own:",
+    "text": "On your own:\n\n\nLog into the maize server: maize.mathcs.carleton.edu\nFollow the directions at stat220-w25.github.io/computing/rstudio-stat220 to create a “content” folder\nLoad the .Rmd file with: download.file(     \"https://math.carleton.edu/aluby/stat220/01-example-unvotes.rmd\",      destfile = \"01-example-unvotes.rmd\")\nSkim the file without running any code:\n\nWhere is the code?\nWhere is the narrative?\n\nRun each code chunk in order. What does this analysis do?\n\n\n\n\n\n−+\n10:00"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-steps-went-into-this-analysis",
+    "href": "slides/01/slides01.html#what-steps-went-into-this-analysis",
+    "title": "Welcome to Stat 220",
+    "section": "What steps went into this analysis?",
+    "text": "What steps went into this analysis?\n\nRecording the original data\nAccessing data via an R package\nCombining multiple datasets into one\nData cleaning: filtering, creating new columns, grouping, summarizing\nMaking a graph\nFitting a smooth line model"
+  },
+  {
+    "objectID": "slides/01/slides01.html#your-turn",
+    "href": "slides/01/slides01.html#your-turn",
+    "title": "Welcome to Stat 220",
+    "section": "Your turn:",
+    "text": "Your turn:\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
+  },
+  {
+    "objectID": "slides/01/slides01.html#course-github",
+    "href": "slides/01/slides01.html#course-github",
+    "title": "Welcome to Stat 220",
+    "section": "Course github",
+    "text": "Course github\n\nhttps://github.com/stat220-w25/\n\n\naka “the one link to rule them all”\n\n\naccess slides\nsee schedule\naccess repositories for homework and projects"
+  },
+  {
+    "objectID": "slides/01/slides01.html#office-hours-tentative",
+    "href": "slides/01/slides01.html#office-hours-tentative",
+    "title": "Welcome to Stat 220",
+    "section": "Office hours (tentative)",
+    "text": "Office hours (tentative)\n\n\n\nDay\nTime\nType\nLocation\n\n\n\n\nMonday\n11-12\nDrop-in\nCMC 307\n\n\nTuesday\n2-3\nDrop-in\nCMC 307\n\n\nWednesday\n4-5\nDrop-in\nCMC 307\n\n\nFriday\n11-12\nBy appt\nCMC 223"
+  },
+  {
+    "objectID": "slides/01/slides01.html#where-is-amanda-in-january",
+    "href": "slides/01/slides01.html#where-is-amanda-in-january",
+    "title": "Welcome to Stat 220",
+    "section": "Where is Amanda in January?",
+    "text": "Where is Amanda in January?"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-will-you-do-in-this-course",
+    "href": "slides/01/slides01.html#what-will-you-do-in-this-course",
+    "title": "Welcome to Stat 220",
+    "section": "What will you do in this course?",
+    "text": "What will you do in this course?\n\n\nGraded work:\n\nHomework\nLab Quizzes\nPortfolio Projects\nFinal Project\n\n\nUngraded work:\n\nDaily prep for class: read/watch/review/try\nIn-class exercises and group work\nEngagement in small and large group discussions"
+  },
+  {
+    "objectID": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
+    "href": "slides/01/slides01.html#what-will-a-typical-dayweek-look-like",
+    "title": "Welcome to Stat 220",
+    "section": "What will a typical day/week look like?",
+    "text": "What will a typical day/week look like?\n\n\nBefore class:\n\nWatch a video or read a chapter\nCome with questions\nBe prepared to try what was covered\n\n\nIn class:\n\nMini lecture\n\nSometimes review\nSometimes new\n\nHands-on coding in R\n\n\nAfter class:\n\nFinish any in-class exercises\nWork on homework and portfolio projects"
+  },
+  {
+    "objectID": "slides/01/slides01.html#grading-system",
+    "href": "slides/01/slides01.html#grading-system",
+    "title": "Welcome to Stat 220",
+    "section": "Grading system",
+    "text": "Grading system\nHomework and lab quiz problems will be graded as successful or not successful. Projects will be graded as excellent, successful, or retry. You will have the opportunity to resubmit the lab quizzes outside of class.\nTo earn a course grade, you must meet all of the requirements in a given row:\n\n\n\n\n\n\n\n\n\n\n\nHomework Problems\nLab Quiz Problems\nPortfolio Projects (4 total)\nFinal Project\n\n\n\n\nA\n85%\n90%\n2 Excellent\nExcellent\n\n\nB\n75%\n80%\n4 Successful\nSuccessful\n\n\nC\n65%\n70%\n3 Successful\nSuccessful\n\n\nD\n55%\n50%\n2 Successful\nSuccessful\n\n\n\n“+” and “-” grades are determined by partially meeting the requirements in a given row."
+  },
+  {
+    "objectID": "slides/01/slides01.html#benefits",
+    "href": "slides/01/slides01.html#benefits",
+    "title": "Welcome to Stat 220",
+    "section": "Benefits",
+    "text": "Benefits\n\nYou decide what grade you’re aiming for, and what you have to do to earn it\nClear guidelines for “successful” and “excellent” marks\nOpportunity to revise and resubmit"
+  },
+  {
+    "objectID": "slides/01/slides01.html#possible-drawbacks",
+    "href": "slides/01/slides01.html#possible-drawbacks",
+    "title": "Welcome to Stat 220",
+    "section": "Possible drawbacks",
+    "text": "Possible drawbacks\n\nNo partial credit!\nRevisions take time\nCategories don’t “average out”"
+  },
+  {
+    "objectID": "slides/01/slides01.html#tokens",
+    "href": "slides/01/slides01.html#tokens",
+    "title": "Welcome to Stat 220",
+    "section": "Tokens",
+    "text": "Tokens\nYou can use a token to:\n\nRevise a portfolio project that did not earn a “successful”\n72-hour extension on a homework assignment (the request must be submitted before the deadline)\n72-hour extension on lab quiz resubmissions (the request must be submitted before the deadline)\nBy passing the syllabus quiz, you’ll activate your 5 tokens for the term. I will track token balances in the moodle gradebook (updated weekly)"
+  },
+  {
+    "objectID": "slides/01/slides01.html#collaboration-policy",
+    "href": "slides/01/slides01.html#collaboration-policy",
+    "title": "Welcome to Stat 220",
+    "section": "Collaboration policy",
+    "text": "Collaboration policy\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
+  },
+  {
+    "objectID": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
+    "href": "slides/01/slides01.html#use-of-generative-artificial-intelligence-ai",
+    "title": "Welcome to Stat 220",
+    "section": "Use of generative artificial intelligence (AI)",
+    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT or Gemini, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.\n\n\n\nAdapted from Mine Çetinkaya-Rundel"
+  },
+  {
+    "objectID": "slides/01/slides01.html#tools",
+    "href": "slides/01/slides01.html#tools",
+    "title": "Welcome to Stat 220",
+    "section": "Tools",
+    "text": "Tools\n\nhttps://maize.mathcs.carleton.edu\n\n\nBrowser based RStudio instance(s) provided by Carleton\nRequires internet connection to access\nProvides consistency in hardware and software environments\nLocal R installations are also fine! But it may be harder for me to provide support"
+  },
+  {
+    "objectID": "slides/01/slides01.html#github",
+    "href": "slides/01/slides01.html#github",
+    "title": "Welcome to Stat 220",
+    "section": "GitHub",
+    "text": "GitHub\n\nhttps://github.com/stat220-w25\n\n\nGitHub organization for the course\nAll of your work and your membership (enrollment) in the organization is private\nEach assignment is a private repo on GitHub, I distribute the assignments on GitHub.\nYou will work on your assignment, then “knit 🧶 commit ✅ push ⤴️”\nYou’ll then be able to submit your PDF via gradescope\n\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
+  },
+  {
+    "objectID": "slides/01/slides01.html#username-advice",
+    "href": "slides/01/slides01.html#username-advice",
+    "title": "Welcome to Stat 220",
+    "section": "Username advice",
+    "text": "Username advice\n\nin case you don’t yet have a GitHub account…\n\nSome brief advice about selecting your account names (particularly for GitHub),\n\nIncorporate your actual name! People like to know who they’re dealing with and makes your username easier for people to guess or remember\nReuse your username from other contexts, e.g., Twitter or Slack\nPick a username you will be comfortable revealing to your future boss\nShorter is better than longer, but be as unique as possible\nMake it timeless. Avoid highlighting your current university, employer, or place of residence"
+  },
+  {
+    "objectID": "slides/01/slides01.html#your-tasks-before-next-class",
+    "href": "slides/01/slides01.html#your-tasks-before-next-class",
+    "title": "Welcome to Stat 220",
+    "section": "Your tasks before next class",
+    "text": "Your tasks before next class\n\nCreate a GitHub account if you don’t have one\nComplete the welcome survey if you haven’t already\nRead the syllabus and pass syllabus quiz\nMake sure you can login in to the maize server or update your local R/RStudio versions\nComplete the readings for next class"
+  },
+  {
     "objectID": "course-faq.html",
     "href": "course-faq.html",
     "title": "FAQ",
@@ -1557,12 +1900,5 @@
     "title": "Stat 220: Introduction to Data Science",
     "section": "Software",
     "text": "Software\nThe use of the R programming language, with the RStudio interface is an essential component of this course. You have two options for using RStudio:\n\nThe server version of RStudio on the web at https://maize.mathcs.carleton.edu. The advantage of using the server version is that all of your work will be stored in the cloud, where it is automatically saved and backed up. This means that you can access your work from any computer on campus using a web browser. The downside is that you have to share limited computational resources with each other!\nA local version of RStudio installed on your machine.The downside to this approach is that your work is only stored locally, but I get around this problem by keeping all of my work on GitHub. You will learn how to use GitHub throughout the course.\n\nNote that you do not have to choose one or the other, you may use both. However, it is important that you understand the distinction so that you can keep track of your work. Both R and RStudio are free and open-source."
-  },
-  {
-    "objectID": "slides/05/slides05.html#section-6",
-    "href": "slides/05/slides05.html#section-6",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "",
-    "text": "From The West Wing Season 2 Episode 16"
   }
 ]
