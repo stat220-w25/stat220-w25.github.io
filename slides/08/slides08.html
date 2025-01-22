@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.6.32">
 
   <meta name="author" content="Prof Amanda Luby">
-  <title>Stat 220 – Data Wrangling:  Pipes &amp; Groups</title>
+  <title>Stat 220 – Data Wrangling:  Pipes &amp;  Groups</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -394,8 +394,8 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="../img/horst_data_cowboy.png" data-background-opacity="0.8" data-background-position="bottom right" data-background-size="70%" data-slide-number="none" class="quarto-title-block center">
-  <h1 class="title">Data Wrangling: <br>Pipes &amp; Groups</h1>
-  <p class="subtitle">Day 07</p>
+  <h1 class="title">Data Wrangling: <br>Pipes &amp;<br> Groups</h1>
+  <p class="subtitle">Day 08</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -409,8 +409,8 @@ Prof Amanda Luby
 </div>
 
 </section>
-<section id="college-scorecard" class="slide level2">
-<h2>2019 College scorecard</h2>
+<section id="the-college-scorecard" class="slide level2">
+<h2>The College Scorecard</h2>
 <blockquote>
 <p>The College Scorecard is designed to increase transparency, putting the power in the hands of the public — from those choosing colleges to those improving college quality — to see how well different schools are serving their students.</p>
 </blockquote>
@@ -435,13 +435,16 @@ $ fedloan        &lt;dbl&gt; 0.5105, 0.8185, 0.6213, 0.4902, 0.5529, 0.5524, 0.6
 </div>
 </section>
 <section>
-<section id="building-pipelines" class="title-slide slide level1 center">
+<section id="building-pipelines" class="title-slide slide level1 maize center">
 <h1>Building Pipelines</h1>
 
 </section>
 <section id="function-application-syntax" class="slide level2">
 <h2>Function-application syntax</h2>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>mn_colleges <span class="ot">&lt;-</span> <span class="fu">filter</span>(colleges, state <span class="sc">==</span> <span class="st">"MN"</span>)</span>
+<span id="cb2-2"><a></a>mn_colleges <span class="ot">&lt;-</span> <span class="fu">select</span>(mn_colleges, school, city, admission_rate<span class="sc">:</span>fedloan)</span>
+<span id="cb2-3"><a></a>mn_colleges</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 9
   school      city  admission_rate   act undergrads  cost grad_rate fy_retention
@@ -456,6 +459,7 @@ $ fedloan        &lt;dbl&gt; 0.5105, 0.8185, 0.6213, 0.4902, 0.5529, 0.5524, 0.6
 <section id="nested-function-calls" class="slide level2">
 <h2>Nested function calls</h2>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">select</span>(<span class="fu">filter</span>(colleges, state <span class="sc">==</span> <span class="st">"MN"</span>), school, city, admission_rate<span class="sc">:</span>fedloan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 9
   school      city  admission_rate   act undergrads  cost grad_rate fy_retention
@@ -467,7 +471,7 @@ $ fedloan        &lt;dbl&gt; 0.5105, 0.8185, 0.6213, 0.4902, 0.5529, 0.5524, 0.6
 </div>
 </div>
 </section>
-<section id="section" class="slide level2">
+<section id="section" class="slide level2 center">
 <h2></h2>
 <div class="columns">
 <div class="column" style="width:60%;">
@@ -477,7 +481,11 @@ $ fedloan        &lt;dbl&gt; 0.5105, 0.8185, 0.6213, 0.4902, 0.5529, 0.5524, 0.6
 <li><p>Think “and then” when reading code</p></li>
 </ul>
 </div><div class="column" style="width:40%;">
-<p><img data-src="../img/magittr-pipe.png"></p>
+<div class="quarto-figure quarto-figure-right">
+<figure>
+<p><img data-src="../img/magittr-pipe.png" class="quarto-figure quarto-figure-right"></p>
+</figure>
+</div>
 </div></div>
 </section>
 <section id="using" class="slide level2">
@@ -491,47 +499,49 @@ $ fedloan        &lt;dbl&gt; 0.5105, 0.8185, 0.6213, 0.4902, 0.5529, 0.5524, 0.6
 <h2>Using <code>%&gt;%</code></h2>
 <p>You can build up a series of pipes:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>mn_colleges <span class="ot">&lt;-</span> colleges <span class="sc">|&gt;</span>                     <span class="co"># dataframe first and then... #&lt;&lt;</span></span>
-<span id="cb4-2"><a></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"MN"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a></a>  <span class="fu">select</span>(school, city, admission_rate<span class="sc">:</span>fedloan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>mn_colleges <span class="ot">&lt;-</span> colleges <span class="sc">|&gt;</span>                     <span class="co"># dataframe first and then... #&lt;&lt;</span></span>
+<span id="cb6-2"><a></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"MN"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a></a>  <span class="fu">select</span>(school, city, admission_rate<span class="sc">:</span>fedloan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="using-2" class="slide level2">
 <h2>Using <code>%&gt;%</code></h2>
 <p>You can build up a series of pipes:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>mn_colleges <span class="ot">&lt;-</span> colleges <span class="sc">|&gt;</span>                     <span class="co"># dataframe first and then... #&lt;&lt;</span></span>
-<span id="cb5-2"><a></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"MN"</span>) <span class="sc">|&gt;</span>                     <span class="co"># filter out MN colleges and then...#&lt;&lt;</span></span>
-<span id="cb5-3"><a></a>  <span class="fu">select</span>(school, city, admission_rate<span class="sc">:</span>fedloan) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>mn_colleges <span class="ot">&lt;-</span> colleges <span class="sc">|&gt;</span>                     <span class="co"># dataframe first and then... #&lt;&lt;</span></span>
+<span id="cb7-2"><a></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"MN"</span>) <span class="sc">|&gt;</span>                     <span class="co"># filter out MN colleges and then...#&lt;&lt;</span></span>
+<span id="cb7-3"><a></a>  <span class="fu">select</span>(school, city, admission_rate<span class="sc">:</span>fedloan) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="using-3" class="slide level2">
 <h2>Using <code>%&gt;%</code></h2>
 <p>You can build up a series of pipes:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>mn_colleges <span class="ot">&lt;-</span> colleges <span class="sc">|&gt;</span>                     <span class="co"># dataframe first and then... #&lt;&lt;</span></span>
-<span id="cb6-2"><a></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"MN"</span>) <span class="sc">|&gt;</span>                     <span class="co"># filter out MN colleges and then...#&lt;&lt;</span></span>
-<span id="cb6-3"><a></a>  <span class="fu">select</span>(school, city, admission_rate<span class="sc">:</span>fedloan) <span class="co"># select the columns of interest #&lt;&lt;   </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>mn_colleges <span class="ot">&lt;-</span> colleges <span class="sc">|&gt;</span>                     <span class="co"># dataframe first and then... #&lt;&lt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"MN"</span>) <span class="sc">|&gt;</span>                     <span class="co"># filter out MN colleges and then...#&lt;&lt;</span></span>
+<span id="cb8-3"><a></a>  <span class="fu">select</span>(school, city, admission_rate<span class="sc">:</span>fedloan) <span class="co"># select the columns of interest #&lt;&lt;   </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="try-it" class="slide level2">
-<h2>Try it</h2>
-<p>Rewrite each code chunk as a single chain of commands using <code>|&gt;</code></p>
+<section id="warm-up" class="slide level2">
+<h2>Warm Up</h2>
+<div class="task">
+<p>Rewrite each code chunk as a single chain of commands using <code>|&gt;</code> or <code>%&gt;%</code></p>
+</div>
 <p>Chunk 1:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">log2</span>(<span class="fu">sqrt</span>(<span class="dv">16</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">log2</span>(<span class="fu">sqrt</span>(<span class="dv">16</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Chunk 2:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">library</span>(nycflights23) <span class="co"># need to load, not in pipeline</span></span>
-<span id="cb8-2"><a></a>msp <span class="ot">&lt;-</span> <span class="fu">filter</span>(flights, dest <span class="sc">==</span> <span class="st">"MSP"</span>, carrier <span class="sc">==</span> <span class="st">"DL"</span>)</span>
-<span id="cb8-3"><a></a>msp_narrow <span class="ot">&lt;-</span> <span class="fu">select</span>(msp, year, month, day, <span class="fu">starts_with</span>(<span class="st">"sched"</span>), </span>
-<span id="cb8-4"><a></a>                     <span class="fu">contains</span>(<span class="st">"delay"</span>), origin)</span>
-<span id="cb8-5"><a></a>msp_narrow <span class="ot">&lt;-</span> <span class="fu">relocate</span>(msp_narrow, origin, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">library</span>(nycflights23) <span class="co"># need to load, not in pipeline</span></span>
+<span id="cb10-2"><a></a>msp <span class="ot">&lt;-</span> <span class="fu">filter</span>(flights, dest <span class="sc">==</span> <span class="st">"MSP"</span>, carrier <span class="sc">==</span> <span class="st">"DL"</span>)</span>
+<span id="cb10-3"><a></a>msp_narrow <span class="ot">&lt;-</span> <span class="fu">select</span>(msp, year, month, day, <span class="fu">starts_with</span>(<span class="st">"sched"</span>), </span>
+<span id="cb10-4"><a></a>                     <span class="fu">contains</span>(<span class="st">"delay"</span>), origin)</span>
+<span id="cb10-5"><a></a>msp_narrow <span class="ot">&lt;-</span> <span class="fu">relocate</span>(msp_narrow, origin, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_bad5f6bb" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_56fc5562" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
 </div>
@@ -545,12 +555,630 @@ $ fedloan        &lt;dbl&gt; 0.5105, 0.8185, 0.6213, 0.4902, 0.5529, 0.5524, 0.6
 <li class="fragment"><p>For simple uses, acts the same as <code>%&gt;%</code> but is more rigid</p></li>
 <li class="fragment"><p>I’ll use both in class examples, but you can use <code>|&gt;</code> or <code>%&gt;%</code></p></li>
 </ul>
+</section>
+<section id="your-turn" class="slide level2">
+<h2>Your turn</h2>
+<div class="task">
+<p><em>Chain</em> the last two parts together, so that the resulting dataset contains both <code>avg_speed</code> and <code>delay_category</code>. Pipe this new dataset into <code>ggplot()</code> to answer the question “is there a relationship between average speed and how late a flight is delayed?”</p>
+<p>If you have time, create a new graph which only contains <em>flights to MSP</em>.</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_3819c267" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">04</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
 </section></section>
+<section>
 <section id="calculating-summaries" class="title-slide slide level1 maize center">
 <h1>Calculating Summaries</h1>
 
+</section>
+<section id="computing-statistics-summarize" class="slide level2">
+<h2>Computing statistics: <code>summarize</code></h2>
+<ul>
+<li class="fragment"><p>collapse many values down into a statistic</p></li>
+<li class="fragment"><p><code>summarize(data, newstat = fun(var))</code><br> applies the <code>fun</code> function to <code>var</code> variable(s) and returns one value in <code>newstat</code> column</p></li>
+</ul>
+</section>
+<section id="computing-statistics-summarize-1" class="slide level2">
+<h2>Computing statistics: <code>summarize</code></h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1"><code>dplyr</code></a></li><li><a href="#tabset-1-2"><code>base</code> R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<p>Average and SD of cost in a data frame format:</p>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>colleges <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb11-3"><a></a>    <span class="at">avg_cost =</span> <span class="fu">mean</span>(cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb11-4"><a></a>    <span class="at">sd_cost =</span> <span class="fu">sd</span>(cost , <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  avg_cost sd_cost
+     &lt;dbl&gt;   &lt;dbl&gt;
+1   36620.  16244.</code></pre>
+</div>
+</div></div>
+</div>
+<div id="tabset-1-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">mean</span>(colleges<span class="sc">$</span>cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 36619.72</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">sd</span>(colleges<span class="sc">$</span>cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16243.9</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="your-turn-1" class="slide level2">
+<h2>Your turn</h2>
+<div class="task">
+<p>Use <code>summarize()</code> to compute statistics about the data:</p>
+<ol type="1">
+<li><p>The lowest and highest <code>distance</code> traveled</p></li>
+<li><p>The lowest and highest <code>air_time</code></p></li>
+<li><p>The median <code>dep_delay</code></p></li>
+</ol>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_b31c8d4f" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="your-turn-2" class="slide level2">
+<h2>Your turn</h2>
+<div class="task">
+<p>Extract the rows for <strong>Delta</strong> flights. (<em>Hint:</em> look at the <code>airlines</code> dataset, which is also distributed in the {nycflights23} R package, to find the carrier shortcut code)</p>
+<p>Then use <code>summarize()</code> and a summary function to find:</p>
+<ol type="1">
+<li><p>The number of flights in this subset</p></li>
+<li><p>The median <code>dep_delay</code>. How does it compare to the overall median?</p></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_d391ccae" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="across" class="slide level2">
+<h2><code>across()</code></h2>
+<p>If you want to calculate the same summary statistics for many variables, <code>across()</code> can help!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>colleges <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(admission_rate<span class="sc">:</span>fedloan, <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  admission_rate   act undergrads   cost grad_rate fy_retention fedloan
+           &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;
+1          0.688  23.2      3559. 36620.     0.550        0.743   0.533</code></pre>
+</div>
+</div>
+</section>
+<section id="across-where" class="slide level2">
+<h2><code>across() + where()</code></h2>
+<p><code>where()</code> can help you apply functions to all columns of a certain type (e.g., numeric)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>colleges <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 8
+   unitid admission_rate   act undergrads   cost grad_rate fy_retention fedloan
+    &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;
+1 203732.          0.688  23.2      3559. 36620.     0.550        0.743   0.533</code></pre>
+</div>
+</div>
+<p><em>But make sure they make sense!</em></p>
+</section>
+<section id="group_by" class="slide level2">
+<h2><code>group_by()</code></h2>
+<p>Groups cases by common values of one or more columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>colleges <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a></a>  <span class="fu">group_by</span>(state)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 187 × 13
+# Groups:   state [44]
+  unitid school   type  city  state region admission_rate   act undergrads  cost
+   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+1 228343 Southwe… priv… Geor… TX    South…          0.490    26       1507 55886
+2 177719 Barnes-… priv… Sain… MO    Plains         NA        NA        569    NA
+3 367884 Hodges … priv… Fort… FL    South…          0.612    NA        832 27425
+# ℹ 184 more rows
+# ℹ 3 more variables: grad_rate &lt;dbl&gt;, fy_retention &lt;dbl&gt;, fedloan &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>How does this help us?</p>
+</section>
+<section id="spit-apply-combine" class="slide level2">
+<h2>Spit-apply-combine</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="../img/08-split-apply-combine.png" width="1109"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="statistics-by-group-group_by-summarize" class="slide level2">
+<h2>Statistics by group: <code>group_by</code> + <code>summarize</code></h2>
+<p>Summary statistics <strong>by state</strong></p>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>colleges <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb23-4"><a></a>    <span class="at">n_schools =</span> <span class="fu">n</span>(),</span>
+<span id="cb23-5"><a></a>    <span class="at">avg_cost =</span> <span class="fu">mean</span>(cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb23-6"><a></a>    <span class="at">min_size =</span> <span class="fu">min</span>(undergrads, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb23-7"><a></a>    <span class="at">max_size =</span> <span class="fu">max</span>(undergrads, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 44 × 5
+   state n_schools avg_cost min_size max_size
+   &lt;chr&gt;     &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+ 1 AL            4   22242.      245     7785
+ 2 AR            3   43816.      512     1447
+ 3 AZ            2   33388.      803    33715
+ 4 CA            9   42807.       43    23337
+ 5 CO            2   45574      5755     8448
+ 6 CT            3   29895.      174     4425
+ 7 FL            5   34747.       39     2401
+ 8 GA            6   27961       235     9742
+ 9 HI            1   36765      1558     1558
+10 IA            1     NaN       339      339
+# ℹ 34 more rows</code></pre>
+</div>
+</div></div>
+</section>
+<section id="your-turn-3" class="slide level2">
+<h2>Your turn</h2>
+<div class="task">
+<p>Use <code>group_by()</code>, <code>summarize()</code>, and <code>slice_max()</code> to display the five <code>dest</code> airports with the most flights from NYC airports in 2023. Your display should include the median flight delay for these airports.</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_0d0fba7c" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="calculating-counts" class="slide level2">
+<h2>Calculating counts</h2>
+<p><code>count()</code> can be used as a short cut to <code>group_by() + summarize()</code> if you are only calculating counts</p>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1"><code>group_by()</code></a></li><li><a href="#tabset-2-2"><code>count()</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>colleges <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 44 × 2
+   state     n
+   &lt;chr&gt; &lt;int&gt;
+ 1 AL        4
+ 2 AR        3
+ 3 AZ        2
+ 4 CA        9
+ 5 CO        2
+ 6 CT        3
+ 7 FL        5
+ 8 GA        6
+ 9 HI        1
+10 IA        1
+# ℹ 34 more rows</code></pre>
+</div>
+</div></div>
+</div>
+<div id="tabset-2-2">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>colleges <span class="sc">%&gt;%</span> <span class="fu">count</span>(state)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 44 × 2
+   state     n
+   &lt;chr&gt; &lt;int&gt;
+ 1 AL        4
+ 2 AR        3
+ 3 AZ        2
+ 4 CA        9
+ 5 CO        2
+ 6 CT        3
+ 7 FL        5
+ 8 GA        6
+ 9 HI        1
+10 IA        1
+# ℹ 34 more rows</code></pre>
+</div>
+</div></div>
+</div>
+</div>
+</div>
+</section>
+<section id="calculations-by-group-group_by-mutate" class="slide level2">
+<h2>Calculations by group: <code>group_by</code> + <code>mutate</code></h2>
+<p>Calculate z-scores <strong>within regions</strong></p>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>colleges <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a></a>  <span class="fu">mutate</span>(<span class="at">z_cost =</span> (cost <span class="sc">-</span> <span class="fu">mean</span>(cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 187 × 14
+# Groups:   region [10]
+   unitid school  type  city  state region admission_rate   act undergrads  cost
+    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+ 1 228343 Southw… priv… Geor… TX    South…          0.490    26       1507 55886
+ 2 177719 Barnes… priv… Sain… MO    Plains         NA        NA        569    NA
+ 3 367884 Hodges… priv… Fort… FL    South…          0.612    NA        832 27425
+ 4 149781 Wheato… priv… Whea… IL    Great…          0.848    29       2358 49214
+ 5 135364 Luther… priv… Lith… GA    South…          0.5      NA        235    NA
+ 6 212601 Gannon… priv… Erie  PA    Mid E…          0.755    23       2866 44896
+ 7 133979 Florid… priv… Miam… FL    South…          0.400    NA       1049 27460
+ 8 117140 Univer… priv… La V… CA    Far W…          0.548    22       4516 58014
+ 9 152567 Trine … priv… Ango… IN    Great…          0.816    25       2120 46440
+10 237057 Whitma… priv… Wall… WA    Far W…          0.559    31       1545 68082
+# ℹ 177 more rows
+# ℹ 4 more variables: grad_rate &lt;dbl&gt;, fy_retention &lt;dbl&gt;, fedloan &lt;dbl&gt;,
+#   z_cost &lt;dbl&gt;</code></pre>
+</div>
+</div></div>
+</section>
+<section id="ungroup" class="slide level2 smaller">
+<h2><code>ungroup()</code></h2>
+<ul>
+<li class="fragment"><p>Once data are grouped, they remain grouped until you manually ungroup them</p></li>
+<li class="fragment"><p>Some summary functions ungroup them for you, e.g., <code>count()</code> and <code>summarize()</code></p></li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>colleges <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a></a>  <span class="fu">mutate</span>(<span class="at">z_cost =</span> (cost <span class="sc">-</span> <span class="fu">mean</span>(cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb31-5"><a></a>  <span class="fu">select</span>(school, city, cost, z_cost)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">With <code>ungroup()</code></a></li><li><a href="#tabset-3-2">Without <code>ungroup()</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 187 × 4
+   school                                           city           cost z_cost
+   &lt;chr&gt;                                            &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;
+ 1 Southwestern University                          Georgetown    55886  1.51 
+ 2 Barnes-Jewish College Goldfarb School of Nursing Saint Louis      NA NA    
+ 3 Hodges University                                Fort Myers    27425 -0.467
+ 4 Wheaton College                                  Wheaton       49214  1.06 
+ 5 Luther Rice College &amp; Seminary                   Lithonia         NA NA    
+ 6 Gannon University                                Erie          44896  0.261
+ 7 Florida Memorial University                      Miami Gardens 27460 -0.465
+ 8 University of La Verne                           La Verne      58014  1.14 
+ 9 Trine University                                 Angola        46440  0.849
+10 Whitman College                                  Walla Walla   68082  1.79 
+# ℹ 177 more rows</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 187 × 5
+# Groups:   region [10]
+   region      school                                         city   cost z_cost
+   &lt;chr&gt;       &lt;chr&gt;                                          &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;
+ 1 Southwest   Southwestern University                        Geor… 55886  1.51 
+ 2 Plains      Barnes-Jewish College Goldfarb School of Nurs… Sain…    NA NA    
+ 3 Southeast   Hodges University                              Fort… 27425 -0.467
+ 4 Great Lakes Wheaton College                                Whea… 49214  1.06 
+ 5 Southeast   Luther Rice College &amp; Seminary                 Lith…    NA NA    
+ 6 Mid East    Gannon University                              Erie  44896  0.261
+ 7 Southeast   Florida Memorial University                    Miam… 27460 -0.465
+ 8 Far West    University of La Verne                         La V… 58014  1.14 
+ 9 Great Lakes Trine University                               Ango… 46440  0.849
+10 Far West    Whitman College                                Wall… 68082  1.79 
+# ℹ 177 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="aside-code-commenting" class="slide level2">
+<h2>Aside: code commenting</h2>
+<p>In R, you can use <code>#</code> for adding comments to your code. Any text that follows the <code>#</code> will be printed as-is and won’t be run as code. This is useful for leaving comments in your code and for temporarily disabling certain lines of code for debugging.</p>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>colleges <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb34-4"><a></a>    <span class="at">n_schools =</span> <span class="fu">n</span>(),                               <span class="co"># This is a reminder to me</span></span>
+<span id="cb34-5"><a></a>    <span class="co"># avg_cost = mean(cost, na.rm = TRUE),         # This line isn't run</span></span>
+<span id="cb34-6"><a></a>    <span class="at">min_size =</span> <span class="fu">min</span>(undergrads, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb34-7"><a></a>    <span class="at">max_size =</span> <span class="fu">max</span>(undergrads, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 44 × 4
+   state n_schools min_size max_size
+   &lt;chr&gt;     &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+ 1 AL            4      245     7785
+ 2 AR            3      512     1447
+ 3 AZ            2      803    33715
+ 4 CA            9       43    23337
+ 5 CO            2     5755     8448
+ 6 CT            3      174     4425
+ 7 FL            5       39     2401
+ 8 GA            6      235     9742
+ 9 HI            1     1558     1558
+10 IA            1      339      339
+# ℹ 34 more rows</code></pre>
+</div>
+</div></div>
+</section>
+<section id="aside-code-commenting-1" class="slide level2">
+<h2>Aside: code commenting</h2>
+<p>And it works especially well when you’ve used <em>chaining</em> in your code</p>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>colleges <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a></a>  <span class="co">#group_by(state) %&gt;%</span></span>
+<span id="cb36-3"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb36-4"><a></a>    <span class="at">n_schools =</span> <span class="fu">n</span>(),                               </span>
+<span id="cb36-5"><a></a>    <span class="at">avg_cost =</span> <span class="fu">mean</span>(cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),         </span>
+<span id="cb36-6"><a></a>    <span class="at">min_size =</span> <span class="fu">min</span>(undergrads, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb36-7"><a></a>    <span class="at">max_size =</span> <span class="fu">max</span>(undergrads, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  n_schools avg_cost min_size max_size
+      &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1       187   36620.        0    33715</code></pre>
+</div>
+</div></div>
+</section></section>
+<section>
+<section id="code-style" class="title-slide slide level1 maize center">
+<h1>Code Style</h1>
 
 </section>
+<section id="which-is-easier-to-read" class="slide level2">
+<h2>Which is easier to read?</h2>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Option A</a></li><li><a href="#tabset-4-2">Option B</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">group_by</span>(colleges, region) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">z_cost =</span> (cost <span class="sc">-</span> <span class="fu">mean</span>(cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 187 × 14
+   unitid school  type  city  state region admission_rate   act undergrads  cost
+    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+ 1 228343 Southw… priv… Geor… TX    South…          0.490    26       1507 55886
+ 2 177719 Barnes… priv… Sain… MO    Plains         NA        NA        569    NA
+ 3 367884 Hodges… priv… Fort… FL    South…          0.612    NA        832 27425
+ 4 149781 Wheato… priv… Whea… IL    Great…          0.848    29       2358 49214
+ 5 135364 Luther… priv… Lith… GA    South…          0.5      NA        235    NA
+ 6 212601 Gannon… priv… Erie  PA    Mid E…          0.755    23       2866 44896
+ 7 133979 Florid… priv… Miam… FL    South…          0.400    NA       1049 27460
+ 8 117140 Univer… priv… La V… CA    Far W…          0.548    22       4516 58014
+ 9 152567 Trine … priv… Ango… IN    Great…          0.816    25       2120 46440
+10 237057 Whitma… priv… Wall… WA    Far W…          0.559    31       1545 68082
+# ℹ 177 more rows
+# ℹ 4 more variables: grad_rate &lt;dbl&gt;, fy_retention &lt;dbl&gt;, fedloan &lt;dbl&gt;,
+#   z_cost &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-4-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>colleges <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a></a>  <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a></a>  <span class="fu">mutate</span>(<span class="at">z_cost =</span> (cost <span class="sc">-</span> <span class="fu">mean</span>(cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(cost, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb40-4"><a></a>  <span class="fu">ungroup</span>() <span class="co">#&lt;&lt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 187 × 14
+   unitid school  type  city  state region admission_rate   act undergrads  cost
+    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+ 1 228343 Southw… priv… Geor… TX    South…          0.490    26       1507 55886
+ 2 177719 Barnes… priv… Sain… MO    Plains         NA        NA        569    NA
+ 3 367884 Hodges… priv… Fort… FL    South…          0.612    NA        832 27425
+ 4 149781 Wheato… priv… Whea… IL    Great…          0.848    29       2358 49214
+ 5 135364 Luther… priv… Lith… GA    South…          0.5      NA        235    NA
+ 6 212601 Gannon… priv… Erie  PA    Mid E…          0.755    23       2866 44896
+ 7 133979 Florid… priv… Miam… FL    South…          0.400    NA       1049 27460
+ 8 117140 Univer… priv… La V… CA    Far W…          0.548    22       4516 58014
+ 9 152567 Trine … priv… Ango… IN    Great…          0.816    25       2120 46440
+10 237057 Whitma… priv… Wall… WA    Far W…          0.559    31       1545 68082
+# ℹ 177 more rows
+# ℹ 4 more variables: grad_rate &lt;dbl&gt;, fy_retention &lt;dbl&gt;, fedloan &lt;dbl&gt;,
+#   z_cost &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="which-is-easier-to-read-1" class="slide level2">
+<h2>Which is easier to read?</h2>
+<div class="panel-tabset">
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Option A</a></li><li><a href="#tabset-5-2">Option B</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span></span>
+<span id="cb42-2"><a></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb42-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
+<span id="cb42-4"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb42-5"><a></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"magma"</span>,<span class="at">end =</span> .<span class="dv">75</span>) <span class="sc">+</span> </span>
+<span id="cb42-6"><a></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"Times"</span>) <span class="sc">+</span> </span>
+<span id="cb42-7"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb42-8"><a></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-9"><a></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-10"><a></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"darkred"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-5-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb43-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"magma"</span>,<span class="at">end =</span> .<span class="dv">75</span>) <span class="sc">+</span> </span>
+<span id="cb43-4"><a></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">"Times"</span>) <span class="sc">+</span> </span>
+<span id="cb43-5"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(), <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb43-6"><a></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"darkred"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="style.tidyverse.org" class="slide level2">
+<h2>&lt;style.tidyverse.org&gt;</h2>
+<div class="cell">
+<iframe src="https://style.tidyverse.org" width="960" height="400px" data-external="1">
+</iframe>
+</div>
+</section>
+<section id="example-pipes-and-whitespace" class="slide level2">
+<h2>Example: Pipes and whitespace</h2>
+<p>|&gt; should always have a space before it, and should usually be followed by a new line. After the first step, each line should be indented by two spaces.</p>
+<p>Good:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean), <span class="at">.by =</span> Species) <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>Species, <span class="at">names_to =</span> <span class="st">"measure"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-4"><a></a>  <span class="fu">arrange</span>(value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Bad:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>iris <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean), <span class="at">.by =</span> Species) <span class="sc">|&gt;</span></span>
+<span id="cb45-2"><a></a><span class="fu">pivot_longer</span>(<span class="sc">!</span>Species, <span class="at">names_to =</span> <span class="st">"measure"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb45-3"><a></a><span class="fu">arrange</span>(value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-long-lines" class="slide level2">
+<h2>Example: long lines</h2>
+<p>If the arguments to a function don’t all fit on one line, put each argument on its own line and indent:</p>
+<p>Good:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb46-2"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb46-3"><a></a>    <span class="at">Sepal.Length =</span> <span class="fu">mean</span>(Sepal.Length),</span>
+<span id="cb46-4"><a></a>    <span class="at">Sepal.Width =</span> <span class="fu">mean</span>(Sepal.Width),</span>
+<span id="cb46-5"><a></a>    <span class="at">.by =</span> Species</span>
+<span id="cb46-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Bad:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb47-2"><a></a>  <span class="fu">summarise</span>(<span class="at">Sepal.Length =</span> <span class="fu">mean</span>(Sepal.Length), <span class="at">Sepal.Width =</span> <span class="fu">mean</span>(Sepal.Width), <span class="at">.by =</span> Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ggplot2-whitespace-and-indenting" class="slide level2 smaller">
+<h2>ggplot2 whitespace and indenting</h2>
+<p><code>+</code> should always have a space before it, and should be followed by a new line. After the first step, each line should be indented by two spaces.</p>
+<p>If you are creating a ggplot off of a dplyr pipeline, there should only be one level of indentation.</p>
+<p>Good:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb48-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Sepal.Width, <span class="at">y =</span> Sepal.Length)) <span class="sc">+</span></span>
+<span id="cb48-4"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Bad:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb49-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Sepal.Width, <span class="at">y =</span> Sepal.Length)) <span class="sc">+</span></span>
+<span id="cb49-4"><a></a>    <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Bad:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb50-2"><a></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb50-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Sepal.Width, <span class="at">y =</span> Sepal.Length)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ggplot2-long-lines" class="slide level2">
+<h2>ggplot2 long lines</h2>
+<p>If the arguments to a ggplot2 layer don’t all fit on one line, put each argument on its own line and indent:</p>
+<p>Good:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb51-2"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Sepal.Width, <span class="at">y =</span> Sepal.Length, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
+<span id="cb51-3"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb51-4"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb51-5"><a></a>    <span class="at">x =</span> <span class="st">"Sepal width, in cm"</span>,</span>
+<span id="cb51-6"><a></a>    <span class="at">y =</span> <span class="st">"Sepal length, in cm"</span>,</span>
+<span id="cb51-7"><a></a>    <span class="at">title =</span> <span class="st">"Sepal length vs. width of irises"</span></span>
+<span id="cb51-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Bad:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a>iris <span class="sc">|&gt;</span></span>
+<span id="cb52-2"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Sepal.Width, <span class="at">y =</span> Sepal.Length, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
+<span id="cb52-3"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb52-4"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sepal width, in cm"</span>, <span class="at">y =</span> <span class="st">"Sepal length, in cm"</span>, <span class="at">title =</span> <span class="st">"Sepal length vs. width of irises"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="code-style-summary" class="slide level2">
+<h2>Code style summary</h2>
+<ul>
+<li class="fragment">All code style guides are opinionated and subjective</li>
+<li class="fragment">Using consistent style makes it easier for collaborators (including future you!) to read and understand your code</li>
+<li class="fragment">Try to follow the tidyverse style guide in this class</li>
+</ul>
+</section>
+<section id="a-shortcut" class="slide level2">
+<h2>A shortcut</h2>
+<p>In RStudio,</p>
+<ol type="1">
+<li class="fragment">Highlight the code that you want to reformat</li>
+<li class="fragment">Go to “code –&gt; reformat code”</li>
+<li class="fragment">Marvel in wonder</li>
+</ol>
+<div class="fragment">
+<h3 id="try-it">Try it</h3>
+<div class="task">
+<p>Reformat your code from the flights activity so far according to the tidyverse style guide</p>
+</div>
+
+
+</div>
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

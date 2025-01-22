@@ -6,14 +6,11 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-82b21c4badf2b3742632e8f006a51c80.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-82b21c4badf2b3742632e8f006a51c80.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.6.32">
 
   <meta name="author" content="Prof Amanda Luby">
-  <title>Stat 220 – Intro to Maps   and Spatial  Data</title>
+  <title>Stat 220 – Data Wrangling:  Tidy Data  Joins</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -97,7 +94,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #d4d0ab; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-1e9829d593a10c0d5559e8cc1c8c0ffc.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-82c0a524c4182e724aa29367b014255e.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -396,9 +393,9 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="../img/snow-cholera-map.jpeg" data-background-opacity="0.8" data-background-position="right" data-background-size="60%" data-slide-number="none" class="quarto-title-block center">
-  <h1 class="title">Intro to Maps <br> and Spatial <br>Data</h1>
-  <p class="subtitle">Day 05</p>
+<section id="title-slide" data-background-image="../img/horst_tidydata_4.jpg" data-background-opacity="0.8" data-background-position="bottom right" data-background-size="70%" data-slide-number="none" class="quarto-title-block center">
+  <h1 class="title">Data Wrangling: <br>Tidy Data <br>Joins</h1>
+  <p class="subtitle">Day 07</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -412,415 +409,227 @@ Prof Amanda Luby
 </div>
 
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
-<ul>
-<li class="fragment">git/GitHub</li>
-<li class="fragment">Intro to Spatial Data</li>
-<li class="fragment">Making Maps in <code>ggplot2</code></li>
-</ul>
-</section>
-<section id="section" class="slide level2 smaller" data-background-image="https://imgs.xkcd.com/comics/git.png" data-background-position="right" data-background-size="35%">
+<section id="section" class="slide level2">
 <h2></h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li class="fragment">Think of the state on GitHub as “worst case scenario”</li>
-<li class="fragment">If you screw things up, copy your important files (eg. <code>hw.Rmd</code>) to a safe place.
-<ul>
-<li class="fragment">Usually your files are JUST FINE. But it is easy to goof up the Git infrastructure when you’re new at this. And it can be hard to get that straightened out on your own.</li>
-</ul></li>
-<li class="fragment">Rename the existing local repo as a temporary measure, i.e.&nbsp;before you do something radical, like delete it.</li>
-<li class="fragment">Clone the original repo from GitHub to RStudio (follow the directions to create a new project). You are back to a happy state.</li>
-<li class="fragment">Copy all relevant files back over from your safe space. The ones whose updated state you need to commit.</li>
-<li class="fragment">Knit, commit, push</li>
-<li class="fragment">Carry on with your life.</li>
-</ul>
-</div><div class="column" style="width:50%;">
-
-</div></div>
-
-<aside><div>
-<p><a href="https://happygitwithr.com/burn">Burn It All Down</a> from <em>Happy Git with R</em></p>
-</div></aside></section>
+<p><img data-src="../img/horst_tidy_1.jpg"></p>
+</section>
 <section id="section-1" class="slide level2">
 <h2></h2>
-<p><img data-src="../img/whole-game-04.png"></p>
+<p><img data-src="../img/horst_tidy_2.jpg"></p>
 </section>
-<section>
-<section id="spatial-data" class="title-slide slide level1 maize center">
-<h1>Spatial Data</h1>
-
-</section>
-<section id="cholera" class="slide level2 smaller">
-<h2>Cholera</h2>
-<p>In 1854, a <em>Cholera</em> outbreak killed 127 people in 3 days in a London neighborhood, resulting in a mass exodus of local residents. At the time, people thought that Cholera w as an airborne disease. John Snow was a physician who was critical of the airborne theory, and set out to investigate.</p>
-<div class="fragment">
-<p>What might this data look like?</p>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top">
-<colgroup>
-<col style="width: 19%">
-<col style="width: 15%">
-<col style="width: 16%">
-<col style="width: 19%">
-<col style="width: 6%">
-<col style="width: 22%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">date</th>
-<th style="text-align: left;">last_name</th>
-<th style="text-align: left;">first_name</th>
-<th style="text-align: left;">address</th>
-<th style="text-align: right;">age</th>
-<th style="text-align: left;">cause_of_death</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Aug 31, 1854</td>
-<td style="text-align: left;">Jones</td>
-<td style="text-align: left;">Thomas</td>
-<td style="text-align: left;">26 Broad St.</td>
-<td style="text-align: right;">37</td>
-<td style="text-align: left;">cholera</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Aug 31, 1854</td>
-<td style="text-align: left;">Jones</td>
-<td style="text-align: left;">Mary</td>
-<td style="text-align: left;">26 Broad St.</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">cholera</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Sept 1, 1854</td>
-<td style="text-align: left;">Warwick</td>
-<td style="text-align: left;">Martin</td>
-<td style="text-align: left;">14 Broad St.</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: left;">cholera</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
-</div>
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
 <section id="section-2" class="slide level2">
 <h2></h2>
-<p>What makes “address” a useful variable is that it is linked to a specific location in the physical world. If we plot these addresses, we get something like the following:</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="section-3" class="slide level2">
-<h2></h2>
-<p>While we can see patterns in the last plot, the underlying map of the London streets provides helpful context that makes it more intelligble:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="../img/snow-cholera-map.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="../img/snow-cholera-map.jpeg" class="quarto-figure quarto-figure-center" style="width:50.0%"></a></p>
-</figure>
-</div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="section-4" class="slide level2">
-<h2></h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p>Snow’s insight was driven by another set of data—the locations of the street-side water pumps (it’s kind of hard to see, but they are labelled on the map). Nearly all of the cases were clustered around a single pump on the center of Broad Street.</p>
-<p>John Snow’s map (and water pump) are now “famous” among epidemiologists and statisticians.</p>
-</div><div class="column fragment" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../img/broad-street-pump.jpeg"></p>
-<figcaption>John Snow’s water pump (and pub) from a 2019 visit</figcaption>
-</figure>
-</div>
-</div></div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="a-successful-data-science-episode" class="slide level2">
-<h2>A successful data science episode:</h2>
-<ol type="1">
-<li class="fragment">Combine three sources of data (Cholera deaths, water pump locations, and street map)</li>
-<li class="fragment">While a model might have come to the same conclusion, simply plotting the data is much simpler (and more convincing to lots of people)</li>
-<li class="fragment">The problem was resolved when the data-based evidence was combined with a plausible model that explained the physical phenomenon.</li>
-</ol>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="what-is-a-map" class="slide level2">
-<h2>What is a map?</h2>
-<p>A bunch of latitude longitude points…</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
+<p><img data-src="../img/horst_tidy_3.jpg"></p>
 </section>
-<section id="what-is-a-map-1" class="slide level2">
-<h2>What is a map?</h2>
-<p>… that are connected with lines in a very specific order.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="necessary-map-data" class="slide level2">
-<h2>Necessary map data</h2>
+<section id="bakeoff-ratings" class="slide level2">
+<h2>Bakeoff ratings</h2>
 <ul>
-<li class="fragment"><p>latitude/longitude points for all map boundaries</p></li>
-<li class="fragment"><p>which boundary group all lat/long points belong</p></li>
-<li class="fragment"><p>the order to connect points within each group</p></li>
+<li class="fragment">Ratings data for each episodes in series 1-8</li>
 </ul>
-</section>
-<section id="state-map-data" class="slide level2">
-<h2>State map data</h2>
-<p><code>ggplot2::map_data()</code> provides the necessary information</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>states <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"state"</span>)</span>
-<span id="cb1-2"><a></a><span class="fu">glimpse</span>(states)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 15,537
-Columns: 6
-$ long      &lt;dbl&gt; -87.46201, -87.48493, -87.52503, -87.53076, -87.57087, -87.5…
-$ lat       &lt;dbl&gt; 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30.32665, …
-$ group     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-$ order     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1…
-$ region    &lt;chr&gt; "alabama", "alabama", "alabama", "alabama", "alabama", "alab…
-$ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
+<pre><code># A tibble: 8 × 11
+  series    e1    e2    e3    e4    e5    e6    e7    e8    e9   e10
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1      1  2.24  3     3     2.6   3.03  2.75 NA    NA    NA    NA   
+2      2  3.1   3.53  3.82  3.6   3.83  4.25  4.42  5.06 NA    NA   
+3      3  3.85  4.6   4.53  4.71  4.61  4.82  5.1   5.35  5.7   6.74
+4      4  6.6   6.65  7.17  6.82  6.95  7.32  7.76  7.41  7.41  9.45
+5      5  8.51  8.79  9.28 10.2   9.95 10.1  10.3   9.02 10.7  13.5 
+6      6 11.6  11.6  12.0  12.4  12.4  12    12.4  11.1  12.6  15.0 
+7      7 13.6  13.4  13.0  13.3  13.1  13.1  13.4  13.3  13.4  15.9 
+8      8  9.46  9.23  8.68  8.55  8.61  8.61  9.01  8.95  9.03 10.0 </code></pre>
 </div>
 </div>
+<p>.footnote[Source: <a href="https://bakeoff.netlify.app/">bakeoff</a> R package]</p>
 </section>
-<section id="using-geom_polygon" class="slide level2">
-<h2>Using <code>geom_polygon()</code></h2>
-<p>Using <code>geom_polygon()</code> will treat states as solid shapes, making it easier to add color</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb3-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="using-coord_fixed" class="slide level2">
-<h2>Using <code>coord_fixed()</code></h2>
-<p>Using <code>coord_fixed()</code> forces x and y units to be equal</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb4-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
-<span id="cb4-3"><a></a>  <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="your-turn" class="slide level2">
-<h2>Your turn</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb5-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
-<span id="cb5-3"><a></a>    <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="warm-up" class="slide level2">
+<h2>Warm up</h2>
 <div class="task">
-<ul>
-<li>Edit this code so that each shape is colored in with a different color.</li>
-<li>You only need the 3 variables used: <code>long</code>, <code>lat</code>, and <code>group</code></li>
-<li><code>05-maps.Rmd</code> file available in the <code>activities</code> repo</li>
-</ul>
+<p>Is this dataset in tidy format? Why or why not?</p>
+<p>If not, sketch out the first few rows of this data set in tidy format</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_f41493ad" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_a87c84ef" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 </div>
 </div>
 </section>
-<section id="coordinate-systems-and-projections" class="slide level2" data-background-image="../img/02-ggplot-layers.png" data-background-size="60%" data-background-position="right" data-background-opacity="0.8">
-<h2>Coordinate Systems and Projections</h2>
-</section>
-<section id="section-5" class="slide level2" data-background-image="../img/cairo-projections.png" data-background-size="50%" data-background-position="right">
+<section id="section-3" class="slide level2">
 <h2></h2>
 <div class="columns">
-<div class="column" style="width:40%;">
-<p>Geospatial data exists on the globe and is generally described with a <em>latitude</em> and <em>longitude</em>. Any <em>projection</em> from the globe to euclidean space (X-Y plane) is going to cause some distortion.</p>
-</div></div>
-</section>
-<section id="section-6" class="slide level2">
-<h2></h2>
-<iframe data-external="1" src="https://www.youtube.com/embed/vVX-PrBRtTY?start=45" width="100%" height="100%" title="West Wing: Gall-Peters Projection" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-
-<aside><div>
-<p>From <em>The West Wing</em> Season 2 Episode 16</p>
-</div></aside></section>
-<section id="section-7" class="slide level2">
-<h2></h2>
-<img data-src="../img/africa-greenland-distortions.png" class="r-stretch">
-</section>
-<section id="changing-the-coordinate-system" class="slide level2">
-<h2>Changing the coordinate system</h2>
-<p><code>coord_map</code> function provides a Mercator projection (<code>mapproj</code> package has more options)</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb6-2"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb6-3"><a></a>  <span class="fu">coord_map</span>() <span class="sc">+</span> </span>
-<span id="cb6-4"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="changing-the-coordinate-system-1" class="slide level2">
-<h2>Changing the coordinate system</h2>
-<p><code>coord_map</code> function provides a Mercator projection (<code>mapproj</code> package has more options)</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb7-2"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb7-3"><a></a>  <span class="fu">coord_map</span>(<span class="at">projection =</span> <span class="st">"sinusoidal"</span>) <span class="sc">+</span> </span>
-<span id="cb7-4"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="mercator-vs-sinusoidal-projection-world-map" class="slide level2">
-<h2>Mercator vs Sinusoidal projection (world map)</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>world <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"world"</span>)</span>
-<span id="cb8-2"><a></a></span>
-<span id="cb8-3"><a></a><span class="fu">ggplot</span>(world, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb8-4"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb8-5"><a></a>  <span class="fu">coord_map</span>(<span class="at">projection =</span> <span class="st">"mercator"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>)) <span class="sc">+</span> </span>
-<span id="cb8-6"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div>
-
-</div>
-<div class="cell quarto-layout-panel" data-layout-nrow="1" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-14-2.png" width="960"></p>
-</div>
-</div>
-</div>
-</section>
-<section id="common-types-of-maps" class="slide level2">
-<h2>Common Types of Maps</h2>
-<ol type="1">
-<li class="fragment">Chloropleth</li>
-<li class="fragment">Proportional Symbol</li>
-<li class="fragment">Cartograms/Geofacets</li>
-</ol>
-</section>
-<section id="chloropleth" class="slide level2">
-<h2>Chloropleth</h2>
-<p>Fill in regions with variable values</p>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p>Need two data sources:</p>
-<ol type="1">
-<li>map data with lat, long, region</li>
-<li>data with measurements for each region</li>
-</ol>
-<p>you don’t need to join them!</p>
-</div><div class="column" style="width:60%;">
-<p><img data-src="../img/wilke-chloropleth.png"></p>
-</div></div>
-
-<aside><div>
-<p><a href="https://clauswilke.com/dataviz/geospatial-data.html"><em>Fundamentals of Data Visualization</em></a></p>
-</div></aside></section>
-<section id="proportional-symbol" class="slide level2">
-<h2>Proportional Symbol</h2>
-<p>Overlay symbols on an existing map, where the size of the shape is proportional to the variable</p>
-<img data-src="../img/airport-ggmap.png" class="r-stretch">
-
-<aside><div>
-<p>Made with {ggmap} and {nycflights23}</p>
-</div></aside></section>
-<section id="cartogram" class="slide level2">
-<h2>Cartogram</h2>
-<p>Use approximate geographical position to encode information, but not lat/long directly</p>
-<img data-src="../img/wilke-cartogram.png" class="r-stretch">
-
-<aside><div>
-<p><a href="https://clauswilke.com/dataviz/geospatial-data.html"><em>Fundamentals of Data Visualization</em></a></p>
-</div></aside></section>
-<section id="your-task" class="slide level2">
-<h2>Your task</h2>
-<p>Your task is to use the American Community Survey data to make a chloropleth map of the US</p>
-<div class="task">
-<p>You should:</p>
+<div class="column" style="width:60%;">
 <ul>
-<li>Use the starter code provided in <code>05-maps.rmd</code></li>
-<li>Choose a different variable</li>
-<li>Change the color scale</li>
-<li>Update the title, axis labels, and legend</li>
+<li><p>Reshape the layout of tabular data</p></li>
+<li><p>Part of the <code>tidyverse</code></p></li>
 </ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-right">
+<figure>
+<p><img data-src="https://tidyr.tidyverse.org/logo.png" class="quarto-figure quarto-figure-right"></p>
+</figure>
 </div>
+</div></div>
+</section>
+<section id="goal" class="slide level2">
+<h2>Goal</h2>
+<p>Want to <em>reshape</em> the data to be in tidy format:</p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Current</a></li><li><a href="#tabset-1-2">Target</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 11
+  series    e1    e2    e3    e4    e5    e6    e7    e8    e9   e10
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1      1  2.24  3     3     2.6   3.03  2.75 NA    NA    NA    NA   
+2      2  3.1   3.53  3.82  3.6   3.83  4.25  4.42  5.06 NA    NA   
+3      3  3.85  4.6   4.53  4.71  4.61  4.82  5.1   5.35  5.7   6.74
+4      4  6.6   6.65  7.17  6.82  6.95  7.32  7.76  7.41  7.41  9.45
+5      5  8.51  8.79  9.28 10.2   9.95 10.1  10.3   9.02 10.7  13.5 
+6      6 11.6  11.6  12.0  12.4  12.4  12    12.4  11.1  12.6  15.0 
+7      7 13.6  13.4  13.0  13.3  13.1  13.1  13.4  13.3  13.4  15.9 
+8      8  9.46  9.23  8.68  8.55  8.61  8.61  9.01  8.95  9.03 10.0 </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 80 × 3
+   series epsiode rating
+    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1      1 e1        2.24
+ 2      1 e2        3   
+ 3      1 e3        3   
+ 4      1 e4        2.6 
+ 5      1 e5        3.03
+ 6      1 e6        2.75
+ 7      1 e7       NA   
+ 8      1 e8       NA   
+ 9      1 e9       NA   
+10      1 e10      NA   
+# ℹ 70 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pivot_longer" class="slide level2">
+<h2><code>pivot_longer()</code></h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li><code>data</code> (as usual)</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">pivot_longer</span>(</span>
+<span id="cb4-2"><a></a>  data, </span>
+<span id="cb4-3"><a></a>  cols, </span>
+<span id="cb4-4"><a></a>  <span class="at">names_to =</span> <span class="st">"name"</span>, </span>
+<span id="cb4-5"><a></a>  <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb4-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+</section>
+<section id="pivot_longer-1" class="slide level2">
+<h2><code>pivot_longer()</code></h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li><code>data</code> (as usual)</li>
+<li><code>cols</code>: columns to pivot into longer format</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">pivot_longer</span>(</span>
+<span id="cb5-2"><a></a>  data, </span>
+<span id="cb5-3"><a></a>  cols, </span>
+<span id="cb5-4"><a></a>  <span class="at">names_to =</span> <span class="st">"name"</span>, </span>
+<span id="cb5-5"><a></a>  <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb5-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+</section>
+<section id="pivot_longer-2" class="slide level2">
+<h2><code>pivot_longer()</code></h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li><code>data</code> (as usual)</li>
+<li><code>cols</code>: columns to pivot into longer format</li>
+<li><code>names_to</code>: name of the column where column names of pivoted variables go (character string)</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">pivot_longer</span>(</span>
+<span id="cb6-2"><a></a>  data, </span>
+<span id="cb6-3"><a></a>  cols, </span>
+<span id="cb6-4"><a></a>  <span class="at">names_to =</span> <span class="st">"name"</span>, </span>
+<span id="cb6-5"><a></a>  <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb6-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+</section>
+<section id="pivot_longer-3" class="slide level2">
+<h2><code>pivot_longer()</code></h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li><code>data</code> (as usual)</li>
+<li><code>cols</code>: columns to pivot into longer format</li>
+<li><code>names_to</code>: name of the column where column names of pivoted variables go (character string)</li>
+<li><code>values_to</code>: name of the column where data in pivoted variables go (character string)</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">pivot_longer</span>(</span>
+<span id="cb7-2"><a></a>  data, </span>
+<span id="cb7-3"><a></a>  cols, </span>
+<span id="cb7-4"><a></a>  <span class="at">names_to =</span> <span class="st">"name"</span>, </span>
+<span id="cb7-5"><a></a>  <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb7-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+</section>
+<section id="wider-rightarrow-longer-ratings" class="slide level2">
+<h2>wider <span class="math inline">\(\rightarrow\)</span> longer ratings</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="1|2|3|4|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>longer_ratings <span class="ot">&lt;-</span> bakeoff_ratings <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">pivot_longer</span>( </span>
+<span id="cb8-3"><a></a>    <span class="at">cols =</span> e1<span class="sc">:</span>e10, </span>
+<span id="cb8-4"><a></a>    <span class="at">names_to =</span> <span class="st">"episode"</span>, </span>
+<span id="cb8-5"><a></a>    <span class="at">values_to =</span> <span class="st">"rating"</span> </span>
+<span id="cb8-6"><a></a>  )</span>
+<span id="cb8-7"><a></a>longer_ratings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 80 × 3
+   series episode rating
+    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1      1 e1        2.24
+ 2      1 e2        3   
+ 3      1 e3        3   
+ 4      1 e4        2.6 
+ 5      1 e5        3.03
+ 6      1 e6        2.75
+ 7      1 e7       NA   
+ 8      1 e8       NA   
+ 9      1 e9       NA   
+10      1 e10      NA   
+# ℹ 70 more rows</code></pre>
+</div>
+</div></div>
 
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -1038,44 +847,6 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
@@ -1263,38 +1034,6 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
       }
     });
     </script>
-    <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
-    (function() {
-      let previousOnload = window.onload;
-      window.onload = () => {
-        if (previousOnload) {
-          previousOnload();
-        }
-        lightboxQuarto.on('slide_before_load', (data) => {
-          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-          const href = trigger.getAttribute('href');
-          if (href !== null) {
-            const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-            if (imgEl !== null) {
-              const srcAttr = imgEl.getAttribute("src");
-              if (srcAttr && srcAttr.startsWith("data:")) {
-                slideConfig.href = srcAttr;
-              }
-            }
-          } 
-        });
-      
-        lightboxQuarto.on('slide_after_load', (data) => {
-          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(slideNode);
-          }
-        });
-      
-      };
-      
-    })();
-              </script>
     
 
 </body></html>
