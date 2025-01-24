@@ -421,12 +421,12 @@ Prof Amanda Luby
 <h2></h2>
 <p><img data-src="../img/horst_tidy_3.jpg"></p>
 </section>
-<section id="bakeoff-ratings" class="slide level2">
+<section id="section-3" class="slide level2" data-background-image="../img/The_Great_British_Bake_Off_title.jpg" data-background-size="contain">
+<h2></h2>
+</section>
+<section id="bakeoff-ratings" class="slide level2 nonincremental">
 <h2>Bakeoff ratings</h2>
-<ul>
-<li class="fragment">Ratings data for each episodes in series 1-8</li>
-</ul>
-<div class="fragment">
+<p>Ratings data for each episode in series 1-8:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 11
@@ -443,7 +443,6 @@ Prof Amanda Luby
 </div>
 </div>
 
-</div>
 <aside><div>
 <p>Source: <a href="https://bakeoff.netlify.app/">bakeoff</a> R package</p>
 </div></aside></section>
@@ -455,14 +454,14 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_1da46808" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_e9eb6819" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 </div>
 </div>
 </section>
-<section id="section-3" class="slide level2 center">
+<section id="section-4" class="slide level2 center">
 <h2></h2>
 <div class="columns">
 <div class="column" style="width:55%;">
@@ -679,13 +678,15 @@ Prof Amanda Luby
 <aside><div>
 <p>The <code>parse_*</code> functions are from <code>readr</code></p>
 </div></aside></section>
-<section id="try-it-messy_ratings2" class="slide level2 nonincremental">
+<section id="try-it-messy_ratings2" class="slide level2">
 <h2>Try it: <code>messy_ratings2</code></h2>
 <p>Tidy this data set by</p>
+<div>
 <ol type="1">
-<li class="fragment">Selecting the <code>series</code> and <code>e*_7day</code> columns</li>
-<li class="fragment">Pivoting the data to add a column for <code>episode</code> and a column for <code>rating</code> (we’ll clean up the episode column later)</li>
+<li>Selecting the <code>series</code> and <code>e*_7day</code> columns</li>
+<li>Pivoting the data to add a column for <code>episode</code> and a column for <code>rating</code> (we’ll clean up the episode column later)</li>
 </ol>
+</div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 21
@@ -707,7 +708,7 @@ Prof Amanda Luby
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_03bb3259" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_ed72dc04" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">04</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
