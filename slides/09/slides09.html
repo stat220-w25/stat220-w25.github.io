@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.6.32">
 
   <meta name="author" content="Prof Amanda Luby">
-  <title>Stat 220 – Data Wrangling:  Tidy Data  Joins</title>
+  <title>Stat 220 – Data Wrangling:  Tidy Data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -394,7 +394,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="../img/horst_tidydata_4.jpg" data-background-opacity="0.8" data-background-position="bottom right" data-background-size="70%" data-slide-number="none" class="quarto-title-block center">
-  <h1 class="title">Data Wrangling: <br>Tidy Data <br>Joins</h1>
+  <h1 class="title">Data Wrangling: <br>Tidy Data</h1>
   <p class="subtitle">Day 07</p>
 
 <div class="quarto-title-authors">
@@ -426,6 +426,7 @@ Prof Amanda Luby
 <ul>
 <li class="fragment">Ratings data for each episodes in series 1-8</li>
 </ul>
+<div class="fragment">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 11
@@ -441,32 +442,35 @@ Prof Amanda Luby
 8      8  9.46  9.23  8.68  8.55  8.61  8.61  9.01  8.95  9.03 10.0 </code></pre>
 </div>
 </div>
-<p>.footnote[Source: <a href="https://bakeoff.netlify.app/">bakeoff</a> R package]</p>
-</section>
+
+</div>
+<aside><div>
+<p>Source: <a href="https://bakeoff.netlify.app/">bakeoff</a> R package</p>
+</div></aside></section>
 <section id="warm-up" class="slide level2">
 <h2>Warm up</h2>
 <div class="task">
 <p>Is this dataset in tidy format? Why or why not?</p>
-<p>If not, sketch out the first few rows of this data set in tidy format</p>
+<p>If not, what would a tidy data set look like? Sketch out the first few rows of this data set in tidy format</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_a87c84ef" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_1da46808" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 </div>
 </div>
 </section>
-<section id="section-3" class="slide level2">
+<section id="section-3" class="slide level2 center">
 <h2></h2>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:55%;">
 <ul>
 <li><p>Reshape the layout of tabular data</p></li>
 <li><p>Part of the <code>tidyverse</code></p></li>
 </ul>
-</div><div class="column" style="width:40%;">
+</div><div class="column" style="width:45%;">
 <div class="quarto-figure quarto-figure-right">
 <figure>
 <p><img data-src="https://tidyr.tidyverse.org/logo.png" class="quarto-figure quarto-figure-right"></p>
@@ -523,11 +527,11 @@ Prof Amanda Luby
 <section id="pivot_longer" class="slide level2">
 <h2><code>pivot_longer()</code></h2>
 <div class="columns">
-<div class="column" style="width:40%;">
+<div class="column" style="width:50%;">
 <ul>
 <li><code>data</code> (as usual)</li>
 </ul>
-</div><div class="column" style="width:40%;">
+</div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">pivot_longer</span>(</span>
 <span id="cb4-2"><a></a>  data, </span>
@@ -541,12 +545,12 @@ Prof Amanda Luby
 <section id="pivot_longer-1" class="slide level2">
 <h2><code>pivot_longer()</code></h2>
 <div class="columns">
-<div class="column" style="width:40%;">
+<div class="column" style="width:50%;">
 <ul>
 <li><code>data</code> (as usual)</li>
 <li><code>cols</code>: columns to pivot into longer format</li>
 </ul>
-</div><div class="column" style="width:40%;">
+</div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">pivot_longer</span>(</span>
 <span id="cb5-2"><a></a>  data, </span>
@@ -560,13 +564,13 @@ Prof Amanda Luby
 <section id="pivot_longer-2" class="slide level2">
 <h2><code>pivot_longer()</code></h2>
 <div class="columns">
-<div class="column" style="width:40%;">
+<div class="column" style="width:50%;">
 <ul>
 <li><code>data</code> (as usual)</li>
 <li><code>cols</code>: columns to pivot into longer format</li>
 <li><code>names_to</code>: name of the column where column names of pivoted variables go (character string)</li>
 </ul>
-</div><div class="column" style="width:40%;">
+</div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">pivot_longer</span>(</span>
 <span id="cb6-2"><a></a>  data, </span>
@@ -580,14 +584,14 @@ Prof Amanda Luby
 <section id="pivot_longer-3" class="slide level2">
 <h2><code>pivot_longer()</code></h2>
 <div class="columns">
-<div class="column" style="width:40%;">
+<div class="column" style="width:50%;">
 <ul>
 <li><code>data</code> (as usual)</li>
 <li><code>cols</code>: columns to pivot into longer format</li>
 <li><code>names_to</code>: name of the column where column names of pivoted variables go (character string)</li>
 <li><code>values_to</code>: name of the column where data in pivoted variables go (character string)</li>
 </ul>
-</div><div class="column" style="width:40%;">
+</div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">pivot_longer</span>(</span>
 <span id="cb7-2"><a></a>  data, </span>
@@ -627,6 +631,246 @@ Prof Amanda Luby
 # ℹ 70 more rows</code></pre>
 </div>
 </div></div>
+</section>
+<section id="parse_number" class="slide level2">
+<h2><code>parse_number()</code></h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>ratings <span class="ot">&lt;-</span> longer_ratings <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-3"><a></a>    <span class="at">episode =</span> <span class="fu">parse_number</span>(episode) </span>
+<span id="cb10-4"><a></a>  )</span>
+<span id="cb10-5"><a></a>ratings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 80 × 3
+   series episode rating
+    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+ 1      1       1   2.24
+ 2      1       2   3   
+ 3      1       3   3   
+ 4      1       4   2.6 
+ 5      1       5   3.03
+ 6      1       6   2.75
+ 7      1       7  NA   
+ 8      1       8  NA   
+ 9      1       9  NA   
+10      1      10  NA   
+# ℹ 70 more rows</code></pre>
+</div>
+</div></div>
+</section>
+<section id="other-parsing-functions" class="slide level2">
+<h2>Other parsing functions</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><code>parse_character</code></p>
+<p><code>parse_date</code></p>
+<p><code>parse_double</code></p>
+<p><code>parse_double</code></p>
+<p><code>parse_factor</code></p>
+</div><div class="column" style="width:50%;">
+<p><code>parse_integer</code></p>
+<p><code>parse_logical</code></p>
+<p><code>parse_number</code></p>
+<p><code>parse_time</code></p>
+</div></div>
+
+<aside><div>
+<p>The <code>parse_*</code> functions are from <code>readr</code></p>
+</div></aside></section>
+<section id="try-it-messy_ratings2" class="slide level2 nonincremental">
+<h2>Try it: <code>messy_ratings2</code></h2>
+<p>Tidy this data set by</p>
+<ol type="1">
+<li class="fragment">Selecting the <code>series</code> and <code>e*_7day</code> columns</li>
+<li class="fragment">Pivoting the data to add a column for <code>episode</code> and a column for <code>rating</code> (we’ll clean up the episode column later)</li>
+</ol>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 21
+  series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day
+   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+1      1    2.24    NA       3       NA       3       NA       2.6     NA   
+2      2    3.1     NA       3.53    NA       3.82    NA       3.6     NA   
+3      3    3.85    NA       4.6     NA       4.53    NA       4.71    NA   
+4      4    6.6     NA       6.65    NA       7.17    NA       6.82    NA   
+5      5    8.51    NA       8.79    NA       9.28    NA      10.2     NA   
+6      6   11.6     11.7    11.6     11.8    12.0     NA      12.4     12.7 
+7      7   13.6     13.9    13.4     13.7    13.0     13.4    13.3     13.9 
+8      8    9.46     9.72    9.23     9.53    8.68     9.06    8.55     8.87
+# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,
+#   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,
+#   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,
+#   e10_28day &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_03bb3259" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">04</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="cleaning-episode" class="slide level2">
+<h2>Cleaning <code>episode</code></h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="2|3-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>ratings2 <span class="ot">&lt;-</span> messy_ratings2 <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a></a>  <span class="fu">select</span>(series, <span class="fu">contains</span>(<span class="st">"7day"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a></a>  <span class="fu">pivot_longer</span>(<span class="fu">contains</span>(<span class="st">"7day"</span>), </span>
+<span id="cb13-4"><a></a>               <span class="at">names_to =</span> <span class="st">"episode"</span>, </span>
+<span id="cb13-5"><a></a>               <span class="at">values_to =</span> <span class="st">"rating"</span>)</span>
+<span id="cb13-6"><a></a>ratings2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 80 × 3
+   series episode  rating
+    &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1      1 e1_7day    2.24
+ 2      1 e2_7day    3   
+ 3      1 e3_7day    3   
+ 4      1 e4_7day    2.6 
+ 5      1 e5_7day    3.03
+ 6      1 e6_7day    2.75
+ 7      1 e7_7day   NA   
+ 8      1 e8_7day   NA   
+ 9      1 e9_7day   NA   
+10      1 e10_7day  NA   
+# ℹ 70 more rows</code></pre>
+</div>
+</div></div>
+</section>
+<section id="separate" class="slide level2">
+<h2><code>separate()</code></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><code>data</code> (as usual)</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">separate</span>(</span>
+<span id="cb15-2"><a></a>  data, </span>
+<span id="cb15-3"><a></a>  col, </span>
+<span id="cb15-4"><a></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"col1"</span>, <span class="st">"col2"</span>),</span>
+<span id="cb15-5"><a></a>  sep </span>
+<span id="cb15-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+</section>
+<section id="separate-1" class="slide level2">
+<h2><code>separate()</code></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><code>data</code> (as usual)</li>
+<li><code>col</code>: column to separate</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">separate</span>(</span>
+<span id="cb16-2"><a></a>  data, </span>
+<span id="cb16-3"><a></a>  col, </span>
+<span id="cb16-4"><a></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"col1"</span>, <span class="st">"col2"</span>),</span>
+<span id="cb16-5"><a></a>  sep </span>
+<span id="cb16-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+</section>
+<section id="separate-2" class="slide level2">
+<h2><code>separate()</code></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><code>data</code> (as usual)</li>
+<li><code>col</code>: column to separate</li>
+<li><code>into</code>: names of new columns to create</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">separate</span>(</span>
+<span id="cb17-2"><a></a>  data, </span>
+<span id="cb17-3"><a></a>  col, </span>
+<span id="cb17-4"><a></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"col1"</span>, <span class="st">"col2"</span>),</span>
+<span id="cb17-5"><a></a>  sep </span>
+<span id="cb17-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+</section>
+<section id="separate-3" class="slide level2">
+<h2><code>separate()</code></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><code>data</code> (as usual)</li>
+<li><code>col</code>: column to separate</li>
+<li><code>into</code>: names of new columns to create</li>
+<li><code>sep</code>: separator between columns</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">separate</span>(</span>
+<span id="cb18-2"><a></a>  data, </span>
+<span id="cb18-3"><a></a>  col, </span>
+<span id="cb18-4"><a></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"col1"</span>, <span class="st">"col2"</span>),</span>
+<span id="cb18-5"><a></a>  sep </span>
+<span id="cb18-6"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+</section>
+<section id="cleaning-episode-1" class="slide level2">
+<h2>Cleaning <code>episode</code></h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="2|3|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>ratings2 <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a></a>  <span class="fu">separate</span>( </span>
+<span id="cb19-3"><a></a>    <span class="at">col =</span> episode, </span>
+<span id="cb19-4"><a></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"episode"</span>, <span class="st">"period"</span>) </span>
+<span id="cb19-5"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 80 × 4
+   series episode period rating
+    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
+ 1      1 e1      7day     2.24
+ 2      1 e2      7day     3   
+ 3      1 e3      7day     3   
+ 4      1 e4      7day     2.6 
+ 5      1 e5      7day     3.03
+ 6      1 e6      7day     2.75
+ 7      1 e7      7day    NA   
+ 8      1 e8      7day    NA   
+ 9      1 e9      7day    NA   
+10      1 e10     7day    NA   
+# ℹ 70 more rows</code></pre>
+</div>
+</div></div>
+</section>
+<section id="wrap-it-up" class="slide level2">
+<h2>Wrap it up</h2>
+<div class="task">
+<ul>
+<li>Clean the <code>episode</code> and <code>period</code> column</li>
+<li>Make a <em>line plot</em> with episode on the x-axis, rating on the y-axis, colored by series. (You will also need to map the <code>group</code> aesthetic to series)</li>
+</ul>
+</div>
+</section>
+<section id="if-time" class="slide level2">
+<h2>If time</h2>
+<p>There are a couple more practice <code>pivot_</code> exercises in the <code>09-tidyr</code> activity.</p>
+</section>
+<section id="lab-quiz" class="slide level2 nonincremental">
+<h2>Lab Quiz</h2>
+<ol type="1">
+<li class="fragment">Copy your repo and open a new R Project just like homework</li>
+<li class="fragment">Include all of your solutions in the <code>lab-quiz-1.Rmd</code> file</li>
+<li class="fragment">The quiz is closed notes, closed internet, closed other people. You should only have R open</li>
+<li class="fragment">You have until 10:45am to complete this exam and turn it in via gradescope and your personal Github repo</li>
+<li class="fragment">It’s OK to print tibbles or short vectors in your knitted file, but any data output should not take up more than 1 pdf page. (Please do NOT include a printout of the whole dataset in your knitted file!!)</li>
+</ol>
 
 
 </section>
@@ -847,6 +1091,44 @@ Prof Amanda Luby
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
