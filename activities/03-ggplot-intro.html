@@ -251,21 +251,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">Intro to <code>ggplot2</code>
-</h1>
+<div class="quarto-title-block"><div><h1 class="title">Intro to <code>ggplot2</code>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Stat220 – W25 </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Carleton College <br> Stat 220 - Winter 2025
+          </p>
+      </div>
+  </div>
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Stat220 – W25 </p>
-          </div>
-  </div>
-    
+      
   
     
   </div>
@@ -392,6 +399,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
+
+<!-- -->
 
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -626,6 +635,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
     clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
@@ -956,7 +1016,190 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Intro to `ggplot2`</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> Stat220 -- W25</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html_document</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="in">  eval = FALSE,</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="in">  collapse = TRUE,   </span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="in">  comment = "#&gt;", </span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="in">  out.width = "100%" </span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="in">q &lt;- 0</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>*Note:* the <span class="in">`setup`</span> chunk includes the line <span class="in">`eval = FALSE`</span>. Make sure to delete this when you are ready to knit your file.</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co">#| out.width: 50%</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.align: center</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"https://cdn.freebiesupply.com/logos/large/2x/survivor-logo-png-transparent.png"</span>)</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>The data we're using today contains information about all seasons of *Survivor* and comes from the <span class="co">[</span><span class="ot">survivoR</span><span class="co">](https://github.com/doehm/survivoR)</span> R package. In the show, a group of people (called castaways) are placed in an isolated location, where they must provide food, fire, and shelter for themselves. The castaways compete in challenges testing the contestants' physical abilities like running and swimming or their mental abilities like puzzles and endurance challenges for rewards and immunity from elimination. The castaways are progressively eliminated from the game as they are voted out by their fellow contestants until only two or three remain. At that point, the players who were eliminated (the "jury") vote for the winner. The winner is given the title of "Sole Survivor" and is awarded the grand prize of \$1,000,000</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: TRUE</span></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>season_summary <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://math.carleton.edu/aluby/stat220/survivor_season_summary.csv"</span>)</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a><span class="fu"># Speed Groupwork</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 1: View the data + pipes</span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** To get started, load the <span class="in">`tidyverse`</span> and and take a <span class="in">`glimpse`</span> at the dataset. How many rows and columns are there? What does each row represent?</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>Loading the <span class="in">`tidyverse`</span> loads 8 packages, one of which is <span class="in">`ggplot2`</span>. You can certainly load each package individually, but it has become common to simply load the tidyverse.</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** The code below filters <span class="in">`season_summary`</span> to include only survivor seasons that aired in the US. What does <span class="in">`|&gt;`</span> do? (Try to answer this with your group, then run <span class="in">`?"|&gt;"`</span> in the console to load the help page if you need to)</span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>season_summary <span class="sc">|&gt;</span></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(season <span class="sc">==</span> <span class="st">"US"</span>)</span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 2: Scatterplots</span></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>First, let’s create a scatterplot of <span class="in">`imdb_mean`</span> vs. <span class="in">`viewers_mean`</span>.</span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>A note on wording: when we say <span class="in">`imdb_mean`</span> vs. <span class="in">`viewers_mean`</span>, this should be interpreted as “variable on the y-axis” vs. “variable on the x-axis”.</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Fill in the data and aesthetic mapping in the below code chunk. What is returned? What’s missing?</span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___))</span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Add the appropriate <span class="in">`geom`</span>etric object to create the scatterplot. This is called adding a layer to a plot. Remember to always put the <span class="in">`+`</span> at the end of a line, never at the start.</span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy your code from the previous chunk and add a geom</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>What do you notice? Write a sentence or two describing your findings</span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** You must remember to put the aesthetic mappings in the <span class="in">`aes()`</span> function! What happens if you forget?</span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a layer and see what happens</span></span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___, <span class="at">x =</span> ___, <span class="at">y =</span> ___)</span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** The aesthetic mappings can be specified in the <span class="in">`geom`</span> layer if you prefer, instead of the main <span class="in">`ggplot()`</span> call. Give it a try:</span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebuild the scatterplot with your aesthetic mapping in the geom layer</span></span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___)</span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 3: Additional Aesthetics</span></span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a><span class="in">`x`</span> and <span class="in">`y`</span> are not the only aesthetic mappings possible. In this section you’ll explore the <span class="in">`color`</span>, <span class="in">`size`</span>, <span class="in">`shape`</span>, and <span class="in">`alpha`</span> (i.e. transparency) aesthetics.</span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`imdb_mean`</span> vs. <span class="in">`viewers_mean`</span>. Add the <span class="in">`color`</span> aesthetic to map <span class="in">`country2`</span> to the point color.</span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ___) <span class="sc">+</span></span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___, <span class="at">color =</span> ___))</span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`imdb_mean`</span> vs. <span class="in">`viewers_mean`</span>. Use <span class="in">`shape`</span> to represent <span class="in">`country2`</span>. Is this plot easier or harder to interpret than the previous plot?</span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`imdb_mean`</span> vs. <span class="in">`viewers_mean`</span>. Use both <span class="in">`shape`</span> and <span class="in">`color`</span> to represent the four_regions. Is this plot easier or harder to interpret than the previous two plots?</span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`imdb_mean`</span> vs. <span class="in">`viewers_mean`</span>. Use <span class="in">`color`</span> to represent the <span class="in">`season`</span>. What did you learn from the plot?</span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`imdb_mean`</span> vs. <span class="in">`viewers_mean`</span>. Use <span class="in">`size`</span> to represent the <span class="in">`season`</span>.</span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Look back at your scatterplots from the last few questions. Explain the differences when you map aesthetics to discrete and continuous variables.</span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Create a scatterplot of <span class="in">`imdb_mean`</span> vs. <span class="in">`viewers_mean`</span>. Use <span class="in">`alpha`</span> to represent the <span class="in">`season`</span>.</span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 4: Visualizing Distributions</span></span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Build a histogram of <span class="in">`viewers_mean`</span> using <span class="in">`geom_histogram()`</span>. Don’t hesitate to look at the ggplot2 cheat sheet for help!</span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___))</span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a>What have you learned about the distribution of average viewership?</span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** By default, <span class="in">`ggplot2`</span> uses 30 bins. To change the number of bins, to say 15, add the argument <span class="in">`bins = 15`</span> to <span class="in">`geom_histogram()`</span>. Note: this is not an aesthetic mapping.</span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___), <span class="at">bins =</span> ___)</span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Instead of a histogram, let’s create a kernel density plot. To do this, substitute geom_density() into your code for question <span class="in">`r q-2`</span>.</span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Now, let's make side-by-side boxplots of <span class="in">`viewers_mean`</span> for each <span class="in">`country2`</span>.</span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___))</span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** A violin plot is a kernel density on its side, made symmetric. Change your code from question <span class="in">`r q-1`</span> to use <span class="in">`geom_violin()`</span>. Which plot do you prefer, boxplots or violin plots? Why?</span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a><span class="co"># Put your violin plot code here</span></span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Round 5: Bar and column charts + Labeling</span></span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>How many seasons were filmed in each country? Let's find out!</span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** Make a bar chart of the number of seasons filmed in each <span class="in">`country2`</span> using <span class="in">`geom_bar()`</span></span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___))</span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** <span class="in">`country2`</span> has a category called "other". Make a bar chart of <span class="in">`country`</span> (which includes all individual countries) instead.</span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill in the blanks</span></span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___) <span class="sc">+</span></span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___))</span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** When you have lots of categories, it's sometimes hard to read the labels on the x-axis. One trick is to flip the axes. Change <span class="in">`geom_bar()`</span> to use the <span class="in">`y`</span> aesthetic from your code in question <span class="in">`r q-1`</span> instead.</span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a>**`r (q &lt;- q+1)`.** In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it’s use. Choose one graph from today and add all labels.</span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span></span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)) <span class="sc">+</span> </span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Put your informative title here"</span>,</span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"and your subtitle here"</span>,</span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"New x label"</span>,</span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"New y label"</span>,</span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Put a caption here"</span></span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
