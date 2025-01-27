@@ -768,7 +768,7 @@
     "href": "slides/10/slides10.html#warm-up",
     "title": "Data Wrangling: Combining Data",
     "section": "Warm up",
-    "text": "Warm up\n\n\nFind your groupmates, introduce yourselves:\n\nName & topic of your first portfolio project\n\nChoose someone to be the “typer”. That person should open the 10-combining.rmd activity in RStudio\nTake a look at the first 3 pairs of data together and talk through (conceptually! in words!) how you think they should be combined\n\n\n\n\n\n−+\n08:00"
+    "text": "Warm up\n\n\nFind your groupmates, introduce yourselves:\n\nName & topic of your first portfolio project\n\nChoose someone to be the “typer”. That person should open the 10-combining.rmd activity in RStudio\n\nCan’t decide? Choose the person who had the shortest walk to class today\n\nTake a look at the first 3 pairs of data together and talk through (conceptually! in words!) how you think they should be combined\n\n\n\n\n\n−+\n08:00"
   },
   {
     "objectID": "slides/10/slides10.html#example-1-star-wars-characters",
@@ -778,11 +778,11 @@
     "text": "Example 1: Star Wars Characters\nDataset 1:\n\nstarwars_characters\n\n# A tibble: 87 × 6\n   name               height  mass homeworld species first_film\n   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     \n 1 Luke Skywalker        172    77 Tatooine  Human   A New Hope\n 2 C-3PO                 167    75 Tatooine  Droid   A New Hope\n 3 R2-D2                  96    32 Naboo     Droid   A New Hope\n 4 Darth Vader           202   136 Tatooine  Human   A New Hope\n 5 Leia Organa           150    49 Alderaan  Human   A New Hope\n 6 Owen Lars             178   120 Tatooine  Human   A New Hope\n 7 Beru Whitesun Lars    165    75 Tatooine  Human   A New Hope\n 8 R5-D4                  97    32 Tatooine  Droid   A New Hope\n 9 Biggs Darklighter     183    84 Tatooine  Human   A New Hope\n10 Obi-Wan Kenobi        182    77 Stewjon   Human   A New Hope\n# ℹ 77 more rows\n\n\nDataset 2:\n\nstarwars_lastjedi\n\n# A tibble: 2 × 6\n  name         height mass  homeworld species first_film   \n  &lt;chr&gt;        &lt;lgl&gt;  &lt;lgl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;        \n1 Rose Tico    NA     NA    Otomok    Human   The Last Jedi\n2 Amilyn Holdo NA     NA    &lt;NA&gt;      Human   The Last Jedi"
   },
   {
-    "objectID": "slides/10/slides10.html#bind_cols",
-    "href": "slides/10/slides10.html#bind_cols",
+    "objectID": "slides/10/slides10.html#bind_rows",
+    "href": "slides/10/slides10.html#bind_rows",
     "title": "Data Wrangling: Combining Data",
-    "section": "bind_cols()",
-    "text": "bind_cols()\n\n\n\ndata_1 our “starting” data\ndata_2 to data_n: additional rows of data that we want to add to data_1\n\n\n\nbind_rows(\n  data_1, \n  data_2, \n  ..., \n  data_n\n  )"
+    "section": "bind_rows()",
+    "text": "bind_rows()\n\n\n\ndata_1: our “starting” data\ndata_2 to data_n: additional rows of data that we want to add to data_1\n\n\n\nbind_rows(\n  data_1, \n  data_2, \n  ..., \n  data_n\n  )"
   },
   {
     "objectID": "slides/10/slides10.html#section",
@@ -799,11 +799,11 @@
     "text": "Example 2: Stats Sections\nDataset 1:\n\nstats_sections_fw\n\n# A tibble: 8 × 3\n  class    fall winter\n  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;\n1 stat120     3      3\n2 stat220     1      1\n3 stat230     1      1\n4 stat250     0      1\n5 stat270     1      0\n6 stat285     1      1\n7 stat320     0      0\n8 stat330     0      1\n\n\nDataset 2:\n\nstats_sections_s\n\n# A tibble: 8 × 1\n  spring\n   &lt;dbl&gt;\n1      4\n2      1\n3      1\n4      1\n5      0\n6      1\n7      1\n8      0"
   },
   {
-    "objectID": "slides/10/slides10.html#bind_cols-1",
-    "href": "slides/10/slides10.html#bind_cols-1",
+    "objectID": "slides/10/slides10.html#bind_cols",
+    "href": "slides/10/slides10.html#bind_cols",
     "title": "Data Wrangling: Combining Data",
     "section": "bind_cols()",
-    "text": "bind_cols()\n\n\n\ndata_1 our “starting” data\ndata_2 to data_n: additional columns of data that we want to add to data_1\n\n\n\nbind_cols(\n  data_1, \n  data_2, \n  ..., \n  data_n\n  )"
+    "text": "bind_cols()\n\n\n\ndata_1: our “starting” data\ndata_2 to data_n: additional columns of data that we want to add to data_1\n\n\n\nbind_cols(\n  data_1, \n  data_2, \n  ..., \n  data_n\n  )"
   },
   {
     "objectID": "slides/10/slides10.html#section-1",
@@ -841,6 +841,13 @@
     "text": "left_join()\n\nus_castaway_results %&gt;%\n  left_join(cast_details, by = \"castaway_id\") %&gt;%\n  select(-season_name)\n\n\n\n# A tibble: 870 × 11\n   castaway_id castaway season place jury  finalist full_name      date_of_birth\n   &lt;chr&gt;       &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;    &lt;chr&gt;          &lt;date&gt;       \n 1 US0001      Sonja         1    16 FALSE FALSE    Sonja Christo… 1937-01-28   \n 2 US0002      B.B.          1    15 FALSE FALSE    B.B. Andersen  1936-01-18   \n 3 US0003      Stacey        1    14 FALSE FALSE    Stacey Stillm… 1972-08-11   \n 4 US0004      Ramona        1    13 FALSE FALSE    Ramona Gray    1971-01-20   \n 5 US0005      Dirk          1    12 FALSE FALSE    Dirk Been      1976-06-15   \n 6 US0006      Joel          1    11 FALSE FALSE    Joel Klug      1972-04-13   \n 7 US0007      Gretchen      1    10 FALSE FALSE    Gretchen Cordy 1962-02-07   \n 8 US0008      Greg          1     9 TRUE  FALSE    Greg Buis      1975-12-31   \n 9 US0009      Jenna         1     8 TRUE  FALSE    Jenna Lewis    1977-07-16   \n10 US0010      Gervase       1     7 TRUE  FALSE    Gervase Peter… 1969-11-02   \n# ℹ 860 more rows\n# ℹ 3 more variables: gender &lt;chr&gt;, occupation &lt;chr&gt;, personality_type &lt;chr&gt;"
   },
   {
+    "objectID": "slides/10/slides10.html#left_join-keeps-duplicate-rows-in-x",
+    "href": "slides/10/slides10.html#left_join-keeps-duplicate-rows-in-x",
+    "title": "Data Wrangling: Combining Data",
+    "section": "left_join() keeps duplicate rows in x",
+    "text": "left_join() keeps duplicate rows in x\n\nus_castaway_results %&gt;%\n  left_join(cast_details, by = \"castaway_id\") %&gt;%\n  filter(castaway == \"Sandra\") %&gt;%\n  select(-season_name)\n\n\n\n# A tibble: 4 × 11\n  castaway_id castaway season place jury  finalist full_name       date_of_birth\n  &lt;chr&gt;       &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;    &lt;chr&gt;           &lt;date&gt;       \n1 US0112      Sandra        7     1 FALSE TRUE     Sandra Diaz-Tw… 1974-07-30   \n2 US0112      Sandra       20     1 FALSE TRUE     Sandra Diaz-Tw… 1974-07-30   \n3 US0112      Sandra       34    15 FALSE FALSE    Sandra Diaz-Tw… 1974-07-30   \n4 US0112      Sandra       40    15 FALSE FALSE    Sandra Diaz-Tw… 1974-07-30   \n# ℹ 3 more variables: gender &lt;chr&gt;, occupation &lt;chr&gt;, personality_type &lt;chr&gt;"
+  },
+  {
     "objectID": "slides/10/slides10.html#other-types-of-_joins",
     "href": "slides/10/slides10.html#other-types-of-_joins",
     "title": "Data Wrangling: Combining Data",
@@ -859,28 +866,28 @@
     "href": "slides/10/slides10.html#left_join-1",
     "title": "Data Wrangling: Combining Data",
     "section": "left_join()",
-    "text": "left_join()\n\n\n\n\n\nleft_join(x, y, by = \"id\")\n\n# A tibble: 3 × 3\n     id value_x value_y\n  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  \n1     1 x1      y1     \n2     2 x2      y2     \n3     3 x3      &lt;NA&gt;"
+    "text": "left_join()\nKeep all rows from x\n\n\n\n\n\nleft_join(x, y, by = \"id\")\n\n# A tibble: 3 × 3\n     id value_x value_y\n  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  \n1     1 x1      y1     \n2     2 x2      y2     \n3     3 x3      &lt;NA&gt;"
   },
   {
     "objectID": "slides/10/slides10.html#full_join",
     "href": "slides/10/slides10.html#full_join",
     "title": "Data Wrangling: Combining Data",
     "section": "full_join()",
-    "text": "full_join()\n\n\n\n\n\nfull_join(x, y)\n\n# A tibble: 4 × 3\n     id value_x value_y\n  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  \n1     1 x1      y1     \n2     2 x2      y2     \n3     3 x3      &lt;NA&gt;   \n4     4 &lt;NA&gt;    y4"
+    "text": "full_join()\nKeep all rows from both x and y\n\n\n\n\n\nfull_join(x, y)\n\n# A tibble: 4 × 3\n     id value_x value_y\n  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  \n1     1 x1      y1     \n2     2 x2      y2     \n3     3 x3      &lt;NA&gt;   \n4     4 &lt;NA&gt;    y4"
   },
   {
     "objectID": "slides/10/slides10.html#semi_join",
     "href": "slides/10/slides10.html#semi_join",
     "title": "Data Wrangling: Combining Data",
     "section": "semi_join()",
-    "text": "semi_join()\n\n\n\n\n\nsemi_join(x, y)\n\n# A tibble: 2 × 2\n     id value_x\n  &lt;dbl&gt; &lt;chr&gt;  \n1     1 x1     \n2     2 x2     \n\n\n\nSimilar to filter()"
+    "text": "semi_join()\nKeep all rows from x where there are matching values in y, keeping just columns from x\n\n\n\n\n\nsemi_join(x, y)\n\n# A tibble: 2 × 2\n     id value_x\n  &lt;dbl&gt; &lt;chr&gt;  \n1     1 x1     \n2     2 x2     \n\n\n\nSimilar to filter()"
   },
   {
     "objectID": "slides/10/slides10.html#anti_join",
     "href": "slides/10/slides10.html#anti_join",
     "title": "Data Wrangling: Combining Data",
     "section": "anti_join()",
-    "text": "anti_join()\n\n\n\n\n\nanti_join(x, y)\n\n# A tibble: 1 × 2\n     id value_x\n  &lt;dbl&gt; &lt;chr&gt;  \n1     3 x3     \n\n\n\nSimilar to filter() with !"
+    "text": "anti_join()\nKeep all rows from x where there are not matching values in y, never duplicate rows of x\n\n\n\n\n\nanti_join(x, y)\n\n# A tibble: 1 × 2\n     id value_x\n  &lt;dbl&gt; &lt;chr&gt;  \n1     3 x3     \n\n\n\nSimilar to filter() with !"
   },
   {
     "objectID": "slides/10/slides10.html#join-functions",
@@ -894,7 +901,7 @@
     "href": "slides/10/slides10.html#keys",
     "title": "Data Wrangling: Combining Data",
     "section": "keys",
-    "text": "keys\nIn these examples, the colored boxes represent keys\n\n\n\n\n\nkeys uniquely identify the observation of interest\nDepend on the context (e.g. episodes vs bakers vs seasons)\nCan be multiple columns\ndplyr will try to find them automatically, but it’s better to be explicit using the by argument"
+    "text": "keys\nIn these examples, the colored boxes represent keys\n\n\n\n\n\nkeys uniquely identify the observation of interest\nAre present in both datasets and used to match the rows\nDepend on the context (e.g. could be castaway ID, could be season ID, could be epiosde number, etc.)\nCan be multiple columns\ndplyr will try to find them automatically, but it’s better to be explicit using the by argument"
   },
   {
     "objectID": "slides/10/slides10.html#lets-try-it-bakeoff-data-again",
@@ -908,7 +915,21 @@
     "href": "slides/10/slides10.html#lets-try-it-bakeoff-data-again-1",
     "title": "Data Wrangling: Combining Data",
     "section": "Let’s try it: Bakeoff data (again)",
-    "text": "Let’s try it: Bakeoff data (again)\nBut that data only had through season 8. We now have a new dataset with seasons 9-14:\n\n\n# A tibble: 6 × 21\n  series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day\n   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;\n1      9    9.55     9.92    9.31     9.76    8.91     9.35    8.88     9.41\n2     10    9.62    10.0     9.38     9.8     8.94     9.42    8.96     9.49\n3     11   11.2     11.8    10.8     11.4    10.7     11.2    10.6     11.2 \n4     12    9.57    10.2     8.98     9.64    8.69     9.39    8.75     9.13\n5     13    8.3      1       7.6      1       7.35     1       7.76     1   \n6     14    7.84     1       7.54     1       7.28     1       7.12     1   \n# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,\n#   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,\n#   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,\n#   e10_28day &lt;dbl&gt;\n\n\n\n\nYour task is to join these two datasets together using (1) bind_rows(), (2) _join() and bind_cols() (you’ll also get some pivot_ practice along the way)"
+    "text": "Let’s try it: Bakeoff data (again)\nBut that data only had through season 8. We now have a new dataset with seasons 9-14:\n\n\n# A tibble: 6 × 21\n  series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day\n   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;\n1      9    9.55     9.92    9.31     9.76    8.91     9.35    8.88     9.41\n2     10    9.62    10.0     9.38     9.8     8.94     9.42    8.96     9.49\n3     11   11.2     11.8    10.8     11.4    10.7     11.2    10.6     11.2 \n4     12    9.57    10.2     8.98     9.64    8.69     9.39    8.75     9.13\n5     13    8.3      1       7.6      1       7.35     1       7.76     1   \n6     14    7.84     1       7.54     1       7.28     1       7.12     1   \n# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,\n#   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,\n#   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,\n#   e10_28day &lt;dbl&gt;\n\n\n\n\nYour task is to join these two datasets together using (1) bind_rows(), (2) _join() and (3) bind_cols() (you’ll also get some pivot_ practice along the way)"
+  },
+  {
+    "objectID": "slides/10/slides10.html#part-ii-the-episodes-data",
+    "href": "slides/10/slides10.html#part-ii-the-episodes-data",
+    "title": "Data Wrangling: Combining Data",
+    "section": "Part II: the episodes data",
+    "text": "Part II: the episodes data\nThe episodes data has information about each episode of GBBO.\n\n\nIn particular, it includes:\n\nbaker: each baker that competed on that episode\nsignature: the name of the dessert they made for the signature challenge\ntechnical: the place the baker earned in the technical challenge\nshowstopper: the name of the dessert they made for the showstopper challenge\nresult: whether the baker was “Safe” or “Eliminated”\n\n\n\nepisodes\n\n# A tibble: 1,007 × 7\n   series episode baker     signature               technical showstopper result\n    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; \n 1      1       1 Annetha   Light Jamaican Black C…         2 Red, White… Safe  \n 2      1       1 David     Chocolate Orange Cake           3 Black Fore… Safe  \n 3      1       1 Edd       Caramel Cinnamon and B…         1 &lt;NA&gt;        Safe  \n 4      1       1 Jasminder Fresh Mango and Passio…        NA &lt;NA&gt;        Safe  \n 5      1       1 Jonathan  Carrot Cake with Lime …         9 Three Tier… Safe  \n 6      1       1 Lea       Cranberry and Pistachi…        10 Raspberrie… Elimi…\n 7      1       1 Louise    Carrot and Orange Cake         NA Never Fail… Safe  \n 8      1       1 Mark      Sticky Marmalade Tea L…        NA Heart-shap… Elimi…\n 9      1       1 Miranda   Triple Layered Brownie…         8 Three Tier… Safe  \n10      1       1 Ruth      Lemon Drizzle Cakewith…        NA Classic Ch… Safe  \n# ℹ 997 more rows"
+  },
+  {
+    "objectID": "slides/10/slides10.html#lets-try-it-bakeoff-data-episodes",
+    "href": "slides/10/slides10.html#lets-try-it-bakeoff-data-episodes",
+    "title": "Data Wrangling: Combining Data",
+    "section": "Let’s try it: Bakeoff data (episodes)",
+    "text": "Let’s try it: Bakeoff data (episodes)\n\nJoin the tidy dataset (all 14 seasons) with the episodes data.\nYour task is to print the “signature” desserts that were made on the 10 episodes that had the highest 7-day viewership."
   },
   {
     "objectID": "slides/02/slides02.html#plan-for-today",
@@ -2484,6 +2505,27 @@
     "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
   },
   {
+    "objectID": "activities/10-combining.html#example-1-star-wars-characters",
+    "href": "activities/10-combining.html#example-1-star-wars-characters",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Example 1: Star Wars Characters",
+    "text": "Example 1: Star Wars Characters\nDataset 1:\n\nEach row in the dataset corresponds to a star wars character\nThe columns include their name, height, mass, homeworld, species, and the first_film they appeared in\n\n\nstarwars_characters\n\n# A tibble: 87 × 6\n   name               height  mass homeworld species first_film\n   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     \n 1 Luke Skywalker        172    77 Tatooine  Human   A New Hope\n 2 C-3PO                 167    75 Tatooine  Droid   A New Hope\n 3 R2-D2                  96    32 Naboo     Droid   A New Hope\n 4 Darth Vader           202   136 Tatooine  Human   A New Hope\n 5 Leia Organa           150    49 Alderaan  Human   A New Hope\n 6 Owen Lars             178   120 Tatooine  Human   A New Hope\n 7 Beru Whitesun Lars    165    75 Tatooine  Human   A New Hope\n 8 R5-D4                  97    32 Tatooine  Droid   A New Hope\n 9 Biggs Darklighter     183    84 Tatooine  Human   A New Hope\n10 Obi-Wan Kenobi        182    77 Stewjon   Human   A New Hope\n# ℹ 77 more rows\n\n\nDataset 2:\nThe dataset is formatted the same, but includes two characters that were first introduced in *The Last Jedi, a Star Wars movie that came out after the first datset was released.\n\nstarwars_lastjedi\n\n# A tibble: 2 × 6\n  name         height mass  homeworld species first_film   \n  &lt;chr&gt;        &lt;lgl&gt;  &lt;lgl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;        \n1 Rose Tico    NA     NA    Otomok    Human   The Last Jedi\n2 Amilyn Holdo NA     NA    &lt;NA&gt;      Human   The Last Jedi\n\n\nHow should these datasets be combined?"
+  },
+  {
+    "objectID": "activities/10-combining.html#example-2-stats-sections",
+    "href": "activities/10-combining.html#example-2-stats-sections",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Example 2: Stats Sections",
+    "text": "Example 2: Stats Sections\nDataset 1:\nThis dataset includes the number of sections of stats courses offered in Fall 2024 and Winter 2025 terms.\n\nstats_sections_fw\n\n# A tibble: 8 × 3\n  class    fall winter\n  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;\n1 stat120     3      3\n2 stat220     1      1\n3 stat230     1      1\n4 stat250     0      1\n5 stat270     1      0\n6 stat285     1      1\n7 stat320     0      0\n8 stat330     0      1\n\n\nDataset 2:\nThis dataset includes the number of sections of stats courses offered in the Spring 2025 term.\n\nstats_sections_s\n\n# A tibble: 8 × 1\n  spring\n   &lt;dbl&gt;\n1      4\n2      1\n3      1\n4      1\n5      0\n6      1\n7      1\n8      0\n\n\nHow should these datasets be combined?"
+  },
+  {
+    "objectID": "activities/10-combining.html#example-3-survivor-castaways",
+    "href": "activities/10-combining.html#example-3-survivor-castaways",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Example 3: Survivor castaways",
+    "text": "Example 3: Survivor castaways\nDataset 1:\n\nThis dataset includes information about each castaway’s performance in a given season of Survivor (US seasons)\nIt includes a castaway ID, first name, season name and number, and the results for that castaway in that season (their overall place, whether they made the jury, and whether they were a finalist)\n\n\nus_castaway_results\n\n# A tibble: 870 × 7\n   castaway_id castaway season_name      season place jury  finalist\n   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;   \n 1 US0001      Sonja    Survivor: Borneo      1    16 FALSE FALSE   \n 2 US0002      B.B.     Survivor: Borneo      1    15 FALSE FALSE   \n 3 US0003      Stacey   Survivor: Borneo      1    14 FALSE FALSE   \n 4 US0004      Ramona   Survivor: Borneo      1    13 FALSE FALSE   \n 5 US0005      Dirk     Survivor: Borneo      1    12 FALSE FALSE   \n 6 US0006      Joel     Survivor: Borneo      1    11 FALSE FALSE   \n 7 US0007      Gretchen Survivor: Borneo      1    10 FALSE FALSE   \n 8 US0008      Greg     Survivor: Borneo      1     9 TRUE  FALSE   \n 9 US0009      Jenna    Survivor: Borneo      1     8 TRUE  FALSE   \n10 US0010      Gervase  Survivor: Borneo      1     7 TRUE  FALSE   \n# ℹ 860 more rows\n\n\nDataset 2:\n\nThis dataset includes information about each castaway who has appeared on Survivor (including non-US seasons)\nIt includes a castaway ID, their full name, date of birth, gender and occupation as presented in the show, and their Myers-Briggs personality type.\n\n\ncast_details\n\n# A tibble: 1,118 × 6\n   castaway_id full_name        date_of_birth gender occupation personality_type\n   &lt;chr&gt;       &lt;chr&gt;            &lt;date&gt;        &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           \n 1 US0014      Rudy Boesch      1928-01-20    Male   Retired N… ISTJ            \n 2 US0002      B.B. Andersen    1936-01-18    Male   Real Esta… ESTJ            \n 3 US0001      Sonja Christoph… 1937-01-28    Female Musician   ENFP            \n 4 US0075      Jake Billingsley 1941-08-21    Male   Land Brok… ISFJ            \n 5 US0151      Jim Lynch        1942-01-07    Male   Retired F… ISTJ            \n 6 US0474      Joseph Del Campo 1943-07-04    Male   Former FB… ISTJ            \n 7 US0304      Jimmy Johnson    1943-07-16    Male   Former NF… ESFJ            \n 8 US0047      Kim Johnson      1944-09-18    Female Retired T… ISFJ            \n 9 US0128      Scout Cloud Lee  1944-11-08    Female Rancher    INFJ            \n10 US0061      Paschal English  1945-03-05    Male   Judge      ISFJ            \n# ℹ 1,108 more rows\n\n\nWe are interested in exploring the relationship between overall place on a Survivor season and personality type. How should these datasets be combined?\nStop here"
+  },
+  {
     "objectID": "activities/10-combining.html#task-line-plot",
     "href": "activities/10-combining.html#task-line-plot",
     "title": "\nbind_ and _join: Combining Data",
@@ -2495,7 +2537,7 @@
     "href": "activities/10-combining.html#task-add-series-9-14-to-the-dataset",
     "title": "\nbind_ and _join: Combining Data",
     "section": "Task: Add series 9-14 to the dataset",
-    "text": "Task: Add series 9-14 to the dataset\nThe code chunk below loads the new dataset\n\nmessy_ratings2b &lt;- read_csv(\"https://stat220-w25.github.io/data/messy_ratings2_9_14.csv\")\n\nCombine with bind_rows()\n\nCombine the two messy datasets by using bind_rows().\n\n# your code here\n\nCombine with join()\n\nWe’ll practice joining with the tidy versions of the data. First, create tidy_ratings2b using the new dataset. Follow the same steps as what was used to create tidy_ratings2\n\n# your code here\n\nOnce you’re satisfied, that the two tidy datasets look similar enough to combine, remove #| eval: false from the following code chunk and run it. Did it work? Why or why not?\n\ntidy_ratings = tidy_ratings2 %&gt;%\n  left_join(tidy_ratings2b)\n\nUse the correction _join function here. Save your dataset to the tidy_ratings object.\n\n# your code here\n\nCombine with bind_cols\n\nTo join the two datasets using bind_cols, you’ll first have to reformat the data so that each episode number is in a row and each series number is in a column. After using bind_cols() the first few rows of your final dataset should look like this:\n# A tibble: 10 × 16\n   episode period    s1    s2    s3    s4    s5    s6    s7    s8    s9   s10   s11   s12   s13   s14\n     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1       1      7  2.24  3.1   3.85  6.6   8.51  11.6  13.6  9.46  9.55  9.62  11.2  9.57  8.3   7.84\n 2       2      7  3     3.53  4.6   6.65  8.79  11.6  13.4  9.23  9.31  9.38  10.8  8.98  7.6   7.54\n 3       3      7  3     3.82  4.53  7.17  9.28  12.0  13.0  8.68  8.91  8.94  10.7  8.69  7.35  7.28\nStop here and let Amanda know you’ve finished"
+    "text": "Task: Add series 9-14 to the dataset\nThe code chunk below loads the new dataset\n\nmessy_ratings2b &lt;- read_csv(\"https://stat220-w25.github.io/data/messy_ratings2_9_14.csv\")\nmessy_ratings2b\n\n# A tibble: 6 × 21\n  series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day\n   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;\n1      9    9.55     9.92    9.31     9.76    8.91     9.35    8.88     9.41\n2     10    9.62    10.0     9.38     9.8     8.94     9.42    8.96     9.49\n3     11   11.2     11.8    10.8     11.4    10.7     11.2    10.6     11.2 \n4     12    9.57    10.2     8.98     9.64    8.69     9.39    8.75     9.13\n5     13    8.3      1       7.6      1       7.35     1       7.76     1   \n6     14    7.84     1       7.54     1       7.28     1       7.12     1   \n# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,\n#   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,\n#   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,\n#   e10_28day &lt;dbl&gt;\n\n\nCombine with bind_rows()\n\nCombine the two messy datasets by using bind_rows(). Be sure to look at your resulting dataset and make sure it has the right format\n\n# your code here\n\nCombine with join()\n\nWe’ll practice joining with the tidy versions of the data. First, create tidy_ratings2b using the new dataset. Follow the same steps as what was used to create tidy_ratings2\n\n# your code here\n\nOnce you’re satisfied, that the two tidy datasets look similar enough to combine, remove #| eval: false from the following code chunk and run it. Did it work? Why or why not?\n\ntidy_ratings = tidy_ratings2 %&gt;%\n  left_join(tidy_ratings2b)\n\nUse the correction _join function here. Save your dataset to the tidy_ratings object.\n\n# your code here\n\nCombine with bind_cols\n\nTo join the two datasets using bind_cols, you’ll first have to un-tidy your tidy datasets, so that each episode number is in a row and each series number is in a column. After using bind_cols() the first few rows of your final dataset should look like this:\n# A tibble: 10 × 16\n   episode period    s1    s2    s3    s4    s5    s6    s7    s8    s9   s10   s11   s12   s13   s14\n     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1       1      7  2.24  3.1   3.85  6.6   8.51  11.6  13.6  9.46  9.55  9.62  11.2  9.57  8.3   7.84\n 2       2      7  3     3.53  4.6   6.65  8.79  11.6  13.4  9.23  9.31  9.38  10.8  8.98  7.6   7.54\n 3       3      7  3     3.82  4.53  7.17  9.28  12.0  13.0  8.68  8.91  8.94  10.7  8.69  7.35  7.28\nStop here and let Amanda know you’ve finished"
   },
   {
     "objectID": "activities/10-combining.html#footnotes",
