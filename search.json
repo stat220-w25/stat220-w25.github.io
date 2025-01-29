@@ -280,88 +280,228 @@
     "text": "Part 6\nChain the last two parts together, so that the resulting dataset contains both avg_speed and delay_category. Pipe this new dataset into ggplot() to answer the question “is there a relationship between average speed and how late a flight is delayed?”\nIf you have time, create a new graph which only contains flights to MSP.\n\n\n\n\n\n\nAdapted from Adam Loy’s materials"
   },
   {
-    "objectID": "activities/04-customizing-plots.html",
-    "href": "activities/04-customizing-plots.html",
-    "title": "Customizing plots",
+    "objectID": "activities/03-ggplot-intro.html",
+    "href": "activities/03-ggplot-intro.html",
+    "title": "Intro to ggplot2\n",
     "section": "",
-    "text": "Note: This code reads the same dataset in that we used last time and then creates two new columns based on an old one. Make sure to run this chunk before trying to make your graph!\n\nseason_summary = readr::read_csv(\"https://math.carleton.edu/aluby/stat220/survivor_season_summary.csv\") |&gt;\n  separate(timeslot, into = c(\"day_of_week\", \"time\"))\n\nRows: 47 Columns: 30\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (13): version, version_season, season_name, location, country, tribe_se...\ndbl  (13): season, n_cast, n_tribes, n_finalists, n_jury, viewers_reunion, v...\ndate  (4): premiered, ended, filming_started, filming_ended\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nWarning: Expected 2 pieces. Additional pieces discarded in 42 rows [1, 2, 3, 4, 5, 6, 7,\n8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...]."
+    "text": "Note: the setup chunk includes the line eval = FALSE. Make sure to delete this when you are ready to knit your file.\nThe data we’re using today contains information about all seasons of Survivor and comes from the survivoR R package. In the show, a group of people (called castaways) are placed in an isolated location, where they must provide food, fire, and shelter for themselves. The castaways compete in challenges testing the contestants’ physical abilities like running and swimming or their mental abilities like puzzles and endurance challenges for rewards and immunity from elimination. The castaways are progressively eliminated from the game as they are voted out by their fellow contestants until only two or three remain. At that point, the players who were eliminated (the “jury”) vote for the winner. The winner is given the title of “Sole Survivor” and is awarded the grand prize of $1,000,000\nseason_summary = readr::read_csv(\"https://math.carleton.edu/aluby/stat220/survivor_season_summary.csv\")\n#&gt; Rows: 47 Columns: 30\n#&gt; ── Column specification ────────────────────────────────────────────────────────\n#&gt; Delimiter: \",\"\n#&gt; chr  (13): version, version_season, season_name, location, country, tribe_se...\n#&gt; dbl  (13): season, n_cast, n_tribes, n_finalists, n_jury, viewers_reunion, v...\n#&gt; date  (4): premiered, ended, filming_started, filming_ended\n#&gt; \n#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.\n#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
   },
   {
-    "objectID": "activities/04-customizing-plots.html#load-data",
-    "href": "activities/04-customizing-plots.html#load-data",
-    "title": "Customizing plots",
+    "objectID": "activities/03-ggplot-intro.html#round-1-view-the-data-pipes",
+    "href": "activities/03-ggplot-intro.html#round-1-view-the-data-pipes",
+    "title": "Intro to ggplot2\n",
+    "section": "Round 1: View the data + pipes",
+    "text": "Round 1: View the data + pipes\n1. To get started, load the tidyverse and and take a glimpse at the dataset. How many rows and columns are there? What does each row represent?\nLoading the tidyverse loads 8 packages, one of which is ggplot2. You can certainly load each package individually, but it has become common to simply load the tidyverse.\n2. The code below filters season_summary to include only survivor seasons that aired in the US. What does |&gt; do? (Try to answer this with your group, then run ?\"|&gt;\" in the console to load the help page if you need to)\n\nseason_summary |&gt;\n  filter(season == \"US\")"
+  },
+  {
+    "objectID": "activities/03-ggplot-intro.html#round-2-scatterplots",
+    "href": "activities/03-ggplot-intro.html#round-2-scatterplots",
+    "title": "Intro to ggplot2\n",
+    "section": "Round 2: Scatterplots",
+    "text": "Round 2: Scatterplots\nFirst, let’s create a scatterplot of imdb_mean vs. viewers_mean.\nA note on wording: when we say imdb_mean vs. viewers_mean, this should be interpreted as “variable on the y-axis” vs. “variable on the x-axis”.\n3. Fill in the data and aesthetic mapping in the below code chunk. What is returned? What’s missing?\n\n# Fill in the blanks\nggplot(data = ___, mapping = aes(x = ___, y = ___))\n\n4. Add the appropriate geometric object to create the scatterplot. This is called adding a layer to a plot. Remember to always put the + at the end of a line, never at the start.\n\n# Copy your code from the previous chunk and add a geom\n\nWhat do you notice? Write a sentence or two describing your findings\n5. You must remember to put the aesthetic mappings in the aes() function! What happens if you forget?\n\n# Add a layer and see what happens\nggplot(data = ___, x = ___, y = ___)\n\n6. The aesthetic mappings can be specified in the geom layer if you prefer, instead of the main ggplot() call. Give it a try:\n\n# Rebuild the scatterplot with your aesthetic mapping in the geom layer\nggplot(data = ___)"
+  },
+  {
+    "objectID": "activities/03-ggplot-intro.html#round-3-additional-aesthetics",
+    "href": "activities/03-ggplot-intro.html#round-3-additional-aesthetics",
+    "title": "Intro to ggplot2\n",
+    "section": "Round 3: Additional Aesthetics",
+    "text": "Round 3: Additional Aesthetics\nx and y are not the only aesthetic mappings possible. In this section you’ll explore the color, size, shape, and alpha (i.e. transparency) aesthetics.\n7. Create a scatterplot of imdb_mean vs. viewers_mean. Add the color aesthetic to map country2 to the point color.\n\nggplot(data = ___) +\n  geom_point(aes(x = ___, y = ___, color = ___))\n\n8. Create a scatterplot of imdb_mean vs. viewers_mean. Use shape to represent country2. Is this plot easier or harder to interpret than the previous plot?\n9. Create a scatterplot of imdb_mean vs. viewers_mean. Use both shape and color to represent the four_regions. Is this plot easier or harder to interpret than the previous two plots?\n10. Create a scatterplot of imdb_mean vs. viewers_mean. Use color to represent the season. What did you learn from the plot?\n11. Create a scatterplot of imdb_mean vs. viewers_mean. Use size to represent the season.\n12. Look back at your scatterplots from the last few questions. Explain the differences when you map aesthetics to discrete and continuous variables.\n13. Create a scatterplot of imdb_mean vs. viewers_mean. Use alpha to represent the season."
+  },
+  {
+    "objectID": "activities/03-ggplot-intro.html#round-4-visualizing-distributions",
+    "href": "activities/03-ggplot-intro.html#round-4-visualizing-distributions",
+    "title": "Intro to ggplot2\n",
+    "section": "Round 4: Visualizing Distributions",
+    "text": "Round 4: Visualizing Distributions\n14. Build a histogram of viewers_mean using geom_histogram(). Don’t hesitate to look at the ggplot2 cheat sheet for help!\n\n# Fill in the blanks\nggplot(___) +\n  geom_histogram(aes(x = ___))\n\nWhat have you learned about the distribution of average viewership?\n15. By default, ggplot2 uses 30 bins. To change the number of bins, to say 15, add the argument bins = 15 to geom_histogram(). Note: this is not an aesthetic mapping.\n\n# Fill in the blanks\nggplot(___) +\n  geom_histogram(aes(x = ___), bins = ___)\n\n16. Instead of a histogram, let’s create a kernel density plot. To do this, substitute geom_density() into your code for question 14.\n17. Now, let’s make side-by-side boxplots of viewers_mean for each country2.\n\n# Fill in the blanks\nggplot(___) +\n  geom_boxplot(aes(x = ___, y = ___))\n\n18. A violin plot is a kernel density on its side, made symmetric. Change your code from question 17 to use geom_violin(). Which plot do you prefer, boxplots or violin plots? Why?\n\n# Put your violin plot code here"
+  },
+  {
+    "objectID": "activities/03-ggplot-intro.html#round-5-bar-and-column-charts-labeling",
+    "href": "activities/03-ggplot-intro.html#round-5-bar-and-column-charts-labeling",
+    "title": "Intro to ggplot2\n",
+    "section": "Round 5: Bar and column charts + Labeling",
+    "text": "Round 5: Bar and column charts + Labeling\nHow many seasons were filmed in each country? Let’s find out!\n19. Make a bar chart of the number of seasons filmed in each country2 using geom_bar()\n\n# Fill in the blanks\nggplot(___) +\n  geom_bar(aes(x = ___))\n\n20. country2 has a category called “other”. Make a bar chart of country (which includes all individual countries) instead.\n\n# Fill in the blanks\nggplot(___) +\n  geom_bar(aes(x = ___))\n\n21. When you have lots of categories, it’s sometimes hard to read the labels on the x-axis. One trick is to flip the axes. Change geom_bar() to use the y aesthetic from your code in question 20 instead.\n22. In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it’s use. Choose one graph from today and add all labels.\n\nggplot(data = mpg) +\n  geom_point(mapping = aes(x = displ, y = hwy)) + \n  labs(\n    title = \"Put your informative title here\",\n    subtitle = \"and your subtitle here\",\n    x = \"New x label\",\n    y = \"New y label\",\n    caption = \"Put a caption here\"\n  )"
+  },
+  {
+    "objectID": "activities/08-dplyr2.html",
+    "href": "activities/08-dplyr2.html",
+    "title": "\ndplyr 2: Pipes and Groups",
     "section": "",
-    "text": "Note: This code reads the same dataset in that we used last time and then creates two new columns based on an old one. Make sure to run this chunk before trying to make your graph!\n\nseason_summary = readr::read_csv(\"https://math.carleton.edu/aluby/stat220/survivor_season_summary.csv\") |&gt;\n  separate(timeslot, into = c(\"day_of_week\", \"time\"))\n\nRows: 47 Columns: 30\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (13): version, version_season, season_name, location, country, tribe_se...\ndbl  (13): season, n_cast, n_tribes, n_finalists, n_jury, viewers_reunion, v...\ndate  (4): premiered, ended, filming_started, filming_ended\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nWarning: Expected 2 pieces. Additional pieces discarded in 42 rows [1, 2, 3, 4, 5, 6, 7,\n8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...]."
+    "text": "Note: continue using your 07-dplyr.rmd file for this activity. You can copy and paste code chunks using the “code” button above. We will continue to use the nycflights23 dataset."
   },
   {
-    "objectID": "activities/04-customizing-plots.html#make-histogram",
-    "href": "activities/04-customizing-plots.html#make-histogram",
-    "title": "Customizing plots",
-    "section": "Make histogram",
-    "text": "Make histogram\n\n# Include your code here"
+    "objectID": "activities/08-dplyr2.html#chunk-1",
+    "href": "activities/08-dplyr2.html#chunk-1",
+    "title": "\ndplyr 2: Pipes and Groups",
+    "section": "Chunk 1",
+    "text": "Chunk 1\n\nlog2(sqrt(16))"
   },
   {
-    "objectID": "activities/10-combining-solutions.html",
-    "href": "activities/10-combining-solutions.html",
+    "objectID": "activities/08-dplyr2.html#chunk-2",
+    "href": "activities/08-dplyr2.html#chunk-2",
+    "title": "\ndplyr 2: Pipes and Groups",
+    "section": "Chunk 2:",
+    "text": "Chunk 2:\n\nlibrary(nycflights23) # need to load, not in pipeline\nmsp &lt;- filter(flights, dest == \"MSP\", carrier == \"DL\")\nmsp_narrow &lt;- select(msp, year, month, day, starts_with(\"sched\"), \n                     contains(\"delay\"), origin)\nmsp_narrow &lt;- relocate(msp_narrow, origin, everything())"
+  },
+  {
+    "objectID": "activities/08-dplyr2.html#your-turn-from-last-time",
+    "href": "activities/08-dplyr2.html#your-turn-from-last-time",
+    "title": "\ndplyr 2: Pipes and Groups",
+    "section": "“Your turn” from last time",
+    "text": "“Your turn” from last time\nChain the last two parts together, so that the resulting dataset contains both avg_speed and delay_category. Pipe this new dataset into ggplot() to answer the question “is there a relationship between average speed and how late a flight is delayed?”\nIf you have time, create a new graph which only contains flights to MSP."
+  },
+  {
+    "objectID": "activities/08-dplyr2.html#summarize",
+    "href": "activities/08-dplyr2.html#summarize",
+    "title": "\ndplyr 2: Pipes and Groups",
+    "section": "summarize()",
+    "text": "summarize()\nUse summarize() to compute statistics about the data:\n\nThe lowest and highest distance traveled\nThe lowest and highest air_time\nThe median dep_delay"
+  },
+  {
+    "objectID": "activities/08-dplyr2.html#summarize-ii",
+    "href": "activities/08-dplyr2.html#summarize-ii",
+    "title": "\ndplyr 2: Pipes and Groups",
+    "section": "\nsummarize() II",
+    "text": "summarize() II\nExtract the rows for Delta flights. (Hint: look at the airlines dataset, which is also distributed in the {nycflights23} R package, to find the carrier shortcut code)\nThen use summarize() and a summary function to find:\n\nThe number of flights in this subset\nThe median dep_delay. How does it compare to the overall median?"
+  },
+  {
+    "objectID": "activities/08-dplyr2.html#group_by",
+    "href": "activities/08-dplyr2.html#group_by",
+    "title": "\ndplyr 2: Pipes and Groups",
+    "section": "group_by()",
+    "text": "group_by()\nUse group_by(), summarize(), and slice_max() to display the five dest airports with the most flights from NYC airports in 2023. Your display should include the median flight delay for these airports."
+  },
+  {
+    "objectID": "activities/07-dplyr1-sols.html",
+    "href": "activities/07-dplyr1-sols.html",
+    "title": "\ndplyr 1: Verbs",
+    "section": "",
+    "text": "Identify the verb (function) that does the following:\n\nPicks rows by their values\nReorders the rows\nPicks variables by their names\nCreates new variables with functions of existing variables"
+  },
+  {
+    "objectID": "activities/07-dplyr1-sols.html#part-1",
+    "href": "activities/07-dplyr1-sols.html#part-1",
+    "title": "\ndplyr 1: Verbs",
+    "section": "Part 1",
+    "text": "Part 1\n\nFind all flights that had an arrival delay of two or more hours.\nFind all flights to MSP\nFind all flights that arrived more than two hours late, but left less than one hour late\n(if time) Find all flights that were delayed by at least an hour, but made up over 30 minutes in flight\n\n\nfilter(flights, dep_delay &gt;= 120)\n\n# A tibble: 15,367 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1        1           2038       203      328              3\n 2  2023     1     1       33           2140       173      238           2352\n 3  2023     1     1       36           2048       228      223           2252\n 4  2023     1     1      831            600       151     1044            838\n 5  2023     1     1      925            700       145     1214           1005\n 6  2023     1     1     1000            700       180     1322           1019\n 7  2023     1     1     1017            817       120     1454           1311\n 8  2023     1     1     1056            700       236     1345           1027\n 9  2023     1     1     1109            735       214     1417           1048\n10  2023     1     1     1110            829       161     1412           1211\n# ℹ 15,357 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\nfilter(flights, dest == \"MSP\")\n\n# A tibble: 5,938 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1      603            605        -2      800            818\n 2  2023     1     1      655            700        -5      841            907\n 3  2023     1     1      657            700        -3      902            927\n 4  2023     1     1      749            750        -1      938           1006\n 5  2023     1     1      951           1000        -9     1159           1237\n 6  2023     1     1     1207           1217       -10     1430           1445\n 7  2023     1     1     1312           1059       133     1518           1319\n 8  2023     1     1     1314           1153        81     1518           1357\n 9  2023     1     1     1506           1500         6     1712           1717\n10  2023     1     1     1513           1512         1     1724           1721\n# ℹ 5,928 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\nfilter(flights, (dep_delay &gt;=120) & (arr_delay &lt; 60))\n\n# A tibble: 5 × 19\n   year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n1  2023     4    10     2158           1955       123       12           2316\n2  2023     4    30     2130           1930       120     2358           2259\n3  2023     5     1     1212            955       137     1617           1528\n4  2023     6     1     1201           1000       121     1425           1326\n5  2023     7    26     2135           1929       126       21           2335\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;"
+  },
+  {
+    "objectID": "activities/07-dplyr1-sols.html#part-2",
+    "href": "activities/07-dplyr1-sols.html#part-2",
+    "title": "\ndplyr 1: Verbs",
+    "section": "Part 2",
+    "text": "Part 2\nUse arrange to answer the following questions:\n\nWhich flights traveled the farthest?\nWhich traveled the shortest?\nWhich flights lasted the longest?\nWhich lasted the shortest?\n\n\narrange(flights, desc(distance))\n\n# A tibble: 435,352 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1      949            900        49       NA           1525\n 2  2023     1     1     1023           1000        23     1637           1610\n 3  2023     1     2      919            900        19     1543           1525\n 4  2023     1     2      951           1000        -9     1620           1610\n 5  2023     1     3      922            900        22     1535           1525\n 6  2023     1     3     1007           1000         7     1630           1610\n 7  2023     1     4      912            900        12     1511           1525\n 8  2023     1     4     1001           1000         1     1630           1610\n 9  2023     1     5      854            900        -6     1454           1525\n10  2023     1     5      949           1000       -11     1600           1610\n# ℹ 435,342 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\narrange(flights, distance)\n\n# A tibble: 435,352 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1      816            820        -4      910            921\n 2  2023     1     2      820            820         0      907            921\n 3  2023     1     2     2324           2159        85       41           2300\n 4  2023     1     3       14           2158       136      104           2259\n 5  2023     1     3      815            820        -5      913            921\n 6  2023     1     4      756            759        -3      903            900\n 7  2023     1     4     1353           1347         6     1449           1448\n 8  2023     1     5      804            759         5      908            900\n 9  2023     1     5     1346           1347        -1     1444           1447\n10  2023     1     6      817            759        18      926            900\n# ℹ 435,342 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\narrange(flights, desc(air_time))\n\n# A tibble: 435,352 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     3     9     1009           1000         9     1720           1605\n 2  2023     1    10      913            900        13     1615           1525\n 3  2023     3    10      852            900        -8     1616           1537\n 4  2023     3     8      853            900        -7     1608           1525\n 5  2023     1    31      858            900        -2     1627           1525\n 6  2023     4     2     1104           1000        64     1702           1510\n 7  2023     1    28     1121            900       141     1820           1525\n 8  2023     3    23      851            900        -9     1451           1437\n 9  2023     2     4     1005           1000         5     1649           1605\n10  2023     3     7     1345            900       285     2100           1525\n# ℹ 435,342 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\narrange(flights, air_time)\n\n# A tibble: 435,352 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1    12     2151           2155        -4     2247           2256\n 2  2023     1     3     1155           1200        -5     1235           1311\n 3  2023     1    12     1452           1455        -3     1540           1607\n 4  2023     1    15      757            759        -2      839            900\n 5  2023     1    19     1450           1455        -5     1536           1607\n 6  2023     2     5     1422           1430        -8     1511           1538\n 7  2023     3     1     1438           1440        -2     1524           1548\n 8  2023     3    17      825            835       -10      911            945\n 9  2023     4     6     1201           1109        52     1255           1218\n10  2023     6     8     2211           2149        22     2256           2242\n# ℹ 435,342 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;"
+  },
+  {
+    "objectID": "activities/07-dplyr1-sols.html#part-3",
+    "href": "activities/07-dplyr1-sols.html#part-3",
+    "title": "\ndplyr 1: Verbs",
+    "section": "Part 3",
+    "text": "Part 3\nCreate a new column in flights giving the average speed of the flight while it was in the air. What are the units of this variable? Make the variable in terms of miles per hour.\n\nmutate(flights, avg_speed = distance/air_time)\n\n# A tibble: 435,352 × 20\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1        1           2038       203      328              3\n 2  2023     1     1       18           2300        78      228            135\n 3  2023     1     1       31           2344        47      500            426\n 4  2023     1     1       33           2140       173      238           2352\n 5  2023     1     1       36           2048       228      223           2252\n 6  2023     1     1      503            500         3      808            815\n 7  2023     1     1      520            510        10      948            949\n 8  2023     1     1      524            530        -6      645            710\n 9  2023     1     1      537            520        17      926            818\n10  2023     1     1      547            545         2      845            852\n# ℹ 435,342 more rows\n# ℹ 12 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, avg_speed &lt;dbl&gt;"
+  },
+  {
+    "objectID": "activities/07-dplyr1-sols.html#part-5",
+    "href": "activities/07-dplyr1-sols.html#part-5",
+    "title": "\ndplyr 1: Verbs",
+    "section": "Part 5",
+    "text": "Part 5\nSuppose that you don’t think the FAA gives enough information in their definition of a delayed flight, so you come up with the following delay categories:\n\n\ndep_delay &lt;= 0 -&gt; none\n\ndep_delay between 1 and 15 minutes -&gt; minimal\n\ndep_delay between 16 and 30 minutes -&gt; delayed\n\ndep_delay between 31 and 60 minutes -&gt; major\n\ndep_delay over 60 minutes -&gt; extreme\n\nUse mutate() and case_when() to create a delay_category variable in the flights data frame.\n\nmutate(flights, delay_category = case_when(\n  dep_delay &lt;= 0 ~ \"none\",\n  dep_delay &lt;= 15 ~ \"minimal\",\n  dep_delay &lt;= 30 ~ \"delayed\",\n  dep_delay &lt;= 60 ~ \"major\",\n  dep_delay &gt; 60 ~ \"extreme\"\n))\n\n# A tibble: 435,352 × 20\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1        1           2038       203      328              3\n 2  2023     1     1       18           2300        78      228            135\n 3  2023     1     1       31           2344        47      500            426\n 4  2023     1     1       33           2140       173      238           2352\n 5  2023     1     1       36           2048       228      223           2252\n 6  2023     1     1      503            500         3      808            815\n 7  2023     1     1      520            510        10      948            949\n 8  2023     1     1      524            530        -6      645            710\n 9  2023     1     1      537            520        17      926            818\n10  2023     1     1      547            545         2      845            852\n# ℹ 435,342 more rows\n# ℹ 12 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, delay_category &lt;chr&gt;\n\n\nand we can check with select():\n\nmutate(flights, delay_category = case_when(\n  dep_delay &lt;= 0 ~ \"none\",\n  dep_delay &lt;= 15 ~ \"minimal\",\n  dep_delay &lt;= 30 ~ \"delayed\",\n  dep_delay &lt;= 60 ~ \"major\",\n  dep_delay &gt; 60 ~ \"extreme\"\n)) %&gt;%\n  select(dep_delay, delay_category)\n\n# A tibble: 435,352 × 2\n   dep_delay delay_category\n       &lt;dbl&gt; &lt;chr&gt;         \n 1       203 extreme       \n 2        78 extreme       \n 3        47 major         \n 4       173 extreme       \n 5       228 extreme       \n 6         3 minimal       \n 7        10 minimal       \n 8        -6 none          \n 9        17 delayed       \n10         2 minimal       \n# ℹ 435,342 more rows"
+  },
+  {
+    "objectID": "activities/07-dplyr1-sols.html#part-6",
+    "href": "activities/07-dplyr1-sols.html#part-6",
+    "title": "\ndplyr 1: Verbs",
+    "section": "Part 6",
+    "text": "Part 6\nChain the last two parts together, so that the resulting dataset contains both avg_speed and delay_category. Pipe this new dataset into ggplot() to answer the question “is there a relationship between average speed and how late a flight is delayed?”\nIf you have time, create a new graph which only contains flights to MSP.\n\nflights %&gt;%\n  mutate(\n    delay_category = case_when(\n      dep_delay &lt;= 0 ~ \"none\",\n      dep_delay &lt;= 15 ~ \"minimal\",\n      dep_delay &lt;= 30 ~ \"delayed\",\n      dep_delay &lt;= 60 ~ \"major\",\n      dep_delay &gt; 60 ~ \"extreme\"\n    ),\n    avg_speed = distance/air_time\n  ) %&gt;%\n  ggplot(aes(y = delay_category, x = avg_speed, fill = delay_category)) + \n  geom_boxplot() + \n  theme(legend.position = \"none\")\n\nWarning: Removed 12534 rows containing non-finite outside the scale range\n(`stat_boxplot()`).\n\n\n\n\n\n\n\n\n\nflights %&gt;%\n  filter(dest == \"MSP\") %&gt;%\n  mutate(\n    delay_category = case_when(\n      dep_delay &lt;= 0 ~ \"none\",\n      dep_delay &lt;= 15 ~ \"minimal\",\n      dep_delay &lt;= 30 ~ \"delayed\",\n      dep_delay &lt;= 60 ~ \"major\",\n      dep_delay &gt; 60 ~ \"extreme\"\n    ),\n    avg_speed = distance/air_time\n  ) %&gt;%\n  ggplot(aes(y = delay_category, x = avg_speed, fill = delay_category)) + \n  geom_boxplot() + \n  theme(legend.position = \"none\")\n\nWarning: Removed 133 rows containing non-finite outside the scale range\n(`stat_boxplot()`)."
+  },
+  {
+    "objectID": "activities/10-combining.html",
+    "href": "activities/10-combining.html",
     "title": "\nbind_ and _join: Combining Data",
     "section": "",
     "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
   },
   {
-    "objectID": "activities/10-combining-solutions.html#task",
-    "href": "activities/10-combining-solutions.html#task",
+    "objectID": "activities/10-combining.html#example-1-star-wars-characters",
+    "href": "activities/10-combining.html#example-1-star-wars-characters",
     "title": "\nbind_ and _join: Combining Data",
-    "section": "Task",
-    "text": "Task\n\nmessy_ratings2b &lt;- read_csv(here(here(), \"data/messy_ratings2_9_14.csv\"))\n\nCombine with bind_rows()\n\n\nmessy_ratings2 %&gt;%\n  bind_rows(messy_ratings2b)\n\n# A tibble: 14 × 21\n   series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day\n    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;\n 1      1    2.24    NA       3       NA       3       NA       2.6     NA   \n 2      2    3.1     NA       3.53    NA       3.82    NA       3.6     NA   \n 3      3    3.85    NA       4.6     NA       4.53    NA       4.71    NA   \n 4      4    6.6     NA       6.65    NA       7.17    NA       6.82    NA   \n 5      5    8.51    NA       8.79    NA       9.28    NA      10.2     NA   \n 6      6   11.6     11.7    11.6     11.8    12.0     NA      12.4     12.7 \n 7      7   13.6     13.9    13.4     13.7    13.0     13.4    13.3     13.9 \n 8      8    9.46     9.72    9.23     9.53    8.68     9.06    8.55     8.87\n 9      9    9.55     9.92    9.31     9.76    8.91     9.35    8.88     9.41\n10     10    9.62    10.0     9.38     9.8     8.94     9.42    8.96     9.49\n11     11   11.2     11.8    10.8     11.4    10.7     11.2    10.6     11.2 \n12     12    9.57    10.2     8.98     9.64    8.69     9.39    8.75     9.13\n13     13    8.3      1       7.6      1       7.35     1       7.76     1   \n14     14    7.84     1       7.54     1       7.28     1       7.12     1   \n# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,\n#   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,\n#   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,\n#   e10_28day &lt;dbl&gt;\n\n\nCombine with join()\n\nFirst, create tidy_ratings2b\n\ntidy_ratings2b &lt;- messy_ratings2b %&gt;%\n  select(series, contains(\"7day\")) %&gt;%\n  pivot_longer(-series, names_to = \"episode\", values_to = \"viewers\") %&gt;%\n  separate(episode, into = c(\"episode\", \"period\")) %&gt;%\n  mutate(\n    episode = parse_number(episode),\n    period = parse_number(period)\n  )\n\nWhy doesn’t left_join() work?\n\ntidy_ratings2 %&gt;%\n  left_join(tidy_ratings2b)\n\n# A tibble: 80 × 4\n   series episode period viewers\n    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;\n 1      1       1      7    2.24\n 2      1       2      7    3   \n 3      1       3      7    3   \n 4      1       4      7    2.6 \n 5      1       5      7    3.03\n 6      1       6      7    2.75\n 7      1       7      7   NA   \n 8      1       8      7   NA   \n 9      1       9      7   NA   \n10      1      10      7   NA   \n# ℹ 70 more rows\n\n\nWhich _join do we use?\n\ntidy_ratings2 %&gt;%\n  full_join(tidy_ratings2b)\n\n# A tibble: 140 × 4\n   series episode period viewers\n    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;\n 1      1       1      7    2.24\n 2      1       2      7    3   \n 3      1       3      7    3   \n 4      1       4      7    2.6 \n 5      1       5      7    3.03\n 6      1       6      7    2.75\n 7      1       7      7   NA   \n 8      1       8      7   NA   \n 9      1       9      7   NA   \n10      1      10      7   NA   \n# ℹ 130 more rows\n\n\nCombine with bind_cols\n\nWhy doesn’t this work?\n\nseasoncols_ratings2 = tidy_ratings2 %&gt;%\n  pivot_wider(names_from = series, \n              values_from = viewers, \n              names_prefix = \"s\")\n\nseasoncols_ratings2b = tidy_ratings2b %&gt;%\n  pivot_wider(names_from = series, values_from = viewers)\n\nseasoncols_ratings2 %&gt;%\n  bind_cols(seasoncols_ratings2b)\n\n# A tibble: 10 × 18\n   episode...1 period...2    s1    s2    s3    s4    s5    s6    s7    s8\n         &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1           1          7  2.24  3.1   3.85  6.6   8.51  11.6  13.6  9.46\n 2           2          7  3     3.53  4.6   6.65  8.79  11.6  13.4  9.23\n 3           3          7  3     3.82  4.53  7.17  9.28  12.0  13.0  8.68\n 4           4          7  2.6   3.6   4.71  6.82 10.2   12.4  13.3  8.55\n 5           5          7  3.03  3.83  4.61  6.95  9.95  12.4  13.1  8.61\n 6           6          7  2.75  4.25  4.82  7.32 10.1   12    13.1  8.61\n 7           7          7 NA     4.42  5.1   7.76 10.3   12.4  13.4  9.01\n 8           8          7 NA     5.06  5.35  7.41  9.02  11.1  13.3  8.95\n 9           9          7 NA    NA     5.7   7.41 10.7   12.6  13.4  9.03\n10          10          7 NA    NA     6.74  9.45 13.5   15.0  15.9 10.0 \n# ℹ 8 more variables: episode...11 &lt;dbl&gt;, period...12 &lt;dbl&gt;, `9` &lt;dbl&gt;,\n#   `10` &lt;dbl&gt;, `11` &lt;dbl&gt;, `12` &lt;dbl&gt;, `13` &lt;dbl&gt;, `14` &lt;dbl&gt;\n\n\nSolve it by removing the episode/period\n\nseasoncols_ratings2b = tidy_ratings2b %&gt;%\n  pivot_wider(names_from = series, \n              values_from = viewers, \n              names_prefix = \"s\") %&gt;%\n  select(-c(episode, period))\n\nseasoncols_ratings2 %&gt;%\n  bind_cols(seasoncols_ratings2b)\n\n# A tibble: 10 × 16\n   episode period    s1    s2    s3    s4    s5    s6    s7    s8    s9   s10\n     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1       1      7  2.24  3.1   3.85  6.6   8.51  11.6  13.6  9.46  9.55  9.62\n 2       2      7  3     3.53  4.6   6.65  8.79  11.6  13.4  9.23  9.31  9.38\n 3       3      7  3     3.82  4.53  7.17  9.28  12.0  13.0  8.68  8.91  8.94\n 4       4      7  2.6   3.6   4.71  6.82 10.2   12.4  13.3  8.55  8.88  8.96\n 5       5      7  3.03  3.83  4.61  6.95  9.95  12.4  13.1  8.61  8.67  9.26\n 6       6      7  2.75  4.25  4.82  7.32 10.1   12    13.1  8.61  8.91  8.7 \n 7       7      7 NA     4.42  5.1   7.76 10.3   12.4  13.4  9.01  9.22  8.98\n 8       8      7 NA     5.06  5.35  7.41  9.02  11.1  13.3  8.95  9.69  9.19\n 9       9      7 NA    NA     5.7   7.41 10.7   12.6  13.4  9.03  9.5   9.34\n10      10      7 NA    NA     6.74  9.45 13.5   15.0  15.9 10.0  10.3  10.0 \n# ℹ 4 more variables: s11 &lt;dbl&gt;, s12 &lt;dbl&gt;, s13 &lt;dbl&gt;, s14 &lt;dbl&gt;\n\n\nStop here and let Amanda know you’ve finished"
+    "section": "Example 1: Star Wars Characters",
+    "text": "Example 1: Star Wars Characters\nDataset 1:\n\nEach row in the dataset corresponds to a star wars character\nThe columns include their name, height, mass, homeworld, species, and the first_film they appeared in\n\n\nstarwars_characters\n\n# A tibble: 87 × 6\n   name               height  mass homeworld species first_film\n   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     \n 1 Luke Skywalker        172    77 Tatooine  Human   A New Hope\n 2 C-3PO                 167    75 Tatooine  Droid   A New Hope\n 3 R2-D2                  96    32 Naboo     Droid   A New Hope\n 4 Darth Vader           202   136 Tatooine  Human   A New Hope\n 5 Leia Organa           150    49 Alderaan  Human   A New Hope\n 6 Owen Lars             178   120 Tatooine  Human   A New Hope\n 7 Beru Whitesun Lars    165    75 Tatooine  Human   A New Hope\n 8 R5-D4                  97    32 Tatooine  Droid   A New Hope\n 9 Biggs Darklighter     183    84 Tatooine  Human   A New Hope\n10 Obi-Wan Kenobi        182    77 Stewjon   Human   A New Hope\n# ℹ 77 more rows\n\n\nDataset 2:\nThe dataset is formatted the same, but includes two characters that were first introduced in *The Last Jedi, a Star Wars movie that came out after the first datset was released.\n\nstarwars_lastjedi\n\n# A tibble: 2 × 6\n  name         height mass  homeworld species first_film   \n  &lt;chr&gt;        &lt;lgl&gt;  &lt;lgl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;        \n1 Rose Tico    NA     NA    Otomok    Human   The Last Jedi\n2 Amilyn Holdo NA     NA    &lt;NA&gt;      Human   The Last Jedi\n\n\nHow should these datasets be combined?"
   },
   {
-    "objectID": "activities/05-maps.html",
-    "href": "activities/05-maps.html",
-    "title": "Maps",
-    "section": "",
-    "text": "states &lt;- map_data(\"state\")\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")\n\n\n\n\n\n\n\n\nEdit the code so that each state is a different color\n\nstates &lt;- map_data(\"state\")\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")"
+    "objectID": "activities/10-combining.html#example-2-stats-sections",
+    "href": "activities/10-combining.html#example-2-stats-sections",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Example 2: Stats Sections",
+    "text": "Example 2: Stats Sections\nDataset 1:\nThis dataset includes the number of sections of stats courses offered in Fall 2024 and Winter 2025 terms.\n\nstats_sections_fw\n\n# A tibble: 8 × 3\n  class    fall winter\n  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;\n1 stat120     3      3\n2 stat220     1      1\n3 stat230     1      1\n4 stat250     0      1\n5 stat270     1      0\n6 stat285     1      1\n7 stat320     0      0\n8 stat330     0      1\n\n\nDataset 2:\nThis dataset includes the number of sections of stats courses offered in the Spring 2025 term.\n\nstats_sections_s\n\n# A tibble: 8 × 1\n  spring\n   &lt;dbl&gt;\n1      4\n2      1\n3      1\n4      1\n5      0\n6      1\n7      1\n8      0\n\n\nHow should these datasets be combined?"
   },
   {
-    "objectID": "activities/05-maps.html#your-turn",
-    "href": "activities/05-maps.html#your-turn",
-    "title": "Maps",
-    "section": "",
-    "text": "Edit the code so that each state is a different color\n\nstates &lt;- map_data(\"state\")\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")"
+    "objectID": "activities/10-combining.html#example-3-survivor-castaways",
+    "href": "activities/10-combining.html#example-3-survivor-castaways",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Example 3: Survivor castaways",
+    "text": "Example 3: Survivor castaways\nDataset 1:\n\nThis dataset includes information about each castaway’s performance in a given season of Survivor (US seasons)\nIt includes a castaway ID, first name, season name and number, and the results for that castaway in that season (their overall place, whether they made the jury, and whether they were a finalist)\n\n\nus_castaway_results\n\n# A tibble: 870 × 7\n   castaway_id castaway season_name      season place jury  finalist\n   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;   \n 1 US0001      Sonja    Survivor: Borneo      1    16 FALSE FALSE   \n 2 US0002      B.B.     Survivor: Borneo      1    15 FALSE FALSE   \n 3 US0003      Stacey   Survivor: Borneo      1    14 FALSE FALSE   \n 4 US0004      Ramona   Survivor: Borneo      1    13 FALSE FALSE   \n 5 US0005      Dirk     Survivor: Borneo      1    12 FALSE FALSE   \n 6 US0006      Joel     Survivor: Borneo      1    11 FALSE FALSE   \n 7 US0007      Gretchen Survivor: Borneo      1    10 FALSE FALSE   \n 8 US0008      Greg     Survivor: Borneo      1     9 TRUE  FALSE   \n 9 US0009      Jenna    Survivor: Borneo      1     8 TRUE  FALSE   \n10 US0010      Gervase  Survivor: Borneo      1     7 TRUE  FALSE   \n# ℹ 860 more rows\n\n\nDataset 2:\n\nThis dataset includes information about each castaway who has appeared on Survivor (including non-US seasons)\nIt includes a castaway ID, their full name, date of birth, gender and occupation as presented in the show, and their Myers-Briggs personality type.\n\n\ncast_details\n\n# A tibble: 1,118 × 6\n   castaway_id full_name        date_of_birth gender occupation personality_type\n   &lt;chr&gt;       &lt;chr&gt;            &lt;date&gt;        &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           \n 1 US0014      Rudy Boesch      1928-01-20    Male   Retired N… ISTJ            \n 2 US0002      B.B. Andersen    1936-01-18    Male   Real Esta… ESTJ            \n 3 US0001      Sonja Christoph… 1937-01-28    Female Musician   ENFP            \n 4 US0075      Jake Billingsley 1941-08-21    Male   Land Brok… ISFJ            \n 5 US0151      Jim Lynch        1942-01-07    Male   Retired F… ISTJ            \n 6 US0474      Joseph Del Campo 1943-07-04    Male   Former FB… ISTJ            \n 7 US0304      Jimmy Johnson    1943-07-16    Male   Former NF… ESFJ            \n 8 US0047      Kim Johnson      1944-09-18    Female Retired T… ISFJ            \n 9 US0128      Scout Cloud Lee  1944-11-08    Female Rancher    INFJ            \n10 US0061      Paschal English  1945-03-05    Male   Judge      ISFJ            \n# ℹ 1,108 more rows\n\n\nWe are interested in exploring the relationship between overall place on a Survivor season and personality type. How should these datasets be combined?\nStop here"
   },
   {
-    "objectID": "activities/09-tidyr.html",
-    "href": "activities/09-tidyr.html",
-    "title": "\ntidyr: Reshaping Data",
+    "objectID": "activities/10-combining.html#task-line-plot",
+    "href": "activities/10-combining.html#task-line-plot",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Task: line plot",
+    "text": "Task: line plot\nFinish the code to make a line plot of viewers against episode, colored and grouped by series. (remember to remove #| eval: false)\n\ntidy_ratings2 %&gt;%\n  ggplot(aes(x = _____, y = _____, col = _____, group = _____)) +\n  geom_line() + \n  scale_color_viridis_c(option = \"plasma\", end = .8)"
+  },
+  {
+    "objectID": "activities/10-combining.html#task-add-series-9-14-to-the-dataset",
+    "href": "activities/10-combining.html#task-add-series-9-14-to-the-dataset",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Task: Add series 9-14 to the dataset",
+    "text": "Task: Add series 9-14 to the dataset\nThe code chunk below loads the new dataset\n\nmessy_ratings2b &lt;- read_csv(\"https://stat220-w25.github.io/data/messy_ratings2_9_14.csv\")\nmessy_ratings2b\n\n# A tibble: 6 × 21\n  series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day\n   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;\n1      9    9.55     9.92    9.31     9.76    8.91     9.35    8.88     9.41\n2     10    9.62    10.0     9.38     9.8     8.94     9.42    8.96     9.49\n3     11   11.2     11.8    10.8     11.4    10.7     11.2    10.6     11.2 \n4     12    9.57    10.2     8.98     9.64    8.69     9.39    8.75     9.13\n5     13    8.3      1       7.6      1       7.35     1       7.76     1   \n6     14    7.84     1       7.54     1       7.28     1       7.12     1   \n# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,\n#   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,\n#   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,\n#   e10_28day &lt;dbl&gt;\n\n\nCombine with bind_rows()\n\nCombine the two messy datasets by using bind_rows(). Be sure to look at your resulting dataset and make sure it has the right format\n\n# your code here\n\nCombine with join()\n\nWe’ll practice joining with the tidy versions of the data. First, create tidy_ratings2b using the new dataset. Follow the same steps as what was used to create tidy_ratings2\n\n# your code here\n\nOnce you’re satisfied, that the two tidy datasets look similar enough to combine, remove #| eval: false from the following code chunk and run it. Did it work? Why or why not?\n\ntidy_ratings = tidy_ratings2 %&gt;%\n  left_join(tidy_ratings2b)\n\nUse the correction _join function here. Save your dataset to the tidy_ratings object.\n\n# your code here\n\nCombine with bind_cols\n\nTo join the two datasets using bind_cols, you’ll first have to un-tidy your tidy datasets, so that each episode number is in a row and each series number is in a column. After using bind_cols() the first few rows of your final dataset should look like this:\n# A tibble: 10 × 16\n   episode period    s1    s2    s3    s4    s5    s6    s7    s8    s9   s10   s11   s12   s13   s14\n     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1       1      7  2.24  3.1   3.85  6.6   8.51  11.6  13.6  9.46  9.55  9.62  11.2  9.57  8.3   7.84\n 2       2      7  3     3.53  4.6   6.65  8.79  11.6  13.4  9.23  9.31  9.38  10.8  8.98  7.6   7.54\n 3       3      7  3     3.82  4.53  7.17  9.28  12.0  13.0  8.68  8.91  8.94  10.7  8.69  7.35  7.28\nStop here and let Amanda know you’ve finished"
+  },
+  {
+    "objectID": "activities/10-combining.html#footnotes",
+    "href": "activities/10-combining.html#footnotes",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Footnotes",
+    "text": "Footnotes\n\nTalk it over: does everybody remember what makes a dataset “tidy”?↩︎"
+  },
+  {
+    "objectID": "activities/11-import.html",
+    "href": "activities/11-import.html",
+    "title": "Data import and dates/times – Solutions",
     "section": "",
     "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
   },
   {
-    "objectID": "activities/09-tidyr.html#task-1",
-    "href": "activities/09-tidyr.html#task-1",
-    "title": "\ntidyr: Reshaping Data",
+    "objectID": "activities/11-import.html#data-4.csv",
+    "href": "activities/11-import.html#data-4.csv",
+    "title": "Data import and dates/times – Solutions",
+    "section": "data-4.csv",
+    "text": "data-4.csv\n\n# your code here"
+  },
+  {
+    "objectID": "activities/11-import.html#tricky-1.csv",
+    "href": "activities/11-import.html#tricky-1.csv",
+    "title": "Data import and dates/times – Solutions",
+    "section": "tricky-1.csv",
+    "text": "tricky-1.csv\n\n# your code here"
+  },
+  {
+    "objectID": "activities/11-import.html#tricky-2.csv",
+    "href": "activities/11-import.html#tricky-2.csv",
+    "title": "Data import and dates/times – Solutions",
+    "section": "tricky-2.csv",
+    "text": "tricky-2.csv\n\n# your code here"
+  },
+  {
+    "objectID": "activities/11-import.html#task-1",
+    "href": "activities/11-import.html#task-1",
+    "title": "Data import and dates/times – Solutions",
     "section": "Task 1",
-    "text": "Task 1\n\nTidy this data set by\n\nSelecting the series and e*_7day columns\nPivoting the data to add a column for episode and a column for rating (we’ll clean up the episode column later)\n\n\n\n# include your code here"
+    "text": "Task 1\nCreate a vector of dates that our class meets this term\n\n# your code here"
   },
   {
-    "objectID": "activities/09-tidyr.html#task-2",
-    "href": "activities/09-tidyr.html#task-2",
-    "title": "\ntidyr: Reshaping Data",
+    "objectID": "activities/11-import.html#task-2",
+    "href": "activities/11-import.html#task-2",
+    "title": "Data import and dates/times – Solutions",
     "section": "Task 2",
-    "text": "Task 2\n\n\nClean the episode and period column\nMake a line plot with episode on the x-axis, rating on the y-axis, colored by series. (You will also need to map the group aesthetic to series)"
-  },
-  {
-    "objectID": "activities/09-tidyr.html#relig_income",
-    "href": "activities/09-tidyr.html#relig_income",
-    "title": "\ntidyr: Reshaping Data",
-    "section": "relig_income",
-    "text": "relig_income\nThe relig_income dataset in the {tidyr} package stores counts based on a survey which (among other things) asked people about their religion and annual income:\n\nrelig_income\n\n# A tibble: 18 × 11\n   religion `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k`\n   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n 1 Agnostic      27        34        60        81        76       137        122\n 2 Atheist       12        27        37        52        35        70         73\n 3 Buddhist      27        21        30        34        33        58         62\n 4 Catholic     418       617       732       670       638      1116        949\n 5 Don’t k…      15        14        15        11        10        35         21\n 6 Evangel…     575       869      1064       982       881      1486        949\n 7 Hindu          1         9         7         9        11        34         47\n 8 Histori…     228       244       236       238       197       223        131\n 9 Jehovah…      20        27        24        24        21        30         15\n10 Jewish        19        19        25        25        30        95         69\n11 Mainlin…     289       495       619       655       651      1107        939\n12 Mormon        29        40        48        51        56       112         85\n13 Muslim         6         7         9        10         9        23         16\n14 Orthodox      13        17        23        32        32        47         38\n15 Other C…       9         7        11        13        13        14         18\n16 Other F…      20        33        40        46        49        63         46\n17 Other W…       5         2         3         4         2         7          3\n18 Unaffil…     217       299       374       365       341       528        407\n# ℹ 3 more variables: `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;,\n#   `Don't know/refused` &lt;dbl&gt;\n\n\nUse pivot_longer() to tidy this dataset."
-  },
-  {
-    "objectID": "activities/09-tidyr.html#anscombe",
-    "href": "activities/09-tidyr.html#anscombe",
-    "title": "\ntidyr: Reshaping Data",
-    "section": "anscombe",
-    "text": "anscombe\nAnscombe’s quartet is a built-in dataset in R.\n\nanscombe\n\n   x1 x2 x3 x4    y1   y2    y3    y4\n1  10 10 10  8  8.04 9.14  7.46  6.58\n2   8  8  8  8  6.95 8.14  6.77  5.76\n3  13 13 13  8  7.58 8.74 12.74  7.71\n4   9  9  9  8  8.81 8.77  7.11  8.84\n5  11 11 11  8  8.33 9.26  7.81  8.47\n6  14 14 14  8  9.96 8.10  8.84  7.04\n7   6  6  6  8  7.24 6.13  6.08  5.25\n8   4  4  4 19  4.26 3.10  5.39 12.50\n9  12 12 12  8 10.84 9.13  8.15  5.56\n10  7  7  7  8  4.82 7.26  6.42  7.91\n11  5  5  5  8  5.68 4.74  5.73  6.89\n\n\nThis dataset contains four pairs of variables (x1 and y1, x2 and y2, etc) that underlie Anscombe’s quartet, a collection of four datasets that have the same summary statistics (mean, sd, correlation etc), but have quite different data. We want to produce a dataset with columns set, x and y:\n# A tibble: 44 × 3\n   set       x     y\n   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 1        10  8.04\n 2 2        10  9.14\n 3 3        10  7.46\nThere are (at least) two ways to do this. The first is a little more intuitive, but not as efficient:\n\nFirst, we’ll create a new “index” column, so we don’t lose track of which x values map to which y values.\n\n\nanscombe &lt;- anscombe %&gt;%\n  mutate(\n    index = 1:nrow(anscombe)\n  )\n\n\nNext, use pivot_longer() on all of the columns but index. Use the default for names_to and values_to. The first few rows of your result should look like this:\n\n# A tibble: 88 × 3\n   index name  value\n   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n 1     1 x1    10   \n 2     1 x2    10   \n 3     1 x3    10  \n\nNext, separate name into variable and set. This is a little tricky, since there’s no separator character (the values of name are x1 and x2 instead of x_1 or x_2). Instead, set sep = 1, which tells R to split the column after the first character. The first few rows of your result should look like this:\n\n# A tibble: 88 × 4\n   index variable set   value\n   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;\n 1     1 x        1     10   \n 2     1 x        2     10   \n 3     1 x        3     10   \n\nFinally, use pivot_wider() with names_from variable and values_from value. Call your tidy dataset anscombe_tidy.\n\nIf all went well, you should be able to run the following two chunks to generate the summary statistics and scatterplots for Anscombe’s quartet.\n\nanscombe_tidy %&gt;%\n  group_by(set) %&gt;%\n  summarize(\n    mean_x = mean(x),\n    mean_y = mean(y),\n    sd_x = sd(x),\n    sd_y = sd(y),\n    cor = cor(x,y)\n  )\n\n\nanscombe_tidy %&gt;%\n  ggplot(aes(x = x, y = y)) + \n  geom_point() + \n  facet_wrap(~set)\n\nThe second way to do this is directly within pivot_longer():\n\nanscombe %&gt;%\n  pivot_longer(\n    -index,\n    names_to = c(\".value\", \"set\"),\n    names_pattern = \"(.)(.)\"\n  )\n\n# A tibble: 44 × 4\n   index set       x     y\n   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1     1 1        10  8.04\n 2     1 2        10  9.14\n 3     1 3        10  7.46\n 4     1 4         8  6.58\n 5     2 1         8  6.95\n 6     2 2         8  8.14\n 7     2 3         8  6.77\n 8     2 4         8  5.76\n 9     3 1        13  7.58\n10     3 2        13  8.74\n# ℹ 34 more rows\n\n\npull up the help page for pivot_longer and try to explain the new arguments."
+    "text": "Task 2\nNext, print them in the format “Wednesday: Jan 29 2025”\nHint: see ?stamp or the lubridate cheatsheet\n\n# your code here"
   },
   {
     "objectID": "portfolio/portfolio-2.html",
@@ -1129,6 +1269,13 @@
     "text": "Your turn\n\nChain the last two parts together, so that the resulting dataset contains both avg_speed and delay_category. Pipe this new dataset into ggplot() to answer the question “is there a relationship between average speed and how late a flight is delayed?”\nIf you have time, create a new graph which only contains flights to MSP.\n\n\n\n\n−+\n04:00"
   },
   {
+    "objectID": "slides/11/slides11.html#today",
+    "href": "slides/11/slides11.html#today",
+    "title": "Data Import & Dates/Times",
+    "section": "Today",
+    "text": "Today\n\nProject 1 grading/questions\nIntro to Project 2\nHW 4 due tonight\nHW 5 + check-in survey\nNew stuff!"
+  },
+  {
     "objectID": "slides/11/slides11.html#readr-functions",
     "href": "slides/11/slides11.html#readr-functions",
     "title": "Data Import & Dates/Times",
@@ -1175,28 +1322,28 @@
     "href": "slides/11/slides11.html#desserts-data",
     "title": "Data Import & Dates/Times",
     "section": "desserts data",
-    "text": "desserts data\n\nContains results from series 1-8 of The Great British Bake Off\nCase defined by series, episode and baker\n\n\n\nSource: Allison Hill and the bakeoff package"
+    "text": "desserts data\n\n\nContains results from series 1-8 of The Great British Bake Off\nCase defined by series, episode and baker\n\n\n\n\nSource: Allison Hill and the bakeoff package; compiled by Adam Loy"
   },
   {
-    "objectID": "slides/11/slides11.html#your-turn",
-    "href": "slides/11/slides11.html#your-turn",
+    "objectID": "slides/11/slides11.html#warm-up",
+    "href": "slides/11/slides11.html#warm-up",
     "title": "Data Import & Dates/Times",
-    "section": "Your turn",
-    "text": "Your turn\n\nUse read_csv() to import the desserts data set from  https://stat220-w25.github.io/data/desserts.csv\nStore the data in the desserts object"
+    "section": "Warm up",
+    "text": "Warm up\n\nUse read_csv() to import the desserts data set from  https://stat220-w25.github.io/data/desserts.csv\nStore the data in the desserts object\n\n\n\n\n−+\n04:00"
   },
   {
     "objectID": "slides/11/slides11.html#did-it-work-as-expected",
     "href": "slides/11/slides11.html#did-it-work-as-expected",
     "title": "Data Import & Dates/Times",
     "section": "Did it work as expected?",
-    "text": "Did it work as expected?\n\n\n\n\nRows: 549\nColumns: 16\n$ series                &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …\n$ episode               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, …\n$ baker                 &lt;chr&gt; \"Annetha\", \"David\", \"Edd\", \"Jasminder\", \"Jonatha…\n$ technical             &lt;chr&gt; \"2nd\", \"3rd\", \"1st\", \"N/A\", \"9th\", \"N/A\", \"8th\",…\n$ result                &lt;chr&gt; \"IN\", \"IN\", \"IN\", \"IN\", \"IN\", \"IN\", \"IN\", \"IN\", …\n$ uk_airdate            &lt;chr&gt; \"17 August 2010\", \"17 August 2010\", \"17 August 2…\n$ us_season             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …\n$ us_airdate            &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…\n$ showstopper_chocolate &lt;chr&gt; \"chocolate\", \"chocolate\", \"no chocolate\", \"no ch…\n$ showstopper_dessert   &lt;chr&gt; \"other\", \"other\", \"other\", \"other\", \"other\", \"ca…\n$ showstopper_fruit     &lt;chr&gt; \"no fruit\", \"no fruit\", \"no fruit\", \"no fruit\", …\n$ showstopper_nut       &lt;chr&gt; \"no nut\", \"no nut\", \"no nut\", \"no nut\", \"almond\"…\n$ signature_chocolate   &lt;chr&gt; \"no chocolate\", \"chocolate\", \"no chocolate\", \"no…\n$ signature_dessert     &lt;chr&gt; \"cake\", \"cake\", \"cake\", \"cake\", \"cake\", \"cake\", …\n$ signature_fruit       &lt;chr&gt; \"no fruit\", \"fruit\", \"fruit\", \"fruit\", \"fruit\", …\n$ signature_nut         &lt;chr&gt; \"no nut\", \"no nut\", \"no nut\", \"no nut\", \"no nut\"…\n\n\n\nA couple issues…\n\ntechnical is character, not numeric\nuk_airdate is character, not date"
+    "text": "Did it work as expected?\n\ndesserts &lt;- read_csv(\"https://stat220-w25.github.io/data/desserts.csv\")\n\n\n\n\n\nRows: 549\nColumns: 16\n$ series                &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …\n$ episode               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, …\n$ baker                 &lt;chr&gt; \"Annetha\", \"David\", \"Edd\", \"Jasminder\", \"Jonatha…\n$ technical             &lt;chr&gt; \"2nd\", \"3rd\", \"1st\", \"N/A\", \"9th\", \"N/A\", \"8th\",…\n$ result                &lt;chr&gt; \"IN\", \"IN\", \"IN\", \"IN\", \"IN\", \"IN\", \"IN\", \"IN\", …\n$ uk_airdate            &lt;chr&gt; \"17 August 2010\", \"17 August 2010\", \"17 August 2…\n$ us_season             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …\n$ us_airdate            &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…\n$ showstopper_chocolate &lt;chr&gt; \"chocolate\", \"chocolate\", \"no chocolate\", \"no ch…\n$ showstopper_dessert   &lt;chr&gt; \"other\", \"other\", \"other\", \"other\", \"other\", \"ca…\n$ showstopper_fruit     &lt;chr&gt; \"no fruit\", \"no fruit\", \"no fruit\", \"no fruit\", …\n$ showstopper_nut       &lt;chr&gt; \"no nut\", \"no nut\", \"no nut\", \"no nut\", \"almond\"…\n$ signature_chocolate   &lt;chr&gt; \"no chocolate\", \"chocolate\", \"no chocolate\", \"no…\n$ signature_dessert     &lt;chr&gt; \"cake\", \"cake\", \"cake\", \"cake\", \"cake\", \"cake\", …\n$ signature_fruit       &lt;chr&gt; \"no fruit\", \"fruit\", \"fruit\", \"fruit\", \"fruit\", …\n$ signature_nut         &lt;chr&gt; \"no nut\", \"no nut\", \"no nut\", \"no nut\", \"no nut\"…\n\n\n\nA couple issues…\n\ntechnical is character, not numeric\nuk_airdate is character, not date"
   },
   {
     "objectID": "slides/11/slides11.html#the-col_types-argument",
     "href": "slides/11/slides11.html#the-col_types-argument",
     "title": "Data Import & Dates/Times",
     "section": "The col_types argument",
-    "text": "The col_types argument\nBy default, looks at first 1000 rows to guess variable data types (guess_max)\n\ndesserts &lt;- read_csv(\n  \"https://stat220-w25.github.io/data/desserts.csv\",\n  col_types = list( \n    technical = col_number(), \n    uk_airdate = col_date()   \n  ) \n)"
+    "text": "The col_types argument\nBy default, looks at first 1000 rows to guess variable data types (guess_max), but we can also tell R how to read column types\n\n\ndesserts &lt;- read_csv(\n  \"https://stat220-w25.github.io/data/desserts.csv\",\n  col_types = list( \n    technical = col_number(), \n    uk_airdate = col_date()   \n  ) \n)"
   },
   {
     "objectID": "slides/11/slides11.html#looking-for-problems",
@@ -1210,14 +1357,21 @@
     "href": "slides/11/slides11.html#date-formatting-woes",
     "title": "Data Import & Dates/Times",
     "section": "Date formatting woes",
-    "text": "Date formatting woes\n\nprint(problems(desserts), n=5)\n\n# A tibble: 556 × 5\n    row   col expected        actual         file \n  &lt;int&gt; &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;\n1     2     6 date in ISO8601 17 August 2010 \"\"   \n2     3     6 date in ISO8601 17 August 2010 \"\"   \n3     4     6 date in ISO8601 17 August 2010 \"\"   \n4     5     4 a number        N/A            \"\"   \n5     5     6 date in ISO8601 17 August 2010 \"\"   \n# ℹ 551 more rows\n\n\nISO8601 format: 2020-08-17\nWhat we have: 17 August 2010"
+    "text": "Date formatting woes\n\nprint(problems(desserts), n=5)\n\n# A tibble: 556 × 5\n    row   col expected        actual         file \n  &lt;int&gt; &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;\n1     2     6 date in ISO8601 17 August 2010 \"\"   \n2     3     6 date in ISO8601 17 August 2010 \"\"   \n3     4     6 date in ISO8601 17 August 2010 \"\"   \n4     5     4 a number        N/A            \"\"   \n5     5     6 date in ISO8601 17 August 2010 \"\"   \n# ℹ 551 more rows\n\n\nISO8601 format: 2010-08-17\nWhat we have: 17 August 2010"
+  },
+  {
+    "objectID": "slides/11/slides11.html#section-1",
+    "href": "slides/11/slides11.html#section-1",
+    "title": "Data Import & Dates/Times",
+    "section": "",
+    "text": "Counting Stuff blog by Randy Au"
   },
   {
     "objectID": "slides/11/slides11.html#adding-format-instructions",
     "href": "slides/11/slides11.html#adding-format-instructions",
     "title": "Data Import & Dates/Times",
     "section": "Adding format instructions",
-    "text": "Adding format instructions\n\ndesserts &lt;- read_csv(\n  \"https://stat220-w25.github.io/data/desserts.csv\",\n  col_types = list(\n    technical = col_number(), \n    uk_airdate = col_date(format = \"%d %B %Y\")  \n  ) \n)\n\n]\n\nYear: \"%Y\" (4 digits). \"%y\" (2 digits)\nMonth: \"%m\" (2 digits), \"%b\" (abbreviated name in current locale), \"%B\" (full name in current locale).\nDay: \"%d\" (2 digits), \"%e\" (optional leading space)"
+    "text": "Adding format instructions\n\ndesserts &lt;- read_csv(\n  \"https://stat220-w25.github.io/data/desserts.csv\",\n  col_types = list(\n    technical = col_number(), \n    uk_airdate = col_date(format = \"%d %B %Y\")  \n  ) \n)\n\n\nYear: \"%Y\" (4 digits). \"%y\" (2 digits)\nMonth: \"%m\" (2 digits), \"%b\" (abbreviated name in current locale), \"%B\" (full name in current locale).\nDay: \"%d\" (2 digits), \"%e\" (optional leading space)"
   },
   {
     "objectID": "slides/11/slides11.html#looking-for-problems-1",
@@ -1241,8 +1395,8 @@
     "text": "Looking for problems\nList of potential problems parsing the file\n\n\n# A tibble: 0 × 5\n# ℹ 5 variables: row &lt;int&gt;, col &lt;int&gt;, expected &lt;chr&gt;, actual &lt;chr&gt;, file &lt;chr&gt;"
   },
   {
-    "objectID": "slides/11/slides11.html#section-1",
-    "href": "slides/11/slides11.html#section-1",
+    "objectID": "slides/11/slides11.html#section-2",
+    "href": "slides/11/slides11.html#section-2",
     "title": "Data Import & Dates/Times",
     "section": "",
     "text": "desserts\n\n# A tibble: 549 × 16\n   series episode baker     technical result uk_airdate us_season us_airdate\n    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;  &lt;date&gt;         &lt;dbl&gt; &lt;date&gt;    \n 1      1       1 Annetha           2 IN     2010-08-17        NA NA        \n 2      1       1 David             3 IN     2010-08-17        NA NA        \n 3      1       1 Edd               1 IN     2010-08-17        NA NA        \n 4      1       1 Jasminder        NA IN     2010-08-17        NA NA        \n 5      1       1 Jonathan          9 IN     2010-08-17        NA NA        \n 6      1       1 Louise           NA IN     2010-08-17        NA NA        \n 7      1       1 Miranda           8 IN     2010-08-17        NA NA        \n 8      1       1 Ruth             NA IN     2010-08-17        NA NA        \n 9      1       1 Lea              10 OUT    2010-08-17        NA NA        \n10      1       1 Mark             NA OUT    2010-08-17        NA NA        \n# ℹ 539 more rows\n# ℹ 8 more variables: showstopper_chocolate &lt;chr&gt;, showstopper_dessert &lt;chr&gt;,\n#   showstopper_fruit &lt;chr&gt;, showstopper_nut &lt;chr&gt;, signature_chocolate &lt;chr&gt;,\n#   signature_dessert &lt;chr&gt;, signature_fruit &lt;chr&gt;, signature_nut &lt;chr&gt;"
@@ -1259,18 +1413,18 @@
     "href": "slides/11/slides11.html#read_csv",
     "title": "Data Import & Dates/Times",
     "section": "?read_csv",
-    "text": "?read_csv"
+    "text": "?read_csv\n\nread_csv(file, \n         col_names = TRUE,\n         col_types = NULL,\n         locale = default_locale(),\n         na = c(\"\", \"NA\"), \n         quoted_na = TRUE,\n         quote = \"\\\"\", \n         comment = \"\",\n         trim_ws = TRUE,\n         skip = 0,\n         n_max = Inf,\n         guess_max = min(1000, n_max),\n         progress = show_progress())"
   },
   {
-    "objectID": "slides/11/slides11.html#your-turn-1",
-    "href": "slides/11/slides11.html#your-turn-1",
+    "objectID": "slides/11/slides11.html#your-turn",
+    "href": "slides/11/slides11.html#your-turn",
     "title": "Data Import & Dates/Times",
     "section": "Your turn",
-    "text": "Your turn\n\nUse the appropriate read_&lt;type&gt;() function to import the following data sets:\n\ndata-4.csv\ntricky-1.csv\ntricky2.csv\n\nIf you hit any errors/problems, be sure to explore them and identify the issue, even if you can’t “fix” it."
+    "text": "Your turn\n\nUse the appropriate read_&lt;type&gt;() function to import the following data sets:\n\ndata-4.csv\ntricky-1.csv\ntricky2.csv\n\nThe full URLs are in the 11-import.Rmd activity\nIf you hit any errors/problems, be sure to explore them and identify the issue, even if you can’t “fix” it."
   },
   {
-    "objectID": "slides/11/slides11.html#section-2",
-    "href": "slides/11/slides11.html#section-2",
+    "objectID": "slides/11/slides11.html#section-3",
+    "href": "slides/11/slides11.html#section-3",
     "title": "Data Import & Dates/Times",
     "section": "",
     "text": "Help!\n\nI already imported data and now I have dates/times as character strings or numeric vectors!"
@@ -1283,8 +1437,8 @@
     "text": "nycflights13 revisited\nRecall that the departure and arrival times were in integer format\n\n\nflights %&gt;% select(contains(\"_time\"), hour, minute)\n\n\n# A tibble: 435,352 × 7\n   dep_time sched_dep_time arr_time sched_arr_time air_time  hour minute\n      &lt;int&gt;          &lt;int&gt;    &lt;int&gt;          &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n 1        1           2038      328              3      367    20     38\n 2       18           2300      228            135      108    23      0\n 3       31           2344      500            426      190    23     44\n 4       33           2140      238           2352      108    21     40\n 5       36           2048      223           2252       80    20     48\n 6      503            500      808            815      154     5      0\n 7      520            510      948            949      192     5     10\n 8      524            530      645            710      119     5     30\n 9      537            520      926            818      258     5     20\n10      547            545      845            852      157     5     45\n# ℹ 435,342 more rows"
   },
   {
-    "objectID": "slides/11/slides11.html#section-3",
-    "href": "slides/11/slides11.html#section-3",
+    "objectID": "slides/11/slides11.html#section-4",
+    "href": "slides/11/slides11.html#section-4",
     "title": "Data Import & Dates/Times",
     "section": "",
     "text": "A class for representing clock times\nPart of the tidyverse\nNeed to load separately"
@@ -1308,7 +1462,7 @@
     "href": "slides/11/slides11.html#creating-times-with-hms-1",
     "title": "Data Import & Dates/Times",
     "section": "Creating times with hms()",
-    "text": "Creating times with hms()\nIf we don’t already have hours, minutes, seconds separately, we’ll need to parseout that information\n\nInteger timeParse + hms()\n\n\n\n\ndep_time &lt;- flights %&gt;% pull(dep_time)\nhead(dep_time)\n\n\n[1]   1  18  31  33  36 503\n\n\n\n\n\n\ndep_time_hms &lt;- hms(hours = dep_time %/% 100, minutes = dep_time %% 100)\nhead(dep_time_hms)\n\n\n00:01:00\n00:18:00\n00:31:00\n00:33:00\n00:36:00\n05:03:00"
+    "text": "Creating times with hms()\nIf we don’t already have hours, minutes, seconds separately, we’ll need to parse out that information\n\nInteger timeParse + hms()\n\n\n\n\ndep_time &lt;- flights %&gt;% pull(dep_time)\nhead(dep_time)\n\n\n[1]   1  18  31  33  36 503\n\n\n\n\n\n\ndep_time_hms &lt;- hms(hours = dep_time %/% 100, minutes = dep_time %% 100)\nhead(dep_time_hms)\n\n\n00:01:00\n00:18:00\n00:31:00\n00:33:00\n00:36:00\n05:03:00\n\n\n%/% divides first number by second number, returns the whole number (integer division)\n%% divides first number by second number, returns the remainder (modulo)"
   },
   {
     "objectID": "slides/11/slides11.html#ultramarathon-results",
@@ -1318,8 +1472,8 @@
     "text": "Ultramarathon results\n\nUltra marathon = anything longer than 26.2 miles\nThe dates and times imported as character strings!\n\n\n\n## Rows: 392\n## Columns: 11\n## $ state            &lt;chr&gt; \"Minnesota\", \"Minnesota\", \"Minnesota\", \"Minnesota\", \"…\n## $ Event            &lt;chr&gt; \"Zumbro\", \"Zumbro\", \"Zumbro\", \"Zumbro\", \"Zumbro\", \"Zu…\n## $ City             &lt;chr&gt; \"Theilman\", \"Theilman\", \"Theilman\", \"Theilman\", \"Thei…\n## $ race_url         &lt;chr&gt; \"https://calendar.ultrarunning.com/event/zumbro\", \"ht…\n## $ date             &lt;chr&gt; \"04/08/21\", \"04/11/20\", \"04/13/19\", \"04/13/18\", \"04/0…\n## $ Finishers        &lt;chr&gt; \"121\", \"Race Cancelled\", \"Race Cancelled\", \"49\", \"149…\n## $ top_result_m     &lt;chr&gt; \"5:23:55\", \"Race Cancelled\", \"Race Cancelled\", \"9:13:…\n## $ top_result_f     &lt;chr&gt; \"6:30:42\", \"Race Cancelled\", \"Race Cancelled\", \"10:15…\n## $ distance         &lt;chr&gt; \"34 Miles\", \"50 Miles\", \"50 Miles\", \"50 Miles\", \"50 M…\n## $ elevation_rating &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…\n## $ surface_rating   &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…"
   },
   {
-    "objectID": "slides/11/slides11.html#section-4",
-    "href": "slides/11/slides11.html#section-4",
+    "objectID": "slides/11/slides11.html#section-5",
+    "href": "slides/11/slides11.html#section-5",
     "title": "Data Import & Dates/Times",
     "section": "",
     "text": "Functions for working with dates and time spans\nPart of the tidyverse\nNeed to load separately"
@@ -1329,14 +1483,14 @@
     "href": "slides/11/slides11.html#parsing-dates",
     "title": "Data Import & Dates/Times",
     "section": "Parsing dates",
-    "text": "Parsing dates\n{lubridate} functions are intuitively named\n\nmdy(\"01/25/23\")\n\n[1] \"2023-01-25\"\n\n\n\nymd(\"2023-01-25\")\n\n[1] \"2023-01-25\"\n\n\n\nymd_hm(\"2023-01-25 08:30\")\n\n[1] \"2023-01-25 08:30:00 UTC\""
+    "text": "Parsing dates\n{lubridate} functions are intuitively named\n\nlibrary(lubridate)\nmdy(\"01/29/25\")\n\n[1] \"2025-01-29\"\n\n\n\ndmy(\"29-01-2025\")\n\n[1] \"2025-01-29\"\n\n\n\nymd(\"2025-01-29\")\n\n[1] \"2025-01-29\"\n\n\n\nymd_hm(\"2025-01-29 09:55\")\n\n[1] \"2025-01-29 09:55:00 UTC\""
   },
   {
     "objectID": "slides/11/slides11.html#ultramarathon-example",
     "href": "slides/11/slides11.html#ultramarathon-example",
     "title": "Data Import & Dates/Times",
     "section": "Ultramarathon example",
-    "text": "Ultramarathon example\nDates are in the form 04/08/21, so use mdy() to parse\n\n\nRows: 392\nColumns: 11\n$ state            &lt;chr&gt; \"Minnesota\", \"Minnesota\", \"Minnesota\", \"Minnesota\", \"…\n$ Event            &lt;chr&gt; \"Zumbro\", \"Zumbro\", \"Zumbro\", \"Zumbro\", \"Zumbro\", \"Zu…\n$ City             &lt;chr&gt; \"Theilman\", \"Theilman\", \"Theilman\", \"Theilman\", \"Thei…\n$ race_url         &lt;chr&gt; \"https://calendar.ultrarunning.com/event/zumbro\", \"ht…\n$ date             &lt;date&gt; 2021-04-08, 2020-04-11, 2019-04-13, 2018-04-13, 2017…\n$ Finishers        &lt;chr&gt; \"121\", \"Race Cancelled\", \"Race Cancelled\", \"49\", \"149…\n$ top_result_m     &lt;chr&gt; \"5:23:55\", \"Race Cancelled\", \"Race Cancelled\", \"9:13:…\n$ top_result_f     &lt;chr&gt; \"6:30:42\", \"Race Cancelled\", \"Race Cancelled\", \"10:15…\n$ distance         &lt;chr&gt; \"34 Miles\", \"50 Miles\", \"50 Miles\", \"50 Miles\", \"50 M…\n$ elevation_rating &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…\n$ surface_rating   &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…"
+    "text": "Ultramarathon example\nDates are in the form 04/08/21, so use mdy() to parse\n\nmn_ultras &lt;- mn_ultras %&gt;% mutate(date = mdy(date))\nglimpse(mn_ultras)\n\nRows: 392\nColumns: 11\n$ state            &lt;chr&gt; \"Minnesota\", \"Minnesota\", \"Minnesota\", \"Minnesota\", \"…\n$ Event            &lt;chr&gt; \"Zumbro\", \"Zumbro\", \"Zumbro\", \"Zumbro\", \"Zumbro\", \"Zu…\n$ City             &lt;chr&gt; \"Theilman\", \"Theilman\", \"Theilman\", \"Theilman\", \"Thei…\n$ race_url         &lt;chr&gt; \"https://calendar.ultrarunning.com/event/zumbro\", \"ht…\n$ date             &lt;date&gt; 2021-04-08, 2020-04-11, 2019-04-13, 2018-04-13, 2017…\n$ Finishers        &lt;chr&gt; \"121\", \"Race Cancelled\", \"Race Cancelled\", \"49\", \"149…\n$ top_result_m     &lt;chr&gt; \"5:23:55\", \"Race Cancelled\", \"Race Cancelled\", \"9:13:…\n$ top_result_f     &lt;chr&gt; \"6:30:42\", \"Race Cancelled\", \"Race Cancelled\", \"10:15…\n$ distance         &lt;chr&gt; \"34 Miles\", \"50 Miles\", \"50 Miles\", \"50 Miles\", \"50 M…\n$ elevation_rating &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…\n$ surface_rating   &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…"
   },
   {
     "objectID": "slides/11/slides11.html#extract-info-from-a-datetime",
@@ -1350,35 +1504,42 @@
     "href": "slides/11/slides11.html#extract-info-from-a-datetime-1",
     "title": "Data Import & Dates/Times",
     "section": "Extract info from a date/time",
-    "text": "Extract info from a date/time\nThe most recent race in the data set was on 2022-01-31\n\nmonth()day()wday()\n\n\nWhat month was that in?\n\n## [1] Jan\n## 12 Levels: Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; ... &lt; Dec\n\n\n\nWhat day of the month was it on?\n\n## [1] 31\n\n\n\nWhat day of the week was it on?\n\n## [1] Mon\n## Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat"
+    "text": "Extract info from a date/time\nThe most recent race in the data set was on 2022-01-31\n\nmonth()day()wday()\n\n\nWhat month was that in?\n\nmonth(\"2022-01-31\", label = TRUE)\n\n[1] Jan\n12 Levels: Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; ... &lt; Dec\n\n\n\n\nWhat day of the month was it on?\n\nday(\"2022-01-31\")\n\n[1] 31\n\n\n\n\nWhat day of the week was it on?\n\nwday(\"2022-01-31\", label = TRUE)\n\n[1] Mon\nLevels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat"
   },
   {
     "objectID": "slides/11/slides11.html#measuring-time",
     "href": "slides/11/slides11.html#measuring-time",
     "title": "Data Import & Dates/Times",
     "section": "Measuring time",
-    "text": "Measuring time\nHow long ago was the last race?\n\nrace &lt;- ymd(\"2022-01-31\")\ntoday() - race\n\nTime difference of 1093 days\n\n\n\nDifferences in date/time objects are difftime objects\ndifftimes use inconsistent units (sometimes weeks, days, hours, minutes, or seconds)"
+    "text": "Measuring time\nHow long ago was the last race?\n\nrace &lt;- ymd(\"2022-01-31\")\ntoday() - race\n\nTime difference of 1094 days\n\n\n\nDifferences in date/time objects are difftime objects\ndifftimes use inconsistent units (sometimes weeks, days, hours, minutes, or seconds)"
   },
   {
     "objectID": "slides/11/slides11.html#measuring-time-durations",
     "href": "slides/11/slides11.html#measuring-time-durations",
     "title": "Data Import & Dates/Times",
     "section": "Measuring time: durations",
-    "text": "Measuring time: durations\nA time span that is always measured in seconds\n\nas.duration(today() - race)\n\n[1] \"94435200s (~2.99 years)\"\n\n\nPlus, a better display"
+    "text": "Measuring time: durations\nA time span that is always measured in seconds\n\nas.duration(today() - race)\n\n[1] \"94521600s (~3 years)\"\n\n\nPlus, a better display"
   },
   {
     "objectID": "slides/11/slides11.html#measuring-time-periods",
     "href": "slides/11/slides11.html#measuring-time-periods",
     "title": "Data Import & Dates/Times",
     "section": "Measuring time: periods",
-    "text": "Measuring time: periods\nTo do math with dates add and subtract periods\n\nymd_hms(\"2023-03-10 08:30:00\", tz = \"America/Chicago\") + days(1)\n\n[1] \"2023-03-11 08:30:00 CST\"\n\n\n\nymd_hms(\"2023-03-11 08:30:00\", tz = \"America/Chicago\") + days(1)\n\n[1] \"2023-03-12 08:30:00 CDT\"\n\n\nPeriods are measured in clock units"
+    "text": "Measuring time: periods\nTo do math with dates add and subtract periods\n\nymd_hms(\"2025-01-29 09:55:00\", tz = \"America/Chicago\") + days(1)\n\n[1] \"2025-01-30 09:55:00 CST\"\n\n\n\nymd_hms(\"2023-02-28 09:55:00\", tz = \"America/Chicago\") + days(1)\n\n[1] \"2023-03-01 09:55:00 CST\"\n\n\nPeriods are measured in clock units"
   },
   {
-    "objectID": "slides/11/slides11.html#measuring-time-durations-1",
-    "href": "slides/11/slides11.html#measuring-time-durations-1",
+    "objectID": "slides/11/slides11.html#try-it",
+    "href": "slides/11/slides11.html#try-it",
     "title": "Data Import & Dates/Times",
-    "section": "Measuring time: durations",
-    "text": "Measuring time: durations\nIf absolute time matters, use seconds or a duration\n\nymd_hms(\"2023-03-10 08:30:00\", tz = \"America/Chicago\") + ddays(1)\n\n[1] \"2023-03-11 08:30:00 CST\"\n\n\n\nymd_hms(\"2023-03-11 08:30:00\", tz = \"America/Chicago\") + ddays(1)\n\n[1] \"2023-03-12 09:30:00 CDT\""
+    "section": "Try it",
+    "text": "Try it\n\nYour task is create a 1-columnn tibble containing all dates that our class meets this term using lubridate functions. You should only specify the first day of class (1/6/2025)\n\n\n\n\n−+\n03:00"
+  },
+  {
+    "objectID": "slides/11/slides11.html#try-it-2",
+    "href": "slides/11/slides11.html#try-it-2",
+    "title": "Data Import & Dates/Times",
+    "section": "Try it 2",
+    "text": "Try it 2\n\nNow, create a second column where the dates have been formatted. (Hint: see ?stamp)\nYour dates should have the form “Wednesday: Jan 29 2025”\n\n\n\n\n−+\n05:00"
   },
   {
     "objectID": "slides/02/slides02.html#plan-for-today",
@@ -2794,186 +2955,109 @@
     ]
   },
   {
-    "objectID": "activities/10-combining.html",
-    "href": "activities/10-combining.html",
+    "objectID": "activities/09-tidyr.html",
+    "href": "activities/09-tidyr.html",
+    "title": "\ntidyr: Reshaping Data",
+    "section": "",
+    "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
+  },
+  {
+    "objectID": "activities/09-tidyr.html#task-1",
+    "href": "activities/09-tidyr.html#task-1",
+    "title": "\ntidyr: Reshaping Data",
+    "section": "Task 1",
+    "text": "Task 1\n\nTidy this data set by\n\nSelecting the series and e*_7day columns\nPivoting the data to add a column for episode and a column for rating (we’ll clean up the episode column later)\n\n\n\n# include your code here"
+  },
+  {
+    "objectID": "activities/09-tidyr.html#task-2",
+    "href": "activities/09-tidyr.html#task-2",
+    "title": "\ntidyr: Reshaping Data",
+    "section": "Task 2",
+    "text": "Task 2\n\n\nClean the episode and period column\nMake a line plot with episode on the x-axis, rating on the y-axis, colored by series. (You will also need to map the group aesthetic to series)"
+  },
+  {
+    "objectID": "activities/09-tidyr.html#relig_income",
+    "href": "activities/09-tidyr.html#relig_income",
+    "title": "\ntidyr: Reshaping Data",
+    "section": "relig_income",
+    "text": "relig_income\nThe relig_income dataset in the {tidyr} package stores counts based on a survey which (among other things) asked people about their religion and annual income:\n\nrelig_income\n\n# A tibble: 18 × 11\n   religion `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k`\n   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n 1 Agnostic      27        34        60        81        76       137        122\n 2 Atheist       12        27        37        52        35        70         73\n 3 Buddhist      27        21        30        34        33        58         62\n 4 Catholic     418       617       732       670       638      1116        949\n 5 Don’t k…      15        14        15        11        10        35         21\n 6 Evangel…     575       869      1064       982       881      1486        949\n 7 Hindu          1         9         7         9        11        34         47\n 8 Histori…     228       244       236       238       197       223        131\n 9 Jehovah…      20        27        24        24        21        30         15\n10 Jewish        19        19        25        25        30        95         69\n11 Mainlin…     289       495       619       655       651      1107        939\n12 Mormon        29        40        48        51        56       112         85\n13 Muslim         6         7         9        10         9        23         16\n14 Orthodox      13        17        23        32        32        47         38\n15 Other C…       9         7        11        13        13        14         18\n16 Other F…      20        33        40        46        49        63         46\n17 Other W…       5         2         3         4         2         7          3\n18 Unaffil…     217       299       374       365       341       528        407\n# ℹ 3 more variables: `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;,\n#   `Don't know/refused` &lt;dbl&gt;\n\n\nUse pivot_longer() to tidy this dataset."
+  },
+  {
+    "objectID": "activities/09-tidyr.html#anscombe",
+    "href": "activities/09-tidyr.html#anscombe",
+    "title": "\ntidyr: Reshaping Data",
+    "section": "anscombe",
+    "text": "anscombe\nAnscombe’s quartet is a built-in dataset in R.\n\nanscombe\n\n   x1 x2 x3 x4    y1   y2    y3    y4\n1  10 10 10  8  8.04 9.14  7.46  6.58\n2   8  8  8  8  6.95 8.14  6.77  5.76\n3  13 13 13  8  7.58 8.74 12.74  7.71\n4   9  9  9  8  8.81 8.77  7.11  8.84\n5  11 11 11  8  8.33 9.26  7.81  8.47\n6  14 14 14  8  9.96 8.10  8.84  7.04\n7   6  6  6  8  7.24 6.13  6.08  5.25\n8   4  4  4 19  4.26 3.10  5.39 12.50\n9  12 12 12  8 10.84 9.13  8.15  5.56\n10  7  7  7  8  4.82 7.26  6.42  7.91\n11  5  5  5  8  5.68 4.74  5.73  6.89\n\n\nThis dataset contains four pairs of variables (x1 and y1, x2 and y2, etc) that underlie Anscombe’s quartet, a collection of four datasets that have the same summary statistics (mean, sd, correlation etc), but have quite different data. We want to produce a dataset with columns set, x and y:\n# A tibble: 44 × 3\n   set       x     y\n   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 1        10  8.04\n 2 2        10  9.14\n 3 3        10  7.46\nThere are (at least) two ways to do this. The first is a little more intuitive, but not as efficient:\n\nFirst, we’ll create a new “index” column, so we don’t lose track of which x values map to which y values.\n\n\nanscombe &lt;- anscombe %&gt;%\n  mutate(\n    index = 1:nrow(anscombe)\n  )\n\n\nNext, use pivot_longer() on all of the columns but index. Use the default for names_to and values_to. The first few rows of your result should look like this:\n\n# A tibble: 88 × 3\n   index name  value\n   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n 1     1 x1    10   \n 2     1 x2    10   \n 3     1 x3    10  \n\nNext, separate name into variable and set. This is a little tricky, since there’s no separator character (the values of name are x1 and x2 instead of x_1 or x_2). Instead, set sep = 1, which tells R to split the column after the first character. The first few rows of your result should look like this:\n\n# A tibble: 88 × 4\n   index variable set   value\n   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;\n 1     1 x        1     10   \n 2     1 x        2     10   \n 3     1 x        3     10   \n\nFinally, use pivot_wider() with names_from variable and values_from value. Call your tidy dataset anscombe_tidy.\n\nIf all went well, you should be able to run the following two chunks to generate the summary statistics and scatterplots for Anscombe’s quartet.\n\nanscombe_tidy %&gt;%\n  group_by(set) %&gt;%\n  summarize(\n    mean_x = mean(x),\n    mean_y = mean(y),\n    sd_x = sd(x),\n    sd_y = sd(y),\n    cor = cor(x,y)\n  )\n\n\nanscombe_tidy %&gt;%\n  ggplot(aes(x = x, y = y)) + \n  geom_point() + \n  facet_wrap(~set)\n\nThe second way to do this is directly within pivot_longer():\n\nanscombe %&gt;%\n  pivot_longer(\n    -index,\n    names_to = c(\".value\", \"set\"),\n    names_pattern = \"(.)(.)\"\n  )\n\n# A tibble: 44 × 4\n   index set       x     y\n   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1     1 1        10  8.04\n 2     1 2        10  9.14\n 3     1 3        10  7.46\n 4     1 4         8  6.58\n 5     2 1         8  6.95\n 6     2 2         8  8.14\n 7     2 3         8  6.77\n 8     2 4         8  5.76\n 9     3 1        13  7.58\n10     3 2        13  8.74\n# ℹ 34 more rows\n\n\npull up the help page for pivot_longer and try to explain the new arguments."
+  },
+  {
+    "objectID": "activities/05-maps.html",
+    "href": "activities/05-maps.html",
+    "title": "Maps",
+    "section": "",
+    "text": "states &lt;- map_data(\"state\")\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")\n\n\n\n\n\n\n\n\nEdit the code so that each state is a different color\n\nstates &lt;- map_data(\"state\")\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")"
+  },
+  {
+    "objectID": "activities/05-maps.html#your-turn",
+    "href": "activities/05-maps.html#your-turn",
+    "title": "Maps",
+    "section": "",
+    "text": "Edit the code so that each state is a different color\n\nstates &lt;- map_data(\"state\")\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")"
+  },
+  {
+    "objectID": "activities/10-combining-solutions.html",
+    "href": "activities/10-combining-solutions.html",
     "title": "\nbind_ and _join: Combining Data",
     "section": "",
     "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
   },
   {
-    "objectID": "activities/10-combining.html#example-1-star-wars-characters",
-    "href": "activities/10-combining.html#example-1-star-wars-characters",
+    "objectID": "activities/10-combining-solutions.html#task",
+    "href": "activities/10-combining-solutions.html#task",
     "title": "\nbind_ and _join: Combining Data",
-    "section": "Example 1: Star Wars Characters",
-    "text": "Example 1: Star Wars Characters\nDataset 1:\n\nEach row in the dataset corresponds to a star wars character\nThe columns include their name, height, mass, homeworld, species, and the first_film they appeared in\n\n\nstarwars_characters\n\n# A tibble: 87 × 6\n   name               height  mass homeworld species first_film\n   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     \n 1 Luke Skywalker        172    77 Tatooine  Human   A New Hope\n 2 C-3PO                 167    75 Tatooine  Droid   A New Hope\n 3 R2-D2                  96    32 Naboo     Droid   A New Hope\n 4 Darth Vader           202   136 Tatooine  Human   A New Hope\n 5 Leia Organa           150    49 Alderaan  Human   A New Hope\n 6 Owen Lars             178   120 Tatooine  Human   A New Hope\n 7 Beru Whitesun Lars    165    75 Tatooine  Human   A New Hope\n 8 R5-D4                  97    32 Tatooine  Droid   A New Hope\n 9 Biggs Darklighter     183    84 Tatooine  Human   A New Hope\n10 Obi-Wan Kenobi        182    77 Stewjon   Human   A New Hope\n# ℹ 77 more rows\n\n\nDataset 2:\nThe dataset is formatted the same, but includes two characters that were first introduced in *The Last Jedi, a Star Wars movie that came out after the first datset was released.\n\nstarwars_lastjedi\n\n# A tibble: 2 × 6\n  name         height mass  homeworld species first_film   \n  &lt;chr&gt;        &lt;lgl&gt;  &lt;lgl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;        \n1 Rose Tico    NA     NA    Otomok    Human   The Last Jedi\n2 Amilyn Holdo NA     NA    &lt;NA&gt;      Human   The Last Jedi\n\n\nHow should these datasets be combined?"
+    "section": "Task",
+    "text": "Task\n\nmessy_ratings2b &lt;- read_csv(here(here(), \"data/messy_ratings2_9_14.csv\"))\n\nCombine with bind_rows()\n\n\nmessy_ratings2 %&gt;%\n  bind_rows(messy_ratings2b)\n\n# A tibble: 14 × 21\n   series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day\n    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;\n 1      1    2.24    NA       3       NA       3       NA       2.6     NA   \n 2      2    3.1     NA       3.53    NA       3.82    NA       3.6     NA   \n 3      3    3.85    NA       4.6     NA       4.53    NA       4.71    NA   \n 4      4    6.6     NA       6.65    NA       7.17    NA       6.82    NA   \n 5      5    8.51    NA       8.79    NA       9.28    NA      10.2     NA   \n 6      6   11.6     11.7    11.6     11.8    12.0     NA      12.4     12.7 \n 7      7   13.6     13.9    13.4     13.7    13.0     13.4    13.3     13.9 \n 8      8    9.46     9.72    9.23     9.53    8.68     9.06    8.55     8.87\n 9      9    9.55     9.92    9.31     9.76    8.91     9.35    8.88     9.41\n10     10    9.62    10.0     9.38     9.8     8.94     9.42    8.96     9.49\n11     11   11.2     11.8    10.8     11.4    10.7     11.2    10.6     11.2 \n12     12    9.57    10.2     8.98     9.64    8.69     9.39    8.75     9.13\n13     13    8.3      1       7.6      1       7.35     1       7.76     1   \n14     14    7.84     1       7.54     1       7.28     1       7.12     1   \n# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,\n#   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,\n#   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,\n#   e10_28day &lt;dbl&gt;\n\n\nCombine with join()\n\nFirst, create tidy_ratings2b\n\ntidy_ratings2b &lt;- messy_ratings2b %&gt;%\n  select(series, contains(\"7day\")) %&gt;%\n  pivot_longer(-series, names_to = \"episode\", values_to = \"viewers\") %&gt;%\n  separate(episode, into = c(\"episode\", \"period\")) %&gt;%\n  mutate(\n    episode = parse_number(episode),\n    period = parse_number(period)\n  )\n\nWhy doesn’t left_join() work?\n\ntidy_ratings2 %&gt;%\n  left_join(tidy_ratings2b)\n\n# A tibble: 80 × 4\n   series episode period viewers\n    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;\n 1      1       1      7    2.24\n 2      1       2      7    3   \n 3      1       3      7    3   \n 4      1       4      7    2.6 \n 5      1       5      7    3.03\n 6      1       6      7    2.75\n 7      1       7      7   NA   \n 8      1       8      7   NA   \n 9      1       9      7   NA   \n10      1      10      7   NA   \n# ℹ 70 more rows\n\n\nWhich _join do we use?\n\ntidy_ratings2 %&gt;%\n  full_join(tidy_ratings2b)\n\n# A tibble: 140 × 4\n   series episode period viewers\n    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;\n 1      1       1      7    2.24\n 2      1       2      7    3   \n 3      1       3      7    3   \n 4      1       4      7    2.6 \n 5      1       5      7    3.03\n 6      1       6      7    2.75\n 7      1       7      7   NA   \n 8      1       8      7   NA   \n 9      1       9      7   NA   \n10      1      10      7   NA   \n# ℹ 130 more rows\n\n\nCombine with bind_cols\n\nWhy doesn’t this work?\n\nseasoncols_ratings2 = tidy_ratings2 %&gt;%\n  pivot_wider(names_from = series, \n              values_from = viewers, \n              names_prefix = \"s\")\n\nseasoncols_ratings2b = tidy_ratings2b %&gt;%\n  pivot_wider(names_from = series, values_from = viewers)\n\nseasoncols_ratings2 %&gt;%\n  bind_cols(seasoncols_ratings2b)\n\n# A tibble: 10 × 18\n   episode...1 period...2    s1    s2    s3    s4    s5    s6    s7    s8\n         &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1           1          7  2.24  3.1   3.85  6.6   8.51  11.6  13.6  9.46\n 2           2          7  3     3.53  4.6   6.65  8.79  11.6  13.4  9.23\n 3           3          7  3     3.82  4.53  7.17  9.28  12.0  13.0  8.68\n 4           4          7  2.6   3.6   4.71  6.82 10.2   12.4  13.3  8.55\n 5           5          7  3.03  3.83  4.61  6.95  9.95  12.4  13.1  8.61\n 6           6          7  2.75  4.25  4.82  7.32 10.1   12    13.1  8.61\n 7           7          7 NA     4.42  5.1   7.76 10.3   12.4  13.4  9.01\n 8           8          7 NA     5.06  5.35  7.41  9.02  11.1  13.3  8.95\n 9           9          7 NA    NA     5.7   7.41 10.7   12.6  13.4  9.03\n10          10          7 NA    NA     6.74  9.45 13.5   15.0  15.9 10.0 \n# ℹ 8 more variables: episode...11 &lt;dbl&gt;, period...12 &lt;dbl&gt;, `9` &lt;dbl&gt;,\n#   `10` &lt;dbl&gt;, `11` &lt;dbl&gt;, `12` &lt;dbl&gt;, `13` &lt;dbl&gt;, `14` &lt;dbl&gt;\n\n\nSolve it by removing the episode/period\n\nseasoncols_ratings2b = tidy_ratings2b %&gt;%\n  pivot_wider(names_from = series, \n              values_from = viewers, \n              names_prefix = \"s\") %&gt;%\n  select(-c(episode, period))\n\nseasoncols_ratings2 %&gt;%\n  bind_cols(seasoncols_ratings2b)\n\n# A tibble: 10 × 16\n   episode period    s1    s2    s3    s4    s5    s6    s7    s8    s9   s10\n     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1       1      7  2.24  3.1   3.85  6.6   8.51  11.6  13.6  9.46  9.55  9.62\n 2       2      7  3     3.53  4.6   6.65  8.79  11.6  13.4  9.23  9.31  9.38\n 3       3      7  3     3.82  4.53  7.17  9.28  12.0  13.0  8.68  8.91  8.94\n 4       4      7  2.6   3.6   4.71  6.82 10.2   12.4  13.3  8.55  8.88  8.96\n 5       5      7  3.03  3.83  4.61  6.95  9.95  12.4  13.1  8.61  8.67  9.26\n 6       6      7  2.75  4.25  4.82  7.32 10.1   12    13.1  8.61  8.91  8.7 \n 7       7      7 NA     4.42  5.1   7.76 10.3   12.4  13.4  9.01  9.22  8.98\n 8       8      7 NA     5.06  5.35  7.41  9.02  11.1  13.3  8.95  9.69  9.19\n 9       9      7 NA    NA     5.7   7.41 10.7   12.6  13.4  9.03  9.5   9.34\n10      10      7 NA    NA     6.74  9.45 13.5   15.0  15.9 10.0  10.3  10.0 \n# ℹ 4 more variables: s11 &lt;dbl&gt;, s12 &lt;dbl&gt;, s13 &lt;dbl&gt;, s14 &lt;dbl&gt;\n\n\nStop here and let Amanda know you’ve finished"
   },
   {
-    "objectID": "activities/10-combining.html#example-2-stats-sections",
-    "href": "activities/10-combining.html#example-2-stats-sections",
-    "title": "\nbind_ and _join: Combining Data",
-    "section": "Example 2: Stats Sections",
-    "text": "Example 2: Stats Sections\nDataset 1:\nThis dataset includes the number of sections of stats courses offered in Fall 2024 and Winter 2025 terms.\n\nstats_sections_fw\n\n# A tibble: 8 × 3\n  class    fall winter\n  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;\n1 stat120     3      3\n2 stat220     1      1\n3 stat230     1      1\n4 stat250     0      1\n5 stat270     1      0\n6 stat285     1      1\n7 stat320     0      0\n8 stat330     0      1\n\n\nDataset 2:\nThis dataset includes the number of sections of stats courses offered in the Spring 2025 term.\n\nstats_sections_s\n\n# A tibble: 8 × 1\n  spring\n   &lt;dbl&gt;\n1      4\n2      1\n3      1\n4      1\n5      0\n6      1\n7      1\n8      0\n\n\nHow should these datasets be combined?"
-  },
-  {
-    "objectID": "activities/10-combining.html#example-3-survivor-castaways",
-    "href": "activities/10-combining.html#example-3-survivor-castaways",
-    "title": "\nbind_ and _join: Combining Data",
-    "section": "Example 3: Survivor castaways",
-    "text": "Example 3: Survivor castaways\nDataset 1:\n\nThis dataset includes information about each castaway’s performance in a given season of Survivor (US seasons)\nIt includes a castaway ID, first name, season name and number, and the results for that castaway in that season (their overall place, whether they made the jury, and whether they were a finalist)\n\n\nus_castaway_results\n\n# A tibble: 870 × 7\n   castaway_id castaway season_name      season place jury  finalist\n   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;   \n 1 US0001      Sonja    Survivor: Borneo      1    16 FALSE FALSE   \n 2 US0002      B.B.     Survivor: Borneo      1    15 FALSE FALSE   \n 3 US0003      Stacey   Survivor: Borneo      1    14 FALSE FALSE   \n 4 US0004      Ramona   Survivor: Borneo      1    13 FALSE FALSE   \n 5 US0005      Dirk     Survivor: Borneo      1    12 FALSE FALSE   \n 6 US0006      Joel     Survivor: Borneo      1    11 FALSE FALSE   \n 7 US0007      Gretchen Survivor: Borneo      1    10 FALSE FALSE   \n 8 US0008      Greg     Survivor: Borneo      1     9 TRUE  FALSE   \n 9 US0009      Jenna    Survivor: Borneo      1     8 TRUE  FALSE   \n10 US0010      Gervase  Survivor: Borneo      1     7 TRUE  FALSE   \n# ℹ 860 more rows\n\n\nDataset 2:\n\nThis dataset includes information about each castaway who has appeared on Survivor (including non-US seasons)\nIt includes a castaway ID, their full name, date of birth, gender and occupation as presented in the show, and their Myers-Briggs personality type.\n\n\ncast_details\n\n# A tibble: 1,118 × 6\n   castaway_id full_name        date_of_birth gender occupation personality_type\n   &lt;chr&gt;       &lt;chr&gt;            &lt;date&gt;        &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           \n 1 US0014      Rudy Boesch      1928-01-20    Male   Retired N… ISTJ            \n 2 US0002      B.B. Andersen    1936-01-18    Male   Real Esta… ESTJ            \n 3 US0001      Sonja Christoph… 1937-01-28    Female Musician   ENFP            \n 4 US0075      Jake Billingsley 1941-08-21    Male   Land Brok… ISFJ            \n 5 US0151      Jim Lynch        1942-01-07    Male   Retired F… ISTJ            \n 6 US0474      Joseph Del Campo 1943-07-04    Male   Former FB… ISTJ            \n 7 US0304      Jimmy Johnson    1943-07-16    Male   Former NF… ESFJ            \n 8 US0047      Kim Johnson      1944-09-18    Female Retired T… ISFJ            \n 9 US0128      Scout Cloud Lee  1944-11-08    Female Rancher    INFJ            \n10 US0061      Paschal English  1945-03-05    Male   Judge      ISFJ            \n# ℹ 1,108 more rows\n\n\nWe are interested in exploring the relationship between overall place on a Survivor season and personality type. How should these datasets be combined?\nStop here"
-  },
-  {
-    "objectID": "activities/10-combining.html#task-line-plot",
-    "href": "activities/10-combining.html#task-line-plot",
-    "title": "\nbind_ and _join: Combining Data",
-    "section": "Task: line plot",
-    "text": "Task: line plot\nFinish the code to make a line plot of viewers against episode, colored and grouped by series. (remember to remove #| eval: false)\n\ntidy_ratings2 %&gt;%\n  ggplot(aes(x = _____, y = _____, col = _____, group = _____)) +\n  geom_line() + \n  scale_color_viridis_c(option = \"plasma\", end = .8)"
-  },
-  {
-    "objectID": "activities/10-combining.html#task-add-series-9-14-to-the-dataset",
-    "href": "activities/10-combining.html#task-add-series-9-14-to-the-dataset",
-    "title": "\nbind_ and _join: Combining Data",
-    "section": "Task: Add series 9-14 to the dataset",
-    "text": "Task: Add series 9-14 to the dataset\nThe code chunk below loads the new dataset\n\nmessy_ratings2b &lt;- read_csv(\"https://stat220-w25.github.io/data/messy_ratings2_9_14.csv\")\nmessy_ratings2b\n\n# A tibble: 6 × 21\n  series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day\n   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;\n1      9    9.55     9.92    9.31     9.76    8.91     9.35    8.88     9.41\n2     10    9.62    10.0     9.38     9.8     8.94     9.42    8.96     9.49\n3     11   11.2     11.8    10.8     11.4    10.7     11.2    10.6     11.2 \n4     12    9.57    10.2     8.98     9.64    8.69     9.39    8.75     9.13\n5     13    8.3      1       7.6      1       7.35     1       7.76     1   \n6     14    7.84     1       7.54     1       7.28     1       7.12     1   \n# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,\n#   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,\n#   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,\n#   e10_28day &lt;dbl&gt;\n\n\nCombine with bind_rows()\n\nCombine the two messy datasets by using bind_rows(). Be sure to look at your resulting dataset and make sure it has the right format\n\n# your code here\n\nCombine with join()\n\nWe’ll practice joining with the tidy versions of the data. First, create tidy_ratings2b using the new dataset. Follow the same steps as what was used to create tidy_ratings2\n\n# your code here\n\nOnce you’re satisfied, that the two tidy datasets look similar enough to combine, remove #| eval: false from the following code chunk and run it. Did it work? Why or why not?\n\ntidy_ratings = tidy_ratings2 %&gt;%\n  left_join(tidy_ratings2b)\n\nUse the correction _join function here. Save your dataset to the tidy_ratings object.\n\n# your code here\n\nCombine with bind_cols\n\nTo join the two datasets using bind_cols, you’ll first have to un-tidy your tidy datasets, so that each episode number is in a row and each series number is in a column. After using bind_cols() the first few rows of your final dataset should look like this:\n# A tibble: 10 × 16\n   episode period    s1    s2    s3    s4    s5    s6    s7    s8    s9   s10   s11   s12   s13   s14\n     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1       1      7  2.24  3.1   3.85  6.6   8.51  11.6  13.6  9.46  9.55  9.62  11.2  9.57  8.3   7.84\n 2       2      7  3     3.53  4.6   6.65  8.79  11.6  13.4  9.23  9.31  9.38  10.8  8.98  7.6   7.54\n 3       3      7  3     3.82  4.53  7.17  9.28  12.0  13.0  8.68  8.91  8.94  10.7  8.69  7.35  7.28\nStop here and let Amanda know you’ve finished"
-  },
-  {
-    "objectID": "activities/10-combining.html#footnotes",
-    "href": "activities/10-combining.html#footnotes",
-    "title": "\nbind_ and _join: Combining Data",
-    "section": "Footnotes",
-    "text": "Footnotes\n\nTalk it over: does everybody remember what makes a dataset “tidy”?↩︎"
-  },
-  {
-    "objectID": "activities/07-dplyr1-sols.html",
-    "href": "activities/07-dplyr1-sols.html",
-    "title": "\ndplyr 1: Verbs",
+    "objectID": "activities/04-customizing-plots.html",
+    "href": "activities/04-customizing-plots.html",
+    "title": "Customizing plots",
     "section": "",
-    "text": "Identify the verb (function) that does the following:\n\nPicks rows by their values\nReorders the rows\nPicks variables by their names\nCreates new variables with functions of existing variables"
+    "text": "Note: This code reads the same dataset in that we used last time and then creates two new columns based on an old one. Make sure to run this chunk before trying to make your graph!\n\nseason_summary = readr::read_csv(\"https://math.carleton.edu/aluby/stat220/survivor_season_summary.csv\") |&gt;\n  separate(timeslot, into = c(\"day_of_week\", \"time\"))\n\nRows: 47 Columns: 30\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (13): version, version_season, season_name, location, country, tribe_se...\ndbl  (13): season, n_cast, n_tribes, n_finalists, n_jury, viewers_reunion, v...\ndate  (4): premiered, ended, filming_started, filming_ended\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nWarning: Expected 2 pieces. Additional pieces discarded in 42 rows [1, 2, 3, 4, 5, 6, 7,\n8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...]."
   },
   {
-    "objectID": "activities/07-dplyr1-sols.html#part-1",
-    "href": "activities/07-dplyr1-sols.html#part-1",
-    "title": "\ndplyr 1: Verbs",
-    "section": "Part 1",
-    "text": "Part 1\n\nFind all flights that had an arrival delay of two or more hours.\nFind all flights to MSP\nFind all flights that arrived more than two hours late, but left less than one hour late\n(if time) Find all flights that were delayed by at least an hour, but made up over 30 minutes in flight\n\n\nfilter(flights, dep_delay &gt;= 120)\n\n# A tibble: 15,367 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1        1           2038       203      328              3\n 2  2023     1     1       33           2140       173      238           2352\n 3  2023     1     1       36           2048       228      223           2252\n 4  2023     1     1      831            600       151     1044            838\n 5  2023     1     1      925            700       145     1214           1005\n 6  2023     1     1     1000            700       180     1322           1019\n 7  2023     1     1     1017            817       120     1454           1311\n 8  2023     1     1     1056            700       236     1345           1027\n 9  2023     1     1     1109            735       214     1417           1048\n10  2023     1     1     1110            829       161     1412           1211\n# ℹ 15,357 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\nfilter(flights, dest == \"MSP\")\n\n# A tibble: 5,938 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1      603            605        -2      800            818\n 2  2023     1     1      655            700        -5      841            907\n 3  2023     1     1      657            700        -3      902            927\n 4  2023     1     1      749            750        -1      938           1006\n 5  2023     1     1      951           1000        -9     1159           1237\n 6  2023     1     1     1207           1217       -10     1430           1445\n 7  2023     1     1     1312           1059       133     1518           1319\n 8  2023     1     1     1314           1153        81     1518           1357\n 9  2023     1     1     1506           1500         6     1712           1717\n10  2023     1     1     1513           1512         1     1724           1721\n# ℹ 5,928 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\nfilter(flights, (dep_delay &gt;=120) & (arr_delay &lt; 60))\n\n# A tibble: 5 × 19\n   year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n1  2023     4    10     2158           1955       123       12           2316\n2  2023     4    30     2130           1930       120     2358           2259\n3  2023     5     1     1212            955       137     1617           1528\n4  2023     6     1     1201           1000       121     1425           1326\n5  2023     7    26     2135           1929       126       21           2335\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;"
-  },
-  {
-    "objectID": "activities/07-dplyr1-sols.html#part-2",
-    "href": "activities/07-dplyr1-sols.html#part-2",
-    "title": "\ndplyr 1: Verbs",
-    "section": "Part 2",
-    "text": "Part 2\nUse arrange to answer the following questions:\n\nWhich flights traveled the farthest?\nWhich traveled the shortest?\nWhich flights lasted the longest?\nWhich lasted the shortest?\n\n\narrange(flights, desc(distance))\n\n# A tibble: 435,352 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1      949            900        49       NA           1525\n 2  2023     1     1     1023           1000        23     1637           1610\n 3  2023     1     2      919            900        19     1543           1525\n 4  2023     1     2      951           1000        -9     1620           1610\n 5  2023     1     3      922            900        22     1535           1525\n 6  2023     1     3     1007           1000         7     1630           1610\n 7  2023     1     4      912            900        12     1511           1525\n 8  2023     1     4     1001           1000         1     1630           1610\n 9  2023     1     5      854            900        -6     1454           1525\n10  2023     1     5      949           1000       -11     1600           1610\n# ℹ 435,342 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\narrange(flights, distance)\n\n# A tibble: 435,352 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1      816            820        -4      910            921\n 2  2023     1     2      820            820         0      907            921\n 3  2023     1     2     2324           2159        85       41           2300\n 4  2023     1     3       14           2158       136      104           2259\n 5  2023     1     3      815            820        -5      913            921\n 6  2023     1     4      756            759        -3      903            900\n 7  2023     1     4     1353           1347         6     1449           1448\n 8  2023     1     5      804            759         5      908            900\n 9  2023     1     5     1346           1347        -1     1444           1447\n10  2023     1     6      817            759        18      926            900\n# ℹ 435,342 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\narrange(flights, desc(air_time))\n\n# A tibble: 435,352 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     3     9     1009           1000         9     1720           1605\n 2  2023     1    10      913            900        13     1615           1525\n 3  2023     3    10      852            900        -8     1616           1537\n 4  2023     3     8      853            900        -7     1608           1525\n 5  2023     1    31      858            900        -2     1627           1525\n 6  2023     4     2     1104           1000        64     1702           1510\n 7  2023     1    28     1121            900       141     1820           1525\n 8  2023     3    23      851            900        -9     1451           1437\n 9  2023     2     4     1005           1000         5     1649           1605\n10  2023     3     7     1345            900       285     2100           1525\n# ℹ 435,342 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;\n\narrange(flights, air_time)\n\n# A tibble: 435,352 × 19\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1    12     2151           2155        -4     2247           2256\n 2  2023     1     3     1155           1200        -5     1235           1311\n 3  2023     1    12     1452           1455        -3     1540           1607\n 4  2023     1    15      757            759        -2      839            900\n 5  2023     1    19     1450           1455        -5     1536           1607\n 6  2023     2     5     1422           1430        -8     1511           1538\n 7  2023     3     1     1438           1440        -2     1524           1548\n 8  2023     3    17      825            835       -10      911            945\n 9  2023     4     6     1201           1109        52     1255           1218\n10  2023     6     8     2211           2149        22     2256           2242\n# ℹ 435,342 more rows\n# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;"
-  },
-  {
-    "objectID": "activities/07-dplyr1-sols.html#part-3",
-    "href": "activities/07-dplyr1-sols.html#part-3",
-    "title": "\ndplyr 1: Verbs",
-    "section": "Part 3",
-    "text": "Part 3\nCreate a new column in flights giving the average speed of the flight while it was in the air. What are the units of this variable? Make the variable in terms of miles per hour.\n\nmutate(flights, avg_speed = distance/air_time)\n\n# A tibble: 435,352 × 20\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1        1           2038       203      328              3\n 2  2023     1     1       18           2300        78      228            135\n 3  2023     1     1       31           2344        47      500            426\n 4  2023     1     1       33           2140       173      238           2352\n 5  2023     1     1       36           2048       228      223           2252\n 6  2023     1     1      503            500         3      808            815\n 7  2023     1     1      520            510        10      948            949\n 8  2023     1     1      524            530        -6      645            710\n 9  2023     1     1      537            520        17      926            818\n10  2023     1     1      547            545         2      845            852\n# ℹ 435,342 more rows\n# ℹ 12 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, avg_speed &lt;dbl&gt;"
-  },
-  {
-    "objectID": "activities/07-dplyr1-sols.html#part-5",
-    "href": "activities/07-dplyr1-sols.html#part-5",
-    "title": "\ndplyr 1: Verbs",
-    "section": "Part 5",
-    "text": "Part 5\nSuppose that you don’t think the FAA gives enough information in their definition of a delayed flight, so you come up with the following delay categories:\n\n\ndep_delay &lt;= 0 -&gt; none\n\ndep_delay between 1 and 15 minutes -&gt; minimal\n\ndep_delay between 16 and 30 minutes -&gt; delayed\n\ndep_delay between 31 and 60 minutes -&gt; major\n\ndep_delay over 60 minutes -&gt; extreme\n\nUse mutate() and case_when() to create a delay_category variable in the flights data frame.\n\nmutate(flights, delay_category = case_when(\n  dep_delay &lt;= 0 ~ \"none\",\n  dep_delay &lt;= 15 ~ \"minimal\",\n  dep_delay &lt;= 30 ~ \"delayed\",\n  dep_delay &lt;= 60 ~ \"major\",\n  dep_delay &gt; 60 ~ \"extreme\"\n))\n\n# A tibble: 435,352 × 20\n    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time\n   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;\n 1  2023     1     1        1           2038       203      328              3\n 2  2023     1     1       18           2300        78      228            135\n 3  2023     1     1       31           2344        47      500            426\n 4  2023     1     1       33           2140       173      238           2352\n 5  2023     1     1       36           2048       228      223           2252\n 6  2023     1     1      503            500         3      808            815\n 7  2023     1     1      520            510        10      948            949\n 8  2023     1     1      524            530        -6      645            710\n 9  2023     1     1      537            520        17      926            818\n10  2023     1     1      547            545         2      845            852\n# ℹ 435,342 more rows\n# ℹ 12 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,\n#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,\n#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, delay_category &lt;chr&gt;\n\n\nand we can check with select():\n\nmutate(flights, delay_category = case_when(\n  dep_delay &lt;= 0 ~ \"none\",\n  dep_delay &lt;= 15 ~ \"minimal\",\n  dep_delay &lt;= 30 ~ \"delayed\",\n  dep_delay &lt;= 60 ~ \"major\",\n  dep_delay &gt; 60 ~ \"extreme\"\n)) %&gt;%\n  select(dep_delay, delay_category)\n\n# A tibble: 435,352 × 2\n   dep_delay delay_category\n       &lt;dbl&gt; &lt;chr&gt;         \n 1       203 extreme       \n 2        78 extreme       \n 3        47 major         \n 4       173 extreme       \n 5       228 extreme       \n 6         3 minimal       \n 7        10 minimal       \n 8        -6 none          \n 9        17 delayed       \n10         2 minimal       \n# ℹ 435,342 more rows"
-  },
-  {
-    "objectID": "activities/07-dplyr1-sols.html#part-6",
-    "href": "activities/07-dplyr1-sols.html#part-6",
-    "title": "\ndplyr 1: Verbs",
-    "section": "Part 6",
-    "text": "Part 6\nChain the last two parts together, so that the resulting dataset contains both avg_speed and delay_category. Pipe this new dataset into ggplot() to answer the question “is there a relationship between average speed and how late a flight is delayed?”\nIf you have time, create a new graph which only contains flights to MSP.\n\nflights %&gt;%\n  mutate(\n    delay_category = case_when(\n      dep_delay &lt;= 0 ~ \"none\",\n      dep_delay &lt;= 15 ~ \"minimal\",\n      dep_delay &lt;= 30 ~ \"delayed\",\n      dep_delay &lt;= 60 ~ \"major\",\n      dep_delay &gt; 60 ~ \"extreme\"\n    ),\n    avg_speed = distance/air_time\n  ) %&gt;%\n  ggplot(aes(y = delay_category, x = avg_speed, fill = delay_category)) + \n  geom_boxplot() + \n  theme(legend.position = \"none\")\n\nWarning: Removed 12534 rows containing non-finite outside the scale range\n(`stat_boxplot()`).\n\n\n\n\n\n\n\n\n\nflights %&gt;%\n  filter(dest == \"MSP\") %&gt;%\n  mutate(\n    delay_category = case_when(\n      dep_delay &lt;= 0 ~ \"none\",\n      dep_delay &lt;= 15 ~ \"minimal\",\n      dep_delay &lt;= 30 ~ \"delayed\",\n      dep_delay &lt;= 60 ~ \"major\",\n      dep_delay &gt; 60 ~ \"extreme\"\n    ),\n    avg_speed = distance/air_time\n  ) %&gt;%\n  ggplot(aes(y = delay_category, x = avg_speed, fill = delay_category)) + \n  geom_boxplot() + \n  theme(legend.position = \"none\")\n\nWarning: Removed 133 rows containing non-finite outside the scale range\n(`stat_boxplot()`)."
-  },
-  {
-    "objectID": "activities/08-dplyr2.html",
-    "href": "activities/08-dplyr2.html",
-    "title": "\ndplyr 2: Pipes and Groups",
+    "objectID": "activities/04-customizing-plots.html#load-data",
+    "href": "activities/04-customizing-plots.html#load-data",
+    "title": "Customizing plots",
     "section": "",
-    "text": "Note: continue using your 07-dplyr.rmd file for this activity. You can copy and paste code chunks using the “code” button above. We will continue to use the nycflights23 dataset."
+    "text": "Note: This code reads the same dataset in that we used last time and then creates two new columns based on an old one. Make sure to run this chunk before trying to make your graph!\n\nseason_summary = readr::read_csv(\"https://math.carleton.edu/aluby/stat220/survivor_season_summary.csv\") |&gt;\n  separate(timeslot, into = c(\"day_of_week\", \"time\"))\n\nRows: 47 Columns: 30\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (13): version, version_season, season_name, location, country, tribe_se...\ndbl  (13): season, n_cast, n_tribes, n_finalists, n_jury, viewers_reunion, v...\ndate  (4): premiered, ended, filming_started, filming_ended\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nWarning: Expected 2 pieces. Additional pieces discarded in 42 rows [1, 2, 3, 4, 5, 6, 7,\n8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...]."
   },
   {
-    "objectID": "activities/08-dplyr2.html#chunk-1",
-    "href": "activities/08-dplyr2.html#chunk-1",
-    "title": "\ndplyr 2: Pipes and Groups",
-    "section": "Chunk 1",
-    "text": "Chunk 1\n\nlog2(sqrt(16))"
+    "objectID": "activities/04-customizing-plots.html#make-histogram",
+    "href": "activities/04-customizing-plots.html#make-histogram",
+    "title": "Customizing plots",
+    "section": "Make histogram",
+    "text": "Make histogram\n\n# Include your code here"
   },
   {
-    "objectID": "activities/08-dplyr2.html#chunk-2",
-    "href": "activities/08-dplyr2.html#chunk-2",
-    "title": "\ndplyr 2: Pipes and Groups",
-    "section": "Chunk 2:",
-    "text": "Chunk 2:\n\nlibrary(nycflights23) # need to load, not in pipeline\nmsp &lt;- filter(flights, dest == \"MSP\", carrier == \"DL\")\nmsp_narrow &lt;- select(msp, year, month, day, starts_with(\"sched\"), \n                     contains(\"delay\"), origin)\nmsp_narrow &lt;- relocate(msp_narrow, origin, everything())"
-  },
-  {
-    "objectID": "activities/08-dplyr2.html#your-turn-from-last-time",
-    "href": "activities/08-dplyr2.html#your-turn-from-last-time",
-    "title": "\ndplyr 2: Pipes and Groups",
-    "section": "“Your turn” from last time",
-    "text": "“Your turn” from last time\nChain the last two parts together, so that the resulting dataset contains both avg_speed and delay_category. Pipe this new dataset into ggplot() to answer the question “is there a relationship between average speed and how late a flight is delayed?”\nIf you have time, create a new graph which only contains flights to MSP."
-  },
-  {
-    "objectID": "activities/08-dplyr2.html#summarize",
-    "href": "activities/08-dplyr2.html#summarize",
-    "title": "\ndplyr 2: Pipes and Groups",
-    "section": "summarize()",
-    "text": "summarize()\nUse summarize() to compute statistics about the data:\n\nThe lowest and highest distance traveled\nThe lowest and highest air_time\nThe median dep_delay"
-  },
-  {
-    "objectID": "activities/08-dplyr2.html#summarize-ii",
-    "href": "activities/08-dplyr2.html#summarize-ii",
-    "title": "\ndplyr 2: Pipes and Groups",
-    "section": "\nsummarize() II",
-    "text": "summarize() II\nExtract the rows for Delta flights. (Hint: look at the airlines dataset, which is also distributed in the {nycflights23} R package, to find the carrier shortcut code)\nThen use summarize() and a summary function to find:\n\nThe number of flights in this subset\nThe median dep_delay. How does it compare to the overall median?"
-  },
-  {
-    "objectID": "activities/08-dplyr2.html#group_by",
-    "href": "activities/08-dplyr2.html#group_by",
-    "title": "\ndplyr 2: Pipes and Groups",
-    "section": "group_by()",
-    "text": "group_by()\nUse group_by(), summarize(), and slice_max() to display the five dest airports with the most flights from NYC airports in 2023. Your display should include the median flight delay for these airports."
-  },
-  {
-    "objectID": "activities/03-ggplot-intro.html",
-    "href": "activities/03-ggplot-intro.html",
-    "title": "Intro to ggplot2\n",
+    "objectID": "activities/11-import-solutions.html",
+    "href": "activities/11-import-solutions.html",
+    "title": "Data import and dates/times – Solutions",
     "section": "",
-    "text": "Note: the setup chunk includes the line eval = FALSE. Make sure to delete this when you are ready to knit your file.\nThe data we’re using today contains information about all seasons of Survivor and comes from the survivoR R package. In the show, a group of people (called castaways) are placed in an isolated location, where they must provide food, fire, and shelter for themselves. The castaways compete in challenges testing the contestants’ physical abilities like running and swimming or their mental abilities like puzzles and endurance challenges for rewards and immunity from elimination. The castaways are progressively eliminated from the game as they are voted out by their fellow contestants until only two or three remain. At that point, the players who were eliminated (the “jury”) vote for the winner. The winner is given the title of “Sole Survivor” and is awarded the grand prize of $1,000,000\nseason_summary = readr::read_csv(\"https://math.carleton.edu/aluby/stat220/survivor_season_summary.csv\")\n#&gt; Rows: 47 Columns: 30\n#&gt; ── Column specification ────────────────────────────────────────────────────────\n#&gt; Delimiter: \",\"\n#&gt; chr  (13): version, version_season, season_name, location, country, tribe_se...\n#&gt; dbl  (13): season, n_cast, n_tribes, n_finalists, n_jury, viewers_reunion, v...\n#&gt; date  (4): premiered, ended, filming_started, filming_ended\n#&gt; \n#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.\n#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
+    "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
   },
   {
-    "objectID": "activities/03-ggplot-intro.html#round-1-view-the-data-pipes",
-    "href": "activities/03-ggplot-intro.html#round-1-view-the-data-pipes",
-    "title": "Intro to ggplot2\n",
-    "section": "Round 1: View the data + pipes",
-    "text": "Round 1: View the data + pipes\n1. To get started, load the tidyverse and and take a glimpse at the dataset. How many rows and columns are there? What does each row represent?\nLoading the tidyverse loads 8 packages, one of which is ggplot2. You can certainly load each package individually, but it has become common to simply load the tidyverse.\n2. The code below filters season_summary to include only survivor seasons that aired in the US. What does |&gt; do? (Try to answer this with your group, then run ?\"|&gt;\" in the console to load the help page if you need to)\n\nseason_summary |&gt;\n  filter(season == \"US\")"
+    "objectID": "activities/11-import-solutions.html#task-1-print-list-of-dates",
+    "href": "activities/11-import-solutions.html#task-1-print-list-of-dates",
+    "title": "Data import and dates/times – Solutions",
+    "section": "Task 1: print list of dates",
+    "text": "Task 1: print list of dates\n\nfirst_class = mdy(\"1/6/2025\")\nmondays = first_class + weeks(1:9)\nwednesdays = mondays + days(2)\nfridays = wednesdays + days(2)\n\nmeetings = tibble(\n  dates = c(mondays, wednesdays, fridays)\n) %&gt;%\n  arrange(dates)\n\nmeetings\n\n# A tibble: 27 × 1\n   dates     \n   &lt;date&gt;    \n 1 2025-01-13\n 2 2025-01-15\n 3 2025-01-17\n 4 2025-01-20\n 5 2025-01-22\n 6 2025-01-24\n 7 2025-01-27\n 8 2025-01-29\n 9 2025-01-31\n10 2025-02-03\n# ℹ 17 more rows"
   },
   {
-    "objectID": "activities/03-ggplot-intro.html#round-2-scatterplots",
-    "href": "activities/03-ggplot-intro.html#round-2-scatterplots",
-    "title": "Intro to ggplot2\n",
-    "section": "Round 2: Scatterplots",
-    "text": "Round 2: Scatterplots\nFirst, let’s create a scatterplot of imdb_mean vs. viewers_mean.\nA note on wording: when we say imdb_mean vs. viewers_mean, this should be interpreted as “variable on the y-axis” vs. “variable on the x-axis”.\n3. Fill in the data and aesthetic mapping in the below code chunk. What is returned? What’s missing?\n\n# Fill in the blanks\nggplot(data = ___, mapping = aes(x = ___, y = ___))\n\n4. Add the appropriate geometric object to create the scatterplot. This is called adding a layer to a plot. Remember to always put the + at the end of a line, never at the start.\n\n# Copy your code from the previous chunk and add a geom\n\nWhat do you notice? Write a sentence or two describing your findings\n5. You must remember to put the aesthetic mappings in the aes() function! What happens if you forget?\n\n# Add a layer and see what happens\nggplot(data = ___, x = ___, y = ___)\n\n6. The aesthetic mappings can be specified in the geom layer if you prefer, instead of the main ggplot() call. Give it a try:\n\n# Rebuild the scatterplot with your aesthetic mapping in the geom layer\nggplot(data = ___)"
-  },
-  {
-    "objectID": "activities/03-ggplot-intro.html#round-3-additional-aesthetics",
-    "href": "activities/03-ggplot-intro.html#round-3-additional-aesthetics",
-    "title": "Intro to ggplot2\n",
-    "section": "Round 3: Additional Aesthetics",
-    "text": "Round 3: Additional Aesthetics\nx and y are not the only aesthetic mappings possible. In this section you’ll explore the color, size, shape, and alpha (i.e. transparency) aesthetics.\n7. Create a scatterplot of imdb_mean vs. viewers_mean. Add the color aesthetic to map country2 to the point color.\n\nggplot(data = ___) +\n  geom_point(aes(x = ___, y = ___, color = ___))\n\n8. Create a scatterplot of imdb_mean vs. viewers_mean. Use shape to represent country2. Is this plot easier or harder to interpret than the previous plot?\n9. Create a scatterplot of imdb_mean vs. viewers_mean. Use both shape and color to represent the four_regions. Is this plot easier or harder to interpret than the previous two plots?\n10. Create a scatterplot of imdb_mean vs. viewers_mean. Use color to represent the season. What did you learn from the plot?\n11. Create a scatterplot of imdb_mean vs. viewers_mean. Use size to represent the season.\n12. Look back at your scatterplots from the last few questions. Explain the differences when you map aesthetics to discrete and continuous variables.\n13. Create a scatterplot of imdb_mean vs. viewers_mean. Use alpha to represent the season."
-  },
-  {
-    "objectID": "activities/03-ggplot-intro.html#round-4-visualizing-distributions",
-    "href": "activities/03-ggplot-intro.html#round-4-visualizing-distributions",
-    "title": "Intro to ggplot2\n",
-    "section": "Round 4: Visualizing Distributions",
-    "text": "Round 4: Visualizing Distributions\n14. Build a histogram of viewers_mean using geom_histogram(). Don’t hesitate to look at the ggplot2 cheat sheet for help!\n\n# Fill in the blanks\nggplot(___) +\n  geom_histogram(aes(x = ___))\n\nWhat have you learned about the distribution of average viewership?\n15. By default, ggplot2 uses 30 bins. To change the number of bins, to say 15, add the argument bins = 15 to geom_histogram(). Note: this is not an aesthetic mapping.\n\n# Fill in the blanks\nggplot(___) +\n  geom_histogram(aes(x = ___), bins = ___)\n\n16. Instead of a histogram, let’s create a kernel density plot. To do this, substitute geom_density() into your code for question 14.\n17. Now, let’s make side-by-side boxplots of viewers_mean for each country2.\n\n# Fill in the blanks\nggplot(___) +\n  geom_boxplot(aes(x = ___, y = ___))\n\n18. A violin plot is a kernel density on its side, made symmetric. Change your code from question 17 to use geom_violin(). Which plot do you prefer, boxplots or violin plots? Why?\n\n# Put your violin plot code here"
-  },
-  {
-    "objectID": "activities/03-ggplot-intro.html#round-5-bar-and-column-charts-labeling",
-    "href": "activities/03-ggplot-intro.html#round-5-bar-and-column-charts-labeling",
-    "title": "Intro to ggplot2\n",
-    "section": "Round 5: Bar and column charts + Labeling",
-    "text": "Round 5: Bar and column charts + Labeling\nHow many seasons were filmed in each country? Let’s find out!\n19. Make a bar chart of the number of seasons filmed in each country2 using geom_bar()\n\n# Fill in the blanks\nggplot(___) +\n  geom_bar(aes(x = ___))\n\n20. country2 has a category called “other”. Make a bar chart of country (which includes all individual countries) instead.\n\n# Fill in the blanks\nggplot(___) +\n  geom_bar(aes(x = ___))\n\n21. When you have lots of categories, it’s sometimes hard to read the labels on the x-axis. One trick is to flip the axes. Change geom_bar() to use the y aesthetic from your code in question 20 instead.\n22. In ggplot2 you can add/change the title, subtitle, caption, and x- and y-axis labels by adding a labs() layer. Below is an example illustrating it’s use. Choose one graph from today and add all labels.\n\nggplot(data = mpg) +\n  geom_point(mapping = aes(x = displ, y = hwy)) + \n  labs(\n    title = \"Put your informative title here\",\n    subtitle = \"and your subtitle here\",\n    x = \"New x label\",\n    y = \"New y label\",\n    caption = \"Put a caption here\"\n  )"
+    "objectID": "activities/11-import-solutions.html#task-2",
+    "href": "activities/11-import-solutions.html#task-2",
+    "title": "Data import and dates/times – Solutions",
+    "section": "Task 2",
+    "text": "Task 2\nNext, print them in the format “Wednesday: Jan 29 2025”\n\nmeetings %&gt;%\n  mutate(\n    date2 = stamp(\"Wednesday: Jan 29 2025\")(dates)\n  )\n\n# A tibble: 27 × 2\n   dates      date2                 \n   &lt;date&gt;     &lt;chr&gt;                 \n 1 2025-01-13 Monday: Jan 13 2025   \n 2 2025-01-15 Wednesday: Jan 15 2025\n 3 2025-01-17 Friday: Jan 17 2025   \n 4 2025-01-20 Monday: Jan 20 2025   \n 5 2025-01-22 Wednesday: Jan 22 2025\n 6 2025-01-24 Friday: Jan 24 2025   \n 7 2025-01-27 Monday: Jan 27 2025   \n 8 2025-01-29 Wednesday: Jan 29 2025\n 9 2025-01-31 Friday: Jan 31 2025   \n10 2025-02-03 Monday: Feb 03 2025   \n# ℹ 17 more rows"
   },
   {
     "objectID": "computing/git-stat220.html",
