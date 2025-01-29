@@ -6,14 +6,11 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-82b21c4badf2b3742632e8f006a51c80.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-82b21c4badf2b3742632e8f006a51c80.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.6.32">
 
   <meta name="author" content="Prof Amanda Luby">
-  <title>Stat 220 – Intro to Maps   and Spatial  Data</title>
+  <title>Stat 220 – Data Import &amp;  Dates/Times</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -97,7 +94,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #d4d0ab; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-1e9829d593a10c0d5559e8cc1c8c0ffc.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-82c0a524c4182e724aa29367b014255e.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -389,16 +386,14 @@
       margin-right: 0; 
     }
   </style>
-  <link href="../../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
-  <script src="../../site_libs/countdown-0.4.0/countdown.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="../img/snow-cholera-map.jpeg" data-background-opacity="0.8" data-background-position="right" data-background-size="60%" data-slide-number="none" class="quarto-title-block center">
-  <h1 class="title">Intro to Maps <br> and Spatial <br>Data</h1>
-  <p class="subtitle">Day 05</p>
+<section id="title-slide" data-background-image="../img/horst_lubridate.png" data-background-opacity="0.8" data-background-position="bottom right" data-background-size="70%" data-slide-number="none" class="quarto-title-block center">
+  <h1 class="title">Data Import &amp; <br>Dates/Times</h1>
+  <p class="subtitle">Day 10</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -412,415 +407,661 @@ Prof Amanda Luby
 </div>
 
 </section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
-<ul>
-<li class="fragment">git/GitHub</li>
-<li class="fragment">Intro to Spatial Data</li>
-<li class="fragment">Making Maps in <code>ggplot2</code></li>
-</ul>
-</section>
-<section id="section" class="slide level2 smaller" data-background-image="https://imgs.xkcd.com/comics/git.png" data-background-position="right" data-background-size="35%">
-<h2></h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li class="fragment">Think of the state on GitHub as “worst case scenario”</li>
-<li class="fragment">If you screw things up, copy your important files (eg. <code>hw.Rmd</code>) to a safe place.
-<ul>
-<li class="fragment">Usually your files are JUST FINE. But it is easy to goof up the Git infrastructure when you’re new at this. And it can be hard to get that straightened out on your own.</li>
-</ul></li>
-<li class="fragment">Rename the existing local repo as a temporary measure, i.e.&nbsp;before you do something radical, like delete it.</li>
-<li class="fragment">Clone the original repo from GitHub to RStudio (follow the directions to create a new project). You are back to a happy state.</li>
-<li class="fragment">Copy all relevant files back over from your safe space. The ones whose updated state you need to commit.</li>
-<li class="fragment">Knit, commit, push</li>
-<li class="fragment">Carry on with your life.</li>
-</ul>
-</div><div class="column" style="width:50%;">
-
-</div></div>
-
-<aside><div>
-<p><a href="https://happygitwithr.com/burn">Burn It All Down</a> from <em>Happy Git with R</em></p>
-</div></aside></section>
-<section id="section-1" class="slide level2">
-<h2></h2>
-<p><img data-src="../img/whole-game-04.png"></p>
-</section>
-<section>
-<section id="spatial-data" class="title-slide slide level1 maize center">
-<h1>Spatial Data</h1>
-
-</section>
-<section id="cholera" class="slide level2 smaller">
-<h2>Cholera</h2>
-<p>In 1854, a <em>Cholera</em> outbreak killed 127 people in 3 days in a London neighborhood, resulting in a mass exodus of local residents. At the time, people thought that Cholera w as an airborne disease. John Snow was a physician who was critical of the airborne theory, and set out to investigate.</p>
-<div class="fragment">
-<p>What might this data look like?</p>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="cell-output-display">
+<section id="readr-functions" class="slide level2">
+<h2><code>readr</code> functions</h2>
 <table class="caption-top">
-<colgroup>
-<col style="width: 19%">
-<col style="width: 15%">
-<col style="width: 16%">
-<col style="width: 19%">
-<col style="width: 6%">
-<col style="width: 22%">
-</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">date</th>
-<th style="text-align: left;">last_name</th>
-<th style="text-align: left;">first_name</th>
-<th style="text-align: left;">address</th>
-<th style="text-align: right;">age</th>
-<th style="text-align: left;">cause_of_death</th>
+<th style="text-align: left;">function</th>
+<th style="text-align: left;">reads</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Aug 31, 1854</td>
-<td style="text-align: left;">Jones</td>
-<td style="text-align: left;">Thomas</td>
-<td style="text-align: left;">26 Broad St.</td>
-<td style="text-align: right;">37</td>
-<td style="text-align: left;">cholera</td>
+<td style="text-align: left;">read_csv()</td>
+<td style="text-align: left;">Comma separated values</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Aug 31, 1854</td>
-<td style="text-align: left;">Jones</td>
-<td style="text-align: left;">Mary</td>
-<td style="text-align: left;">26 Broad St.</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">cholera</td>
+<td style="text-align: left;">read_csv2()</td>
+<td style="text-align: left;">Semi-colon separated values</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Sept 1, 1854</td>
-<td style="text-align: left;">Warwick</td>
-<td style="text-align: left;">Martin</td>
-<td style="text-align: left;">14 Broad St.</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: left;">cholera</td>
+<td style="text-align: left;">read_delim()</td>
+<td style="text-align: left;">General delimited files</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">read_fwf()</td>
+<td style="text-align: left;">Fixed width files</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">read_log()</td>
+<td style="text-align: left;">Apache log files</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">read_table()</td>
+<td style="text-align: left;">Space separated</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">read_tsv()</td>
+<td style="text-align: left;">Tab delimited values</td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-
-</div>
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="section-2" class="slide level2">
-<h2></h2>
-<p>What makes “address” a useful variable is that it is linked to a specific location in the physical world. If we plot these addresses, we get something like the following:</p>
+</section>
+<section id="basic-syntax" class="slide level2">
+<h2>Basic syntax</h2>
+<p>All <code>readr</code> functions share a common syntax</p>
 <div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"path/to/file.csv"</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="section-3" class="slide level2">
-<h2></h2>
-<p>While we can see patterns in the last plot, the underlying map of the London streets provides helpful context that makes it more intelligble:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="../img/snow-cholera-map.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="../img/snow-cholera-map.jpeg" class="quarto-figure quarto-figure-center" style="width:50.0%"></a></p>
-</figure>
-</div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="section-4" class="slide level2">
-<h2></h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p>Snow’s insight was driven by another set of data—the locations of the street-side water pumps (it’s kind of hard to see, but they are labelled on the map). Nearly all of the cases were clustered around a single pump on the center of Broad Street.</p>
-<p>John Snow’s map (and water pump) are now “famous” among epidemiologists and statisticians.</p>
-</div><div class="column fragment" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../img/broad-street-pump.jpeg"></p>
-<figcaption>John Snow’s water pump (and pub) from a 2019 visit</figcaption>
-</figure>
-</div>
-</div></div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="a-successful-data-science-episode" class="slide level2">
-<h2>A successful data science episode:</h2>
+</section>
+<section id="whats-the-big-deal" class="slide level2">
+<h2>What’s the big deal?</h2>
+<p>Compared to <code>read.table</code> and its derivatives, <code>readr</code> functions are:</p>
 <ol type="1">
-<li class="fragment">Combine three sources of data (Cholera deaths, water pump locations, and street map)</li>
-<li class="fragment">While a model might have come to the same conclusion, simply plotting the data is much simpler (and more convincing to lots of people)</li>
-<li class="fragment">The problem was resolved when the data-based evidence was combined with a plausible model that explained the physical phenomenon.</li>
+<li class="fragment"><p>~ 10 times faster</p></li>
+<li class="fragment"><p>Return tibbles</p></li>
+<li class="fragment"><p>Have more intuitive defaults. No row names, no strings as factors.</p></li>
 </ol>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="what-is-a-map" class="slide level2">
-<h2>What is a map?</h2>
-<p>A bunch of latitude longitude points…</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
 </section>
-<section id="what-is-a-map-1" class="slide level2">
-<h2>What is a map?</h2>
-<p>… that are connected with lines in a very specific order.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="tibbles-enhance-data-frames" class="slide level2">
+<h2>tibbles enhance data frames</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="https://tibble.tidyverse.org/logo.svg"></p>
+</div><div class="column" style="width:50%;">
+<p><strong>Subsetting</strong> - <code>[</code> always returns a new tibble, <code>[[</code> and <code>$</code> always return a new vector</p>
+<p><strong>No partial matching</strong> - You must use full column names when subsetting</p>
+<p><strong>Display</strong> - When you print a tibble, R provides a concise view of the data that fits on one screen</p>
+</div></div>
 </section>
-<section id="necessary-map-data" class="slide level2">
-<h2>Necessary map data</h2>
+<section id="concise-printing" class="slide level2">
+<h2>Concise printing</h2>
+<img data-src="../img/10-tibble-df-compare.png" class="r-stretch">
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<img data-src="../img/10-tibble-print.png" class="r-stretch">
+</section>
+<section id="conversion" class="slide level2">
+<h2>Conversion</h2>
 <ul>
-<li class="fragment"><p>latitude/longitude points for all map boundaries</p></li>
-<li class="fragment"><p>which boundary group all lat/long points belong</p></li>
-<li class="fragment"><p>the order to connect points within each group</p></li>
+<li class="fragment"><p><code>as_tibble()</code> - convert a data frame to a tibble</p></li>
+<li class="fragment"><p><code>as.data.frame()</code> - convert a tibble to a data frame</p></li>
 </ul>
 </section>
-<section id="state-map-data" class="slide level2">
-<h2>State map data</h2>
-<p><code>ggplot2::map_data()</code> provides the necessary information</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>states <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"state"</span>)</span>
-<span id="cb1-2"><a></a><span class="fu">glimpse</span>(states)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 15,537
-Columns: 6
-$ long      &lt;dbl&gt; -87.46201, -87.48493, -87.52503, -87.53076, -87.57087, -87.5…
-$ lat       &lt;dbl&gt; 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30.32665, …
-$ group     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-$ order     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1…
-$ region    &lt;chr&gt; "alabama", "alabama", "alabama", "alabama", "alabama", "alab…
-$ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
-</div>
-</div>
-</section>
-<section id="using-geom_polygon" class="slide level2">
-<h2>Using <code>geom_polygon()</code></h2>
-<p>Using <code>geom_polygon()</code> will treat states as solid shapes, making it easier to add color</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb3-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="using-coord_fixed" class="slide level2">
-<h2>Using <code>coord_fixed()</code></h2>
-<p>Using <code>coord_fixed()</code> forces x and y units to be equal</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb4-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
-<span id="cb4-3"><a></a>  <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
+<section id="desserts-data" class="slide level2">
+<h2><code>desserts</code> data</h2>
+<ul>
+<li class="fragment"><p>Contains results from series 1-8 of <em>The Great British Bake Off</em></p></li>
+<li class="fragment"><p>Case defined by series, episode and baker</p></li>
+</ul>
+
+<aside><div>
+<p>Source: Allison Hill and the <a href="https://bakeoff.netlify.app">bakeoff</a> package</p>
+</div></aside></section>
 <section id="your-turn" class="slide level2">
 <h2>Your turn</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb5-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
-<span id="cb5-3"><a></a>    <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <div class="task">
-<ul>
-<li>Edit this code so that each shape is colored in with a different color.</li>
-<li>You only need the 3 variables used: <code>long</code>, <code>lat</code>, and <code>group</code></li>
-<li><code>05-maps.Rmd</code> file available in the <code>activities</code> repo</li>
-</ul>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div class="countdown" id="timer_f41493ad" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-</div>
+<p>Use <code>read_csv()</code> to import the <code>desserts</code> data set from <br> https://stat220-w25.github.io/data/desserts.csv</p>
+<p>Store the data in the <code>desserts</code> object</p>
 </div>
 </section>
-<section id="coordinate-systems-and-projections" class="slide level2" data-background-image="../img/02-ggplot-layers.png" data-background-size="60%" data-background-position="right" data-background-opacity="0.8">
-<h2>Coordinate Systems and Projections</h2>
-</section>
-<section id="section-5" class="slide level2" data-background-image="../img/cairo-projections.png" data-background-size="50%" data-background-position="right">
-<h2></h2>
+<section id="did-it-work-as-expected" class="slide level2">
+<h2>Did it work as expected?</h2>
 <div class="columns">
-<div class="column" style="width:40%;">
-<p>Geospatial data exists on the globe and is generally described with a <em>latitude</em> and <em>longitude</em>. Any <em>projection</em> from the globe to euclidean space (X-Y plane) is going to cause some distortion.</p>
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 549
+Columns: 16
+$ series                &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ episode               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, …
+$ baker                 &lt;chr&gt; "Annetha", "David", "Edd", "Jasminder", "Jonatha…
+$ technical             &lt;chr&gt; "2nd", "3rd", "1st", "N/A", "9th", "N/A", "8th",…
+$ result                &lt;chr&gt; "IN", "IN", "IN", "IN", "IN", "IN", "IN", "IN", …
+$ uk_airdate            &lt;chr&gt; "17 August 2010", "17 August 2010", "17 August 2…
+$ us_season             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ us_airdate            &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ showstopper_chocolate &lt;chr&gt; "chocolate", "chocolate", "no chocolate", "no ch…
+$ showstopper_dessert   &lt;chr&gt; "other", "other", "other", "other", "other", "ca…
+$ showstopper_fruit     &lt;chr&gt; "no fruit", "no fruit", "no fruit", "no fruit", …
+$ showstopper_nut       &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "almond"…
+$ signature_chocolate   &lt;chr&gt; "no chocolate", "chocolate", "no chocolate", "no…
+$ signature_dessert     &lt;chr&gt; "cake", "cake", "cake", "cake", "cake", "cake", …
+$ signature_fruit       &lt;chr&gt; "no fruit", "fruit", "fruit", "fruit", "fruit", …
+$ signature_nut         &lt;chr&gt; "no nut", "no nut", "no nut", "no nut", "no nut"…</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<p>A couple issues…</p>
+<ul>
+<li><p><code>technical</code> is character, not numeric</p></li>
+<li><p><code>uk_airdate</code> is character, not date</p></li>
+</ul>
 </div></div>
 </section>
-<section id="section-6" class="slide level2">
-<h2></h2>
-<iframe data-external="1" src="https://www.youtube.com/embed/vVX-PrBRtTY?start=45" width="100%" height="100%" title="West Wing: Gall-Peters Projection" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-
-<aside><div>
-<p>From <em>The West Wing</em> Season 2 Episode 16</p>
-</div></aside></section>
-<section id="section-7" class="slide level2">
-<h2></h2>
-<img data-src="../img/africa-greenland-distortions.png" class="r-stretch">
+<section id="the-col_types-argument" class="slide level2">
+<h2>The <code>col_types</code> argument</h2>
+<p>By default, looks at first 1000 rows to guess variable data types (<code>guess_max</code>)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="3-6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>desserts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb3-2"><a></a>  <span class="st">"https://stat220-w25.github.io/data/desserts.csv"</span>,</span>
+<span id="cb3-3"><a></a>  <span class="at">col_types =</span> <span class="fu">list</span>( </span>
+<span id="cb3-4"><a></a>    <span class="at">technical =</span> <span class="fu">col_number</span>(), </span>
+<span id="cb3-5"><a></a>    <span class="at">uk_airdate =</span> <span class="fu">col_date</span>()   </span>
+<span id="cb3-6"><a></a>  ) </span>
+<span id="cb3-7"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="changing-the-coordinate-system" class="slide level2">
-<h2>Changing the coordinate system</h2>
-<p><code>coord_map</code> function provides a Mercator projection (<code>mapproj</code> package has more options)</p>
+<section id="looking-for-problems" class="slide level2">
+<h2>Looking for <code>problems</code></h2>
+<p>List of potential problems parsing the file</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">problems</span>(desserts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 556 × 5
+     row   col expected        actual         file 
+   &lt;int&gt; &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;
+ 1     2     6 date in ISO8601 17 August 2010 ""   
+ 2     3     6 date in ISO8601 17 August 2010 ""   
+ 3     4     6 date in ISO8601 17 August 2010 ""   
+ 4     5     4 a number        N/A            ""   
+ 5     5     6 date in ISO8601 17 August 2010 ""   
+ 6     6     6 date in ISO8601 17 August 2010 ""   
+ 7     7     4 a number        N/A            ""   
+ 8     7     6 date in ISO8601 17 August 2010 ""   
+ 9     8     6 date in ISO8601 17 August 2010 ""   
+10     9     4 a number        N/A            ""   
+# ℹ 546 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="date-formatting-woes" class="slide level2">
+<h2>Date formatting woes</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">print</span>(<span class="fu">problems</span>(desserts), <span class="at">n=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 556 × 5
+    row   col expected        actual         file 
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;
+1     2     6 date in ISO8601 17 August 2010 ""   
+2     3     6 date in ISO8601 17 August 2010 ""   
+3     4     6 date in ISO8601 17 August 2010 ""   
+4     5     4 a number        N/A            ""   
+5     5     6 date in ISO8601 17 August 2010 ""   
+# ℹ 551 more rows</code></pre>
+</div>
+</div>
+<p>ISO8601 format: <code>2020-08-17</code></p>
+<p>What we have: <code>17 August 2010</code></p>
+</section>
+<section id="adding-format-instructions" class="slide level2">
+<h2>Adding <code>format</code> instructions</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>desserts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb8-2"><a></a>  <span class="st">"https://stat220-w25.github.io/data/desserts.csv"</span>,</span>
+<span id="cb8-3"><a></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb8-4"><a></a>    <span class="at">technical =</span> <span class="fu">col_number</span>(), </span>
+<span id="cb8-5"><a></a>    <span class="at">uk_airdate =</span> <span class="fu">col_date</span>(<span class="at">format =</span> <span class="st">"%d %B %Y"</span>)  </span>
+<span id="cb8-6"><a></a>  ) </span>
+<span id="cb8-7"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>]</p>
+<ul>
+<li class="fragment"><p>Year: <code>"%Y"</code> (4 digits). <code>"%y"</code> (2 digits)</p></li>
+<li class="fragment"><p>Month: <code>"%m"</code> (2 digits), <code>"%b"</code> (abbreviated name in current locale), <code>"%B"</code> (full name in current locale).</p></li>
+<li class="fragment"><p>Day: <code>"%d"</code> (2 digits), <code>"%e"</code> (optional leading space)</p></li>
+</ul>
+</section>
+<section id="looking-for-problems-1" class="slide level2">
+<h2>Looking for <code>problems</code></h2>
+<p>List of potential problems parsing the file</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">problems</span>(desserts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 5
+    row   col expected actual file 
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;
+1     5     4 a number N/A    ""   
+2     7     4 a number N/A    ""   
+3     9     4 a number N/A    ""   
+4    11     4 a number N/A    ""   
+5    35     4 a number N/A    ""   
+6    36     4 a number N/A    ""   
+7    37     4 a number N/A    ""   </code></pre>
+</div>
+</div>
+</section>
+<section id="addressing-missing-values" class="slide level2">
+<h2>Addressing missing values</h2>
+<p>By default <code>na = c("", "NA")</code> are the recognized missing values</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>desserts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb11-2"><a></a>  <span class="st">"https://stat220-w25.github.io/data/desserts.csv"</span>,</span>
+<span id="cb11-3"><a></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb11-4"><a></a>    <span class="at">technical =</span> <span class="fu">col_number</span>(), </span>
+<span id="cb11-5"><a></a>    <span class="at">uk_airdate =</span> <span class="fu">col_date</span>(<span class="at">format =</span> <span class="st">"%d %B %Y"</span>)</span>
+<span id="cb11-6"><a></a>  ),</span>
+<span id="cb11-7"><a></a>  <span class="at">na =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"NA"</span>, <span class="st">"N/A"</span>) </span>
+<span id="cb11-8"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="looking-for-problems-2" class="slide level2">
+<h2>Looking for <code>problems</code></h2>
+<p>List of potential problems parsing the file</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 0 × 5
+# ℹ 5 variables: row &lt;int&gt;, col &lt;int&gt;, expected &lt;chr&gt;, actual &lt;chr&gt;, file &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>desserts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 549 × 16
+   series episode baker     technical result uk_airdate us_season us_airdate
+    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;  &lt;date&gt;         &lt;dbl&gt; &lt;date&gt;    
+ 1      1       1 Annetha           2 IN     2010-08-17        NA NA        
+ 2      1       1 David             3 IN     2010-08-17        NA NA        
+ 3      1       1 Edd               1 IN     2010-08-17        NA NA        
+ 4      1       1 Jasminder        NA IN     2010-08-17        NA NA        
+ 5      1       1 Jonathan          9 IN     2010-08-17        NA NA        
+ 6      1       1 Louise           NA IN     2010-08-17        NA NA        
+ 7      1       1 Miranda           8 IN     2010-08-17        NA NA        
+ 8      1       1 Ruth             NA IN     2010-08-17        NA NA        
+ 9      1       1 Lea              10 OUT    2010-08-17        NA NA        
+10      1       1 Mark             NA OUT    2010-08-17        NA NA        
+# ℹ 539 more rows
+# ℹ 8 more variables: showstopper_chocolate &lt;chr&gt;, showstopper_dessert &lt;chr&gt;,
+#   showstopper_fruit &lt;chr&gt;, showstopper_nut &lt;chr&gt;, signature_chocolate &lt;chr&gt;,
+#   signature_dessert &lt;chr&gt;, signature_fruit &lt;chr&gt;, signature_nut &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="column-casting-functions" class="slide level2">
+<h2>Column casting functions</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Type</th>
+<th><code>dplyr::glimpse()</code></th>
+<th><code>readr::col_*()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>logical</td>
+<td><code>&lt;lgl&gt;</code></td>
+<td><code>col_logical</code></td>
+</tr>
+<tr class="even">
+<td>numeric</td>
+<td><code>&lt;int&gt;</code> or <code>&lt;dbl&gt;</code></td>
+<td><code>col_number</code></td>
+</tr>
+<tr class="odd">
+<td>character</td>
+<td><code>&lt;chr&gt;</code></td>
+<td><code>col_character</code></td>
+</tr>
+<tr class="even">
+<td>factor</td>
+<td><code>&lt;fct&gt;</code></td>
+<td><code>col_factor</code></td>
+</tr>
+<tr class="odd">
+<td>date</td>
+<td><code>&lt;date&gt;</code></td>
+<td><code>col_date</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="read_csv" class="slide level2">
+<h2><code>?read_csv</code></h2>
+</section>
+<section id="your-turn-1" class="slide level2">
+<h2>Your turn</h2>
+<div class="task">
+<p>Use the appropriate <code>read_&lt;type&gt;()</code> function to import the following data sets:</p>
+<ul>
+<li><p><code>data-4.csv</code></p></li>
+<li><p><code>tricky-1.csv</code></p></li>
+<li><p><code>tricky2.csv</code></p></li>
+</ul>
+<p>If you hit any errors/problems, be sure to explore them and identify the issue, even if you can’t “fix” it.</p>
+</div>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<div class="r-fit-text">
+<p>Help!</p>
+</div>
+<p>I already imported data and now I have dates/times as character strings or numeric vectors!</p>
+</section>
+<section id="nycflights13-revisited" class="slide level2">
+<h2><code>nycflights13</code> revisited</h2>
+<p>Recall that the departure and arrival times were in integer format</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb6-2"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb6-3"><a></a>  <span class="fu">coord_map</span>() <span class="sc">+</span> </span>
-<span id="cb6-4"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"_time"</span>), hour, minute)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
-</figure>
-</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 435,352 × 7
+   dep_time sched_dep_time arr_time sched_arr_time air_time  hour minute
+      &lt;int&gt;          &lt;int&gt;    &lt;int&gt;          &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+ 1        1           2038      328              3      367    20     38
+ 2       18           2300      228            135      108    23      0
+ 3       31           2344      500            426      190    23     44
+ 4       33           2140      238           2352      108    21     40
+ 5       36           2048      223           2252       80    20     48
+ 6      503            500      808            815      154     5      0
+ 7      520            510      948            949      192     5     10
+ 8      524            530      645            710      119     5     30
+ 9      537            520      926            818      258     5     20
+10      547            545      845            852      157     5     45
+# ℹ 435,342 more rows</code></pre>
 </div>
 </div></div>
 </section>
-<section id="changing-the-coordinate-system-1" class="slide level2">
-<h2>Changing the coordinate system</h2>
-<p><code>coord_map</code> function provides a Mercator projection (<code>mapproj</code> package has more options)</p>
+<section id="section-3" class="slide level2 center">
+<h2></h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li><p>A class for representing clock times</p></li>
+<li><p>Part of the <code>tidyverse</code></p></li>
+<li><p>Need to load separately</p></li>
+</ul>
+</div><div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-right">
+<figure>
+<p><img data-src="https://hms.tidyverse.org/logo.png" class="quarto-figure quarto-figure-right"></p>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="creating-times-with-hms" class="slide level2">
+<h2>Creating times with <code>hms()</code></h2>
+<p>We can use the <code>hour</code> and <code>minute</code> column to create a clock time</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb7-2"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb7-3"><a></a>  <span class="fu">coord_map</span>(<span class="at">projection =</span> <span class="st">"sinusoidal"</span>) <span class="sc">+</span> </span>
-<span id="cb7-4"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">library</span>(hms)</span>
+<span id="cb17-2"><a></a>sched_dep_times <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a></a>  <span class="fu">mutate</span>(<span class="at">sched_dep_time_hms =</span> <span class="fu">hms</span>(<span class="at">hours =</span> hour, <span class="at">minutes =</span> minute)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a></a>  <span class="fu">pull</span>()</span>
+<span id="cb17-5"><a></a><span class="fu">head</span>(sched_dep_times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
-<div class="cell-output-display">
-<div>
+<div class="cell-output cell-output-stdout">
+<pre><code>20:38:00
+23:00:00
+23:44:00
+21:40:00
+20:48:00
+05:00:00</code></pre>
+</div>
+</div></div>
+</section>
+<section id="hms-creates-a-special-type-of-object" class="slide level2">
+<h2><code>hms()</code> creates a special type of object</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">class</span>(sched_dep_times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "hms"      "difftime"</code></pre>
+</div>
+</div></div>
+</section>
+<section id="creating-times-with-hms-1" class="slide level2">
+<h2>Creating times with <code>hms()</code></h2>
+<p>If we don’t already have hours, minutes, seconds separately, we’ll need to parseout that information</p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Integer time</a></li><li><a href="#tabset-1-2">Parse + <code>hms()</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>dep_time <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span> <span class="fu">pull</span>(dep_time)</span>
+<span id="cb21-2"><a></a><span class="fu">head</span>(dep_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]   1  18  31  33  36 503</code></pre>
+</div>
+</div></div>
+</div>
+<div id="tabset-1-2">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>dep_time_hms <span class="ot">&lt;-</span> <span class="fu">hms</span>(<span class="at">hours =</span> dep_time <span class="sc">%/%</span> <span class="dv">100</span>, <span class="at">minutes =</span> dep_time <span class="sc">%%</span> <span class="dv">100</span>)</span>
+<span id="cb23-2"><a></a><span class="fu">head</span>(dep_time_hms)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>00:01:00
+00:18:00
+00:31:00
+00:33:00
+00:36:00
+05:03:00</code></pre>
+</div>
+</div></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ultramarathon-results" class="slide level2">
+<h2>Ultramarathon results</h2>
+<ul>
+<li class="fragment">Ultra marathon = anything longer than 26.2 miles</li>
+<li class="fragment">The dates and times imported as character strings!</li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<pre><code>## Rows: 392
+## Columns: 11
+## $ state            &lt;chr&gt; "Minnesota", "Minnesota", "Minnesota", "Minnesota", "…
+## $ Event            &lt;chr&gt; "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zu…
+## $ City             &lt;chr&gt; "Theilman", "Theilman", "Theilman", "Theilman", "Thei…
+## $ race_url         &lt;chr&gt; "https://calendar.ultrarunning.com/event/zumbro", "ht…
+## $ date             &lt;chr&gt; "04/08/21", "04/11/20", "04/13/19", "04/13/18", "04/0…
+## $ Finishers        &lt;chr&gt; "121", "Race Cancelled", "Race Cancelled", "49", "149…
+## $ top_result_m     &lt;chr&gt; "5:23:55", "Race Cancelled", "Race Cancelled", "9:13:…
+## $ top_result_f     &lt;chr&gt; "6:30:42", "Race Cancelled", "Race Cancelled", "10:15…
+## $ distance         &lt;chr&gt; "34 Miles", "50 Miles", "50 Miles", "50 Miles", "50 M…
+## $ elevation_rating &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…
+## $ surface_rating   &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…</code></pre>
+</div>
+</div>
+</section>
+<section id="section-4" class="slide level2 center">
+<h2></h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li><p>Functions for working with dates and time spans</p></li>
+<li><p>Part of the <code>tidyverse</code></p></li>
+<li><p>Need to load separately</p></li>
+</ul>
+</div><div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-right">
 <figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
+<p><img data-src="https://lubridate.tidyverse.org/logo.png" class="quarto-figure quarto-figure-right"></p>
 </figure>
 </div>
-</div>
 </div></div>
 </section>
-<section id="mercator-vs-sinusoidal-projection-world-map" class="slide level2">
-<h2>Mercator vs Sinusoidal projection (world map)</h2>
+<section id="parsing-dates" class="slide level2 nonincremental">
+<h2>Parsing dates</h2>
+<p><code>{lubridate}</code> functions are intuitively named</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>world <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"world"</span>)</span>
-<span id="cb8-2"><a></a></span>
-<span id="cb8-3"><a></a><span class="fu">ggplot</span>(world, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb8-4"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb8-5"><a></a>  <span class="fu">coord_map</span>(<span class="at">projection =</span> <span class="st">"mercator"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>)) <span class="sc">+</span> </span>
-<span id="cb8-6"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">mdy</span>(<span class="st">"01/25/23"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2023-01-25"</code></pre>
 </div>
-<div>
-
 </div>
-<div class="cell quarto-layout-panel" data-layout-nrow="1" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">ymd</span>(<span class="st">"2023-01-25"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2023-01-25"</code></pre>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-14-2.png" width="960"></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">ymd_hm</span>(<span class="st">"2023-01-25 08:30"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2023-01-25 08:30:00 UTC"</code></pre>
+</div>
+</div>
+</section>
+<section id="ultramarathon-example" class="slide level2">
+<h2>Ultramarathon example</h2>
+<p>Dates are in the form <code>04/08/21</code>, so use <code>mdy()</code> to parse</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 392
+Columns: 11
+$ state            &lt;chr&gt; "Minnesota", "Minnesota", "Minnesota", "Minnesota", "…
+$ Event            &lt;chr&gt; "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zumbro", "Zu…
+$ City             &lt;chr&gt; "Theilman", "Theilman", "Theilman", "Theilman", "Thei…
+$ race_url         &lt;chr&gt; "https://calendar.ultrarunning.com/event/zumbro", "ht…
+$ date             &lt;date&gt; 2021-04-08, 2020-04-11, 2019-04-13, 2018-04-13, 2017…
+$ Finishers        &lt;chr&gt; "121", "Race Cancelled", "Race Cancelled", "49", "149…
+$ top_result_m     &lt;chr&gt; "5:23:55", "Race Cancelled", "Race Cancelled", "9:13:…
+$ top_result_f     &lt;chr&gt; "6:30:42", "Race Cancelled", "Race Cancelled", "10:15…
+$ distance         &lt;chr&gt; "34 Miles", "50 Miles", "50 Miles", "50 Miles", "50 M…
+$ elevation_rating &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…
+$ surface_rating   &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,…</code></pre>
+</div>
+</div>
+</section>
+<section id="extract-info-from-a-datetime" class="slide level2">
+<h2>Extract info from a date/time</h2>
+<p><code>{lubridate}</code> functions are intuitively named</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 57%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>function</th>
+<th>action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>year()</code>, <code>month()</code></td>
+<td>extract year/month</td>
+</tr>
+<tr class="even">
+<td><code>week()</code></td>
+<td>extract week of the year</td>
+</tr>
+<tr class="odd">
+<td><code>day()</code>, <code>wday()</code></td>
+<td>extract day of month/day of week</td>
+</tr>
+<tr class="even">
+<td><code>hour()</code>, <code>minute()</code>, <code>second()</code></td>
+<td>extract hour/minute/second</td>
+</tr>
+</tbody>
+</table>
+<p>Adding <code>label = TRUE</code> creates an <em>ordered factor</em> (for <code>month</code> or <code>wday</code>)</p>
+</section>
+<section id="extract-info-from-a-datetime-1" class="slide level2">
+<h2>Extract info from a date/time</h2>
+<p>The most recent race in the data set was on 2022-01-31</p>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1"><code>month()</code></a></li><li><a href="#tabset-2-2"><code>day()</code></a></li><li><a href="#tabset-2-3"><code>wday()</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<p>What month was that in?</p>
+<div class="cell">
+<pre><code>## [1] Jan
+## 12 Levels: Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; ... &lt; Dec</code></pre>
+</div>
+</div>
+<div id="tabset-2-2">
+<p>What day of the month was it on?</p>
+<div class="cell">
+<pre><code>## [1] 31</code></pre>
+</div>
+</div>
+<div id="tabset-2-3">
+<p>What day of the week was it on?</p>
+<div class="cell">
+<pre><code>## [1] Mon
+## Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat</code></pre>
+</div>
 </div>
 </div>
 </div>
 </section>
-<section id="common-types-of-maps" class="slide level2">
-<h2>Common Types of Maps</h2>
-<ol type="1">
-<li class="fragment">Chloropleth</li>
-<li class="fragment">Proportional Symbol</li>
-<li class="fragment">Cartograms/Geofacets</li>
-</ol>
-</section>
-<section id="chloropleth" class="slide level2">
-<h2>Chloropleth</h2>
-<p>Fill in regions with variable values</p>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p>Need two data sources:</p>
-<ol type="1">
-<li>map data with lat, long, region</li>
-<li>data with measurements for each region</li>
-</ol>
-<p>you don’t need to join them!</p>
-</div><div class="column" style="width:60%;">
-<p><img data-src="../img/wilke-chloropleth.png"></p>
-</div></div>
-
-<aside><div>
-<p><a href="https://clauswilke.com/dataviz/geospatial-data.html"><em>Fundamentals of Data Visualization</em></a></p>
-</div></aside></section>
-<section id="proportional-symbol" class="slide level2">
-<h2>Proportional Symbol</h2>
-<p>Overlay symbols on an existing map, where the size of the shape is proportional to the variable</p>
-<img data-src="../img/airport-ggmap.png" class="r-stretch">
-
-<aside><div>
-<p>Made with {ggmap} and {nycflights23}</p>
-</div></aside></section>
-<section id="cartogram" class="slide level2">
-<h2>Cartogram</h2>
-<p>Use approximate geographical position to encode information, but not lat/long directly</p>
-<img data-src="../img/wilke-cartogram.png" class="r-stretch">
-
-<aside><div>
-<p><a href="https://clauswilke.com/dataviz/geospatial-data.html"><em>Fundamentals of Data Visualization</em></a></p>
-</div></aside></section>
-<section id="your-task" class="slide level2">
-<h2>Your task</h2>
-<p>Your task is to use the American Community Survey data to make a chloropleth map of the US</p>
-<div class="task">
-<p>You should:</p>
+<section id="measuring-time" class="slide level2">
+<h2>Measuring time</h2>
+<p>How long ago was the last race?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>race <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">"2022-01-31"</span>)</span>
+<span id="cb36-2"><a></a><span class="fu">today</span>() <span class="sc">-</span> race</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 1093 days</code></pre>
+</div>
+</div>
 <ul>
-<li>Use the starter code provided in <code>05-maps.rmd</code></li>
-<li>Choose a different variable</li>
-<li>Change the color scale</li>
-<li>Update the title, axis labels, and legend</li>
+<li class="fragment"><p>Differences in date/time objects are <code>difftime</code> objects</p></li>
+<li class="fragment"><p><code>difftime</code>s use inconsistent units (sometimes weeks, days, hours, minutes, or seconds)</p></li>
 </ul>
+</section>
+<section id="measuring-time-durations" class="slide level2">
+<h2>Measuring time: durations</h2>
+<p>A time span that is <strong>always measured in seconds</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">as.duration</span>(<span class="fu">today</span>() <span class="sc">-</span> race)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "94435200s (~2.99 years)"</code></pre>
+</div>
+</div>
+<p>Plus, a better display</p>
+</section>
+<section id="measuring-time-periods" class="slide level2">
+<h2>Measuring time: periods</h2>
+<p>To do math with dates add and subtract <strong>periods</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">ymd_hms</span>(<span class="st">"2023-03-10 08:30:00"</span>, <span class="at">tz =</span> <span class="st">"America/Chicago"</span>) <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2023-03-11 08:30:00 CST"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">ymd_hms</span>(<span class="st">"2023-03-11 08:30:00"</span>, <span class="at">tz =</span> <span class="st">"America/Chicago"</span>) <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2023-03-12 08:30:00 CDT"</code></pre>
+</div>
+</div>
+<p>Periods are measured in clock units</p>
+</section>
+<section id="measuring-time-durations-1" class="slide level2">
+<h2>Measuring time: durations</h2>
+<p>If absolute time matters, use seconds or a duration</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">ymd_hms</span>(<span class="st">"2023-03-10 08:30:00"</span>, <span class="at">tz =</span> <span class="st">"America/Chicago"</span>) <span class="sc">+</span> <span class="fu">ddays</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2023-03-11 08:30:00 CST"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">ymd_hms</span>(<span class="st">"2023-03-11 08:30:00"</span>, <span class="at">tz =</span> <span class="st">"America/Chicago"</span>) <span class="sc">+</span> <span class="fu">ddays</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2023-03-12 09:30:00 CDT"</code></pre>
+</div>
 </div>
 
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -1263,38 +1504,6 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
       }
     });
     </script>
-    <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
-    (function() {
-      let previousOnload = window.onload;
-      window.onload = () => {
-        if (previousOnload) {
-          previousOnload();
-        }
-        lightboxQuarto.on('slide_before_load', (data) => {
-          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-          const href = trigger.getAttribute('href');
-          if (href !== null) {
-            const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-            if (imgEl !== null) {
-              const srcAttr = imgEl.getAttribute("src");
-              if (srcAttr && srcAttr.startsWith("data:")) {
-                slideConfig.href = srcAttr;
-              }
-            }
-          } 
-        });
-      
-        lightboxQuarto.on('slide_after_load', (data) => {
-          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(slideNode);
-          }
-        });
-      
-      };
-      
-    })();
-              </script>
     
 
 </body></html>
