@@ -464,42 +464,42 @@
   {
     "objectID": "activities/11-import.html",
     "href": "activities/11-import.html",
-    "title": "Data import and dates/times – Solutions",
+    "title": "Data import and dates/times",
     "section": "",
     "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
   },
   {
     "objectID": "activities/11-import.html#data-4.csv",
     "href": "activities/11-import.html#data-4.csv",
-    "title": "Data import and dates/times – Solutions",
+    "title": "Data import and dates/times",
     "section": "data-4.csv",
     "text": "data-4.csv\n\n# your code here"
   },
   {
     "objectID": "activities/11-import.html#tricky-1.csv",
     "href": "activities/11-import.html#tricky-1.csv",
-    "title": "Data import and dates/times – Solutions",
+    "title": "Data import and dates/times",
     "section": "tricky-1.csv",
     "text": "tricky-1.csv\n\n# your code here"
   },
   {
     "objectID": "activities/11-import.html#tricky-2.csv",
     "href": "activities/11-import.html#tricky-2.csv",
-    "title": "Data import and dates/times – Solutions",
+    "title": "Data import and dates/times",
     "section": "tricky-2.csv",
     "text": "tricky-2.csv\n\n# your code here"
   },
   {
     "objectID": "activities/11-import.html#task-1",
     "href": "activities/11-import.html#task-1",
-    "title": "Data import and dates/times – Solutions",
+    "title": "Data import and dates/times",
     "section": "Task 1",
     "text": "Task 1\nCreate a vector of dates that our class meets this term\n\n# your code here"
   },
   {
     "objectID": "activities/11-import.html#task-2",
     "href": "activities/11-import.html#task-2",
-    "title": "Data import and dates/times – Solutions",
+    "title": "Data import and dates/times",
     "section": "Task 2",
     "text": "Task 2\nNext, print them in the format “Wednesday: Jan 29 2025”\nHint: see ?stamp or the lubridate cheatsheet\n\n# your code here"
   },
