@@ -251,13 +251,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#tricky-2.csv" id="toc-tricky-2.csv" class="nav-link" data-scroll-target="#tricky-2.csv">tricky-2.csv</a></li>
   </ul>
 </li>
-  <li>
-<a href="#lubridate" id="toc-lubridate" class="nav-link" data-scroll-target="#lubridate"><code>lubridate</code></a>
-  <ul class="collapse">
-<li><a href="#task-1-print-list-of-dates" id="toc-task-1-print-list-of-dates" class="nav-link" data-scroll-target="#task-1-print-list-of-dates">Task 1: print list of dates</a></li>
-  <li><a href="#task-2" id="toc-task-2" class="nav-link" data-scroll-target="#task-2">Task 2</a></li>
-  </ul>
-</li>
+  <li><a href="#time-plot" id="toc-time-plot" class="nav-link" data-scroll-target="#time-plot">Time – plot</a></li>
+  <li><a href="#days-make-a-list-of-class-days" id="toc-days-make-a-list-of-class-days" class="nav-link" data-scroll-target="#days-make-a-list-of-class-days">Days – make a list of class days</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -294,191 +289,80 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Use <code>read_csv()</code> to import the <code>desserts</code> data set from</p>
 <p>https://stat220-w25.github.io/data/desserts.csv</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">desserts</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"https://stat220-w25.github.io/data/desserts.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">desserts</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"data/desserts.csv"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="your-turn" class="level1"><h1>Your turn</h1>
 <p>Use the appropriate <code>read_&lt;type&gt;()</code> function to import the following data sets:</p>
 <ul>
 <li><p><code>https://stat220-w25.github.io/data/data-4.csv</code></p></li>
-<li><p><code>https://stat220-w25.github.io/data/tricky-1.csv</code></p></li>
+<li><p><code>https:/stat220-w25.github.io/data/tricky-1.csv</code></p></li>
 <li><p><code>https://stat220-w25.github.io/data/tricky-2.csv</code></p></li>
 </ul>
 <p>If you hit any errors/problems, be sure to explore them and identify the issue, even if you can’t “fix” it.</p>
 <section id="data-4.csv" class="level3"><h3 class="anchored" data-anchor-id="data-4.csv">data-4.csv</h3>
 <p>Opening the URL for <code>data-4.csv</code> you see that the delimiter is <code>|</code>, so you should use <code>read_delim()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data4</span> <span class="op">&lt;-</span> <span class="fu">read_delim</span><span class="op">(</span><span class="st">"https://stat220-w25.github.io/data/data-4.csv"</span>, delim <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data4</span> <span class="op">&lt;-</span> <span class="fu">read_delim</span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>,<span class="st">"data/data-4.csv"</span><span class="op">)</span>, delim <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="tricky-1.csv" class="level3"><h3 class="anchored" data-anchor-id="tricky-1.csv">tricky-1.csv</h3>
 <p>At first glance it isn’t obvious what is tricky about <code>tricky-1.csv</code>; however, if you try to use <code>read_csv()</code> you’ll hit the following problem:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky1</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"https://stat220-w25.github.io/data/tricky-1.csv"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky1</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"https:/stat220-w25.github.io/data/tricky-1.csv"</span><span class="op">)</span></span>
 <span><span class="fu">problems</span><span class="op">(</span><span class="va">tricky1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 5
-    row   col expected  actual    file 
-  &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;
-1     4     4 5 columns 4 columns ""   
-2     7     4 5 columns 4 columns ""   </code></pre>
-</div>
 </div>
 <p>The output of <code>problems()</code> here is that in rows 4 and 7 <code>read_csv</code> only finds 4 columns, but 5 are expected. Looking at the imported data set we see that the city is missing in rows three and 6 (the 4th and 7th rows of the original data file).</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 5
-   first     last             address                 city         postcode
-   &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;                   &lt;chr&gt;        &lt;chr&gt;   
- 1 Leah      Downs            688-5741 Ut St.         Owensboro    V9Z 9K2 
- 2 Boris     Kirby            257-5422 Vel Avenue     Rialto       C6I 9S0 
- 3 Naida     Franco           Atwater                 T8K 7U8      &lt;NA&gt;    
- 4 Xena      Tucker           7218 A St.              Grand Forks  M6O 1X4 
- 5 Rylee     Wise             155-6070 Purus. St.     Bradford     65359   
- 6 Gallagher 2415 Ligula. St. Carbondale              55211        &lt;NA&gt;    
- 7 Griffin   Benjamin         3261 Ac St.             Guayama      94450   
- 8 Rinah     Bradley          787-9626 Eget Avenue    Norton       17673   
- 9 Tobias    Walter           4717 Mauris. Street     Attleboro    73678   
-10 Boris     Farley           893-8193 Quisque Avenue San Clemente 74492   </code></pre>
-</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can fix this with post processing:</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky1</span><span class="op">[</span><span class="fl">3</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">tricky1</span><span class="op">[</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="cn">NA</span>, <span class="va">tricky1</span><span class="op">[</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky1</span><span class="op">[</span><span class="fl">3</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">tricky1</span><span class="op">[</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="cn">NA</span>, <span class="va">tricky1</span><span class="op">[</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">tricky1</span><span class="op">[</span><span class="fl">6</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">tricky1</span><span class="op">[</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">]</span>, <span class="cn">NA</span>, <span class="va">tricky1</span><span class="op">[</span><span class="fl">4</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="tricky-2.csv" class="level3"><h3 class="anchored" data-anchor-id="tricky-2.csv">tricky-2.csv</h3>
 <p>To begin, we can attempt to read in the <code>tricky-2.csv</code> file:</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"https://stat220-w25.github.io/data/tricky-2.csv"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span>,<span class="st">"data/tricky-2.csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">problems</span><span class="op">(</span><span class="va">tricky2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 14 × 5
-     row   col expected  actual    file 
-   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;
- 1     9     6 5 columns 6 columns ""   
- 2    10     6 5 columns 6 columns ""   
- 3    11     6 5 columns 6 columns ""   
- 4    12     6 5 columns 6 columns ""   
- 5    13     6 5 columns 6 columns ""   
- 6    14     6 5 columns 6 columns ""   
- 7    15     6 5 columns 6 columns ""   
- 8    16     6 5 columns 6 columns ""   
- 9    17     6 5 columns 6 columns ""   
-10    18     6 5 columns 6 columns ""   
-11    19     6 5 columns 6 columns ""   
-12    20     6 5 columns 6 columns ""   
-13    21     6 5 columns 6 columns ""   
-14    22     6 5 columns 6 columns ""   </code></pre>
-</div>
 </div>
 <p>This looks like a missing value problem again! Let’s look at the rows with missing values:</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2</span> <span class="op">%&gt;%</span> <span class="fu">slice</span><span class="op">(</span><span class="fl">8</span><span class="op">:</span><span class="fl">21</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 14 × 5
-   iata  airport                  city               latitude longitude         
-   &lt;chr&gt; &lt;chr&gt;                    &lt;chr&gt;              &lt;chr&gt;    &lt;chr&gt;             
- 1 02C   Capitol                  Brookfield         WI       43.08751,-88.1778…
- 2 02G   Columbiana County        East Liverpool     OH       40.67331278,-80.6…
- 3 03D   Memphis Memorial         Memphis            MO       40.44725889,-92.2…
- 4 04M   Calhoun County           Pittsboro          MS       33.93011222,-89.3…
- 5 04Y   Hawley Municipal         Hawley             MN       46.88384889,-96.3…
- 6 05C   Griffith-Merrillville    Griffith           IN       41.51961917,-87.4…
- 7 05F   Gatesville - City/County Gatesville         TX       31.42127556,-97.7…
- 8 05U   Eureka                   Eureka             NV       39.60416667,-116.…
- 9 06A   Moton  Municipal         Tuskegee           AL       32.46047167,-85.6…
-10 06C   Schaumburg               Chicago/Schaumburg IL       41.98934083,-88.1…
-11 06D   Rolla Municipal          Rolla              ND       48.88434111,-99.6…
-12 06M   Eupora Municipal         Eupora             MS       33.53456583,-89.3…
-13 06N   Randall                  Middletown         NY       41.43156583,-74.3…
-14 06U   Jackpot/Hayden           Jackpot            NV       41.97602222,-114.…</code></pre>
-</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2</span> <span class="op">%&gt;%</span> <span class="fu">slice</span><span class="op">(</span><span class="fl">8</span><span class="op">:</span><span class="fl">21</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Why are there state abbreviations in the latitude column?!? (Because not all the rows put quotes around the “City, State” so it added an extra column!)</p>
 <p>One solution is to parse the file in pieces. First, we can import the first 7 rows of the file:</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2_part1</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span></span>
-<span>  <span class="st">"https://stat220-w25.github.io/data/tricky-2.csv"</span>,</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2_part1</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span></span>
+<span>  <span class="st">"https://aloy.rbind.io/data/tricky-2.csv"</span>,</span>
 <span>  n_max <span class="op">=</span> <span class="fl">7</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we parse the other rows, and manually specify the column names, since we are skipping the first row:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2_part2</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span></span>
-<span>  <span class="st">"https://stat220-w25.github.io/data/tricky-2.csv"</span>,</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2_part2</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span></span>
+<span>  <span class="st">"https://aloy.rbind.io/data/tricky-2.csv"</span>,</span>
 <span>  skip <span class="op">=</span> <span class="fl">8</span>, </span>
 <span>  col_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iata"</span>, <span class="st">"airport"</span>, <span class="st">"city"</span>, <span class="st">"state"</span>,  <span class="st">"latitude"</span>, <span class="st">"longitude"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, we have to use some data wrangling skills to combine everything. First, we must create a <code>state</code> column in <code>tricky2_part1</code></p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2_part1</span> <span class="op">&lt;-</span> <span class="va">tricky2_part1</span> <span class="op">%&gt;%</span></span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2_part1</span> <span class="op">&lt;-</span> <span class="va">tricky2_part1</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">separate</span><span class="op">(</span><span class="va">city</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"city"</span>, <span class="st">"state"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then, we need to bind the two sets of rows together using <code>bind_rows()</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="va">tricky2_part1</span>, <span class="va">tricky2_part2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tricky2</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="va">tricky2_part1</span>, <span class="va">tricky2_part2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section></section><section id="lubridate" class="level1"><h1><code>lubridate</code></h1>
-<section id="task-1-print-list-of-dates" class="level2"><h2 class="anchored" data-anchor-id="task-1-print-list-of-dates">Task 1: print list of dates</h2>
-<div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">first_class</span> <span class="op">=</span> <span class="fu">mdy</span><span class="op">(</span><span class="st">"1/6/2025"</span><span class="op">)</span></span>
-<span><span class="va">mondays</span> <span class="op">=</span> <span class="va">first_class</span> <span class="op">+</span> <span class="fu">weeks</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span></span>
-<span><span class="va">wednesdays</span> <span class="op">=</span> <span class="va">mondays</span> <span class="op">+</span> <span class="fu">days</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">fridays</span> <span class="op">=</span> <span class="va">wednesdays</span> <span class="op">+</span> <span class="fu">days</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">meetings</span> <span class="op">=</span> <span class="fu">tibble</span><span class="op">(</span></span>
-<span>  dates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">mondays</span>, <span class="va">wednesdays</span>, <span class="va">fridays</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">dates</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">meetings</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 27 × 1
-   dates     
-   &lt;date&gt;    
- 1 2025-01-13
- 2 2025-01-15
- 3 2025-01-17
- 4 2025-01-20
- 5 2025-01-22
- 6 2025-01-24
- 7 2025-01-27
- 8 2025-01-29
- 9 2025-01-31
-10 2025-02-03
-# ℹ 17 more rows</code></pre>
-</div>
-</div>
-</section><section id="task-2" class="level2"><h2 class="anchored" data-anchor-id="task-2">Task 2</h2>
-<p>Next, print them in the format “Wednesday: Jan 29 2025”</p>
-<div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">meetings</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span></span>
-<span>    date2 <span class="op">=</span> <span class="fu">stamp</span><span class="op">(</span><span class="st">"Wednesday: Jan 29 2025"</span><span class="op">)</span><span class="op">(</span><span class="va">dates</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 27 × 2
-   dates      date2                 
-   &lt;date&gt;     &lt;chr&gt;                 
- 1 2025-01-13 Monday: Jan 13 2025   
- 2 2025-01-15 Wednesday: Jan 15 2025
- 3 2025-01-17 Friday: Jan 17 2025   
- 4 2025-01-20 Monday: Jan 20 2025   
- 5 2025-01-22 Wednesday: Jan 22 2025
- 6 2025-01-24 Friday: Jan 24 2025   
- 7 2025-01-27 Monday: Jan 27 2025   
- 8 2025-01-29 Wednesday: Jan 29 2025
- 9 2025-01-31 Friday: Jan 31 2025   
-10 2025-02-03 Monday: Feb 03 2025   
-# ℹ 17 more rows</code></pre>
-</div>
-</div>
+</section></section><section id="time-plot" class="level1"><h1>Time – plot</h1>
+</section><section id="days-make-a-list-of-class-days" class="level1"><h1>Days – make a list of class days</h1>
+<p>Start by printing the dates only</p>
+<p>Next, print them in the format “Week 4 Wednesday: Jan 29 2025”</p>
 
 
 <!-- -->
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1093,153 +977,137 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb20" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Data import and dates/times -- Solutions"</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> Stat220 -- W25</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(echo = TRUE,</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="in">                      warning = FALSE,</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="in">                      message = FALSE)</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggthemes)</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>Click the "code" button above to copy and paste the source code, or pull a fresh version of the <span class="co">[</span><span class="ot">"activities" repo</span><span class="co">](https://github.com/stat220-w25/activities)</span> from GitHub.</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="fu"># Warm Up</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`read_csv()`</span> to import the <span class="in">`desserts`</span> data set from</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>https://stat220-w25.github.io/data/desserts.csv</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>desserts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://stat220-w25.github.io/data/desserts.csv"</span>)</span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="fu"># Your turn</span></span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>Use the appropriate <span class="in">`read_&lt;type&gt;()`</span> function to import the following data sets:</span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`https://stat220-w25.github.io/data/data-4.csv`</span></span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`https://stat220-w25.github.io/data/tricky-1.csv`</span></span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`https://stat220-w25.github.io/data/tricky-2.csv`</span></span>
-<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>If you hit any errors/problems, be sure to explore them and identify the issue, even if you can't "fix" it.</span>
-<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### data-4.csv</span></span>
-<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>Opening the URL for <span class="in">`data-4.csv`</span> you see that the delimiter is <span class="in">`|`</span>, so you should use <span class="in">`read_delim()`</span>:</span>
-<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a>data4 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"https://stat220-w25.github.io/data/data-4.csv"</span>, <span class="at">delim =</span> <span class="st">"|"</span>)</span>
-<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### tricky-1.csv</span></span>
-<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>At first glance it isn't obvious what is tricky about <span class="in">`tricky-1.csv`</span>; however, if you try to use <span class="in">`read_csv()`</span> you'll hit the following problem:</span>
-<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>tricky1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://stat220-w25.github.io/data/tricky-1.csv"</span>)</span>
-<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(tricky1)</span>
-<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a>The output of <span class="in">`problems()`</span> here is that in rows 4 and 7 <span class="in">`read_csv`</span> only finds 4 columns, but 5 are expected. Looking at the imported data set we see that the city is missing in rows three and 6 (the 4th and 7th rows of the original data file).</span>
-<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>tricky1</span>
-<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a>We can fix this with post processing:</span>
-<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a>tricky1[<span class="dv">3</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(tricky1[<span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="cn">NA</span>, tricky1[<span class="dv">3</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>])</span>
-<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a>tricky1[<span class="dv">6</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(tricky1[<span class="dv">4</span>, <span class="dv">1</span>], <span class="cn">NA</span>, tricky1[<span class="dv">4</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>])</span>
-<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a><span class="fu">### tricky-2.csv</span></span>
-<span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a>To begin, we can attempt to read in the <span class="in">`tricky-2.csv`</span> file:</span>
-<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-87"><a href="#cb20-87" aria-hidden="true" tabindex="-1"></a>tricky2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://stat220-w25.github.io/data/tricky-2.csv"</span>)</span>
-<span id="cb20-88"><a href="#cb20-88" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(tricky2)</span>
-<span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-90"><a href="#cb20-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a>This looks like a missing value problem again! Let's look at the rows with missing values:</span>
-<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a>tricky2 <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">8</span><span class="sc">:</span><span class="dv">21</span>)</span>
-<span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-99"><a href="#cb20-99" aria-hidden="true" tabindex="-1"></a>Why are there state abbreviations in the latitude column?!? (Because not all the rows put quotes around the "City, State" so it added an extra column!)</span>
-<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a>One solution is to parse the file in pieces. First, we can import the first 7 rows of the file:</span>
-<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a>tricky2_part1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://stat220-w25.github.io/data/tricky-2.csv"</span>,</span>
-<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_max =</span> <span class="dv">7</span></span>
-<span id="cb20-109"><a href="#cb20-109" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-110"><a href="#cb20-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a>Next, we parse the other rows, and manually specify the column names, since we are skipping the first row:</span>
-<span id="cb20-113"><a href="#cb20-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-116"><a href="#cb20-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-117"><a href="#cb20-117" aria-hidden="true" tabindex="-1"></a>tricky2_part2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb20-118"><a href="#cb20-118" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://stat220-w25.github.io/data/tricky-2.csv"</span>,</span>
-<span id="cb20-119"><a href="#cb20-119" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">8</span>, </span>
-<span id="cb20-120"><a href="#cb20-120" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"iata"</span>, <span class="st">"airport"</span>, <span class="st">"city"</span>, <span class="st">"state"</span>,  <span class="st">"latitude"</span>, <span class="st">"longitude"</span>)</span>
-<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-124"><a href="#cb20-124" aria-hidden="true" tabindex="-1"></a>Now, we have to use some data wrangling skills to combine everything. First, we must create a <span class="in">`state`</span> column in <span class="in">`tricky2_part1`</span></span>
-<span id="cb20-125"><a href="#cb20-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-128"><a href="#cb20-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-129"><a href="#cb20-129" aria-hidden="true" tabindex="-1"></a>tricky2_part1 <span class="ot">&lt;-</span> tricky2_part1 <span class="sc">%&gt;%</span></span>
-<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(city, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"city"</span>, <span class="st">"state"</span>), <span class="at">sep =</span> <span class="st">","</span>)</span>
-<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a>Then, we need to bind the two sets of rows together using <span class="in">`bind_rows()`</span>:</span>
-<span id="cb20-134"><a href="#cb20-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-137"><a href="#cb20-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-138"><a href="#cb20-138" aria-hidden="true" tabindex="-1"></a>tricky2 <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(tricky2_part1, tricky2_part2)</span>
-<span id="cb20-139"><a href="#cb20-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a><span class="fu"># `lubridate`</span></span>
-<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a><span class="fu">## Task 1: print list of dates</span></span>
-<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a>first_class <span class="ot">=</span> <span class="fu">mdy</span>(<span class="st">"1/6/2025"</span>)</span>
-<span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a>mondays <span class="ot">=</span> first_class <span class="sc">+</span> <span class="fu">weeks</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
-<span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a>wednesdays <span class="ot">=</span> mondays <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">2</span>)</span>
-<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a>fridays <span class="ot">=</span> wednesdays <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">2</span>)</span>
-<span id="cb20-153"><a href="#cb20-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-154"><a href="#cb20-154" aria-hidden="true" tabindex="-1"></a>meetings <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb20-155"><a href="#cb20-155" aria-hidden="true" tabindex="-1"></a>  <span class="at">dates =</span> <span class="fu">c</span>(mondays, wednesdays, fridays)</span>
-<span id="cb20-156"><a href="#cb20-156" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(dates)</span>
-<span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a>meetings</span>
-<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-161"><a href="#cb20-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## Task 2</span></span>
-<span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a>Next, print them in the format "Wednesday: Jan 29 2025"</span>
-<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-169"><a href="#cb20-169" aria-hidden="true" tabindex="-1"></a>meetings <span class="sc">%&gt;%</span></span>
-<span id="cb20-170"><a href="#cb20-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb20-171"><a href="#cb20-171" aria-hidden="true" tabindex="-1"></a>    <span class="at">date2 =</span> <span class="fu">stamp</span>(<span class="st">"Wednesday: Jan 29 2025"</span>)(dates)</span>
-<span id="cb20-172"><a href="#cb20-172" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb20-173"><a href="#cb20-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Data import and dates/times -- Solutions"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> Stat220 -- W25</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(echo = TRUE,</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="in">                      warning = FALSE,</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="in">                      message = FALSE,</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="in">                      eval = FALSE)</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggthemes)</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>Click the "code" button above to copy and paste the source code, or pull a fresh version of the <span class="co">[</span><span class="ot">"activities" repo</span><span class="co">](https://github.com/stat220-w25/activities)</span> from GitHub.</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="fu"># Warm Up</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`read_csv()`</span> to import the <span class="in">`desserts`</span> data set from</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>https://stat220-w25.github.io/data/desserts.csv</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>desserts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(here<span class="sc">::</span><span class="fu">here</span>(), <span class="st">"data/desserts.csv"</span>))</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="fu"># Your turn</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>Use the appropriate <span class="in">`read_&lt;type&gt;()`</span> function to import the following data sets:</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`https://stat220-w25.github.io/data/data-4.csv`</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`https:/stat220-w25.github.io/data/tricky-1.csv`</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`https://stat220-w25.github.io/data/tricky-2.csv`</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>If you hit any errors/problems, be sure to explore them and identify the issue, even if you can't "fix" it.</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### data-4.csv</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>Opening the URL for <span class="in">`data-4.csv`</span> you see that the delimiter is <span class="in">`|`</span>, so you should use <span class="in">`read_delim()`</span>:</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>data4 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(here<span class="sc">::</span><span class="fu">here</span>(here<span class="sc">::</span><span class="fu">here</span>(),<span class="st">"data/data-4.csv"</span>), <span class="at">delim =</span> <span class="st">"|"</span>)</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### tricky-1.csv</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>At first glance it isn't obvious what is tricky about <span class="in">`tricky-1.csv`</span>; however, if you try to use <span class="in">`read_csv()`</span> you'll hit the following problem:</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>tricky1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https:/stat220-w25.github.io/data/tricky-1.csv"</span>)</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(tricky1)</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>The output of <span class="in">`problems()`</span> here is that in rows 4 and 7 <span class="in">`read_csv`</span> only finds 4 columns, but 5 are expected. Looking at the imported data set we see that the city is missing in rows three and 6 (the 4th and 7th rows of the original data file).</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>tricky1</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>We can fix this with post processing:</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>tricky1[<span class="dv">3</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(tricky1[<span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="cn">NA</span>, tricky1[<span class="dv">3</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>tricky1[<span class="dv">6</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(tricky1[<span class="dv">4</span>, <span class="dv">1</span>], <span class="cn">NA</span>, tricky1[<span class="dv">4</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>])</span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="fu">### tricky-2.csv</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>To begin, we can attempt to read in the <span class="in">`tricky-2.csv`</span> file:</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>tricky2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(here<span class="sc">::</span><span class="fu">here</span>(),<span class="st">"data/tricky-2.csv"</span>))</span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(tricky2)</span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>This looks like a missing value problem again! Let's look at the rows with missing values:</span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>tricky2 <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">8</span><span class="sc">:</span><span class="dv">21</span>)</span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>Why are there state abbreviations in the latitude column?!? (Because not all the rows put quotes around the "City, State" so it added an extra column!)</span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a>One solution is to parse the file in pieces. First, we can import the first 7 rows of the file:</span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a>tricky2_part1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://aloy.rbind.io/data/tricky-2.csv"</span>,</span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_max =</span> <span class="dv">7</span></span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>Next, we parse the other rows, and manually specify the column names, since we are skipping the first row:</span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a>tricky2_part2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://aloy.rbind.io/data/tricky-2.csv"</span>,</span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">8</span>, </span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"iata"</span>, <span class="st">"airport"</span>, <span class="st">"city"</span>, <span class="st">"state"</span>,  <span class="st">"latitude"</span>, <span class="st">"longitude"</span>)</span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a>Now, we have to use some data wrangling skills to combine everything. First, we must create a <span class="in">`state`</span> column in <span class="in">`tricky2_part1`</span></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a>tricky2_part1 <span class="ot">&lt;-</span> tricky2_part1 <span class="sc">%&gt;%</span></span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(city, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"city"</span>, <span class="st">"state"</span>), <span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a>Then, we need to bind the two sets of rows together using <span class="in">`bind_rows()`</span>:</span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a>tricky2 <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(tricky2_part1, tricky2_part2)</span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a><span class="fu"># Time -- plot</span></span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a><span class="fu"># Days -- make a list of class days</span></span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a>Start by printing the dates only</span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a>Next, print them in the format "Week 4 Wednesday: Jan 29 2025"</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -413,153 +413,156 @@
     "text": "Part 6\nChain the last two parts together, so that the resulting dataset contains both avg_speed and delay_category. Pipe this new dataset into ggplot() to answer the question “is there a relationship between average speed and how late a flight is delayed?”\nIf you have time, create a new graph which only contains flights to MSP.\n\nflights %&gt;%\n  mutate(\n    delay_category = case_when(\n      dep_delay &lt;= 0 ~ \"none\",\n      dep_delay &lt;= 15 ~ \"minimal\",\n      dep_delay &lt;= 30 ~ \"delayed\",\n      dep_delay &lt;= 60 ~ \"major\",\n      dep_delay &gt; 60 ~ \"extreme\"\n    ),\n    avg_speed = distance/air_time\n  ) %&gt;%\n  ggplot(aes(y = delay_category, x = avg_speed, fill = delay_category)) + \n  geom_boxplot() + \n  theme(legend.position = \"none\")\n\nWarning: Removed 12534 rows containing non-finite outside the scale range\n(`stat_boxplot()`).\n\n\n\n\n\n\n\n\n\nflights %&gt;%\n  filter(dest == \"MSP\") %&gt;%\n  mutate(\n    delay_category = case_when(\n      dep_delay &lt;= 0 ~ \"none\",\n      dep_delay &lt;= 15 ~ \"minimal\",\n      dep_delay &lt;= 30 ~ \"delayed\",\n      dep_delay &lt;= 60 ~ \"major\",\n      dep_delay &gt; 60 ~ \"extreme\"\n    ),\n    avg_speed = distance/air_time\n  ) %&gt;%\n  ggplot(aes(y = delay_category, x = avg_speed, fill = delay_category)) + \n  geom_boxplot() + \n  theme(legend.position = \"none\")\n\nWarning: Removed 133 rows containing non-finite outside the scale range\n(`stat_boxplot()`)."
   },
   {
-    "objectID": "activities/10-combining.html",
-    "href": "activities/10-combining.html",
-    "title": "\nbind_ and _join: Combining Data",
+    "objectID": "activities/12-factors.html",
+    "href": "activities/12-factors.html",
+    "title": "12-factors",
+    "section": "",
+    "text": "gss_cat gets loaded with the forcats package in the tidyverse use gss_cat to answer the following questions (I’d use a graph, but do whatever you’d like!)\n\ngss_cat\n\n# A tibble: 21,483 × 9\n    year marital         age race  rincome        partyid    relig denom tvhours\n   &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt;          &lt;fct&gt;      &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;\n 1  2000 Never married    26 White $8000 to 9999  Ind,near … Prot… Sout…      12\n 2  2000 Divorced         48 White $8000 to 9999  Not str r… Prot… Bapt…      NA\n 3  2000 Widowed          67 White Not applicable Independe… Prot… No d…       2\n 4  2000 Never married    39 White Not applicable Ind,near … Orth… Not …       4\n 5  2000 Divorced         25 White Not applicable Not str d… None  Not …       1\n 6  2000 Married          25 White $20000 - 24999 Strong de… Prot… Sout…      NA\n 7  2000 Never married    36 White $25000 or more Not str r… Chri… Not …       3\n 8  2000 Divorced         44 White $7000 to 7999  Ind,near … Prot… Luth…      NA\n 9  2000 Married          44 White $25000 or more Not str d… Prot… Other       0\n10  2000 Married          47 White $25000 or more Strong re… Prot… Sout…       3\n# ℹ 21,473 more rows\n\n\n\nWhich religions watch the least TV?\nDo married people watch more or less TV than single people?"
+  },
+  {
+    "objectID": "activities/12-factors.html#hotel-bookings-by-month",
+    "href": "activities/12-factors.html#hotel-bookings-by-month",
+    "title": "12-factors",
+    "section": "Hotel bookings by month",
+    "text": "Hotel bookings by month\n\n# From TidyTuesday: https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-11/readme.md\nhotels &lt;- read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-11/hotels.csv\", show_col_types = FALSE)\n\n\nRun the code and examine the plot. How are the months ordered? What would be a better order?\n\n\nhotels %&gt;%\n  group_by(hotel, arrival_date_month) %&gt;%   # group by hotel type and arrival month\n  summarize(mean_adr = mean(adr)) %&gt;%       # calculate mean adr for each group\n  ggplot(aes(\n    x = arrival_date_month,                 # x-axis = arrival_date_month\n    y = mean_adr,                           # y-axis = mean_adr calculated above\n    group = hotel,                          # group lines by hotel type\n    color = hotel)                          # and color by hotel type\n    ) +\n  geom_line() +                             # use lines to represent data\n  theme_minimal() +                         # use a minimal theme\n  labs(\n    x = \"Arrival month\",                    # customize labels\n    y = \"Mean ADR (average daily rate)\",\n    title = \"Comparison of resort and city hotel prices across months\",\n    subtitle = \"Resort hotel prices soar in the summer while ciry hotel prices remain relatively constant throughout the year\",\n    color = \"Hotel type\"\n    )\n\n\n\n\n\n\n\n\nReorder the months on the x-axis (levels of arrival_date_month) in a way that makes more sense. Use a function from the forcats package."
+  },
+  {
+    "objectID": "activities/12-factors.html#more-hotel-bookings-by-room-type",
+    "href": "activities/12-factors.html#more-hotel-bookings-by-room-type",
+    "title": "12-factors",
+    "section": "More hotel bookings by room type",
+    "text": "More hotel bookings by room type\n\nCreate a bar chart of the reserved_room_type.\nCreate another bar chart where you have bars for the top three room types and an “other” category lumping the other room types together."
+  },
+  {
+    "objectID": "activities/12-factors.html#more-hotel-bookings-by-room-type-1",
+    "href": "activities/12-factors.html#more-hotel-bookings-by-room-type-1",
+    "title": "12-factors",
+    "section": "More hotel bookings by room type",
+    "text": "More hotel bookings by room type\n\nRun the code and examine the plot. How are the months ordered? What would be a better order?\n\n\nhotels %&gt;%\n  group_by(meal, arrival_date_month) %&gt;%   # group by meal type and arrival month\n  summarize(mean_adr = mean(adr)) %&gt;%       # calculate mean adr for each group\n  ggplot(aes(\n    x = arrival_date_month,                 # x-axis = arrival_date_month\n    y = mean_adr,                           # y-axis = mean_adr calculated above\n    group = meal,                          # group lines by meal type\n    color = meal)                          # and color by meal type\n    ) +\n  geom_line() +                             # use lines to represent data\n  theme_minimal() +                         # use a minimal theme\n  labs(\n    x = \"Arrival month\",                    # customize labels\n    y = \"Mean ADR (average daily rate)\",\n    color = \"Meal type\"\n    ) +\n  ggthemes::scale_color_colorblind()\n\n\n\n\n\n\n\n\nReorder the levels of meal type in a way that makes more sense. Use a function from the forcats package to do this."
+  },
+  {
+    "objectID": "activities/09-tidyr.html",
+    "href": "activities/09-tidyr.html",
+    "title": "\ntidyr: Reshaping Data",
     "section": "",
     "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
   },
   {
-    "objectID": "activities/10-combining.html#example-1-star-wars-characters",
-    "href": "activities/10-combining.html#example-1-star-wars-characters",
-    "title": "\nbind_ and _join: Combining Data",
-    "section": "Example 1: Star Wars Characters",
-    "text": "Example 1: Star Wars Characters\nDataset 1:\n\nEach row in the dataset corresponds to a star wars character\nThe columns include their name, height, mass, homeworld, species, and the first_film they appeared in\n\n\nstarwars_characters\n\n# A tibble: 87 × 6\n   name               height  mass homeworld species first_film\n   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     \n 1 Luke Skywalker        172    77 Tatooine  Human   A New Hope\n 2 C-3PO                 167    75 Tatooine  Droid   A New Hope\n 3 R2-D2                  96    32 Naboo     Droid   A New Hope\n 4 Darth Vader           202   136 Tatooine  Human   A New Hope\n 5 Leia Organa           150    49 Alderaan  Human   A New Hope\n 6 Owen Lars             178   120 Tatooine  Human   A New Hope\n 7 Beru Whitesun Lars    165    75 Tatooine  Human   A New Hope\n 8 R5-D4                  97    32 Tatooine  Droid   A New Hope\n 9 Biggs Darklighter     183    84 Tatooine  Human   A New Hope\n10 Obi-Wan Kenobi        182    77 Stewjon   Human   A New Hope\n# ℹ 77 more rows\n\n\nDataset 2:\nThe dataset is formatted the same, but includes two characters that were first introduced in *The Last Jedi, a Star Wars movie that came out after the first datset was released.\n\nstarwars_lastjedi\n\n# A tibble: 2 × 6\n  name         height mass  homeworld species first_film   \n  &lt;chr&gt;        &lt;lgl&gt;  &lt;lgl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;        \n1 Rose Tico    NA     NA    Otomok    Human   The Last Jedi\n2 Amilyn Holdo NA     NA    &lt;NA&gt;      Human   The Last Jedi\n\n\nHow should these datasets be combined?"
-  },
-  {
-    "objectID": "activities/10-combining.html#example-2-stats-sections",
-    "href": "activities/10-combining.html#example-2-stats-sections",
-    "title": "\nbind_ and _join: Combining Data",
-    "section": "Example 2: Stats Sections",
-    "text": "Example 2: Stats Sections\nDataset 1:\nThis dataset includes the number of sections of stats courses offered in Fall 2024 and Winter 2025 terms.\n\nstats_sections_fw\n\n# A tibble: 8 × 3\n  class    fall winter\n  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;\n1 stat120     3      3\n2 stat220     1      1\n3 stat230     1      1\n4 stat250     0      1\n5 stat270     1      0\n6 stat285     1      1\n7 stat320     0      0\n8 stat330     0      1\n\n\nDataset 2:\nThis dataset includes the number of sections of stats courses offered in the Spring 2025 term.\n\nstats_sections_s\n\n# A tibble: 8 × 1\n  spring\n   &lt;dbl&gt;\n1      4\n2      1\n3      1\n4      1\n5      0\n6      1\n7      1\n8      0\n\n\nHow should these datasets be combined?"
-  },
-  {
-    "objectID": "activities/10-combining.html#example-3-survivor-castaways",
-    "href": "activities/10-combining.html#example-3-survivor-castaways",
-    "title": "\nbind_ and _join: Combining Data",
-    "section": "Example 3: Survivor castaways",
-    "text": "Example 3: Survivor castaways\nDataset 1:\n\nThis dataset includes information about each castaway’s performance in a given season of Survivor (US seasons)\nIt includes a castaway ID, first name, season name and number, and the results for that castaway in that season (their overall place, whether they made the jury, and whether they were a finalist)\n\n\nus_castaway_results\n\n# A tibble: 870 × 7\n   castaway_id castaway season_name      season place jury  finalist\n   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;   \n 1 US0001      Sonja    Survivor: Borneo      1    16 FALSE FALSE   \n 2 US0002      B.B.     Survivor: Borneo      1    15 FALSE FALSE   \n 3 US0003      Stacey   Survivor: Borneo      1    14 FALSE FALSE   \n 4 US0004      Ramona   Survivor: Borneo      1    13 FALSE FALSE   \n 5 US0005      Dirk     Survivor: Borneo      1    12 FALSE FALSE   \n 6 US0006      Joel     Survivor: Borneo      1    11 FALSE FALSE   \n 7 US0007      Gretchen Survivor: Borneo      1    10 FALSE FALSE   \n 8 US0008      Greg     Survivor: Borneo      1     9 TRUE  FALSE   \n 9 US0009      Jenna    Survivor: Borneo      1     8 TRUE  FALSE   \n10 US0010      Gervase  Survivor: Borneo      1     7 TRUE  FALSE   \n# ℹ 860 more rows\n\n\nDataset 2:\n\nThis dataset includes information about each castaway who has appeared on Survivor (including non-US seasons)\nIt includes a castaway ID, their full name, date of birth, gender and occupation as presented in the show, and their Myers-Briggs personality type.\n\n\ncast_details\n\n# A tibble: 1,118 × 6\n   castaway_id full_name        date_of_birth gender occupation personality_type\n   &lt;chr&gt;       &lt;chr&gt;            &lt;date&gt;        &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           \n 1 US0014      Rudy Boesch      1928-01-20    Male   Retired N… ISTJ            \n 2 US0002      B.B. Andersen    1936-01-18    Male   Real Esta… ESTJ            \n 3 US0001      Sonja Christoph… 1937-01-28    Female Musician   ENFP            \n 4 US0075      Jake Billingsley 1941-08-21    Male   Land Brok… ISFJ            \n 5 US0151      Jim Lynch        1942-01-07    Male   Retired F… ISTJ            \n 6 US0474      Joseph Del Campo 1943-07-04    Male   Former FB… ISTJ            \n 7 US0304      Jimmy Johnson    1943-07-16    Male   Former NF… ESFJ            \n 8 US0047      Kim Johnson      1944-09-18    Female Retired T… ISFJ            \n 9 US0128      Scout Cloud Lee  1944-11-08    Female Rancher    INFJ            \n10 US0061      Paschal English  1945-03-05    Male   Judge      ISFJ            \n# ℹ 1,108 more rows\n\n\nWe are interested in exploring the relationship between overall place on a Survivor season and personality type. How should these datasets be combined?\nStop here"
-  },
-  {
-    "objectID": "activities/10-combining.html#task-line-plot",
-    "href": "activities/10-combining.html#task-line-plot",
-    "title": "\nbind_ and _join: Combining Data",
-    "section": "Task: line plot",
-    "text": "Task: line plot\nFinish the code to make a line plot of viewers against episode, colored and grouped by series. (remember to remove #| eval: false)\n\ntidy_ratings2 %&gt;%\n  ggplot(aes(x = _____, y = _____, col = _____, group = _____)) +\n  geom_line() + \n  scale_color_viridis_c(option = \"plasma\", end = .8)"
-  },
-  {
-    "objectID": "activities/10-combining.html#task-add-series-9-14-to-the-dataset",
-    "href": "activities/10-combining.html#task-add-series-9-14-to-the-dataset",
-    "title": "\nbind_ and _join: Combining Data",
-    "section": "Task: Add series 9-14 to the dataset",
-    "text": "Task: Add series 9-14 to the dataset\nThe code chunk below loads the new dataset\n\nmessy_ratings2b &lt;- read_csv(\"https://stat220-w25.github.io/data/messy_ratings2_9_14.csv\")\nmessy_ratings2b\n\n# A tibble: 6 × 21\n  series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day\n   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;\n1      9    9.55     9.92    9.31     9.76    8.91     9.35    8.88     9.41\n2     10    9.62    10.0     9.38     9.8     8.94     9.42    8.96     9.49\n3     11   11.2     11.8    10.8     11.4    10.7     11.2    10.6     11.2 \n4     12    9.57    10.2     8.98     9.64    8.69     9.39    8.75     9.13\n5     13    8.3      1       7.6      1       7.35     1       7.76     1   \n6     14    7.84     1       7.54     1       7.28     1       7.12     1   \n# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,\n#   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,\n#   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,\n#   e10_28day &lt;dbl&gt;\n\n\nCombine with bind_rows()\n\nCombine the two messy datasets by using bind_rows(). Be sure to look at your resulting dataset and make sure it has the right format\n\n# your code here\n\nCombine with join()\n\nWe’ll practice joining with the tidy versions of the data. First, create tidy_ratings2b using the new dataset. Follow the same steps as what was used to create tidy_ratings2\n\n# your code here\n\nOnce you’re satisfied, that the two tidy datasets look similar enough to combine, remove #| eval: false from the following code chunk and run it. Did it work? Why or why not?\n\ntidy_ratings = tidy_ratings2 %&gt;%\n  left_join(tidy_ratings2b)\n\nUse the correction _join function here. Save your dataset to the tidy_ratings object.\n\n# your code here\n\nCombine with bind_cols\n\nTo join the two datasets using bind_cols, you’ll first have to un-tidy your tidy datasets, so that each episode number is in a row and each series number is in a column. After using bind_cols() the first few rows of your final dataset should look like this:\n# A tibble: 10 × 16\n   episode period    s1    s2    s3    s4    s5    s6    s7    s8    s9   s10   s11   s12   s13   s14\n     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1       1      7  2.24  3.1   3.85  6.6   8.51  11.6  13.6  9.46  9.55  9.62  11.2  9.57  8.3   7.84\n 2       2      7  3     3.53  4.6   6.65  8.79  11.6  13.4  9.23  9.31  9.38  10.8  8.98  7.6   7.54\n 3       3      7  3     3.82  4.53  7.17  9.28  12.0  13.0  8.68  8.91  8.94  10.7  8.69  7.35  7.28\nStop here and let Amanda know you’ve finished"
-  },
-  {
-    "objectID": "activities/10-combining.html#footnotes",
-    "href": "activities/10-combining.html#footnotes",
-    "title": "\nbind_ and _join: Combining Data",
-    "section": "Footnotes",
-    "text": "Footnotes\n\nTalk it over: does everybody remember what makes a dataset “tidy”?↩︎"
-  },
-  {
-    "objectID": "activities/11-import.html",
-    "href": "activities/11-import.html",
-    "title": "Data import and dates/times",
-    "section": "",
-    "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
-  },
-  {
-    "objectID": "activities/11-import.html#data-4.csv",
-    "href": "activities/11-import.html#data-4.csv",
-    "title": "Data import and dates/times",
-    "section": "data-4.csv",
-    "text": "data-4.csv\n\n# your code here"
-  },
-  {
-    "objectID": "activities/11-import.html#tricky-1.csv",
-    "href": "activities/11-import.html#tricky-1.csv",
-    "title": "Data import and dates/times",
-    "section": "tricky-1.csv",
-    "text": "tricky-1.csv\n\n# your code here"
-  },
-  {
-    "objectID": "activities/11-import.html#tricky-2.csv",
-    "href": "activities/11-import.html#tricky-2.csv",
-    "title": "Data import and dates/times",
-    "section": "tricky-2.csv",
-    "text": "tricky-2.csv\n\n# your code here"
-  },
-  {
-    "objectID": "activities/11-import.html#task-1",
-    "href": "activities/11-import.html#task-1",
-    "title": "Data import and dates/times",
+    "objectID": "activities/09-tidyr.html#task-1",
+    "href": "activities/09-tidyr.html#task-1",
+    "title": "\ntidyr: Reshaping Data",
     "section": "Task 1",
-    "text": "Task 1\nCreate a vector of dates that our class meets this term\n\n# your code here"
+    "text": "Task 1\n\nTidy this data set by\n\nSelecting the series and e*_7day columns\nPivoting the data to add a column for episode and a column for rating (we’ll clean up the episode column later)\n\n\n\n# include your code here"
   },
   {
-    "objectID": "activities/11-import.html#task-2",
-    "href": "activities/11-import.html#task-2",
-    "title": "Data import and dates/times",
+    "objectID": "activities/09-tidyr.html#task-2",
+    "href": "activities/09-tidyr.html#task-2",
+    "title": "\ntidyr: Reshaping Data",
     "section": "Task 2",
-    "text": "Task 2\nNext, print them in the format “Wednesday: Jan 29 2025”\nHint: see ?stamp or the lubridate cheatsheet\n\n# your code here"
+    "text": "Task 2\n\n\nClean the episode and period column\nMake a line plot with episode on the x-axis, rating on the y-axis, colored by series. (You will also need to map the group aesthetic to series)"
   },
   {
-    "objectID": "portfolio/portfolio-2.html",
-    "href": "portfolio/portfolio-2.html",
-    "title": "Portfolio Project 2",
+    "objectID": "activities/09-tidyr.html#relig_income",
+    "href": "activities/09-tidyr.html#relig_income",
+    "title": "\ntidyr: Reshaping Data",
+    "section": "relig_income",
+    "text": "relig_income\nThe relig_income dataset in the {tidyr} package stores counts based on a survey which (among other things) asked people about their religion and annual income:\n\nrelig_income\n\n# A tibble: 18 × 11\n   religion `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k`\n   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n 1 Agnostic      27        34        60        81        76       137        122\n 2 Atheist       12        27        37        52        35        70         73\n 3 Buddhist      27        21        30        34        33        58         62\n 4 Catholic     418       617       732       670       638      1116        949\n 5 Don’t k…      15        14        15        11        10        35         21\n 6 Evangel…     575       869      1064       982       881      1486        949\n 7 Hindu          1         9         7         9        11        34         47\n 8 Histori…     228       244       236       238       197       223        131\n 9 Jehovah…      20        27        24        24        21        30         15\n10 Jewish        19        19        25        25        30        95         69\n11 Mainlin…     289       495       619       655       651      1107        939\n12 Mormon        29        40        48        51        56       112         85\n13 Muslim         6         7         9        10         9        23         16\n14 Orthodox      13        17        23        32        32        47         38\n15 Other C…       9         7        11        13        13        14         18\n16 Other F…      20        33        40        46        49        63         46\n17 Other W…       5         2         3         4         2         7          3\n18 Unaffil…     217       299       374       365       341       528        407\n# ℹ 3 more variables: `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;,\n#   `Don't know/refused` &lt;dbl&gt;\n\n\nUse pivot_longer() to tidy this dataset."
+  },
+  {
+    "objectID": "activities/09-tidyr.html#anscombe",
+    "href": "activities/09-tidyr.html#anscombe",
+    "title": "\ntidyr: Reshaping Data",
+    "section": "anscombe",
+    "text": "anscombe\nAnscombe’s quartet is a built-in dataset in R.\n\nanscombe\n\n   x1 x2 x3 x4    y1   y2    y3    y4\n1  10 10 10  8  8.04 9.14  7.46  6.58\n2   8  8  8  8  6.95 8.14  6.77  5.76\n3  13 13 13  8  7.58 8.74 12.74  7.71\n4   9  9  9  8  8.81 8.77  7.11  8.84\n5  11 11 11  8  8.33 9.26  7.81  8.47\n6  14 14 14  8  9.96 8.10  8.84  7.04\n7   6  6  6  8  7.24 6.13  6.08  5.25\n8   4  4  4 19  4.26 3.10  5.39 12.50\n9  12 12 12  8 10.84 9.13  8.15  5.56\n10  7  7  7  8  4.82 7.26  6.42  7.91\n11  5  5  5  8  5.68 4.74  5.73  6.89\n\n\nThis dataset contains four pairs of variables (x1 and y1, x2 and y2, etc) that underlie Anscombe’s quartet, a collection of four datasets that have the same summary statistics (mean, sd, correlation etc), but have quite different data. We want to produce a dataset with columns set, x and y:\n# A tibble: 44 × 3\n   set       x     y\n   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 1        10  8.04\n 2 2        10  9.14\n 3 3        10  7.46\nThere are (at least) two ways to do this. The first is a little more intuitive, but not as efficient:\n\nFirst, we’ll create a new “index” column, so we don’t lose track of which x values map to which y values.\n\n\nanscombe &lt;- anscombe %&gt;%\n  mutate(\n    index = 1:nrow(anscombe)\n  )\n\n\nNext, use pivot_longer() on all of the columns but index. Use the default for names_to and values_to. The first few rows of your result should look like this:\n\n# A tibble: 88 × 3\n   index name  value\n   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n 1     1 x1    10   \n 2     1 x2    10   \n 3     1 x3    10  \n\nNext, separate name into variable and set. This is a little tricky, since there’s no separator character (the values of name are x1 and x2 instead of x_1 or x_2). Instead, set sep = 1, which tells R to split the column after the first character. The first few rows of your result should look like this:\n\n# A tibble: 88 × 4\n   index variable set   value\n   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;\n 1     1 x        1     10   \n 2     1 x        2     10   \n 3     1 x        3     10   \n\nFinally, use pivot_wider() with names_from variable and values_from value. Call your tidy dataset anscombe_tidy.\n\nIf all went well, you should be able to run the following two chunks to generate the summary statistics and scatterplots for Anscombe’s quartet.\n\nanscombe_tidy %&gt;%\n  group_by(set) %&gt;%\n  summarize(\n    mean_x = mean(x),\n    mean_y = mean(y),\n    sd_x = sd(x),\n    sd_y = sd(y),\n    cor = cor(x,y)\n  )\n\n\nanscombe_tidy %&gt;%\n  ggplot(aes(x = x, y = y)) + \n  geom_point() + \n  facet_wrap(~set)\n\nThe second way to do this is directly within pivot_longer():\n\nanscombe %&gt;%\n  pivot_longer(\n    -index,\n    names_to = c(\".value\", \"set\"),\n    names_pattern = \"(.)(.)\"\n  )\n\n# A tibble: 44 × 4\n   index set       x     y\n   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1     1 1        10  8.04\n 2     1 2        10  9.14\n 3     1 3        10  7.46\n 4     1 4         8  6.58\n 5     2 1         8  6.95\n 6     2 2         8  8.14\n 7     2 3         8  6.77\n 8     2 4         8  5.76\n 9     3 1        13  7.58\n10     3 2        13  8.74\n# ℹ 34 more rows\n\n\npull up the help page for pivot_longer and try to explain the new arguments."
+  },
+  {
+    "objectID": "portfolio/portfolio-1.html",
+    "href": "portfolio/portfolio-1.html",
+    "title": "Portfolio Project 1",
     "section": "",
-    "text": "For your second portfolio project, you’ll apply what you’ve learned about wrangling data using the tidyverse. Your goal is to learn which areas of the U.S. struggle with weather prediction and explore possible reasons why. Speciﬁcally, you will focus on the error in high and low temperature forecasting, and may wish to also consider precipitation and outlook.\nYou should write a short report describing your ﬁndings. I envision an introductory paragraph that provides some context to your data, and a couple paragraphs outlining your ﬁndings. That’s it. I’m looking for something that is insightful and well-crafted, rather than long and exhaustive.\nYou should write your blog post in R Markdown, create any graphics using ggplot2, and use tools from this class for data wrangling. To submit your work, push both your R Markdown (.Rmd) ﬁle and knitted output document to GitHub. Do not forget to give your post an informative title!",
+    "text": "Overview\nIn your first mini-project, you’ll apply what you’ve learned about ggplot2 and design principles to replicate and redesign a published graph. This project consists of three parts:\n\nReplicating an existing graph using ggplot2. Depending on the graph you choose, this may require some creativity in recreating data.\nUsing design principles from class, re-design the original graph to be better. This should include, at minimum, changes to two of the “layers” of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme).\nA written summary (no more than 1 printed page) including (1) an evaluation of the original graph and (2) reasoning for your design choices in improving the graph. This should include references to readings and discussions from class.\n\n\n\nOptions and Examples\nThe list below includes some good places to get started finding a graph. You do not have to choose a graph from one of these sources. It can be hard to find associated data with some published graphs, so don’t spend too much time trying to find data for a specific graph before moving on.\n\nOur World In Data\nFiveThirtyEight + Associated R Package (See available data here).\nHelpMeViz\nDataIsPlural\nTidyTuesday – If you choose this option, please be especially kind in your critique. This is a weekly R community activity, and many submissions are by beginners.\nr/dataisbeautiful\nr/dataisugly\n\n\n\nSubmission\nYour submission should include two visualizations (replication and improvement), a written overview of your work, and all associated code. You should work in a rmarkdown or quarto file. Your knitted/rendered file can be either pdf or html. I will distribute GitHub skeleton repos that you should fill in as you work. You should commit your final code and output file to your repo and link your repo to gradescope to submit.\n\n\nRubric\nA successful project will:\n\nInclude all necessary components pushed to GitHub and linked to gradescope\nContain code, plots, and written summary in a single .rmd document\nThe .rmd with all necessary code for recreation\nThe .rmd does not include unnecessary code\nProvide a thoughtful summary and critique\nThe replication matches the original graph on all layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\nThe improved graph has made changes to at least two of the layers\n\nAesthetics faithfully represent the representation of the underlying data\n\nMeet minimum submission quality standards\n\nVery few grammatical mistakes, spelling mistakes, or typos\nAppropriate labels and font sizes\nA readable theme\nThe rendered document does not contain any unnecessary content (package loading messages, warnings, etc.)\n\n\nAn excellent project will meet all of the requirements for a successful project, plus\n\nBe published (publicly!) to the web. (It is a portfolio project, after all). I recommend using RPubs as it’s very easy to publish a standalone website through RStudio, but if you have a public-facing website, that’s great too! Please include a URL in your YAML header so I can find it when grading.\n\nThere are lots of reasons you might not want the world to know that you are enrolled in this class, and this is one of your rights under FERPA. If you’re not comfortable including your name, you don’t have to! Your public document can be authored by “Student” (which has a history of being used in statistics).\nIf you are not comfortable attaching your name to something public-facing and this solution doesn’t work for you, please contact me on slack at least 72 hours before the due date so we can make an alternative plan.\n\nThe improved graph has made changes to at least four of the layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\n\nAll changes to aesthetics, geometries, etc. should be faithful representations of the underlying data (e.g. changes for the sake of making a change don’t count!)\n\n\nFor this portfolio project, you may work individually or in pairs. If you choose to work in a pair, let me know as soon as you decide so I can make a group repo for you. Both partners should have a record of committing and pushing to the repo.\n\n\nFAQ\nIf you have any questions, please post them to the #portfolio-projects channel on slack.",
     "crumbs": [
       "Portfolio Projects",
-      "Portfolio Project 2"
+      "Portfolio Project 1"
     ]
   },
   {
-    "objectID": "portfolio/portfolio-2.html#weather-forecasts.csv",
-    "href": "portfolio/portfolio-2.html#weather-forecasts.csv",
-    "title": "Portfolio Project 2",
-    "section": "weather-forecasts.csv",
-    "text": "weather-forecasts.csv\n\n\n\n\n\n\n\n\nvariable\nclass\ndescription\n\n\n\n\ndate\ndate\ndate described by the forecast\n\n\ncity\nfactor\nobservation city\n\n\nstate\nfactor\nstate or territory\n\n\nhigh_or_low\nfactor\nwhether the forecast is for the high temperature of the low temperature\n\n\nforecast_hours_before\ninteger\nthe number of hours before the observation (one of 12, 24, 36, or 48)\n\n\nobserved_temp\ninteger\nthe actual observed temperature on that date (high or low)\n\n\nforecast_temp\ninteger\nthe predicted temperature on that date (high or low)\n\n\nobserved_precip\ndouble\nthe observed precipitation on that date, in inches; note that some observations lack an indication of precipitation, while others explicitly report 0\n\n\nforecast_outlook\nfactor\nan abbreviation for the general outlook, such as precipitation type\n\n\npossible_error\nfactor\neither (1) “none” if the row contains no potential errors or (2) thename of the variable that is the cause of the potential error",
-    "crumbs": [
-      "Portfolio Projects",
-      "Portfolio Project 2"
-    ]
-  },
-  {
-    "objectID": "portfolio/portfolio-2.html#forecast_cities.csv",
-    "href": "portfolio/portfolio-2.html#forecast_cities.csv",
-    "title": "Portfolio Project 2",
-    "section": "forecast_cities.csv",
-    "text": "forecast_cities.csv\n\n\n\n\n\n\n\n\nvariable\nclass\ndescription\n\n\n\n\ncity\ncharacter\ncity\n\n\nstate\ncharacter\nstate or territory\n\n\nlon lat\ndouble\nlongitude\n\n\nlat\ndouble\nlatitude\n\n\nkoppen\ncharacter\nKöppen climate classiﬁcation\n\n\nelevation\ndouble\nelevation in meters\n\n\ndistance_to_coast\ndouble\ndistance_to_coast in miles\n\n\nwind\ndouble\nmean wind speed\n\n\nelevation_change_four\ndouble\ngreatest elevation change in meters out of the four closest points to this city in a collection of elevations used by the team at Saint Louis University\n\n\nelevation_change_eight\ndouble\ngreatest elevation change in meters out of the eight closest points to this city in a collection of elevations used by the team at Saint Louis University\n\n\navg_annual_precip\ndouble\naverage annual precipitation in inches",
-    "crumbs": [
-      "Portfolio Projects",
-      "Portfolio Project 2"
-    ]
-  },
-  {
-    "objectID": "portfolio/portfolio-2.html#outlook_meanings.csv",
-    "href": "portfolio/portfolio-2.html#outlook_meanings.csv",
-    "title": "Portfolio Project 2",
-    "section": "outlook_meanings.csv",
-    "text": "outlook_meanings.csv\n\n\n\nvariable\nclass\n\n\n\n\nforecast_outlook\ncharacter\n\n\nmeaning\ncharacter",
-    "crumbs": [
-      "Portfolio Projects",
-      "Portfolio Project 2"
-    ]
-  },
-  {
-    "objectID": "notes/02-full-lego-report.html",
-    "href": "notes/02-full-lego-report.html",
-    "title": "An Overview of Lego Sets on Rebrickable",
+    "objectID": "notes/01-r-basics.html",
+    "href": "notes/01-r-basics.html",
+    "title": "R Basics",
     "section": "",
-    "text": "Rebrickable is a website that shows you which LEGO sets you can build from the LEGO sets and parts that you already own. To do this, Rebrickable maintains a database of the entire LEGO catalog. In this document, we’ll summarize the LEGO sets in this database.\nThe data set was originally obtained from the 2022-09-09 repository on Tidy Tuesday.\n\nIn the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
+    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
   },
   {
-    "objectID": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
-    "href": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
-    "title": "An Overview of Lego Sets on Rebrickable",
+    "objectID": "notes/01-r-basics.html#loading-r-packages",
+    "href": "notes/01-r-basics.html#loading-r-packages",
+    "title": "R Basics",
     "section": "",
-    "text": "In the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
+    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#creating-and-naming-objects",
+    "href": "notes/01-r-basics.html#creating-and-naming-objects",
+    "title": "R Basics",
+    "section": "Creating and naming objects",
+    "text": "Creating and naming objects\nAll R statements where you create objects have the form:\n\nobject_name &lt;- value\n\nAt first, we’ll be creating a lot of data objects. For example, we an load a data set containing the ratings for each episode of The Office using the code\n\noffice_ratings &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-17/office_ratings.csv\")\n\nIn this class you will be creating a lot of objects, so you’ll need to come up with names for those objects. Trying to think of informative/meaningful names for objects is hard, but necessary work! Below are the fundamental rules for naming objects in R:\n\nnames can’t start with a number\nnames are case-sensitive\nsome common letters are used internally by R and should be avoided as variable names (c, q, t, C, D, F, T, I)\nThere are reserved words that R won’t let you use for variable names (for, in, while, if, else, repeat, break, next)\nR will let you use the name of a predefined function—but don’t do it!\n\nYou can always check to see if you the name you want to use is already taken via exists():\nFor example lm exists\n\nexists(\"lm\")\n\n[1] TRUE\n\n\nbut carleton_college doesn’t.\n\nexists(\"carleton_college\")\n\n[1] FALSE\n\n\nThere are also a lot of naming styles out there, and if you have coded in another language, you may have already developed a preference. Below is an illustration by Allison Horst\n\n\n\n\n\n\n\n\nI generally following the tidyverse style guide, so you’ll see that I use only lowercase letters, numbers, and _ (snake case)."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#overviews-of-data-frames",
+    "href": "notes/01-r-basics.html#overviews-of-data-frames",
+    "title": "R Basics",
+    "section": "Overviews of data frames",
+    "text": "Overviews of data frames\nAbove, you loaded in a data set called office_ratings. Data sets are stored as a special data structure called a data frame. Data frames are the most-commonly used data structure for data analysis in R. For now, think of them like spreadsheets.\nOnce you have your data frame, you can get a quick overview of it using a few commands (below I use data_set as a generic placeholder for the data frame’s name):\n\n\n\n\n\n\nCommand\nDescription\n\n\n\nhead(data_set)\nprint the first 6 rows\n\n\ntail(data_set)\nprint the last 6 rows\n\n\nglimpse(data_set)\na quick overview where columns run down the screen and the data values run across. This allows you to see every column in the data frame.\n\n\nstr(data_set)\na quick overview like glimpse(), but without some of the formatting\n\n\nsummary(data_set)\nquick summary statistics for each column\n\n\ndim(data_set)\nthe number of rows and columns\n\n\nnrow(data_set)\nthe number of rows\n\n\nncol(data_set)\nthe number of columns"
+  },
+  {
+    "objectID": "notes/01-r-basics.html#tibbles",
+    "href": "notes/01-r-basics.html#tibbles",
+    "title": "R Basics",
+    "section": "Tibbles",
+    "text": "Tibbles\nA tibble, or a tbl_df is another version of a data frame which is used by default in a lot of the tidyverse packages that we’ll use.\n\nTibbles are data.frames that are lazy and surly: they do less (i.e. they don’t change variable names or types, and don’t do partial matching) and complain more (e.g. when a variable does not exist). This forces you to confront problems earlier, typically leading to cleaner, more expressive code. Tibbles also have an enhanced print() method which makes them easier to use with large datasets containing complex objects.\n\n\n\n\n\n\n\n Check point\n\n\n\nRun the above commands on the office_ratings data set. Compare and contrast the information returned by each command.\n\n\n\n\n\n\n\n\nGetting a spreadsheet\n\n\n\nIn RStudio, you can run the command View(data_set) to pull up a spreadsheet representation of a data frame. You can also click on the name of the data frame in the Environment pane. This can be a great way help you think about the data, and even has some interactive functions (e.g., filtering and searching); however, never include View(data_set) in an .Rmd file!!\n\n\n\n\n\n\n\n\nReview from intro stats\n\n\n\nIn intro stats we used the terms cases (or observations) and variables to describe the rows and columns of a data frame, respectively."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
+    "href": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
+    "title": "R Basics",
+    "section": "Extracting pieces of data frames",
+    "text": "Extracting pieces of data frames\nSince data frames are the fundamental data structure for most analyses in R, it’s important to know how to work with them. You already know how to get an overview of a data frame, but that isn’t always very informative. Often, you want to extract pieces of a data frame, such as a specific column or row.\nExtracting rows\nData frames can be indexed by their row/column numbers. To extract elements of a data frame, the basic syntax is data_set[row.index, column.index]. So, to extract the 10th row of office_ratings we run\n\noffice_ratings[10, ]\n\n# A tibble: 1 × 6\n  season episode title    imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      2       4 The Fire         8.4        2713 2005-10-11\n\n\nNotice that to extract an entire row, we leave the column index position blank.\nWe can also extract multiple rows by creating a vector of row indices. For example, we can extract the first 5 rows via\n\noffice_ratings[1:5, ]\n\n# A tibble: 5 × 6\n  season episode title         imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                 7.6        3706 2005-03-24\n2      1       2 Diversity Day         8.3        3566 2005-03-29\n3      1       3 Health Care           7.9        2983 2005-04-05\n4      1       4 The Alliance          8.1        2886 2005-04-12\n5      1       5 Basketball            8.4        3179 2005-04-19\n\n\nHere, 1:5 create a sequence of integers from 1 to 5.\nWe could also specify arbitrary row index values by combing the values into a vector. For example, we could extract the 1st, 13th, 64th, and 128th rows via\n\noffice_ratings[c(1, 13, 64, 128), ]\n\n# A tibble: 4 × 6\n  season episode title            imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                    7.6        3706 2005-03-24\n2      2       7 The Client               8.6        2631 2005-11-08\n3      4      13 Job Fair                 7.9        1977 2008-05-08\n4      7      11 Classy Christmas         8.9        2138 2010-12-09\n\n\nExtracting columns\nSimilar to extracting rows, we can use a numeric index to extract the columns of a data frame. For example, to extract the 3rd column, we can run\n\noffice_ratings[,3]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nAlternatively, we can pass in the column name in quotes instead of the column number\n\noffice_ratings[,\"title\"]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nNotice that the extracted column is still formatted as a data frame (or tibble). If you want to extract the contents of the column and just have a vector of titles, you have a few options.\n\nYou could use double brackets with the column number:\n\n\noffice_ratings[[3]]\n\n\nYou could use double brackets with the column name in quotes:\n\n\noffice_ratings[[\"title\"]]\n\n\nYou could use the $ extractor with the column name (not in quotes):\n\n\noffice_ratings$title\n\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract the 35th row of office_ratings.\nExtract rows 35, 36, 37, and 38 of office_ratings.\nExtract the imdb_rating column from office ratings using the column index number.\nExtract the imdb_rating column from office ratings using the column name."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#lists",
+    "href": "notes/01-r-basics.html#lists",
+    "title": "R Basics",
+    "section": "Lists",
+    "text": "Lists\nIt turns out that data frames are special cases of lists, a more general data structure. In a data frame, each column is an element of the data list and each column must be of the same length. In general, lists can be comprised of elements of vastly different lengths and data types.\nAs an example, let’s construct a list of the faculty in the MAST department and what is being taught this winter.\n\nstat_faculty &lt;- c(\"Kelling\", \"Loy\", \"Luby\", \"Poppick\", \"St. Clair\", \"Wadsworth\")\nstat_courses &lt;- c(120, 220, 230, 250, 285, 330)\nmath_faculty &lt;- c(\"Brooke\", \"Davis\", \"Egge\", \"Gomez-Gonzales\", \"Haunsperger\", \"Johnson\", \n                  \"Meyer\", \"Montee\", \"Shrestha\",\"Terry\", \"Thompson\", \"Turnage-Butterbaugh\")\nmath_courses &lt;- c(101, 106, 111, 120, 210, 211, 232, 236, 240, 241, 251, 321, 333, 395)\n\nmast &lt;- list(stat_faculty = stat_faculty, stat_courses = stat_courses, \n             math_faculty = math_faculty, math_courses = math_courses)\n\nOverview of a list\nYou can get an overview of a list a few ways:\n\n\nglimpse(list_name) and str(list_name) list the elements of the list and the first few entries of each element.\n\n\nglimpse(mast)\n\nList of 4\n $ stat_faculty: chr [1:6] \"Kelling\" \"Loy\" \"Luby\" \"Poppick\" ...\n $ stat_courses: num [1:6] 120 220 230 250 285 330\n $ math_faculty: chr [1:12] \"Brooke\" \"Davis\" \"Egge\" \"Gomez-Gonzales\" ...\n $ math_courses: num [1:14] 101 106 111 120 210 211 232 236 240 241 ...\n\n\n\n\nlength(list_name) will tell you how many elements are in the list\n\n\nlength(mast)\n\n[1] 4\n\n\nExtracting elements of a list\nSince data frames are lists, you’ve already seen how to extract elements of a list. For example, to extract the stat_faculty you could run\n\nmast[[1]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\nor\n\nmast[[\"stat_faculty\"]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you had only used a single bracket above, the returned object would still be a list, which is typically not what we would want.\n\nmast[1]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\n\n\n Check point\n\n\n\nExtract the statistics courses offered this term."
+  },
+  {
+    "objectID": "notes/01-r-basics.html#vectors",
+    "href": "notes/01-r-basics.html#vectors",
+    "title": "R Basics",
+    "section": "Vectors",
+    "text": "Vectors\nThe columns of the office_ratings data frame and the elements of the mast list were comprised of (atomic) vectors. Unlike lists, all elements within a vector share the same type. For example, all names in the stat_faculty vector were character strings and all ratings in the imdb_rating column were numeric. We’ll deal with a variety of types of vectors in this course, including:\n\nnumeric\ncharacter (text)\nlogical (TRUE/FALSE)\n\nExtracting elements of a vector\nJust like with lists (and therefore data frames), we use brackets to extract elements from a vector. As an example, let’s work with the title column from office_ratings.\n\ntitle &lt;- office_ratings$title # vector of titles\n\nTo extract the 111th title, we run\n\ntitle[111]\n\n[1] \"New Leads\"\n\n\nor two extract the 100th through 111th titles, we run\n\ntitle[100:111]\n\n [1] \"Double Date\"          \"Murder\"               \"Shareholder Meeting\" \n [4] \"Scott's Tots\"         \"Secret Santa\"         \"The Banker\"          \n [7] \"Sabre\"                \"Manager and Salesman\" \"The Delivery: Part 1\"\n[10] \"The Delivery: Part 2\" \"St. Patrick's Day\"    \"New Leads\"           \n\n\nNegative indices\nSometimes, we want to “kick out” elements of our vector. To do this, we can use a negative index value. For example,\n\ntitle[-1]\n\nreturns all but the first title—that is, it kicks out the first title. To kick out multiple elements, we need to negate a vector of indices. For example, below we kick out the first 10 titles\n\ntitle[-c(1:10)]\n\nAnd now we kick out the 5th, 50th, and 150th titles\n\ntitle[-c(5, 50, 150)]\n\nThis idea can be adapted to lists and data frames. For example, to kick out the first row of office_ratings, we run\n\noffice_ratings[-1,]\n\n# A tibble: 187 × 6\n   season episode title             imdb_rating total_votes air_date  \n    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n 1      1       2 Diversity Day             8.3        3566 2005-03-29\n 2      1       3 Health Care               7.9        2983 2005-04-05\n 3      1       4 The Alliance              8.1        2886 2005-04-12\n 4      1       5 Basketball                8.4        3179 2005-04-19\n 5      1       6 Hot Girl                  7.8        2852 2005-04-26\n 6      2       1 The Dundies               8.7        3213 2005-09-20\n 7      2       2 Sexual Harassment         8.2        2736 2005-09-27\n 8      2       3 Office Olympics           8.4        2742 2005-10-04\n 9      2       4 The Fire                  8.4        2713 2005-10-11\n10      2       5 Halloween                 8.2        2561 2005-10-18\n# ℹ 177 more rows\n\n\nor to kick out the math courses from the mast list we run\n\nmast[-4]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n$stat_courses\n[1] 120 220 230 250 285 330\n\n$math_faculty\n [1] \"Brooke\"              \"Davis\"               \"Egge\"               \n [4] \"Gomez-Gonzales\"      \"Haunsperger\"         \"Johnson\"            \n [7] \"Meyer\"               \"Montee\"              \"Shrestha\"           \n[10] \"Terry\"               \"Thompson\"            \"Turnage-Butterbaugh\"\n\n\nLogical indices\nIt’s great to be able to extract (or omit) elements using indices, but sometimes we don’t know what index value we should use. For example, if you wanted to extract all of the 300-level statistics courses from the stat_courses vector, you would need to manually determine that positions 2:5 meet that requirement. That’s a lot of work! A better alternative is to allow R to find the elements meeting that requirement using logical operators. Below is a table summarizing common logical operators in R.\n\n\nComparison\nMeaning\n\n\n\n&lt;\nless than\n\n\n&gt;\ngreater than\n\n\n&lt;=\nless than or equal to\n\n\n&gt;=\ngreater than or equal to\n\n\n==\nis equal to\n\n\n!=\nnot equal to\n\n\n\nIn order to extract the 300-level statistics courses, we’ll take two steps:\n\nWe’ll determine whether each course is numbered at least 300,\nthen we’ll use that sequence of TRUEs/FALSEs to extract the course.\n\nSo, first we use the logical operator &gt;= to compare stat_courses and 300. This returns TRUE if the element meets the specification and FALSE otherwise.\n\nstat_courses &gt;= 300\n\n[1] FALSE FALSE FALSE FALSE FALSE  TRUE\n\n\nNow, we can use this vector as our index. Only the TRUE elements will be extracted:\n\nstat_courses[stat_courses &gt;= 300]\n\n[1] 330\n\n\nThe same idea can be used with data frames and lists, just remember how to format the brackets and indices!\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract all statistics courses below 250 from stat_courses.\nExtract all math courses except for 240 (probability) from math_courses.\nExtract all rows from season 3 of The Office."
+  },
+  {
+    "objectID": "course-faq.html",
+    "href": "course-faq.html",
+    "title": "FAQ",
+    "section": "",
+    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
+    "crumbs": [
+      "Course information",
+      "FAQ"
+    ]
+  },
+  {
+    "objectID": "course-faq.html#where-can-i-get-help",
+    "href": "course-faq.html#where-can-i-get-help",
+    "title": "FAQ",
+    "section": "",
+    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
+    "crumbs": [
+      "Course information",
+      "FAQ"
+    ]
   },
   {
     "objectID": "slides/06/slides06.html#today",
@@ -1511,14 +1514,14 @@
     "href": "slides/11/slides11.html#measuring-time",
     "title": "Data Import & Dates/Times",
     "section": "Measuring time",
-    "text": "Measuring time\nHow long ago was the last race?\n\nrace &lt;- ymd(\"2022-01-31\")\ntoday() - race\n\nTime difference of 1094 days\n\n\n\nDifferences in date/time objects are difftime objects\ndifftimes use inconsistent units (sometimes weeks, days, hours, minutes, or seconds)"
+    "text": "Measuring time\nHow long ago was the last race?\n\nrace &lt;- ymd(\"2022-01-31\")\ntoday() - race\n\nTime difference of 1095 days\n\n\n\nDifferences in date/time objects are difftime objects\ndifftimes use inconsistent units (sometimes weeks, days, hours, minutes, or seconds)"
   },
   {
     "objectID": "slides/11/slides11.html#measuring-time-durations",
     "href": "slides/11/slides11.html#measuring-time-durations",
     "title": "Data Import & Dates/Times",
     "section": "Measuring time: durations",
-    "text": "Measuring time: durations\nA time span that is always measured in seconds\n\nas.duration(today() - race)\n\n[1] \"94521600s (~3 years)\"\n\n\nPlus, a better display"
+    "text": "Measuring time: durations\nA time span that is always measured in seconds\n\nas.duration(today() - race)\n\n[1] \"94608000s (~3 years)\"\n\n\nPlus, a better display"
   },
   {
     "objectID": "slides/11/slides11.html#measuring-time-periods",
@@ -1994,7 +1997,7 @@
     "href": "index.html",
     "title": "Stat 220: Intro to Data Science",
     "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n📝complete welcome survey\n\nWelcome + data, R review\n\nslides01 01-example-unvotes\n\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\n\nslides02 02-reproducible-reports 02-lego-report\n\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1  📺 intro to ggplot\n\nggplot\n\nslides03 03-ggplot-intro and .rmd\n\nHW 1 (on moodle)\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04  04-customizing-plots .rmd\n\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\n\nslides05  05-maps .rmd\n\nHW 2\n\n\n2\nF\nFri, Jan 17\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\n\nslides07 07-verbs\n\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\n\nslides08 08-dplyr2\n\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4 \n\nTidy data\n\nslides09 09-tidyr\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 19.1-19.3\n\nCombining datasets\n\nslides10 10-combining\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\nslides11 11-import\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 16 \n\nWorking with factors\n\n\n\n\n5\nM\nMon, Feb 3\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\n\n\n\n5\nW\nWed, Feb 5\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nText Analysis\n\nHW 5, Portfolio 2\n\n\n\n5\nF\nFri, Feb 7\nTBA\nTBA\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\n❌ Midterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n📚What is an API? 📚R4DS 23 📝 sign up for a census API key\n\nAPIs\n\n\n\n\n7\nW\nWed, Feb 19\nTBA\nScraping\n\nHW7  Final Project Proposal\n\n\n7\nF\nFri, Feb 21\n\nEthics III\n\nLab Quiz 3\n\n\n8\nM\nMon, Feb 24\nTBA\nIntro to Interactivity\n\n\n\n\n8\nW\nWed, Feb 26\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\nShiny 1\n\nHW8, Portfolio 3\n\n\n\n8\nF\nFri, Feb 28\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nM\nMon, Mar 3\n\nShiny 3\n\nFinal Project sketch draft\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\n\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
+    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n📝complete welcome survey\n\nWelcome + data, R review\n\nslides01 01-example-unvotes\n\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\n\nslides02 02-reproducible-reports 02-lego-report\n\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1  📺 intro to ggplot\n\nggplot\n\nslides03 03-ggplot-intro and .rmd\n\nHW 1 (on moodle)\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04  04-customizing-plots .rmd\n\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\n\nslides05  05-maps .rmd\n\nHW 2\n\n\n2\nF\nFri, Jan 17\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\n\nslides07 07-verbs\n\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\n\nslides08 08-dplyr2\n\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4 \n\nTidy data\n\nslides09 09-tidyr\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 19.1-19.3\n\nCombining datasets\n\nslides10 10-combining\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\nslides11 11-import\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 16 \n\nWorking with factors\n\nslides12 12-factors\n\n\n\n\n5\nM\nMon, Feb 3\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\n\n\n\n5\nW\nWed, Feb 5\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nText Analysis\n\nHW 5, Portfolio 2\n\n\n\n5\nF\nFri, Feb 7\nTBA\nTBA\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\n❌ Midterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n📚What is an API? 📚R4DS 23 📝 sign up for a census API key\n\nAPIs\n\n\n\n\n7\nW\nWed, Feb 19\nTBA\nScraping\n\nHW7  Final Project Proposal\n\n\n7\nF\nFri, Feb 21\n\nEthics III\n\nLab Quiz 3\n\n\n8\nM\nMon, Feb 24\nTBA\nIntro to Interactivity\n\n\n\n\n8\nW\nWed, Feb 26\nPick one:  📺 Shiny basics playlist  📚Ch 1-2 of Mastering Shiny\n\nShiny 1\n\nHW8, Portfolio 3\n\n\n\n8\nF\nFri, Feb 28\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nM\nMon, Mar 3\n\nShiny 3\n\nFinal Project sketch draft\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\n\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
     "crumbs": [
       "Course information",
       "Schedule"
@@ -2866,128 +2869,559 @@
     "text": "Your tasks before next class\n\nCreate a GitHub account if you don’t have one\nComplete the welcome survey if you haven’t already\nRead the syllabus and pass syllabus quiz\nMake sure you can login in to the maize server or update your local R/RStudio versions\nComplete the readings for next class"
   },
   {
-    "objectID": "course-faq.html",
-    "href": "course-faq.html",
-    "title": "FAQ",
+    "objectID": "slides/12/slides12.html#today",
+    "href": "slides/12/slides12.html#today",
+    "title": "Working with Factors",
+    "section": "Today",
+    "text": "Today\n\nsetup chunk and alt-text\nHW5 and Portfolio 2 grace period\nNew stuff!"
+  },
+  {
+    "objectID": "slides/12/slides12.html#survivor-castaways-data",
+    "href": "slides/12/slides12.html#survivor-castaways-data",
+    "title": "Working with Factors",
+    "section": "Survivor castaways data",
+    "text": "Survivor castaways data\n\n\n# A tibble: 1,351 × 29\n   version version_season season_name      season full_name castaway_id castaway\n   &lt;fct&gt;   &lt;chr&gt;          &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;   \n 1 US      US01           Survivor: Borneo      1 Sonja Ch… US0001      Sonja   \n 2 US      US01           Survivor: Borneo      1 B.B. And… US0002      B.B.    \n 3 US      US01           Survivor: Borneo      1 Stacey S… US0003      Stacey  \n 4 US      US01           Survivor: Borneo      1 Ramona G… US0004      Ramona  \n 5 US      US01           Survivor: Borneo      1 Dirk Been US0005      Dirk    \n 6 US      US01           Survivor: Borneo      1 Joel Klug US0006      Joel    \n 7 US      US01           Survivor: Borneo      1 Gretchen… US0007      Gretchen\n 8 US      US01           Survivor: Borneo      1 Greg Buis US0008      Greg    \n 9 US      US01           Survivor: Borneo      1 Jenna Le… US0009      Jenna   \n10 US      US01           Survivor: Borneo      1 Gervase … US0010      Gervase \n# ℹ 1,341 more rows\n# ℹ 22 more variables: age &lt;dbl&gt;, city &lt;chr&gt;, state &lt;chr&gt;, episode &lt;dbl&gt;,\n#   day &lt;dbl&gt;, order &lt;dbl&gt;, result &lt;chr&gt;, place &lt;dbl&gt;, jury_status &lt;chr&gt;,\n#   original_tribe &lt;chr&gt;, jury &lt;lgl&gt;, finalist &lt;lgl&gt;, winner &lt;lgl&gt;,\n#   acknowledge &lt;lgl&gt;, ack_look &lt;lgl&gt;, ack_speak &lt;lgl&gt;, ack_gesture &lt;lgl&gt;,\n#   ack_smile &lt;lgl&gt;, ack_quote &lt;chr&gt;, ack_score &lt;dbl&gt;, jury1 &lt;dbl&gt;, jury2 &lt;fct&gt;"
+  },
+  {
+    "objectID": "slides/12/slides12.html#both-of-these-are-categorical-variables",
+    "href": "slides/12/slides12.html#both-of-these-are-categorical-variables",
+    "title": "Working with Factors",
+    "section": "Both of these are categorical variables",
+    "text": "Both of these are categorical variables\n\nunique(castaways$version)\n\n[1] US AU SA UK NZ\nLevels: AU NZ SA UK US\n\n\n\nunique(castaways$season_name) %&gt;% head()\n\n[1] \"Survivor: Borneo\"                 \"Survivor: The Australian Outback\"\n[3] \"Survivor: Africa\"                 \"Survivor: Marquesas\"             \n[5] \"Survivor: Thailand\"               \"Survivor: The Amazon\"            \n\n\n\nBut are stored as different types\n\nclass(castaways$version)\n\n[1] \"factor\"\n\n\n\nclass(castaways$season_name) \n\n[1] \"character\""
+  },
+  {
+    "objectID": "slides/12/slides12.html#same-graph-colored-by-the-same-categorical-variable",
+    "href": "slides/12/slides12.html#same-graph-colored-by-the-same-categorical-variable",
+    "title": "Working with Factors",
+    "section": "Same graph, colored by the same categorical variable",
+    "text": "Same graph, colored by the same categorical variable"
+  },
+  {
+    "objectID": "slides/12/slides12.html#factors",
+    "href": "slides/12/slides12.html#factors",
+    "title": "Working with Factors",
+    "section": "Factors",
+    "text": "Factors\nR’s representation of categorical data. Consists of:\n\nA set of values\nAn ordered set of valid levels\n\n\n\neyes &lt;- factor(x = c(\"blue\", \"green\", \"green\"), \n               levels = c(\"blue\", \"brown\", \"green\"))\neyes\n\n[1] blue  green green\nLevels: blue brown green"
+  },
+  {
+    "objectID": "slides/12/slides12.html#factors-1",
+    "href": "slides/12/slides12.html#factors-1",
+    "title": "Working with Factors",
+    "section": "Factors",
+    "text": "Factors\nStored as an integer vector with a levels attribute\n\nunclass(eyes)\n\n[1] 1 3 3\nattr(,\"levels\")\n[1] \"blue\"  \"brown\" \"green\""
+  },
+  {
+    "objectID": "slides/12/slides12.html#section",
+    "href": "slides/12/slides12.html#section",
+    "title": "Working with Factors",
     "section": "",
-    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
-    "crumbs": [
-      "Course information",
-      "FAQ"
-    ]
+    "text": "Simple functions for working with factors.\nPart of the tidyverse\n\n\n# loaded with tidyverse\nlibrary(forcats)"
   },
   {
-    "objectID": "course-faq.html#where-can-i-get-help",
-    "href": "course-faq.html#where-can-i-get-help",
-    "title": "FAQ",
+    "objectID": "slides/12/slides12.html#gss_cat",
+    "href": "slides/12/slides12.html#gss_cat",
+    "title": "Working with Factors",
+    "section": "gss_cat",
+    "text": "gss_cat\nA sample of data from the General Social Survey, a long-running US survey conducted by NORC at the University of Chicago.\n\n\n# A tibble: 21,483 × 9\n    year marital         age race  rincome        partyid    relig denom tvhours\n   &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt;          &lt;fct&gt;      &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;\n 1  2000 Never married    26 White $8000 to 9999  Ind,near … Prot… Sout…      12\n 2  2000 Divorced         48 White $8000 to 9999  Not str r… Prot… Bapt…      NA\n 3  2000 Widowed          67 White Not applicable Independe… Prot… No d…       2\n 4  2000 Never married    39 White Not applicable Ind,near … Orth… Not …       4\n 5  2000 Divorced         25 White Not applicable Not str d… None  Not …       1\n 6  2000 Married          25 White $20000 - 24999 Strong de… Prot… Sout…      NA\n 7  2000 Never married    36 White $25000 or more Not str r… Chri… Not …       3\n 8  2000 Divorced         44 White $7000 to 7999  Ind,near … Prot… Luth…      NA\n 9  2000 Married          44 White $25000 or more Not str d… Prot… Other       0\n10  2000 Married          47 White $25000 or more Strong re… Prot… Sout…       3\n# ℹ 21,473 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#warm-up",
+    "href": "slides/12/slides12.html#warm-up",
+    "title": "Working with Factors",
+    "section": "Warm up",
+    "text": "Warm up\n\nUse gss_cat to answer the following questions.\n\nWhich religions watch the least TV?\nDo married people watch more or less TV than single people?\n\n\n\n\n\n\n−&plus;\n\n04:00"
+  },
+  {
+    "objectID": "slides/12/slides12.html#which-religions-watch-the-least-tv",
+    "href": "slides/12/slides12.html#which-religions-watch-the-least-tv",
+    "title": "Working with Factors",
+    "section": "Which religions watch the least TV?",
+    "text": "Which religions watch the least TV?\n\n\n\ngss_cat\n\n\n\n\n# A tibble: 21,483 × 9\n    year marital         age race  rincome        partyid    relig denom tvhours\n   &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt;          &lt;fct&gt;      &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;\n 1  2000 Never married    26 White $8000 to 9999  Ind,near … Prot… Sout…      12\n 2  2000 Divorced         48 White $8000 to 9999  Not str r… Prot… Bapt…      NA\n 3  2000 Widowed          67 White Not applicable Independe… Prot… No d…       2\n 4  2000 Never married    39 White Not applicable Ind,near … Orth… Not …       4\n 5  2000 Divorced         25 White Not applicable Not str d… None  Not …       1\n 6  2000 Married          25 White $20000 - 24999 Strong de… Prot… Sout…      NA\n 7  2000 Never married    36 White $25000 or more Not str r… Chri… Not …       3\n 8  2000 Divorced         44 White $7000 to 7999  Ind,near … Prot… Luth…      NA\n 9  2000 Married          44 White $25000 or more Not str d… Prot… Other       0\n10  2000 Married          47 White $25000 or more Strong re… Prot… Sout…       3\n# ℹ 21,473 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#which-religions-watch-the-least-tv-1",
+    "href": "slides/12/slides12.html#which-religions-watch-the-least-tv-1",
+    "title": "Working with Factors",
+    "section": "Which religions watch the least TV?",
+    "text": "Which religions watch the least TV?\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours)\n\n\n\n\n# A tibble: 11,337 × 9\n    year marital         age race  rincome        partyid    relig denom tvhours\n   &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt;          &lt;fct&gt;      &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;\n 1  2000 Never married    26 White $8000 to 9999  Ind,near … Prot… Sout…      12\n 2  2000 Widowed          67 White Not applicable Independe… Prot… No d…       2\n 3  2000 Never married    39 White Not applicable Ind,near … Orth… Not …       4\n 4  2000 Divorced         25 White Not applicable Not str d… None  Not …       1\n 5  2000 Never married    36 White $25000 or more Not str r… Chri… Not …       3\n 6  2000 Married          44 White $25000 or more Not str d… Prot… Other       0\n 7  2000 Married          47 White $25000 or more Strong re… Prot… Sout…       3\n 8  2000 Married          53 White $25000 or more Not str d… Prot… Other       2\n 9  2000 Married          52 White $25000 or more Strong de… Prot… Sout…       1\n10  2000 Divorced         52 White $25000 or more Ind,near … None  Not …       1\n# ℹ 11,327 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#which-religions-watch-the-least-tv-2",
+    "href": "slides/12/slides12.html#which-religions-watch-the-least-tv-2",
+    "title": "Working with Factors",
+    "section": "Which religions watch the least TV?",
+    "text": "Which religions watch the least TV?\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  group_by(relig)\n\n\n\n\n# A tibble: 11,337 × 9\n# Groups:   relig [15]\n    year marital         age race  rincome        partyid    relig denom tvhours\n   &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt;          &lt;fct&gt;      &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;\n 1  2000 Never married    26 White $8000 to 9999  Ind,near … Prot… Sout…      12\n 2  2000 Widowed          67 White Not applicable Independe… Prot… No d…       2\n 3  2000 Never married    39 White Not applicable Ind,near … Orth… Not …       4\n 4  2000 Divorced         25 White Not applicable Not str d… None  Not …       1\n 5  2000 Never married    36 White $25000 or more Not str r… Chri… Not …       3\n 6  2000 Married          44 White $25000 or more Not str d… Prot… Other       0\n 7  2000 Married          47 White $25000 or more Strong re… Prot… Sout…       3\n 8  2000 Married          53 White $25000 or more Not str d… Prot… Other       2\n 9  2000 Married          52 White $25000 or more Strong de… Prot… Sout…       1\n10  2000 Divorced         52 White $25000 or more Ind,near … None  Not …       1\n# ℹ 11,327 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#which-religions-watch-the-least-tv-3",
+    "href": "slides/12/slides12.html#which-religions-watch-the-least-tv-3",
+    "title": "Working with Factors",
+    "section": "Which religions watch the least TV?",
+    "text": "Which religions watch the least TV?\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  group_by(relig) %&gt;%\n  summarize(tvhours = mean(tvhours))\n\n\n\n\n# A tibble: 15 × 2\n   relig                   tvhours\n   &lt;fct&gt;                     &lt;dbl&gt;\n 1 No answer                  2.72\n 2 Don't know                 4.62\n 3 Inter-nondenominational    2.87\n 4 Native american            3.46\n 5 Christian                  2.79\n 6 Orthodox-christian         2.42\n 7 Moslem/islam               2.44\n 8 Other eastern              1.67\n 9 Hinduism                   1.89\n10 Buddhism                   2.38\n11 Other                      2.73\n12 None                       2.71\n13 Jewish                     2.52\n14 Catholic                   2.96\n15 Protestant                 3.15"
+  },
+  {
+    "objectID": "slides/12/slides12.html#which-religions-watch-the-least-tv-4",
+    "href": "slides/12/slides12.html#which-religions-watch-the-least-tv-4",
+    "title": "Working with Factors",
+    "section": "Which religions watch the least TV?",
+    "text": "Which religions watch the least TV?\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  group_by(relig) %&gt;%\n  summarize(tvhours = mean(tvhours)) %&gt;%\n  ggplot(aes(tvhours, relig))"
+  },
+  {
+    "objectID": "slides/12/slides12.html#which-religions-watch-the-least-tv-5",
+    "href": "slides/12/slides12.html#which-religions-watch-the-least-tv-5",
+    "title": "Working with Factors",
+    "section": "Which religions watch the least TV?",
+    "text": "Which religions watch the least TV?\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  group_by(relig) %&gt;%\n  summarize(tvhours = mean(tvhours)) %&gt;%\n  ggplot(aes(tvhours, relig)) +\n    geom_point()"
+  },
+  {
+    "objectID": "slides/12/slides12.html#which-do-you-prefer",
+    "href": "slides/12/slides12.html#which-do-you-prefer",
+    "title": "Working with Factors",
+    "section": "Which do you prefer?",
+    "text": "Which do you prefer?"
+  },
+  {
+    "objectID": "slides/12/slides12.html#why-is-the-y-axis-in-this-order",
+    "href": "slides/12/slides12.html#why-is-the-y-axis-in-this-order",
+    "title": "Working with Factors",
+    "section": "Why is the y-axis in this order?",
+    "text": "Why is the y-axis in this order?"
+  },
+  {
+    "objectID": "slides/12/slides12.html#levels",
+    "href": "slides/12/slides12.html#levels",
+    "title": "Working with Factors",
+    "section": "levels()",
+    "text": "levels()\nUse levels() to access a factor’s levels\n\ngss_cat %&gt;% pull(relig) %&gt;% levels()\n\n [1] \"No answer\"               \"Don't know\"             \n [3] \"Inter-nondenominational\" \"Native american\"        \n [5] \"Christian\"               \"Orthodox-christian\"     \n [7] \"Moslem/islam\"            \"Other eastern\"          \n [9] \"Hinduism\"                \"Buddhism\"               \n[11] \"Other\"                   \"None\"                   \n[13] \"Jewish\"                  \"Catholic\"               \n[15] \"Protestant\"              \"Not applicable\""
+  },
+  {
+    "objectID": "slides/12/slides12.html#most-useful-factor-skills",
+    "href": "slides/12/slides12.html#most-useful-factor-skills",
+    "title": "Working with Factors",
+    "section": "Most useful factor skills:",
+    "text": "Most useful factor skills:\n1. Reorder the levels\n2. Recode the levels\n3. Collapse levels"
+  },
+  {
+    "objectID": "slides/12/slides12.html#fct_reorder",
+    "href": "slides/12/slides12.html#fct_reorder",
+    "title": "Working with Factors",
+    "section": "fct_reorder",
+    "text": "fct_reorder\n\n\n\n\n.f factor vector\n\n.x variable to reorder by (in conjunction with .fun)\n\n.fun function to reorder by\n\n.desc put levels in descending order?\n\n\n\nfct_reorder(\n  .f, \n  .x, \n  .fun = median, \n  ...,\n  .desc = FALSE \n  )"
+  },
+  {
+    "objectID": "slides/12/slides12.html#reorder-relig-by-tvhours",
+    "href": "slides/12/slides12.html#reorder-relig-by-tvhours",
+    "title": "Working with Factors",
+    "section": "Reorder relig by tvhours",
+    "text": "Reorder relig by tvhours\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  group_by(relig) %&gt;%\n  summarize(tvhours = mean(tvhours)) %&gt;%\n  ggplot(aes(\n    x = tvhours,\n    y = relig\n  )) +\n    geom_point()"
+  },
+  {
+    "objectID": "slides/12/slides12.html#reorder-relig-by-tvhours-1",
+    "href": "slides/12/slides12.html#reorder-relig-by-tvhours-1",
+    "title": "Working with Factors",
+    "section": "Reorder relig by tvhours",
+    "text": "Reorder relig by tvhours\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  group_by(relig) %&gt;%\n  summarize(tvhours = mean(tvhours)) %&gt;%\n  ggplot(aes(\n    x = tvhours,\n    y = fct_reorder(relig, tvhours)                 #ROTATE\n  )) +\n    geom_point()"
+  },
+  {
+    "objectID": "slides/12/slides12.html#try-it",
+    "href": "slides/12/slides12.html#try-it",
+    "title": "Working with Factors",
+    "section": "Try it",
+    "text": "Try it\n\nUse rincome_summary to construct a dotplot of rincome against age.\nReorder rincome by age\n\n\nrincome_summary &lt;- gss_cat %&gt;%\n  group_by(rincome) %&gt;%\n  summarize(\n    age = mean(age, na.rm = TRUE),\n    tvhours = mean(tvhours, na.rm = TRUE),\n    n = n()\n  )\n\n\n\n\n\n−&plus;\n\n02:30"
+  },
+  {
+    "objectID": "slides/12/slides12.html#which-do-you-prefer-1",
+    "href": "slides/12/slides12.html#which-do-you-prefer-1",
+    "title": "Working with Factors",
+    "section": "Which do you prefer?",
+    "text": "Which do you prefer?"
+  },
+  {
+    "objectID": "slides/12/slides12.html#fct_reorder2",
+    "href": "slides/12/slides12.html#fct_reorder2",
+    "title": "Working with Factors",
+    "section": "fct_reorder2",
+    "text": "fct_reorder2\nReorders the levels of a factor by the Y values associated with the largest X values.\n\n\n\n\n.f factor vector\n\n.x X variable\n\n.y Y variable\n\n.fun function to reorder by\n\n.desc put levels in descending order?\n\n\n\nfct_reorder2(\n  .f, \n  .x, \n  .y, \n  .fun = median, \n  ...,\n  .desc = FALSE\n  )"
+  },
+  {
+    "objectID": "slides/12/slides12.html#reorder-marital",
+    "href": "slides/12/slides12.html#reorder-marital",
+    "title": "Working with Factors",
+    "section": "Reorder marital",
+    "text": "Reorder marital\n\n\n\ngss_cat %&gt;%\n  drop_na(age) %&gt;%\n  count(age, marital) %&gt;%\n  group_by(age) %&gt;%\n  mutate(prop = n / sum(n)) %&gt;%\n  ggplot(\n    aes(age,\n        prop,\n        color = marital )) +\n\n  geom_line() +\n  scale_color_colorblind(\"\")"
+  },
+  {
+    "objectID": "slides/12/slides12.html#reorder-marital-1",
+    "href": "slides/12/slides12.html#reorder-marital-1",
+    "title": "Working with Factors",
+    "section": "Reorder marital",
+    "text": "Reorder marital\n\n\n\ngss_cat %&gt;%\n  drop_na(age) %&gt;%\n  count(age, marital) %&gt;%\n  group_by(age) %&gt;%\n  mutate(prop = n / sum(n)) %&gt;%\n  ggplot(\n    aes(age,\n        prop,\n        color = fct_reorder2(marital, .x = age, .y = prop))) + #ROTATE\n\n  geom_line() +\n  scale_color_colorblind(\"\")"
+  },
+  {
+    "objectID": "slides/12/slides12.html#other-reordering-functions",
+    "href": "slides/12/slides12.html#other-reordering-functions",
+    "title": "Working with Factors",
+    "section": "Other reordering functions",
+    "text": "Other reordering functions\n\n\n\ngss_cat %&gt;%\n  ggplot() +\n  geom_bar(aes(x = marital))"
+  },
+  {
+    "objectID": "slides/12/slides12.html#other-reordering-functions-1",
+    "href": "slides/12/slides12.html#other-reordering-functions-1",
+    "title": "Working with Factors",
+    "section": "Other reordering functions",
+    "text": "Other reordering functions\n\n\n\ngss_cat %&gt;%\n  ggplot() +\n  geom_bar(aes(x = fct_infreq(marital)))"
+  },
+  {
+    "objectID": "slides/12/slides12.html#other-reordering-functions-2",
+    "href": "slides/12/slides12.html#other-reordering-functions-2",
+    "title": "Working with Factors",
+    "section": "Other reordering functions",
+    "text": "Other reordering functions\n\n\n\ngss_cat %&gt;%\n  ggplot() +\n  geom_bar(aes(x = fct_rev(fct_infreq(marital))))"
+  },
+  {
+    "objectID": "slides/12/slides12.html#which-political-leaning-watches-more-tv",
+    "href": "slides/12/slides12.html#which-political-leaning-watches-more-tv",
+    "title": "Working with Factors",
+    "section": "Which political leaning watches more TV?",
+    "text": "Which political leaning watches more TV?\n\n\n\n\n\n\n\n\nHow could we improve the partyid labels?"
+  },
+  {
+    "objectID": "slides/12/slides12.html#fct_reorder2-1",
+    "href": "slides/12/slides12.html#fct_reorder2-1",
+    "title": "Working with Factors",
+    "section": "fct_reorder2",
+    "text": "fct_reorder2\nChanges values of levels\n\n\n\n\n.f factor vector\n\n... new level = old level pairs (as a named character vector)\n\n\n\nfct_recode(.f, ...)"
+  },
+  {
+    "objectID": "slides/12/slides12.html#recoding-partyid",
+    "href": "slides/12/slides12.html#recoding-partyid",
+    "title": "Working with Factors",
+    "section": "Recoding partyid",
+    "text": "Recoding partyid\n\n\n\ngss_cat\n\n\n\n\n# A tibble: 21,483 × 9\n    year marital         age race  rincome        partyid    relig denom tvhours\n   &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt;          &lt;fct&gt;      &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;\n 1  2000 Never married    26 White $8000 to 9999  Ind,near … Prot… Sout…      12\n 2  2000 Divorced         48 White $8000 to 9999  Not str r… Prot… Bapt…      NA\n 3  2000 Widowed          67 White Not applicable Independe… Prot… No d…       2\n 4  2000 Never married    39 White Not applicable Ind,near … Orth… Not …       4\n 5  2000 Divorced         25 White Not applicable Not str d… None  Not …       1\n 6  2000 Married          25 White $20000 - 24999 Strong de… Prot… Sout…      NA\n 7  2000 Never married    36 White $25000 or more Not str r… Chri… Not …       3\n 8  2000 Divorced         44 White $7000 to 7999  Ind,near … Prot… Luth…      NA\n 9  2000 Married          44 White $25000 or more Not str d… Prot… Other       0\n10  2000 Married          47 White $25000 or more Strong re… Prot… Sout…       3\n# ℹ 21,473 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#recoding-partyid-1",
+    "href": "slides/12/slides12.html#recoding-partyid-1",
+    "title": "Working with Factors",
+    "section": "Recoding partyid",
+    "text": "Recoding partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours)\n\n\n\n\n# A tibble: 11,337 × 9\n    year marital         age race  rincome        partyid    relig denom tvhours\n   &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt;          &lt;fct&gt;      &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;\n 1  2000 Never married    26 White $8000 to 9999  Ind,near … Prot… Sout…      12\n 2  2000 Widowed          67 White Not applicable Independe… Prot… No d…       2\n 3  2000 Never married    39 White Not applicable Ind,near … Orth… Not …       4\n 4  2000 Divorced         25 White Not applicable Not str d… None  Not …       1\n 5  2000 Never married    36 White $25000 or more Not str r… Chri… Not …       3\n 6  2000 Married          44 White $25000 or more Not str d… Prot… Other       0\n 7  2000 Married          47 White $25000 or more Strong re… Prot… Sout…       3\n 8  2000 Married          53 White $25000 or more Not str d… Prot… Other       2\n 9  2000 Married          52 White $25000 or more Strong de… Prot… Sout…       1\n10  2000 Divorced         52 White $25000 or more Ind,near … None  Not …       1\n# ℹ 11,327 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#recoding-partyid-2",
+    "href": "slides/12/slides12.html#recoding-partyid-2",
+    "title": "Working with Factors",
+    "section": "Recoding partyid",
+    "text": "Recoding partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours)\n\n\n\n\n# A tibble: 11,337 × 2\n   partyid            tvhours\n   &lt;fct&gt;                &lt;int&gt;\n 1 Ind,near rep            12\n 2 Independent              2\n 3 Ind,near rep             4\n 4 Not str democrat         1\n 5 Not str republican       3\n 6 Not str democrat         0\n 7 Strong republican        3\n 8 Not str democrat         2\n 9 Strong democrat          1\n10 Ind,near dem             1\n# ℹ 11,327 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#recoding-partyid-3",
+    "href": "slides/12/slides12.html#recoding-partyid-3",
+    "title": "Working with Factors",
+    "section": "Recoding partyid",
+    "text": "Recoding partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n    mutate(partyid = fct_recode(partyid,\n    \"Republican, strong\"    = \"Strong republican\",\n    \"Republican, weak\"      = \"Not str republican\",\n    \"Independent, near rep\" = \"Ind,near rep\",\n    \"Independent, near dem\" = \"Ind,near dem\",\n    \"Democrat, weak\"        = \"Not str democrat\",\n    \"Democrat, strong\"      = \"Strong democrat\"))\n\n\n\n\n# A tibble: 11,337 × 2\n   partyid               tvhours\n   &lt;fct&gt;                   &lt;int&gt;\n 1 Independent, near rep      12\n 2 Independent                 2\n 3 Independent, near rep       4\n 4 Democrat, weak              1\n 5 Republican, weak            3\n 6 Democrat, weak              0\n 7 Republican, strong          3\n 8 Democrat, weak              2\n 9 Democrat, strong            1\n10 Independent, near dem       1\n# ℹ 11,327 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#recoding-partyid-4",
+    "href": "slides/12/slides12.html#recoding-partyid-4",
+    "title": "Working with Factors",
+    "section": "Recoding partyid",
+    "text": "Recoding partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n    mutate(partyid = fct_recode(partyid,\n    \"Republican, strong\"    = \"Strong republican\",\n    \"Republican, weak\"      = \"Not str republican\",\n    \"Independent, near rep\" = \"Ind,near rep\",\n    \"Independent, near dem\" = \"Ind,near dem\",\n    \"Democrat, weak\"        = \"Not str democrat\",\n    \"Democrat, strong\"      = \"Strong democrat\")) %&gt;%\n  group_by(partyid)\n\n\n\n\n# A tibble: 11,337 × 2\n# Groups:   partyid [10]\n   partyid               tvhours\n   &lt;fct&gt;                   &lt;int&gt;\n 1 Independent, near rep      12\n 2 Independent                 2\n 3 Independent, near rep       4\n 4 Democrat, weak              1\n 5 Republican, weak            3\n 6 Democrat, weak              0\n 7 Republican, strong          3\n 8 Democrat, weak              2\n 9 Democrat, strong            1\n10 Independent, near dem       1\n# ℹ 11,327 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#recoding-partyid-5",
+    "href": "slides/12/slides12.html#recoding-partyid-5",
+    "title": "Working with Factors",
+    "section": "Recoding partyid",
+    "text": "Recoding partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n    mutate(partyid = fct_recode(partyid,\n    \"Republican, strong\"    = \"Strong republican\",\n    \"Republican, weak\"      = \"Not str republican\",\n    \"Independent, near rep\" = \"Ind,near rep\",\n    \"Independent, near dem\" = \"Ind,near dem\",\n    \"Democrat, weak\"        = \"Not str democrat\",\n    \"Democrat, strong\"      = \"Strong democrat\")) %&gt;%\n  group_by(partyid) %&gt;%\n  summarize(tvhours = mean(tvhours))\n\n\n\n\n# A tibble: 10 × 2\n   partyid               tvhours\n   &lt;fct&gt;                   &lt;dbl&gt;\n 1 No answer                3.22\n 2 Don't know               2   \n 3 Other party              2.79\n 4 Republican, strong       2.72\n 5 Republican, weak         2.63\n 6 Independent, near rep    2.77\n 7 Independent              3.08\n 8 Independent, near dem    2.80\n 9 Democrat, weak           3.04\n10 Democrat, strong         3.52"
+  },
+  {
+    "objectID": "slides/12/slides12.html#recoding-partyid-6",
+    "href": "slides/12/slides12.html#recoding-partyid-6",
+    "title": "Working with Factors",
+    "section": "Recoding partyid",
+    "text": "Recoding partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n    mutate(partyid = fct_recode(partyid,\n    \"Republican, strong\"    = \"Strong republican\",\n    \"Republican, weak\"      = \"Not str republican\",\n    \"Independent, near rep\" = \"Ind,near rep\",\n    \"Independent, near dem\" = \"Ind,near dem\",\n    \"Democrat, weak\"        = \"Not str democrat\",\n    \"Democrat, strong\"      = \"Strong democrat\")) %&gt;%\n  group_by(partyid) %&gt;%\n  summarize(tvhours = mean(tvhours)) %&gt;%\n  ggplot(aes(tvhours, fct_reorder(partyid, tvhours)))"
+  },
+  {
+    "objectID": "slides/12/slides12.html#recoding-partyid-7",
+    "href": "slides/12/slides12.html#recoding-partyid-7",
+    "title": "Working with Factors",
+    "section": "Recoding partyid",
+    "text": "Recoding partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n    mutate(partyid = fct_recode(partyid,\n    \"Republican, strong\"    = \"Strong republican\",\n    \"Republican, weak\"      = \"Not str republican\",\n    \"Independent, near rep\" = \"Ind,near rep\",\n    \"Independent, near dem\" = \"Ind,near dem\",\n    \"Democrat, weak\"        = \"Not str democrat\",\n    \"Democrat, strong\"      = \"Strong democrat\")) %&gt;%\n  group_by(partyid) %&gt;%\n  summarize(tvhours = mean(tvhours)) %&gt;%\n  ggplot(aes(tvhours, fct_reorder(partyid, tvhours))) +\n  geom_point()"
+  },
+  {
+    "objectID": "slides/12/slides12.html#recoding-partyid-8",
+    "href": "slides/12/slides12.html#recoding-partyid-8",
+    "title": "Working with Factors",
+    "section": "Recoding partyid",
+    "text": "Recoding partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n    mutate(partyid = fct_recode(partyid,\n    \"Republican, strong\"    = \"Strong republican\",\n    \"Republican, weak\"      = \"Not str republican\",\n    \"Independent, near rep\" = \"Ind,near rep\",\n    \"Independent, near dem\" = \"Ind,near dem\",\n    \"Democrat, weak\"        = \"Not str democrat\",\n    \"Democrat, strong\"      = \"Strong democrat\")) %&gt;%\n  group_by(partyid) %&gt;%\n  summarize(tvhours = mean(tvhours)) %&gt;%\n  ggplot(aes(tvhours, fct_reorder(partyid, tvhours))) +\n  geom_point() +\n  labs(y = \"partyid\")"
+  },
+  {
+    "objectID": "slides/12/slides12.html#how-can-we-combine-these-factor-levels",
+    "href": "slides/12/slides12.html#how-can-we-combine-these-factor-levels",
+    "title": "Working with Factors",
+    "section": "How can we combine these factor levels?",
+    "text": "How can we combine these factor levels?"
+  },
+  {
+    "objectID": "slides/12/slides12.html#fct_collapse",
+    "href": "slides/12/slides12.html#fct_collapse",
+    "title": "Working with Factors",
+    "section": "fct_collapse()",
+    "text": "fct_collapse()\nChanges multiple levels into single levels\n\n\n\n\n.f factor vector\n\n... named arguments set to a character vector (levels in the vector will be collapsed to the name of the argument)\n\n\n\nfct_collapse(.f, ...)"
+  },
+  {
+    "objectID": "slides/12/slides12.html#collapsing-partyid",
+    "href": "slides/12/slides12.html#collapsing-partyid",
+    "title": "Working with Factors",
+    "section": "Collapsing partyid",
+    "text": "Collapsing partyid\n\n\n\ngss_cat\n\n\n\n\n# A tibble: 21,483 × 9\n    year marital         age race  rincome        partyid    relig denom tvhours\n   &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt;          &lt;fct&gt;      &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;\n 1  2000 Never married    26 White $8000 to 9999  Ind,near … Prot… Sout…      12\n 2  2000 Divorced         48 White $8000 to 9999  Not str r… Prot… Bapt…      NA\n 3  2000 Widowed          67 White Not applicable Independe… Prot… No d…       2\n 4  2000 Never married    39 White Not applicable Ind,near … Orth… Not …       4\n 5  2000 Divorced         25 White Not applicable Not str d… None  Not …       1\n 6  2000 Married          25 White $20000 - 24999 Strong de… Prot… Sout…      NA\n 7  2000 Never married    36 White $25000 or more Not str r… Chri… Not …       3\n 8  2000 Divorced         44 White $7000 to 7999  Ind,near … Prot… Luth…      NA\n 9  2000 Married          44 White $25000 or more Not str d… Prot… Other       0\n10  2000 Married          47 White $25000 or more Strong re… Prot… Sout…       3\n# ℹ 21,473 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#collapsing-partyid-1",
+    "href": "slides/12/slides12.html#collapsing-partyid-1",
+    "title": "Working with Factors",
+    "section": "Collapsing partyid",
+    "text": "Collapsing partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours)\n\n\n\n\n# A tibble: 11,337 × 9\n    year marital         age race  rincome        partyid    relig denom tvhours\n   &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt;          &lt;fct&gt;      &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;\n 1  2000 Never married    26 White $8000 to 9999  Ind,near … Prot… Sout…      12\n 2  2000 Widowed          67 White Not applicable Independe… Prot… No d…       2\n 3  2000 Never married    39 White Not applicable Ind,near … Orth… Not …       4\n 4  2000 Divorced         25 White Not applicable Not str d… None  Not …       1\n 5  2000 Never married    36 White $25000 or more Not str r… Chri… Not …       3\n 6  2000 Married          44 White $25000 or more Not str d… Prot… Other       0\n 7  2000 Married          47 White $25000 or more Strong re… Prot… Sout…       3\n 8  2000 Married          53 White $25000 or more Not str d… Prot… Other       2\n 9  2000 Married          52 White $25000 or more Strong de… Prot… Sout…       1\n10  2000 Divorced         52 White $25000 or more Ind,near … None  Not …       1\n# ℹ 11,327 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#collapsing-partyid-2",
+    "href": "slides/12/slides12.html#collapsing-partyid-2",
+    "title": "Working with Factors",
+    "section": "Collapsing partyid",
+    "text": "Collapsing partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours)\n\n\n\n\n# A tibble: 11,337 × 2\n   partyid            tvhours\n   &lt;fct&gt;                &lt;int&gt;\n 1 Ind,near rep            12\n 2 Independent              2\n 3 Ind,near rep             4\n 4 Not str democrat         1\n 5 Not str republican       3\n 6 Not str democrat         0\n 7 Strong republican        3\n 8 Not str democrat         2\n 9 Strong democrat          1\n10 Ind,near dem             1\n# ℹ 11,327 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#collapsing-partyid-3",
+    "href": "slides/12/slides12.html#collapsing-partyid-3",
+    "title": "Working with Factors",
+    "section": "Collapsing partyid",
+    "text": "Collapsing partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n  mutate(\n    partyid =\n      fct_collapse(\n        partyid,\n        conservative = c(\"Strong republican\",\n                         \"Not str republican\",\n                         \"Ind,near rep\"),\n        liberal = c(\"Strong democrat\",\n                    \"Not str democrat\",\n                    \"Ind,near dem\"))\n  )\n\n\n\n\n# A tibble: 11,337 × 2\n   partyid      tvhours\n   &lt;fct&gt;          &lt;int&gt;\n 1 conservative      12\n 2 Independent        2\n 3 conservative       4\n 4 liberal            1\n 5 conservative       3\n 6 liberal            0\n 7 conservative       3\n 8 liberal            2\n 9 liberal            1\n10 liberal            1\n# ℹ 11,327 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#collapsing-partyid-4",
+    "href": "slides/12/slides12.html#collapsing-partyid-4",
+    "title": "Working with Factors",
+    "section": "Collapsing partyid",
+    "text": "Collapsing partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n  mutate(\n    partyid =\n      fct_collapse(\n        partyid,\n        conservative = c(\"Strong republican\",\n                         \"Not str republican\",\n                         \"Ind,near rep\"),\n        liberal = c(\"Strong democrat\",\n                    \"Not str democrat\",\n                    \"Ind,near dem\"))\n  ) %&gt;%\n  group_by(partyid)\n\n\n\n\n# A tibble: 11,337 × 2\n# Groups:   partyid [6]\n   partyid      tvhours\n   &lt;fct&gt;          &lt;int&gt;\n 1 conservative      12\n 2 Independent        2\n 3 conservative       4\n 4 liberal            1\n 5 conservative       3\n 6 liberal            0\n 7 conservative       3\n 8 liberal            2\n 9 liberal            1\n10 liberal            1\n# ℹ 11,327 more rows"
+  },
+  {
+    "objectID": "slides/12/slides12.html#collapsing-partyid-5",
+    "href": "slides/12/slides12.html#collapsing-partyid-5",
+    "title": "Working with Factors",
+    "section": "Collapsing partyid",
+    "text": "Collapsing partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n  mutate(\n    partyid =\n      fct_collapse(\n        partyid,\n        conservative = c(\"Strong republican\",\n                         \"Not str republican\",\n                         \"Ind,near rep\"),\n        liberal = c(\"Strong democrat\",\n                    \"Not str democrat\",\n                    \"Ind,near dem\"))\n  ) %&gt;%\n  group_by(partyid) %&gt;%\n  summarize(tvhours = mean(tvhours))\n\n\n\n\n# A tibble: 6 × 2\n  partyid      tvhours\n  &lt;fct&gt;          &lt;dbl&gt;\n1 No answer       3.22\n2 Don't know      2   \n3 Other party     2.79\n4 conservative    2.69\n5 Independent     3.08\n6 liberal         3.15"
+  },
+  {
+    "objectID": "slides/12/slides12.html#collapsing-partyid-6",
+    "href": "slides/12/slides12.html#collapsing-partyid-6",
+    "title": "Working with Factors",
+    "section": "Collapsing partyid",
+    "text": "Collapsing partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n  mutate(\n    partyid =\n      fct_collapse(\n        partyid,\n        conservative = c(\"Strong republican\",\n                         \"Not str republican\",\n                         \"Ind,near rep\"),\n        liberal = c(\"Strong democrat\",\n                    \"Not str democrat\",\n                    \"Ind,near dem\"))\n  ) %&gt;%\n  group_by(partyid) %&gt;%\n  summarize(tvhours = mean(tvhours)) %&gt;%\n  ggplot(aes(tvhours, fct_reorder(partyid, tvhours)))"
+  },
+  {
+    "objectID": "slides/12/slides12.html#collapsing-partyid-7",
+    "href": "slides/12/slides12.html#collapsing-partyid-7",
+    "title": "Working with Factors",
+    "section": "Collapsing partyid",
+    "text": "Collapsing partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n  mutate(\n    partyid =\n      fct_collapse(\n        partyid,\n        conservative = c(\"Strong republican\",\n                         \"Not str republican\",\n                         \"Ind,near rep\"),\n        liberal = c(\"Strong democrat\",\n                    \"Not str democrat\",\n                    \"Ind,near dem\"))\n  ) %&gt;%\n  group_by(partyid) %&gt;%\n  summarize(tvhours = mean(tvhours)) %&gt;%\n  ggplot(aes(tvhours, fct_reorder(partyid, tvhours))) +\n  geom_point()"
+  },
+  {
+    "objectID": "slides/12/slides12.html#collapsing-partyid-8",
+    "href": "slides/12/slides12.html#collapsing-partyid-8",
+    "title": "Working with Factors",
+    "section": "Collapsing partyid",
+    "text": "Collapsing partyid\n\n\n\ngss_cat %&gt;%\n  drop_na(tvhours) %&gt;%\n  select(partyid, tvhours) %&gt;%\n  mutate(\n    partyid =\n      fct_collapse(\n        partyid,\n        conservative = c(\"Strong republican\",\n                         \"Not str republican\",\n                         \"Ind,near rep\"),\n        liberal = c(\"Strong democrat\",\n                    \"Not str democrat\",\n                    \"Ind,near dem\"))\n  ) %&gt;%\n  group_by(partyid) %&gt;%\n  summarize(tvhours = mean(tvhours)) %&gt;%\n  ggplot(aes(tvhours, fct_reorder(partyid, tvhours))) +\n  geom_point() +\n  labs(y = \"partyid\")"
+  },
+  {
+    "objectID": "slides/12/slides12.html#your-turn",
+    "href": "slides/12/slides12.html#your-turn",
+    "title": "Working with Factors",
+    "section": "Your turn",
+    "text": "Your turn\n\nCollapse the marital variable to have levels Married, not_married, and No answer\nInclude \"Never married\", \"Divorced\", and “Widowed\" in not_married\n\n\n\n\n\n−&plus;\n\n02:00"
+  },
+  {
+    "objectID": "slides/12/slides12.html#there-are-relatively-few-points-in-each-of-these-groups",
+    "href": "slides/12/slides12.html#there-are-relatively-few-points-in-each-of-these-groups",
+    "title": "Working with Factors",
+    "section": "There are relatively few points in each of these groups",
+    "text": "There are relatively few points in each of these groups"
+  },
+  {
+    "objectID": "slides/12/slides12.html#fct_lump",
+    "href": "slides/12/slides12.html#fct_lump",
+    "title": "Working with Factors",
+    "section": "fct_lump()",
+    "text": "fct_lump()\nCollapses levels with fewest values into a single level.\nBy default collapses as many levels as possible such that the new level is still the smallest.\n\n\n\n\nf factor vector\n\nn preserve the most common n levels\nother_level = \"Other\"\n\n\n\nfct_lump(\n  f, \n  n, \n  other_level = \"Other\", \n  ...\n)"
+  },
+  {
+    "objectID": "slides/12/slides12.html#lumping-parytid",
+    "href": "slides/12/slides12.html#lumping-parytid",
+    "title": "Working with Factors",
+    "section": "Lumping parytid",
+    "text": "Lumping parytid\n\n\n\ngss_cat %&gt;%\n  mutate(partyid = partyid) %&gt;%\n  ggplot(aes(partyid)) +\n  geom_bar() +\n  labs(x = \"partyid\")"
+  },
+  {
+    "objectID": "slides/12/slides12.html#lumping-parytid-1",
+    "href": "slides/12/slides12.html#lumping-parytid-1",
+    "title": "Working with Factors",
+    "section": "Lumping parytid",
+    "text": "Lumping parytid\n\n\n\ngss_cat %&gt;%\n  mutate(partyid = fct_lump(partyid, n = 2)) %&gt;%\n  ggplot(aes(partyid)) +\n  geom_bar() +\n  labs(x = \"partyid\")"
+  },
+  {
+    "objectID": "slides/12/slides12.html#lumping-parytid-2",
+    "href": "slides/12/slides12.html#lumping-parytid-2",
+    "title": "Working with Factors",
+    "section": "Lumping parytid",
+    "text": "Lumping parytid\n\n\n\ngss_cat %&gt;%\n  mutate(partyid = fct_lump(partyid, n = 3)) %&gt;%\n  ggplot(aes(partyid)) +\n  geom_bar() +\n  labs(x = \"partyid\")"
+  },
+  {
+    "objectID": "notes/02-full-lego-report.html",
+    "href": "notes/02-full-lego-report.html",
+    "title": "An Overview of Lego Sets on Rebrickable",
     "section": "",
-    "text": "The best place to come for help is Amanda’s office hours! I can help with anything related to the course. You can also check my calendar for one-on-one appointment slots.\n\n\n\nStudents needing help with their Statistics coursework and R/Rstudio questions can get help from Stats Lab Assistants in the Stats Lab in CMC 304. Stats Lab Assistants are primiarily for Stat 120 (Intro Stats), but they may also be able to assist with general R/Rstudio questions.",
-    "crumbs": [
-      "Course information",
-      "FAQ"
-    ]
+    "text": "Rebrickable is a website that shows you which LEGO sets you can build from the LEGO sets and parts that you already own. To do this, Rebrickable maintains a database of the entire LEGO catalog. In this document, we’ll summarize the LEGO sets in this database.\nThe data set was originally obtained from the 2022-09-09 repository on Tidy Tuesday.\n\nIn the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
   },
   {
-    "objectID": "notes/01-r-basics.html",
-    "href": "notes/01-r-basics.html",
-    "title": "R Basics",
+    "objectID": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
+    "href": "notes/02-full-lego-report.html#summarizing-the-lego-dataset",
+    "title": "An Overview of Lego Sets on Rebrickable",
     "section": "",
-    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
+    "text": "In the data set consists of 19798 LEGO sets (i.e., rows) and 6 variables (i.e., columns). The data set includes LEGO sets from 1949 to 2022. The average number of parts in a set was 161.1 with a standard deviation of 402.62. However, there are 3630 in the data set with 0 parts, making these summary statistics inaccurate.\nBelow is a scatterplot with smoother describing how the typical number of parts in a set has changed from 1949 to 2022.\n\nlibrary(tidyverse)\n\nggplot(sets, aes(year, num_parts)) +\n    geom_jitter(alpha = 0.2, size = .5) +\n    geom_smooth(color = \"skyblue\") +\n    scale_y_continuous(trans = \"log10\") +\n    coord_fixed(ratio = 10) +\n    labs(x = \"Year\", y = \"Number of parts\",\n             title = \"LEGO sets are getting larger over the years\",\n             caption = \"Data source: brickable.com\") +\n    theme_light()"
   },
   {
-    "objectID": "notes/01-r-basics.html#loading-r-packages",
-    "href": "notes/01-r-basics.html#loading-r-packages",
-    "title": "R Basics",
+    "objectID": "portfolio/portfolio-2.html",
+    "href": "portfolio/portfolio-2.html",
+    "title": "Portfolio Project 2",
     "section": "",
-    "text": "In your previous statistics course at Carleton, you likely loaded at least one add-on R package. In this course, we’ll use a lot of tools found in the tidyverse of R packages. To load many of these packages at once, you can use the library(&lt;package_name&gt;) command. So to load the tidyverse we run:\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\n\n\n\n\n\nNote\n\n\n\nAbove we see a lot of extra info printed when we load the tidyverse. These messages are just telling you what packages are now available to you and warning you that a few functions (e.g., filter) has been replaced by the tidyverse version. We’ll see how to suppress these messages later."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#creating-and-naming-objects",
-    "href": "notes/01-r-basics.html#creating-and-naming-objects",
-    "title": "R Basics",
-    "section": "Creating and naming objects",
-    "text": "Creating and naming objects\nAll R statements where you create objects have the form:\n\nobject_name &lt;- value\n\nAt first, we’ll be creating a lot of data objects. For example, we an load a data set containing the ratings for each episode of The Office using the code\n\noffice_ratings &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-17/office_ratings.csv\")\n\nIn this class you will be creating a lot of objects, so you’ll need to come up with names for those objects. Trying to think of informative/meaningful names for objects is hard, but necessary work! Below are the fundamental rules for naming objects in R:\n\nnames can’t start with a number\nnames are case-sensitive\nsome common letters are used internally by R and should be avoided as variable names (c, q, t, C, D, F, T, I)\nThere are reserved words that R won’t let you use for variable names (for, in, while, if, else, repeat, break, next)\nR will let you use the name of a predefined function—but don’t do it!\n\nYou can always check to see if you the name you want to use is already taken via exists():\nFor example lm exists\n\nexists(\"lm\")\n\n[1] TRUE\n\n\nbut carleton_college doesn’t.\n\nexists(\"carleton_college\")\n\n[1] FALSE\n\n\nThere are also a lot of naming styles out there, and if you have coded in another language, you may have already developed a preference. Below is an illustration by Allison Horst\n\n\n\n\n\n\n\n\nI generally following the tidyverse style guide, so you’ll see that I use only lowercase letters, numbers, and _ (snake case)."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#overviews-of-data-frames",
-    "href": "notes/01-r-basics.html#overviews-of-data-frames",
-    "title": "R Basics",
-    "section": "Overviews of data frames",
-    "text": "Overviews of data frames\nAbove, you loaded in a data set called office_ratings. Data sets are stored as a special data structure called a data frame. Data frames are the most-commonly used data structure for data analysis in R. For now, think of them like spreadsheets.\nOnce you have your data frame, you can get a quick overview of it using a few commands (below I use data_set as a generic placeholder for the data frame’s name):\n\n\n\n\n\n\nCommand\nDescription\n\n\n\nhead(data_set)\nprint the first 6 rows\n\n\ntail(data_set)\nprint the last 6 rows\n\n\nglimpse(data_set)\na quick overview where columns run down the screen and the data values run across. This allows you to see every column in the data frame.\n\n\nstr(data_set)\na quick overview like glimpse(), but without some of the formatting\n\n\nsummary(data_set)\nquick summary statistics for each column\n\n\ndim(data_set)\nthe number of rows and columns\n\n\nnrow(data_set)\nthe number of rows\n\n\nncol(data_set)\nthe number of columns"
-  },
-  {
-    "objectID": "notes/01-r-basics.html#tibbles",
-    "href": "notes/01-r-basics.html#tibbles",
-    "title": "R Basics",
-    "section": "Tibbles",
-    "text": "Tibbles\nA tibble, or a tbl_df is another version of a data frame which is used by default in a lot of the tidyverse packages that we’ll use.\n\nTibbles are data.frames that are lazy and surly: they do less (i.e. they don’t change variable names or types, and don’t do partial matching) and complain more (e.g. when a variable does not exist). This forces you to confront problems earlier, typically leading to cleaner, more expressive code. Tibbles also have an enhanced print() method which makes them easier to use with large datasets containing complex objects.\n\n\n\n\n\n\n\n Check point\n\n\n\nRun the above commands on the office_ratings data set. Compare and contrast the information returned by each command.\n\n\n\n\n\n\n\n\nGetting a spreadsheet\n\n\n\nIn RStudio, you can run the command View(data_set) to pull up a spreadsheet representation of a data frame. You can also click on the name of the data frame in the Environment pane. This can be a great way help you think about the data, and even has some interactive functions (e.g., filtering and searching); however, never include View(data_set) in an .Rmd file!!\n\n\n\n\n\n\n\n\nReview from intro stats\n\n\n\nIn intro stats we used the terms cases (or observations) and variables to describe the rows and columns of a data frame, respectively."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
-    "href": "notes/01-r-basics.html#extracting-pieces-of-data-frames",
-    "title": "R Basics",
-    "section": "Extracting pieces of data frames",
-    "text": "Extracting pieces of data frames\nSince data frames are the fundamental data structure for most analyses in R, it’s important to know how to work with them. You already know how to get an overview of a data frame, but that isn’t always very informative. Often, you want to extract pieces of a data frame, such as a specific column or row.\nExtracting rows\nData frames can be indexed by their row/column numbers. To extract elements of a data frame, the basic syntax is data_set[row.index, column.index]. So, to extract the 10th row of office_ratings we run\n\noffice_ratings[10, ]\n\n# A tibble: 1 × 6\n  season episode title    imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      2       4 The Fire         8.4        2713 2005-10-11\n\n\nNotice that to extract an entire row, we leave the column index position blank.\nWe can also extract multiple rows by creating a vector of row indices. For example, we can extract the first 5 rows via\n\noffice_ratings[1:5, ]\n\n# A tibble: 5 × 6\n  season episode title         imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                 7.6        3706 2005-03-24\n2      1       2 Diversity Day         8.3        3566 2005-03-29\n3      1       3 Health Care           7.9        2983 2005-04-05\n4      1       4 The Alliance          8.1        2886 2005-04-12\n5      1       5 Basketball            8.4        3179 2005-04-19\n\n\nHere, 1:5 create a sequence of integers from 1 to 5.\nWe could also specify arbitrary row index values by combing the values into a vector. For example, we could extract the 1st, 13th, 64th, and 128th rows via\n\noffice_ratings[c(1, 13, 64, 128), ]\n\n# A tibble: 4 × 6\n  season episode title            imdb_rating total_votes air_date  \n   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n1      1       1 Pilot                    7.6        3706 2005-03-24\n2      2       7 The Client               8.6        2631 2005-11-08\n3      4      13 Job Fair                 7.9        1977 2008-05-08\n4      7      11 Classy Christmas         8.9        2138 2010-12-09\n\n\nExtracting columns\nSimilar to extracting rows, we can use a numeric index to extract the columns of a data frame. For example, to extract the 3rd column, we can run\n\noffice_ratings[,3]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nAlternatively, we can pass in the column name in quotes instead of the column number\n\noffice_ratings[,\"title\"]\n\n# A tibble: 188 × 1\n   title            \n   &lt;chr&gt;            \n 1 Pilot            \n 2 Diversity Day    \n 3 Health Care      \n 4 The Alliance     \n 5 Basketball       \n 6 Hot Girl         \n 7 The Dundies      \n 8 Sexual Harassment\n 9 Office Olympics  \n10 The Fire         \n# ℹ 178 more rows\n\n\nNotice that the extracted column is still formatted as a data frame (or tibble). If you want to extract the contents of the column and just have a vector of titles, you have a few options.\n\nYou could use double brackets with the column number:\n\n\noffice_ratings[[3]]\n\n\nYou could use double brackets with the column name in quotes:\n\n\noffice_ratings[[\"title\"]]\n\n\nYou could use the $ extractor with the column name (not in quotes):\n\n\noffice_ratings$title\n\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract the 35th row of office_ratings.\nExtract rows 35, 36, 37, and 38 of office_ratings.\nExtract the imdb_rating column from office ratings using the column index number.\nExtract the imdb_rating column from office ratings using the column name."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#lists",
-    "href": "notes/01-r-basics.html#lists",
-    "title": "R Basics",
-    "section": "Lists",
-    "text": "Lists\nIt turns out that data frames are special cases of lists, a more general data structure. In a data frame, each column is an element of the data list and each column must be of the same length. In general, lists can be comprised of elements of vastly different lengths and data types.\nAs an example, let’s construct a list of the faculty in the MAST department and what is being taught this winter.\n\nstat_faculty &lt;- c(\"Kelling\", \"Loy\", \"Luby\", \"Poppick\", \"St. Clair\", \"Wadsworth\")\nstat_courses &lt;- c(120, 220, 230, 250, 285, 330)\nmath_faculty &lt;- c(\"Brooke\", \"Davis\", \"Egge\", \"Gomez-Gonzales\", \"Haunsperger\", \"Johnson\", \n                  \"Meyer\", \"Montee\", \"Shrestha\",\"Terry\", \"Thompson\", \"Turnage-Butterbaugh\")\nmath_courses &lt;- c(101, 106, 111, 120, 210, 211, 232, 236, 240, 241, 251, 321, 333, 395)\n\nmast &lt;- list(stat_faculty = stat_faculty, stat_courses = stat_courses, \n             math_faculty = math_faculty, math_courses = math_courses)\n\nOverview of a list\nYou can get an overview of a list a few ways:\n\n\nglimpse(list_name) and str(list_name) list the elements of the list and the first few entries of each element.\n\n\nglimpse(mast)\n\nList of 4\n $ stat_faculty: chr [1:6] \"Kelling\" \"Loy\" \"Luby\" \"Poppick\" ...\n $ stat_courses: num [1:6] 120 220 230 250 285 330\n $ math_faculty: chr [1:12] \"Brooke\" \"Davis\" \"Egge\" \"Gomez-Gonzales\" ...\n $ math_courses: num [1:14] 101 106 111 120 210 211 232 236 240 241 ...\n\n\n\n\nlength(list_name) will tell you how many elements are in the list\n\n\nlength(mast)\n\n[1] 4\n\n\nExtracting elements of a list\nSince data frames are lists, you’ve already seen how to extract elements of a list. For example, to extract the stat_faculty you could run\n\nmast[[1]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\nor\n\nmast[[\"stat_faculty\"]]\n\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\nNote\n\n\n\nIf you had only used a single bracket above, the returned object would still be a list, which is typically not what we would want.\n\nmast[1]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n\n\n\n\n\n\n\n\n\n Check point\n\n\n\nExtract the statistics courses offered this term."
-  },
-  {
-    "objectID": "notes/01-r-basics.html#vectors",
-    "href": "notes/01-r-basics.html#vectors",
-    "title": "R Basics",
-    "section": "Vectors",
-    "text": "Vectors\nThe columns of the office_ratings data frame and the elements of the mast list were comprised of (atomic) vectors. Unlike lists, all elements within a vector share the same type. For example, all names in the stat_faculty vector were character strings and all ratings in the imdb_rating column were numeric. We’ll deal with a variety of types of vectors in this course, including:\n\nnumeric\ncharacter (text)\nlogical (TRUE/FALSE)\n\nExtracting elements of a vector\nJust like with lists (and therefore data frames), we use brackets to extract elements from a vector. As an example, let’s work with the title column from office_ratings.\n\ntitle &lt;- office_ratings$title # vector of titles\n\nTo extract the 111th title, we run\n\ntitle[111]\n\n[1] \"New Leads\"\n\n\nor two extract the 100th through 111th titles, we run\n\ntitle[100:111]\n\n [1] \"Double Date\"          \"Murder\"               \"Shareholder Meeting\" \n [4] \"Scott's Tots\"         \"Secret Santa\"         \"The Banker\"          \n [7] \"Sabre\"                \"Manager and Salesman\" \"The Delivery: Part 1\"\n[10] \"The Delivery: Part 2\" \"St. Patrick's Day\"    \"New Leads\"           \n\n\nNegative indices\nSometimes, we want to “kick out” elements of our vector. To do this, we can use a negative index value. For example,\n\ntitle[-1]\n\nreturns all but the first title—that is, it kicks out the first title. To kick out multiple elements, we need to negate a vector of indices. For example, below we kick out the first 10 titles\n\ntitle[-c(1:10)]\n\nAnd now we kick out the 5th, 50th, and 150th titles\n\ntitle[-c(5, 50, 150)]\n\nThis idea can be adapted to lists and data frames. For example, to kick out the first row of office_ratings, we run\n\noffice_ratings[-1,]\n\n# A tibble: 187 × 6\n   season episode title             imdb_rating total_votes air_date  \n    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;       &lt;dbl&gt; &lt;date&gt;    \n 1      1       2 Diversity Day             8.3        3566 2005-03-29\n 2      1       3 Health Care               7.9        2983 2005-04-05\n 3      1       4 The Alliance              8.1        2886 2005-04-12\n 4      1       5 Basketball                8.4        3179 2005-04-19\n 5      1       6 Hot Girl                  7.8        2852 2005-04-26\n 6      2       1 The Dundies               8.7        3213 2005-09-20\n 7      2       2 Sexual Harassment         8.2        2736 2005-09-27\n 8      2       3 Office Olympics           8.4        2742 2005-10-04\n 9      2       4 The Fire                  8.4        2713 2005-10-11\n10      2       5 Halloween                 8.2        2561 2005-10-18\n# ℹ 177 more rows\n\n\nor to kick out the math courses from the mast list we run\n\nmast[-4]\n\n$stat_faculty\n[1] \"Kelling\"   \"Loy\"       \"Luby\"      \"Poppick\"   \"St. Clair\" \"Wadsworth\"\n\n$stat_courses\n[1] 120 220 230 250 285 330\n\n$math_faculty\n [1] \"Brooke\"              \"Davis\"               \"Egge\"               \n [4] \"Gomez-Gonzales\"      \"Haunsperger\"         \"Johnson\"            \n [7] \"Meyer\"               \"Montee\"              \"Shrestha\"           \n[10] \"Terry\"               \"Thompson\"            \"Turnage-Butterbaugh\"\n\n\nLogical indices\nIt’s great to be able to extract (or omit) elements using indices, but sometimes we don’t know what index value we should use. For example, if you wanted to extract all of the 300-level statistics courses from the stat_courses vector, you would need to manually determine that positions 2:5 meet that requirement. That’s a lot of work! A better alternative is to allow R to find the elements meeting that requirement using logical operators. Below is a table summarizing common logical operators in R.\n\n\nComparison\nMeaning\n\n\n\n&lt;\nless than\n\n\n&gt;\ngreater than\n\n\n&lt;=\nless than or equal to\n\n\n&gt;=\ngreater than or equal to\n\n\n==\nis equal to\n\n\n!=\nnot equal to\n\n\n\nIn order to extract the 300-level statistics courses, we’ll take two steps:\n\nWe’ll determine whether each course is numbered at least 300,\nthen we’ll use that sequence of TRUEs/FALSEs to extract the course.\n\nSo, first we use the logical operator &gt;= to compare stat_courses and 300. This returns TRUE if the element meets the specification and FALSE otherwise.\n\nstat_courses &gt;= 300\n\n[1] FALSE FALSE FALSE FALSE FALSE  TRUE\n\n\nNow, we can use this vector as our index. Only the TRUE elements will be extracted:\n\nstat_courses[stat_courses &gt;= 300]\n\n[1] 330\n\n\nThe same idea can be used with data frames and lists, just remember how to format the brackets and indices!\n\n\n\n\n\n\n Check point\n\n\n\n\nExtract all statistics courses below 250 from stat_courses.\nExtract all math courses except for 240 (probability) from math_courses.\nExtract all rows from season 3 of The Office."
-  },
-  {
-    "objectID": "portfolio/portfolio-1.html",
-    "href": "portfolio/portfolio-1.html",
-    "title": "Portfolio Project 1",
-    "section": "",
-    "text": "Overview\nIn your first mini-project, you’ll apply what you’ve learned about ggplot2 and design principles to replicate and redesign a published graph. This project consists of three parts:\n\nReplicating an existing graph using ggplot2. Depending on the graph you choose, this may require some creativity in recreating data.\nUsing design principles from class, re-design the original graph to be better. This should include, at minimum, changes to two of the “layers” of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme).\nA written summary (no more than 1 printed page) including (1) an evaluation of the original graph and (2) reasoning for your design choices in improving the graph. This should include references to readings and discussions from class.\n\n\n\nOptions and Examples\nThe list below includes some good places to get started finding a graph. You do not have to choose a graph from one of these sources. It can be hard to find associated data with some published graphs, so don’t spend too much time trying to find data for a specific graph before moving on.\n\nOur World In Data\nFiveThirtyEight + Associated R Package (See available data here).\nHelpMeViz\nDataIsPlural\nTidyTuesday – If you choose this option, please be especially kind in your critique. This is a weekly R community activity, and many submissions are by beginners.\nr/dataisbeautiful\nr/dataisugly\n\n\n\nSubmission\nYour submission should include two visualizations (replication and improvement), a written overview of your work, and all associated code. You should work in a rmarkdown or quarto file. Your knitted/rendered file can be either pdf or html. I will distribute GitHub skeleton repos that you should fill in as you work. You should commit your final code and output file to your repo and link your repo to gradescope to submit.\n\n\nRubric\nA successful project will:\n\nInclude all necessary components pushed to GitHub and linked to gradescope\nContain code, plots, and written summary in a single .rmd document\nThe .rmd with all necessary code for recreation\nThe .rmd does not include unnecessary code\nProvide a thoughtful summary and critique\nThe replication matches the original graph on all layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\nThe improved graph has made changes to at least two of the layers\n\nAesthetics faithfully represent the representation of the underlying data\n\nMeet minimum submission quality standards\n\nVery few grammatical mistakes, spelling mistakes, or typos\nAppropriate labels and font sizes\nA readable theme\nThe rendered document does not contain any unnecessary content (package loading messages, warnings, etc.)\n\n\nAn excellent project will meet all of the requirements for a successful project, plus\n\nBe published (publicly!) to the web. (It is a portfolio project, after all). I recommend using RPubs as it’s very easy to publish a standalone website through RStudio, but if you have a public-facing website, that’s great too! Please include a URL in your YAML header so I can find it when grading.\n\nThere are lots of reasons you might not want the world to know that you are enrolled in this class, and this is one of your rights under FERPA. If you’re not comfortable including your name, you don’t have to! Your public document can be authored by “Student” (which has a history of being used in statistics).\nIf you are not comfortable attaching your name to something public-facing and this solution doesn’t work for you, please contact me on slack at least 72 hours before the due date so we can make an alternative plan.\n\nThe improved graph has made changes to at least four of the layers of the grammar of graphics (data, aesthetics, geometries, facets, statistics, coordinates, and theme)\n\nAll changes to aesthetics, geometries, etc. should be faithful representations of the underlying data (e.g. changes for the sake of making a change don’t count!)\n\n\nFor this portfolio project, you may work individually or in pairs. If you choose to work in a pair, let me know as soon as you decide so I can make a group repo for you. Both partners should have a record of committing and pushing to the repo.\n\n\nFAQ\nIf you have any questions, please post them to the #portfolio-projects channel on slack.",
+    "text": "For your second portfolio project, you’ll apply what you’ve learned about wrangling data using the tidyverse. Your goal is to learn which areas of the U.S. struggle with weather prediction and explore possible reasons why. Speciﬁcally, you will focus on the error in high and low temperature forecasting, and may wish to also consider precipitation and outlook.\nYou should write a short report describing your ﬁndings. I envision an introductory paragraph that provides some context to your data, and a couple paragraphs outlining your ﬁndings. That’s it. I’m looking for something that is insightful and well-crafted, rather than long and exhaustive.\nYou should write your blog post in R Markdown, create any graphics using ggplot2, and use tools from this class for data wrangling. To submit your work, push both your R Markdown (.Rmd) ﬁle and knitted output document to GitHub. Do not forget to give your post an informative title!",
     "crumbs": [
       "Portfolio Projects",
-      "Portfolio Project 1"
+      "Portfolio Project 2"
     ]
   },
   {
-    "objectID": "activities/09-tidyr.html",
-    "href": "activities/09-tidyr.html",
-    "title": "\ntidyr: Reshaping Data",
+    "objectID": "portfolio/portfolio-2.html#weather-forecasts.csv",
+    "href": "portfolio/portfolio-2.html#weather-forecasts.csv",
+    "title": "Portfolio Project 2",
+    "section": "weather-forecasts.csv",
+    "text": "weather-forecasts.csv\n\n\n\n\n\n\n\n\nvariable\nclass\ndescription\n\n\n\n\ndate\ndate\ndate described by the forecast\n\n\ncity\nfactor\nobservation city\n\n\nstate\nfactor\nstate or territory\n\n\nhigh_or_low\nfactor\nwhether the forecast is for the high temperature of the low temperature\n\n\nforecast_hours_before\ninteger\nthe number of hours before the observation (one of 12, 24, 36, or 48)\n\n\nobserved_temp\ninteger\nthe actual observed temperature on that date (high or low)\n\n\nforecast_temp\ninteger\nthe predicted temperature on that date (high or low)\n\n\nobserved_precip\ndouble\nthe observed precipitation on that date, in inches; note that some observations lack an indication of precipitation, while others explicitly report 0\n\n\nforecast_outlook\nfactor\nan abbreviation for the general outlook, such as precipitation type\n\n\npossible_error\nfactor\neither (1) “none” if the row contains no potential errors or (2) thename of the variable that is the cause of the potential error",
+    "crumbs": [
+      "Portfolio Projects",
+      "Portfolio Project 2"
+    ]
+  },
+  {
+    "objectID": "portfolio/portfolio-2.html#forecast_cities.csv",
+    "href": "portfolio/portfolio-2.html#forecast_cities.csv",
+    "title": "Portfolio Project 2",
+    "section": "forecast_cities.csv",
+    "text": "forecast_cities.csv\n\n\n\n\n\n\n\n\nvariable\nclass\ndescription\n\n\n\n\ncity\ncharacter\ncity\n\n\nstate\ncharacter\nstate or territory\n\n\nlon lat\ndouble\nlongitude\n\n\nlat\ndouble\nlatitude\n\n\nkoppen\ncharacter\nKöppen climate classiﬁcation\n\n\nelevation\ndouble\nelevation in meters\n\n\ndistance_to_coast\ndouble\ndistance_to_coast in miles\n\n\nwind\ndouble\nmean wind speed\n\n\nelevation_change_four\ndouble\ngreatest elevation change in meters out of the four closest points to this city in a collection of elevations used by the team at Saint Louis University\n\n\nelevation_change_eight\ndouble\ngreatest elevation change in meters out of the eight closest points to this city in a collection of elevations used by the team at Saint Louis University\n\n\navg_annual_precip\ndouble\naverage annual precipitation in inches",
+    "crumbs": [
+      "Portfolio Projects",
+      "Portfolio Project 2"
+    ]
+  },
+  {
+    "objectID": "portfolio/portfolio-2.html#outlook_meanings.csv",
+    "href": "portfolio/portfolio-2.html#outlook_meanings.csv",
+    "title": "Portfolio Project 2",
+    "section": "outlook_meanings.csv",
+    "text": "outlook_meanings.csv\n\n\n\nvariable\nclass\n\n\n\n\nforecast_outlook\ncharacter\n\n\nmeaning\ncharacter",
+    "crumbs": [
+      "Portfolio Projects",
+      "Portfolio Project 2"
+    ]
+  },
+  {
+    "objectID": "activities/11-import.html",
+    "href": "activities/11-import.html",
+    "title": "Data import and dates/times",
     "section": "",
     "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
   },
   {
-    "objectID": "activities/09-tidyr.html#task-1",
-    "href": "activities/09-tidyr.html#task-1",
-    "title": "\ntidyr: Reshaping Data",
+    "objectID": "activities/11-import.html#data-4.csv",
+    "href": "activities/11-import.html#data-4.csv",
+    "title": "Data import and dates/times",
+    "section": "data-4.csv",
+    "text": "data-4.csv\n\n# your code here"
+  },
+  {
+    "objectID": "activities/11-import.html#tricky-1.csv",
+    "href": "activities/11-import.html#tricky-1.csv",
+    "title": "Data import and dates/times",
+    "section": "tricky-1.csv",
+    "text": "tricky-1.csv\n\n# your code here"
+  },
+  {
+    "objectID": "activities/11-import.html#tricky-2.csv",
+    "href": "activities/11-import.html#tricky-2.csv",
+    "title": "Data import and dates/times",
+    "section": "tricky-2.csv",
+    "text": "tricky-2.csv\n\n# your code here"
+  },
+  {
+    "objectID": "activities/11-import.html#task-1",
+    "href": "activities/11-import.html#task-1",
+    "title": "Data import and dates/times",
     "section": "Task 1",
-    "text": "Task 1\n\nTidy this data set by\n\nSelecting the series and e*_7day columns\nPivoting the data to add a column for episode and a column for rating (we’ll clean up the episode column later)\n\n\n\n# include your code here"
+    "text": "Task 1\nCreate a vector of dates that our class meets this term\n\n# your code here"
   },
   {
-    "objectID": "activities/09-tidyr.html#task-2",
-    "href": "activities/09-tidyr.html#task-2",
-    "title": "\ntidyr: Reshaping Data",
+    "objectID": "activities/11-import.html#task-2",
+    "href": "activities/11-import.html#task-2",
+    "title": "Data import and dates/times",
     "section": "Task 2",
-    "text": "Task 2\n\n\nClean the episode and period column\nMake a line plot with episode on the x-axis, rating on the y-axis, colored by series. (You will also need to map the group aesthetic to series)"
+    "text": "Task 2\nNext, print them in the format “Wednesday: Jan 29 2025”\nHint: see ?stamp or the lubridate cheatsheet\n\n# your code here"
   },
   {
-    "objectID": "activities/09-tidyr.html#relig_income",
-    "href": "activities/09-tidyr.html#relig_income",
-    "title": "\ntidyr: Reshaping Data",
-    "section": "relig_income",
-    "text": "relig_income\nThe relig_income dataset in the {tidyr} package stores counts based on a survey which (among other things) asked people about their religion and annual income:\n\nrelig_income\n\n# A tibble: 18 × 11\n   religion `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k`\n   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n 1 Agnostic      27        34        60        81        76       137        122\n 2 Atheist       12        27        37        52        35        70         73\n 3 Buddhist      27        21        30        34        33        58         62\n 4 Catholic     418       617       732       670       638      1116        949\n 5 Don’t k…      15        14        15        11        10        35         21\n 6 Evangel…     575       869      1064       982       881      1486        949\n 7 Hindu          1         9         7         9        11        34         47\n 8 Histori…     228       244       236       238       197       223        131\n 9 Jehovah…      20        27        24        24        21        30         15\n10 Jewish        19        19        25        25        30        95         69\n11 Mainlin…     289       495       619       655       651      1107        939\n12 Mormon        29        40        48        51        56       112         85\n13 Muslim         6         7         9        10         9        23         16\n14 Orthodox      13        17        23        32        32        47         38\n15 Other C…       9         7        11        13        13        14         18\n16 Other F…      20        33        40        46        49        63         46\n17 Other W…       5         2         3         4         2         7          3\n18 Unaffil…     217       299       374       365       341       528        407\n# ℹ 3 more variables: `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;,\n#   `Don't know/refused` &lt;dbl&gt;\n\n\nUse pivot_longer() to tidy this dataset."
+    "objectID": "activities/10-combining.html",
+    "href": "activities/10-combining.html",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "",
+    "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
   },
   {
-    "objectID": "activities/09-tidyr.html#anscombe",
-    "href": "activities/09-tidyr.html#anscombe",
-    "title": "\ntidyr: Reshaping Data",
-    "section": "anscombe",
-    "text": "anscombe\nAnscombe’s quartet is a built-in dataset in R.\n\nanscombe\n\n   x1 x2 x3 x4    y1   y2    y3    y4\n1  10 10 10  8  8.04 9.14  7.46  6.58\n2   8  8  8  8  6.95 8.14  6.77  5.76\n3  13 13 13  8  7.58 8.74 12.74  7.71\n4   9  9  9  8  8.81 8.77  7.11  8.84\n5  11 11 11  8  8.33 9.26  7.81  8.47\n6  14 14 14  8  9.96 8.10  8.84  7.04\n7   6  6  6  8  7.24 6.13  6.08  5.25\n8   4  4  4 19  4.26 3.10  5.39 12.50\n9  12 12 12  8 10.84 9.13  8.15  5.56\n10  7  7  7  8  4.82 7.26  6.42  7.91\n11  5  5  5  8  5.68 4.74  5.73  6.89\n\n\nThis dataset contains four pairs of variables (x1 and y1, x2 and y2, etc) that underlie Anscombe’s quartet, a collection of four datasets that have the same summary statistics (mean, sd, correlation etc), but have quite different data. We want to produce a dataset with columns set, x and y:\n# A tibble: 44 × 3\n   set       x     y\n   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 1        10  8.04\n 2 2        10  9.14\n 3 3        10  7.46\nThere are (at least) two ways to do this. The first is a little more intuitive, but not as efficient:\n\nFirst, we’ll create a new “index” column, so we don’t lose track of which x values map to which y values.\n\n\nanscombe &lt;- anscombe %&gt;%\n  mutate(\n    index = 1:nrow(anscombe)\n  )\n\n\nNext, use pivot_longer() on all of the columns but index. Use the default for names_to and values_to. The first few rows of your result should look like this:\n\n# A tibble: 88 × 3\n   index name  value\n   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;\n 1     1 x1    10   \n 2     1 x2    10   \n 3     1 x3    10  \n\nNext, separate name into variable and set. This is a little tricky, since there’s no separator character (the values of name are x1 and x2 instead of x_1 or x_2). Instead, set sep = 1, which tells R to split the column after the first character. The first few rows of your result should look like this:\n\n# A tibble: 88 × 4\n   index variable set   value\n   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;\n 1     1 x        1     10   \n 2     1 x        2     10   \n 3     1 x        3     10   \n\nFinally, use pivot_wider() with names_from variable and values_from value. Call your tidy dataset anscombe_tidy.\n\nIf all went well, you should be able to run the following two chunks to generate the summary statistics and scatterplots for Anscombe’s quartet.\n\nanscombe_tidy %&gt;%\n  group_by(set) %&gt;%\n  summarize(\n    mean_x = mean(x),\n    mean_y = mean(y),\n    sd_x = sd(x),\n    sd_y = sd(y),\n    cor = cor(x,y)\n  )\n\n\nanscombe_tidy %&gt;%\n  ggplot(aes(x = x, y = y)) + \n  geom_point() + \n  facet_wrap(~set)\n\nThe second way to do this is directly within pivot_longer():\n\nanscombe %&gt;%\n  pivot_longer(\n    -index,\n    names_to = c(\".value\", \"set\"),\n    names_pattern = \"(.)(.)\"\n  )\n\n# A tibble: 44 × 4\n   index set       x     y\n   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1     1 1        10  8.04\n 2     1 2        10  9.14\n 3     1 3        10  7.46\n 4     1 4         8  6.58\n 5     2 1         8  6.95\n 6     2 2         8  8.14\n 7     2 3         8  6.77\n 8     2 4         8  5.76\n 9     3 1        13  7.58\n10     3 2        13  8.74\n# ℹ 34 more rows\n\n\npull up the help page for pivot_longer and try to explain the new arguments."
+    "objectID": "activities/10-combining.html#example-1-star-wars-characters",
+    "href": "activities/10-combining.html#example-1-star-wars-characters",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Example 1: Star Wars Characters",
+    "text": "Example 1: Star Wars Characters\nDataset 1:\n\nEach row in the dataset corresponds to a star wars character\nThe columns include their name, height, mass, homeworld, species, and the first_film they appeared in\n\n\nstarwars_characters\n\n# A tibble: 87 × 6\n   name               height  mass homeworld species first_film\n   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     \n 1 Luke Skywalker        172    77 Tatooine  Human   A New Hope\n 2 C-3PO                 167    75 Tatooine  Droid   A New Hope\n 3 R2-D2                  96    32 Naboo     Droid   A New Hope\n 4 Darth Vader           202   136 Tatooine  Human   A New Hope\n 5 Leia Organa           150    49 Alderaan  Human   A New Hope\n 6 Owen Lars             178   120 Tatooine  Human   A New Hope\n 7 Beru Whitesun Lars    165    75 Tatooine  Human   A New Hope\n 8 R5-D4                  97    32 Tatooine  Droid   A New Hope\n 9 Biggs Darklighter     183    84 Tatooine  Human   A New Hope\n10 Obi-Wan Kenobi        182    77 Stewjon   Human   A New Hope\n# ℹ 77 more rows\n\n\nDataset 2:\nThe dataset is formatted the same, but includes two characters that were first introduced in *The Last Jedi, a Star Wars movie that came out after the first datset was released.\n\nstarwars_lastjedi\n\n# A tibble: 2 × 6\n  name         height mass  homeworld species first_film   \n  &lt;chr&gt;        &lt;lgl&gt;  &lt;lgl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;        \n1 Rose Tico    NA     NA    Otomok    Human   The Last Jedi\n2 Amilyn Holdo NA     NA    &lt;NA&gt;      Human   The Last Jedi\n\n\nHow should these datasets be combined?"
+  },
+  {
+    "objectID": "activities/10-combining.html#example-2-stats-sections",
+    "href": "activities/10-combining.html#example-2-stats-sections",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Example 2: Stats Sections",
+    "text": "Example 2: Stats Sections\nDataset 1:\nThis dataset includes the number of sections of stats courses offered in Fall 2024 and Winter 2025 terms.\n\nstats_sections_fw\n\n# A tibble: 8 × 3\n  class    fall winter\n  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;\n1 stat120     3      3\n2 stat220     1      1\n3 stat230     1      1\n4 stat250     0      1\n5 stat270     1      0\n6 stat285     1      1\n7 stat320     0      0\n8 stat330     0      1\n\n\nDataset 2:\nThis dataset includes the number of sections of stats courses offered in the Spring 2025 term.\n\nstats_sections_s\n\n# A tibble: 8 × 1\n  spring\n   &lt;dbl&gt;\n1      4\n2      1\n3      1\n4      1\n5      0\n6      1\n7      1\n8      0\n\n\nHow should these datasets be combined?"
+  },
+  {
+    "objectID": "activities/10-combining.html#example-3-survivor-castaways",
+    "href": "activities/10-combining.html#example-3-survivor-castaways",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Example 3: Survivor castaways",
+    "text": "Example 3: Survivor castaways\nDataset 1:\n\nThis dataset includes information about each castaway’s performance in a given season of Survivor (US seasons)\nIt includes a castaway ID, first name, season name and number, and the results for that castaway in that season (their overall place, whether they made the jury, and whether they were a finalist)\n\n\nus_castaway_results\n\n# A tibble: 870 × 7\n   castaway_id castaway season_name      season place jury  finalist\n   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;   \n 1 US0001      Sonja    Survivor: Borneo      1    16 FALSE FALSE   \n 2 US0002      B.B.     Survivor: Borneo      1    15 FALSE FALSE   \n 3 US0003      Stacey   Survivor: Borneo      1    14 FALSE FALSE   \n 4 US0004      Ramona   Survivor: Borneo      1    13 FALSE FALSE   \n 5 US0005      Dirk     Survivor: Borneo      1    12 FALSE FALSE   \n 6 US0006      Joel     Survivor: Borneo      1    11 FALSE FALSE   \n 7 US0007      Gretchen Survivor: Borneo      1    10 FALSE FALSE   \n 8 US0008      Greg     Survivor: Borneo      1     9 TRUE  FALSE   \n 9 US0009      Jenna    Survivor: Borneo      1     8 TRUE  FALSE   \n10 US0010      Gervase  Survivor: Borneo      1     7 TRUE  FALSE   \n# ℹ 860 more rows\n\n\nDataset 2:\n\nThis dataset includes information about each castaway who has appeared on Survivor (including non-US seasons)\nIt includes a castaway ID, their full name, date of birth, gender and occupation as presented in the show, and their Myers-Briggs personality type.\n\n\ncast_details\n\n# A tibble: 1,118 × 6\n   castaway_id full_name        date_of_birth gender occupation personality_type\n   &lt;chr&gt;       &lt;chr&gt;            &lt;date&gt;        &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           \n 1 US0014      Rudy Boesch      1928-01-20    Male   Retired N… ISTJ            \n 2 US0002      B.B. Andersen    1936-01-18    Male   Real Esta… ESTJ            \n 3 US0001      Sonja Christoph… 1937-01-28    Female Musician   ENFP            \n 4 US0075      Jake Billingsley 1941-08-21    Male   Land Brok… ISFJ            \n 5 US0151      Jim Lynch        1942-01-07    Male   Retired F… ISTJ            \n 6 US0474      Joseph Del Campo 1943-07-04    Male   Former FB… ISTJ            \n 7 US0304      Jimmy Johnson    1943-07-16    Male   Former NF… ESFJ            \n 8 US0047      Kim Johnson      1944-09-18    Female Retired T… ISFJ            \n 9 US0128      Scout Cloud Lee  1944-11-08    Female Rancher    INFJ            \n10 US0061      Paschal English  1945-03-05    Male   Judge      ISFJ            \n# ℹ 1,108 more rows\n\n\nWe are interested in exploring the relationship between overall place on a Survivor season and personality type. How should these datasets be combined?\nStop here"
+  },
+  {
+    "objectID": "activities/10-combining.html#task-line-plot",
+    "href": "activities/10-combining.html#task-line-plot",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Task: line plot",
+    "text": "Task: line plot\nFinish the code to make a line plot of viewers against episode, colored and grouped by series. (remember to remove #| eval: false)\n\ntidy_ratings2 %&gt;%\n  ggplot(aes(x = _____, y = _____, col = _____, group = _____)) +\n  geom_line() + \n  scale_color_viridis_c(option = \"plasma\", end = .8)"
+  },
+  {
+    "objectID": "activities/10-combining.html#task-add-series-9-14-to-the-dataset",
+    "href": "activities/10-combining.html#task-add-series-9-14-to-the-dataset",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Task: Add series 9-14 to the dataset",
+    "text": "Task: Add series 9-14 to the dataset\nThe code chunk below loads the new dataset\n\nmessy_ratings2b &lt;- read_csv(\"https://stat220-w25.github.io/data/messy_ratings2_9_14.csv\")\nmessy_ratings2b\n\n# A tibble: 6 × 21\n  series e1_7day e1_28day e2_7day e2_28day e3_7day e3_28day e4_7day e4_28day\n   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;\n1      9    9.55     9.92    9.31     9.76    8.91     9.35    8.88     9.41\n2     10    9.62    10.0     9.38     9.8     8.94     9.42    8.96     9.49\n3     11   11.2     11.8    10.8     11.4    10.7     11.2    10.6     11.2 \n4     12    9.57    10.2     8.98     9.64    8.69     9.39    8.75     9.13\n5     13    8.3      1       7.6      1       7.35     1       7.76     1   \n6     14    7.84     1       7.54     1       7.28     1       7.12     1   \n# ℹ 12 more variables: e5_7day &lt;dbl&gt;, e5_28day &lt;dbl&gt;, e6_7day &lt;dbl&gt;,\n#   e6_28day &lt;dbl&gt;, e7_7day &lt;dbl&gt;, e7_28day &lt;dbl&gt;, e8_7day &lt;dbl&gt;,\n#   e8_28day &lt;dbl&gt;, e9_7day &lt;dbl&gt;, e9_28day &lt;dbl&gt;, e10_7day &lt;dbl&gt;,\n#   e10_28day &lt;dbl&gt;\n\n\nCombine with bind_rows()\n\nCombine the two messy datasets by using bind_rows(). Be sure to look at your resulting dataset and make sure it has the right format\n\n# your code here\n\nCombine with join()\n\nWe’ll practice joining with the tidy versions of the data. First, create tidy_ratings2b using the new dataset. Follow the same steps as what was used to create tidy_ratings2\n\n# your code here\n\nOnce you’re satisfied, that the two tidy datasets look similar enough to combine, remove #| eval: false from the following code chunk and run it. Did it work? Why or why not?\n\ntidy_ratings = tidy_ratings2 %&gt;%\n  left_join(tidy_ratings2b)\n\nUse the correction _join function here. Save your dataset to the tidy_ratings object.\n\n# your code here\n\nCombine with bind_cols\n\nTo join the two datasets using bind_cols, you’ll first have to un-tidy your tidy datasets, so that each episode number is in a row and each series number is in a column. After using bind_cols() the first few rows of your final dataset should look like this:\n# A tibble: 10 × 16\n   episode period    s1    s2    s3    s4    s5    s6    s7    s8    s9   s10   s11   s12   s13   s14\n     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1       1      7  2.24  3.1   3.85  6.6   8.51  11.6  13.6  9.46  9.55  9.62  11.2  9.57  8.3   7.84\n 2       2      7  3     3.53  4.6   6.65  8.79  11.6  13.4  9.23  9.31  9.38  10.8  8.98  7.6   7.54\n 3       3      7  3     3.82  4.53  7.17  9.28  12.0  13.0  8.68  8.91  8.94  10.7  8.69  7.35  7.28\nStop here and let Amanda know you’ve finished"
+  },
+  {
+    "objectID": "activities/10-combining.html#footnotes",
+    "href": "activities/10-combining.html#footnotes",
+    "title": "\nbind_ and _join: Combining Data",
+    "section": "Footnotes",
+    "text": "Footnotes\n\nTalk it over: does everybody remember what makes a dataset “tidy”?↩︎"
   },
   {
     "objectID": "activities/05-maps.html",
@@ -3043,21 +3477,7 @@
     "href": "activities/11-import-solutions.html",
     "title": "Data import and dates/times – Solutions",
     "section": "",
-    "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub."
-  },
-  {
-    "objectID": "activities/11-import-solutions.html#task-1-print-list-of-dates",
-    "href": "activities/11-import-solutions.html#task-1-print-list-of-dates",
-    "title": "Data import and dates/times – Solutions",
-    "section": "Task 1: print list of dates",
-    "text": "Task 1: print list of dates\n\nfirst_class = mdy(\"1/6/2025\")\nmondays = first_class + weeks(1:9)\nwednesdays = mondays + days(2)\nfridays = wednesdays + days(2)\n\nmeetings = tibble(\n  dates = c(mondays, wednesdays, fridays)\n) %&gt;%\n  arrange(dates)\n\nmeetings\n\n# A tibble: 27 × 1\n   dates     \n   &lt;date&gt;    \n 1 2025-01-13\n 2 2025-01-15\n 3 2025-01-17\n 4 2025-01-20\n 5 2025-01-22\n 6 2025-01-24\n 7 2025-01-27\n 8 2025-01-29\n 9 2025-01-31\n10 2025-02-03\n# ℹ 17 more rows"
-  },
-  {
-    "objectID": "activities/11-import-solutions.html#task-2",
-    "href": "activities/11-import-solutions.html#task-2",
-    "title": "Data import and dates/times – Solutions",
-    "section": "Task 2",
-    "text": "Task 2\nNext, print them in the format “Wednesday: Jan 29 2025”\n\nmeetings %&gt;%\n  mutate(\n    date2 = stamp(\"Wednesday: Jan 29 2025\")(dates)\n  )\n\n# A tibble: 27 × 2\n   dates      date2                 \n   &lt;date&gt;     &lt;chr&gt;                 \n 1 2025-01-13 Monday: Jan 13 2025   \n 2 2025-01-15 Wednesday: Jan 15 2025\n 3 2025-01-17 Friday: Jan 17 2025   \n 4 2025-01-20 Monday: Jan 20 2025   \n 5 2025-01-22 Wednesday: Jan 22 2025\n 6 2025-01-24 Friday: Jan 24 2025   \n 7 2025-01-27 Monday: Jan 27 2025   \n 8 2025-01-29 Wednesday: Jan 29 2025\n 9 2025-01-31 Friday: Jan 31 2025   \n10 2025-02-03 Monday: Feb 03 2025   \n# ℹ 17 more rows"
+    "text": "Click the “code” button above to copy and paste the source code, or pull a fresh version of the “activities” repo from GitHub.\nWarm Up\nUse read_csv() to import the desserts data set from\nhttps://stat220-w25.github.io/data/desserts.csv\n\ndesserts &lt;- read_csv(here::here(here::here(), \"data/desserts.csv\"))\n\nYour turn\nUse the appropriate read_&lt;type&gt;() function to import the following data sets:\n\nhttps://stat220-w25.github.io/data/data-4.csv\nhttps:/stat220-w25.github.io/data/tricky-1.csv\nhttps://stat220-w25.github.io/data/tricky-2.csv\n\nIf you hit any errors/problems, be sure to explore them and identify the issue, even if you can’t “fix” it.\ndata-4.csv\nOpening the URL for data-4.csv you see that the delimiter is |, so you should use read_delim():\n\ndata4 &lt;- read_delim(here::here(here::here(),\"data/data-4.csv\"), delim = \"|\")\n\ntricky-1.csv\nAt first glance it isn’t obvious what is tricky about tricky-1.csv; however, if you try to use read_csv() you’ll hit the following problem:\n\ntricky1 &lt;- read_csv(\"https:/stat220-w25.github.io/data/tricky-1.csv\")\nproblems(tricky1)\n\nThe output of problems() here is that in rows 4 and 7 read_csv only finds 4 columns, but 5 are expected. Looking at the imported data set we see that the city is missing in rows three and 6 (the 4th and 7th rows of the original data file).\n\ntricky1\n\nWe can fix this with post processing:\n\ntricky1[3, ] &lt;- c(tricky1[3, 1:2], NA, tricky1[3, 3:4])\ntricky1[6, ] &lt;- c(tricky1[4, 1], NA, tricky1[4, 3:5])\n\ntricky-2.csv\nTo begin, we can attempt to read in the tricky-2.csv file:\n\ntricky2 &lt;- read_csv(here::here(here::here(),\"data/tricky-2.csv\"))\nproblems(tricky2)\n\nThis looks like a missing value problem again! Let’s look at the rows with missing values:\n\ntricky2 %&gt;% slice(8:21)\n\nWhy are there state abbreviations in the latitude column?!? (Because not all the rows put quotes around the “City, State” so it added an extra column!)\nOne solution is to parse the file in pieces. First, we can import the first 7 rows of the file:\n\ntricky2_part1 &lt;- read_csv(\n  \"https://aloy.rbind.io/data/tricky-2.csv\",\n  n_max = 7\n)\n\nNext, we parse the other rows, and manually specify the column names, since we are skipping the first row:\n\ntricky2_part2 &lt;- read_csv(\n  \"https://aloy.rbind.io/data/tricky-2.csv\",\n  skip = 8, \n  col_names = c(\"iata\", \"airport\", \"city\", \"state\",  \"latitude\", \"longitude\")\n)\n\nNow, we have to use some data wrangling skills to combine everything. First, we must create a state column in tricky2_part1\n\ntricky2_part1 &lt;- tricky2_part1 %&gt;%\n  separate(city, into = c(\"city\", \"state\"), sep = \",\")\n\nThen, we need to bind the two sets of rows together using bind_rows():\n\ntricky2 &lt;- bind_rows(tricky2_part1, tricky2_part2)\n\nTime – plot\nDays – make a list of class days\nStart by printing the dates only\nNext, print them in the format “Week 4 Wednesday: Jan 29 2025”"
   },
   {
     "objectID": "computing/git-stat220.html",
