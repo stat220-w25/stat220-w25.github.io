@@ -6,20 +6,17 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-82b21c4badf2b3742632e8f006a51c80.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.32">
-
-  <meta name="author" content="Prof Amanda Luby">
-  <title>Stat 220 – Intro to Maps   and Spatial  Data</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
-  <style>
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-82b21c4badf2b3742632e8f006a51c80.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+<meta name="author" content="Prof Amanda Luby">
+<title>Stat 220 – Intro to  Web Scraping</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+<style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -97,14 +94,14 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #d4d0ab; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-3fbdf5335c1ee34ace0cfc252b951b28.css">
-  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-9be35e48ac5ff9906ccc019449422c46.css">
+<link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
 
   .callout {
     margin-top: 1em;
@@ -302,7 +299,7 @@
   }
 
   </style>
-  <style type="text/css">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -313,6 +310,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -389,16 +387,13 @@
       margin-right: 0; 
     }
   </style>
-  <link href="../../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
-  <script src="../../site_libs/countdown-0.4.0/countdown.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="../img/snow-cholera-map.jpeg" data-background-opacity="0.8" data-background-position="right" data-background-size="60%" data-slide-number="none" class="quarto-title-block center">
-  <h1 class="title">Intro to Maps <br> and Spatial <br>Data</h1>
-  <p class="subtitle">Day 05</p>
+<section id="title-slide" data-background-image="../img/robot_mower2.jpg" data-background-opacity="0.8" data-background-position="bottom right" data-background-size="35%" data-slide-number="none" class="quarto-title-block center"><h1 class="title">Intro to <br>Web Scraping</h1>
+  <p class="subtitle">Day 20</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -411,441 +406,281 @@ Prof Amanda Luby
     </div>
 </div>
 
-</section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
+</section><section id="ways-to-access-data-from-the-web" class="slide level2 scrollable"><h2>Ways to access data from the web:</h2>
+<ol type="1">
+<li class="fragment"><p>Web APIs (application programming interface): website offers a set of structured http requests that return JSON or XML files.</p></li>
+<li class="fragment"><p><strong>Screen scraping:<br> extract data from source code of website, with html parser (easy) or regular expression matching (less easy).</strong></p></li>
+</ol></section><section id="api-vs-screen-scraping" class="slide level2"><h2>API vs Screen Scraping</h2>
+</section><section id="check-the-terms-of-useservice-first" class="slide level2"><h2>Check the terms of use/service first!</h2>
 <ul>
-<li class="fragment">git/GitHub</li>
-<li class="fragment">Intro to Spatial Data</li>
-<li class="fragment">Making Maps in <code>ggplot2</code></li>
-</ul>
-</section>
-<section id="section" class="slide level2 smaller" data-background-image="https://imgs.xkcd.com/comics/git.png" data-background-position="right" data-background-size="35%">
-<h2></h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li class="fragment">Think of the state on GitHub as “worst case scenario”</li>
-<li class="fragment">If you screw things up, copy your important files (eg. <code>hw.Rmd</code>) to a safe place.
-<ul>
-<li class="fragment">Usually your files are JUST FINE. But it is easy to goof up the Git infrastructure when you’re new at this. And it can be hard to get that straightened out on your own.</li>
-</ul></li>
-<li class="fragment">Rename the existing local repo as a temporary measure, i.e.&nbsp;before you do something radical, like delete it.</li>
-<li class="fragment">Clone the original repo from GitHub to RStudio (follow the directions to create a new project). You are back to a happy state.</li>
-<li class="fragment">Copy all relevant files back over from your safe space. The ones whose updated state you need to commit.</li>
-<li class="fragment">Knit, commit, push</li>
-<li class="fragment">Carry on with your life.</li>
-</ul>
-</div><div class="column" style="width:50%;">
-
-</div></div>
-
-<aside><div>
-<p><a href="https://happygitwithr.com/burn">Burn It All Down</a> from <em>Happy Git with R</em></p>
-</div></aside></section>
-<section id="section-1" class="slide level2">
-<h2></h2>
-<p><img data-src="../img/whole-game-04.png"></p>
-</section>
-<section>
-<section id="spatial-data" class="title-slide slide level1 maize center">
-<h1>Spatial Data</h1>
-
-</section>
-<section id="cholera" class="slide level2 smaller">
-<h2>Cholera</h2>
-<p>In 1854, a <em>Cholera</em> outbreak killed 127 people in 3 days in a London neighborhood, resulting in a mass exodus of local residents. At the time, people thought that Cholera w as an airborne disease. John Snow was a physician who was critical of the airborne theory, and set out to investigate.</p>
+<li class="fragment"><p>Can you query this webpage?</p></li>
+<li class="fragment"><p>Are there restrictions on the use of the data?</p></li>
+<li class="fragment"><p>How many requests can you make per minute?</p></li>
+<li class="fragment"><p>…and more…</p></li>
+</ul></section><section id="checking-for-permission-to-scrape" class="slide level2"><h2>Checking for permission to scrape</h2>
+<p>Use <code><a href="https://docs.ropensci.org/robotstxt/reference/paths_allowed.html">robotstxt::paths_allowed()</a></code> to see if you can scrape the web page.</p>
 <div class="fragment">
-<p>What might this data look like?</p>
+<p>You can scrape Zillow</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(robotstxt)</span>
+<span id="cb1-2"><a></a><span class="fu">paths_allowed</span>(<span class="st">"http://www.zillow.com"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
 </div>
 <div class="fragment">
+<p>But not Facebook</p>
 <div class="cell">
-<div class="cell-output-display">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">paths_allowed</span>(<span class="st">"http://www.facebook.com"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="task">
+<p>What websites have data about <em>you</em>? Think of 1-2 and see if scraping is allowed on those sites.</p>
+</div>
+</div>
+</section><section id="hypertext-markup-language" class="slide level2"><h2>Hypertext Markup Language</h2>
+<ul>
+<li class="fragment"><p>Most of the data on the web is still largely available as HTML</p></li>
+<li class="fragment"><p>It is structured (hierarchical / tree based), but it’s often not available in a form useful for analysis (flat / tidy).</p></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb5-1"><a></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb5-2"><a></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb5-3"><a></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>This is a title<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb5-4"><a></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb5-5"><a></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb5-6"><a></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> align</span><span class="op">=</span><span class="st">"center"</span><span class="dt">&gt;</span>Hello world!<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb5-7"><a></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb5-8"><a></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="html-tags" class="slide level2"><h2>HTML tags</h2>
+<p>HTML uses <strong>tags</strong> to describe different aspects of document content</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 15%">
 <col style="width: 16%">
-<col style="width: 19%">
-<col style="width: 6%">
-<col style="width: 22%">
+<col style="width: 84%">
 </colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">date</th>
-<th style="text-align: left;">last_name</th>
-<th style="text-align: left;">first_name</th>
-<th style="text-align: left;">address</th>
-<th style="text-align: right;">age</th>
-<th style="text-align: left;">cause_of_death</th>
-</tr>
-</thead>
+<thead><tr class="header">
+<th>Tag</th>
+<th>Example</th>
+</tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Aug 31, 1854</td>
-<td style="text-align: left;">Jones</td>
-<td style="text-align: left;">Thomas</td>
-<td style="text-align: left;">26 Broad St.</td>
-<td style="text-align: right;">37</td>
-<td style="text-align: left;">cholera</td>
+<td>heading</td>
+<td><code>&lt;h1&gt;My Title&lt;/h1&gt;</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Aug 31, 1854</td>
-<td style="text-align: left;">Jones</td>
-<td style="text-align: left;">Mary</td>
-<td style="text-align: left;">26 Broad St.</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">cholera</td>
+<td>paragraph</td>
+<td><code>&lt;p&gt;A paragraph of content...&lt;/p&gt;</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Sept 1, 1854</td>
-<td style="text-align: left;">Warwick</td>
-<td style="text-align: left;">Martin</td>
-<td style="text-align: left;">14 Broad St.</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: left;">cholera</td>
+<td>table</td>
+<td><code>&lt;table&gt; ... &lt;/table&gt;</code></td>
+</tr>
+<tr class="even">
+<td>anchor (with attribute)</td>
+<td><code>&lt;a href="http://www.mysite.net"&gt;click here for link&lt;/a&gt;</code></td>
 </tr>
 </tbody>
-</table>
-</div>
-</div>
-
-</div>
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="section-2" class="slide level2">
-<h2></h2>
-<p>What makes “address” a useful variable is that it is linked to a specific location in the physical world. If we plot these addresses, we get something like the following:</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="section-3" class="slide level2">
-<h2></h2>
-<p>While we can see patterns in the last plot, the underlying map of the London streets provides helpful context that makes it more intelligble:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="../img/snow-cholera-map.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="../img/snow-cholera-map.jpeg" class="quarto-figure quarto-figure-center" style="width:50.0%"></a></p>
-</figure>
-</div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="section-4" class="slide level2">
-<h2></h2>
+</table></section><section id="rvest" class="slide level2"><h2>{rvest}</h2>
 <div class="columns">
-<div class="column" style="width:60%;">
-<p>Snow’s insight was driven by another set of data—the locations of the street-side water pumps (it’s kind of hard to see, but they are labelled on the map). Nearly all of the cases were clustered around a single pump on the center of Broad Street.</p>
-<p>John Snow’s map (and water pump) are now “famous” among epidemiologists and statisticians.</p>
-</div><div class="column fragment" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../img/broad-street-pump.jpeg"></p>
-<figcaption>John Snow’s water pump (and pub) from a 2019 visit</figcaption>
-</figure>
+<div class="column" style="width:50%;">
+<p><img data-src="https://rvest.tidyverse.org/logo.png" style="width:70.0%"></p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>Pronounced like “harvest”</p></li>
+<li><p>Processing and manipulation of HTML data</p></li>
+<li><p><em>Installed</em> with the {tidyverse} but not <em>loaded</em> automatically</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">library</span>(rvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div></div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="a-successful-data-science-episode" class="slide level2">
-<h2>A successful data science episode:</h2>
-<ol type="1">
-<li class="fragment">Combine three sources of data (Cholera deaths, water pump locations, and street map)</li>
-<li class="fragment">While a model might have come to the same conclusion, simply plotting the data is much simpler (and more convincing to lots of people)</li>
-<li class="fragment">The problem was resolved when the data-based evidence was combined with a plausible model that explained the physical phenomenon.</li>
-</ol>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="what-is-a-map" class="slide level2">
-<h2>What is a map?</h2>
-<p>A bunch of latitude longitude points…</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="what-is-a-map-1" class="slide level2">
-<h2>What is a map?</h2>
-<p>… that are connected with lines in a very specific order.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="necessary-map-data" class="slide level2">
-<h2>Necessary map data</h2>
+</section><section id="core-rvest-functions" class="slide level2 smaller"><h2>Core <code>rvest</code> functions</h2>
+<table class="caption-top">
+<thead><tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>read_html</code></td>
+<td>Read HTML data from a url or character string</td>
+</tr>
+<tr class="even">
+<td><code>html_element</code></td>
+<td>Select a specified element from HTML document</td>
+</tr>
+<tr class="odd">
+<td><code>html_element</code></td>
+<td>Select specified elements from HTML document</td>
+</tr>
+<tr class="even">
+<td><code>html_table</code></td>
+<td>Parse an HTML table into a data frame</td>
+</tr>
+<tr class="odd">
+<td><code>html_text</code></td>
+<td>Extract tag pairs’ content</td>
+</tr>
+<tr class="even">
+<td><code>html_name</code></td>
+<td>Extract tags’ names</td>
+</tr>
+<tr class="odd">
+<td><code>html_attrs</code></td>
+<td>Extract all of each tag’s attributes</td>
+</tr>
+<tr class="even">
+<td><code>html_attr</code></td>
+<td>Extract tags’ attribute value by name</td>
+</tr>
+</tbody>
+</table></section><section id="example-box-office-mojo" class="slide level2"><h2>Example: box office mojo</h2>
+<p><a href="https://www.boxofficemojo.com/year/2022/" class="uri">https://www.boxofficemojo.com/year/2022/</a></p>
+<div class="columns">
+<div class="column" style="width:50%;">
 <ul>
-<li class="fragment"><p>latitude/longitude points for all map boundaries</p></li>
-<li class="fragment"><p>which boundary group all lat/long points belong</p></li>
-<li class="fragment"><p>the order to connect points within each group</p></li>
+<li>
+<p>Take a look at the web page <strong>and</strong> the html source code</p>
+<p>Chrome or Firefox: right click -&gt; View page source</p>
+</li>
+<li><p>Look for the tag <code>&lt;table&gt;</code> tag</p></li>
 </ul>
-</section>
-<section id="state-map-data" class="slide level2">
-<h2>State map data</h2>
-<p><code>ggplot2::map_data()</code> provides the necessary information</p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../img/scrape_boxoffice_mojo2022.png"></p>
+</div></div>
+</section><section id="read-html-into-r" class="slide level2"><h2>Read HTML into R</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>states <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"state"</span>)</span>
-<span id="cb1-2"><a></a><span class="fu">glimpse</span>(states)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"https://www.boxofficemojo.com/year/2022/"</span>)</span>
+<span id="cb7-2"><a></a>page</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 15,537
-Columns: 6
-$ long      &lt;dbl&gt; -87.46201, -87.48493, -87.52503, -87.53076, -87.57087, -87.5…
-$ lat       &lt;dbl&gt; 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30.32665, …
-$ group     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-$ order     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1…
-$ region    &lt;chr&gt; "alabama", "alabama", "alabama", "alabama", "alabama", "alab…
-$ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
+<pre><code>{html_document}
+&lt;html class="a-no-js" data-19ax5a9jf="dingo"&gt;
+[1] &lt;head&gt;\n&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8 ...
+[2] &lt;body id="body" class="mojo-page-id-yld a-m-us a-aui_72554-c a-aui_a11y_6 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">str</span>(page)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 2
+ $ node:&lt;externalptr&gt; 
+ $ doc :&lt;externalptr&gt; 
+ - attr(*, "class")= chr [1:2] "xml_document" "xml_node"</code></pre>
 </div>
 </div>
-</section>
-<section id="using-geom_polygon" class="slide level2">
-<h2>Using <code>geom_polygon()</code></h2>
-<p>Using <code>geom_polygon()</code> will treat states as solid shapes, making it easier to add color</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb3-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="using-coord_fixed" class="slide level2">
-<h2>Using <code>coord_fixed()</code></h2>
-<p>Using <code>coord_fixed()</code> forces x and y units to be equal</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb4-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
-<span id="cb4-3"><a></a>  <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="your-turn" class="slide level2">
-<h2>Your turn</h2>
+</section><section id="extract-tables" class="slide level2"><h2>Extract tables</h2>
+<p>Use <code>html_element()</code> or <code>html_elements()</code> to extract pieces out of HTML documents</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb5-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
-<span id="cb5-3"><a></a>    <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>tables <span class="ot">&lt;-</span> page <span class="sc">%&gt;%</span> <span class="fu">html_elements</span>(<span class="st">"table"</span>)</span>
+<span id="cb11-2"><a></a><span class="fu">str</span>(tables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 1
+ $ :List of 2
+  ..$ node:&lt;externalptr&gt; 
+  ..$ doc :&lt;externalptr&gt; 
+  ..- attr(*, "class")= chr "xml_node"
+ - attr(*, "class")= chr "xml_nodeset"</code></pre>
 </div>
-<div class="task">
+</div>
+</section><section id="html_element-vs-html_elements" class="slide level2"><h2>
+<code>html_element()</code> vs <code>html_elements()</code>
+</h2>
 <ul>
-<li>Edit this code so that each shape is colored in with a different color.</li>
-<li>You only need the 3 variables used: <code>long</code>, <code>lat</code>, and <code>group</code></li>
-<li><code>05-maps.Rmd</code> file available in the <code>activities</code> repo</li>
-</ul>
-</div>
+<li class="fragment"><p><code>html_elements()</code> <strong>returns all matching elements</strong> beneath any of the inputs, flattening results into a new node set</p></li>
+<li class="fragment"><p><code>html_element()</code> <strong>always returns a vector the same length as the input</strong>, using a “missing” element where needed.</p></li>
+</ul></section><section id="check-that-its-the-right-table" class="slide level2"><h2>Check that it’s the right table</h2>
+<p>It looks promising!</p>
 <div class="cell">
-<div class="cell-output-display">
-<div class="countdown" id="timer_f41493ad" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{xml_nodeset (1)}
+[1] &lt;table class="a-bordered a-horizontal-stripes a-size-base a-span12 mojo-b ...</code></pre>
 </div>
 </div>
-</div>
-</section>
-<section id="coordinate-systems-and-projections" class="slide level2" data-background-image="../img/02-ggplot-layers.png" data-background-size="60%" data-background-position="right" data-background-opacity="0.8">
-<h2>Coordinate Systems and Projections</h2>
-</section>
-<section id="section-5" class="slide level2" data-background-image="../img/cairo-projections.png" data-background-size="50%" data-background-position="right">
-<h2></h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p>Geospatial data exists on the globe and is generally described with a <em>latitude</em> and <em>longitude</em>. Any <em>projection</em> from the globe to euclidean space (X-Y plane) is going to cause some distortion.</p>
-</div></div>
-</section>
-<section id="section-6" class="slide level2">
-<h2></h2>
-<iframe data-external="1" src="https://www.youtube.com/embed/vVX-PrBRtTY?start=45" width="100%" height="100%" title="West Wing: Gall-Peters Projection" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-
-<aside><div>
-<p>From <em>The West Wing</em> Season 2 Episode 16</p>
-</div></aside></section>
-<section id="section-7" class="slide level2">
-<h2></h2>
-<img data-src="../img/africa-greenland-distortions.png" class="r-stretch">
-</section>
-<section id="changing-the-coordinate-system" class="slide level2">
-<h2>Changing the coordinate system</h2>
-<p><code>coord_map</code> function provides a Mercator projection (<code>mapproj</code> package has more options)</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb6-2"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb6-3"><a></a>  <span class="fu">coord_map</span>() <span class="sc">+</span> </span>
-<span id="cb6-4"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="changing-the-coordinate-system-1" class="slide level2">
-<h2>Changing the coordinate system</h2>
-<p><code>coord_map</code> function provides a Mercator projection (<code>mapproj</code> package has more options)</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb7-2"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb7-3"><a></a>  <span class="fu">coord_map</span>(<span class="at">projection =</span> <span class="st">"sinusoidal"</span>) <span class="sc">+</span> </span>
-<span id="cb7-4"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="mercator-vs-sinusoidal-projection-world-map" class="slide level2">
-<h2>Mercator vs Sinusoidal projection (world map)</h2>
+<div class="fragment">
+<p>But we don’t have a data frame yet…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>world <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"world"</span>)</span>
-<span id="cb8-2"><a></a></span>
-<span id="cb8-3"><a></a><span class="fu">ggplot</span>(world, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb8-4"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb8-5"><a></a>  <span class="fu">coord_map</span>(<span class="at">projection =</span> <span class="st">"mercator"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>)) <span class="sc">+</span> </span>
-<span id="cb8-6"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>tables[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{html_node}
+&lt;table class="a-bordered a-horizontal-stripes a-size-base a-span12 mojo-body-table mojo-table-annotated mojo-body-table-compact"&gt;
+ [1] &lt;tr&gt;\n&lt;th class="a-text-right mojo-field-type-rank mojo-sort-column mojo ...
+ [2] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+ [3] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+ [4] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+ [5] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+ [6] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+ [7] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+ [8] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+ [9] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+[10] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+[11] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+[12] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+[13] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+[14] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+[15] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+[16] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+[17] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+[18] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+[19] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+[20] &lt;tr&gt;\n&lt;td class="a-text-right mojo-header-column mojo-truncate mojo-fiel ...
+...</code></pre>
 </div>
-<div>
+</div>
+</div>
+</section><section id="parse-a-table-into-a-data-frame" class="slide level2"><h2>Parse a table into a data frame</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>top2022 <span class="ot">&lt;-</span> <span class="fu">html_table</span>(tables[[<span class="dv">1</span>]])</span>
+<span id="cb17-2"><a></a><span class="fu">glimpse</span>(top2022)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 200
+Columns: 11
+$ Rank           &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, …
+$ Release        &lt;chr&gt; "Top Gun: Maverick", "Black Panther: Wakanda Forever", …
+$ Genre          &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
+$ Budget         &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
+$ `Running Time` &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
+$ Gross          &lt;chr&gt; "$718,318,561", "$436,499,646", "$411,331,607", "$401,0…
+$ Theaters       &lt;chr&gt; "4,751", "4,396", "4,534", "4,340", "4,697", "4,427", "…
+$ `Total Gross`  &lt;chr&gt; "$718,732,821", "$453,829,060", "$411,331,607", "$684,0…
+$ `Release Date` &lt;chr&gt; "May 27", "Nov 11", "May 6", "Dec 16", "Jun 10", "Jul 1…
+$ Distributor    &lt;chr&gt; "Paramount Pictures", "Walt Disney Studios Motion Pictu…
+$ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false", "…</code></pre>
+</div>
+</div>
+</section><section id="scrape-then-wrangle" class="slide level2"><h2>Scrape then wrangle</h2>
+<p>Data aren’t ready for analysis, too many character columns!</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 200
+Columns: 11
+$ Rank           &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, …
+$ Release        &lt;chr&gt; "Top Gun: Maverick", "Black Panther: Wakanda Forever", …
+$ Genre          &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
+$ Budget         &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
+$ `Running Time` &lt;chr&gt; "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", …
+$ Gross          &lt;chr&gt; "$718,318,561", "$436,499,646", "$411,331,607", "$401,0…
+$ Theaters       &lt;chr&gt; "4,751", "4,396", "4,534", "4,340", "4,697", "4,427", "…
+$ `Total Gross`  &lt;chr&gt; "$718,732,821", "$453,829,060", "$411,331,607", "$684,0…
+$ `Release Date` &lt;chr&gt; "May 27", "Nov 11", "May 6", "Dec 16", "Jun 10", "Jul 1…
+$ Distributor    &lt;chr&gt; "Paramount Pictures", "Walt Disney Studios Motion Pictu…
+$ Estimated      &lt;chr&gt; "false", "false", "false", "false", "false", "false", "…</code></pre>
+</div>
+</div>
 
-</div>
-<div class="cell quarto-layout-panel" data-layout-nrow="1" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-14-2.png" width="960"></p>
-</div>
-</div>
-</div>
+
 </section>
-<section id="common-types-of-maps" class="slide level2">
-<h2>Common Types of Maps</h2>
-<ol type="1">
-<li class="fragment">Chloropleth</li>
-<li class="fragment">Proportional Symbol</li>
-<li class="fragment">Cartograms/Geofacets</li>
-</ol>
-</section>
-<section id="chloropleth" class="slide level2">
-<h2>Chloropleth</h2>
-<p>Fill in regions with variable values</p>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p>Need two data sources:</p>
-<ol type="1">
-<li>map data with lat, long, region</li>
-<li>data with measurements for each region</li>
-</ol>
-<p>you don’t need to join them!</p>
-</div><div class="column" style="width:60%;">
-<p><img data-src="../img/wilke-chloropleth.png"></p>
-</div></div>
-
-<aside><div>
-<p><a href="https://clauswilke.com/dataviz/geospatial-data.html"><em>Fundamentals of Data Visualization</em></a></p>
-</div></aside></section>
-<section id="proportional-symbol" class="slide level2">
-<h2>Proportional Symbol</h2>
-<p>Overlay symbols on an existing map, where the size of the shape is proportional to the variable</p>
-<img data-src="../img/airport-ggmap.png" class="r-stretch">
-
-<aside><div>
-<p>Made with {ggmap} and {nycflights23}</p>
-</div></aside></section>
-<section id="cartogram" class="slide level2">
-<h2>Cartogram</h2>
-<p>Use approximate geographical position to encode information, but not lat/long directly</p>
-<img data-src="../img/wilke-cartogram.png" class="r-stretch">
-
-<aside><div>
-<p><a href="https://clauswilke.com/dataviz/geospatial-data.html"><em>Fundamentals of Data Visualization</em></a></p>
-</div></aside></section>
-<section id="your-task" class="slide level2">
-<h2>Your task</h2>
-<p>Your task is to use the American Community Survey data to make a chloropleth map of the US</p>
-<div class="task">
-<p>You should:</p>
-<ul>
-<li>Use the starter code provided in <code>05-maps.rmd</code></li>
-<li>Choose a different variable</li>
-<li>Change the color scale</li>
-<li>Update the title, axis labels, and legend</li>
-</ul>
 </div>
-
-
-</section></section>
-    </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 <p><a href="https://stat220-w25.github.io">🔗 stat220-w25.github.io</a></p>
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="../../site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script><script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="../../site_libs/revealjs/plugin/notes/notes.js"></script><script src="../../site_libs/revealjs/plugin/search/search.js"></script><script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="../../site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -1037,9 +872,7 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
           RevealZoom
         ]
       });
-    </script>
-    
-    <script>
+    </script><script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
@@ -1074,9 +907,7 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
         const mode = bsSheetEl.getAttribute("data-mode");
@@ -1263,38 +1094,6 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
       }
     });
     </script>
-    <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
-    (function() {
-      let previousOnload = window.onload;
-      window.onload = () => {
-        if (previousOnload) {
-          previousOnload();
-        }
-        lightboxQuarto.on('slide_before_load', (data) => {
-          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-          const href = trigger.getAttribute('href');
-          if (href !== null) {
-            const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-            if (imgEl !== null) {
-              const srcAttr = imgEl.getAttribute("src");
-              if (srcAttr && srcAttr.startsWith("data:")) {
-                slideConfig.href = srcAttr;
-              }
-            }
-          } 
-        });
-      
-        lightboxQuarto.on('slide_after_load', (data) => {
-          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(slideNode);
-          }
-        });
-      
-      };
-      
-    })();
-              </script>
-    
+
 
 </body></html>

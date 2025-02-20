@@ -2615,158 +2615,425 @@
     "text": "handwriting font\n\nin case you don’t yet have a GitHub account…"
   },
   {
-    "objectID": "slides/02/slides02.html#plan-for-today",
-    "href": "slides/02/slides02.html#plan-for-today",
-    "title": "Github +  Reproducible  Reporting",
+    "objectID": "slides/20/slides20.html#ways-to-access-data-from-the-web",
+    "href": "slides/20/slides20.html#ways-to-access-data-from-the-web",
+    "title": "Intro to Web Scraping",
+    "section": "Ways to access data from the web:",
+    "text": "Ways to access data from the web:\n\nWeb APIs (application programming interface): website offers a set of structured http requests that return JSON or XML files.\nScreen scraping: extract data from source code of website, with html parser (easy) or regular expression matching (less easy)."
+  },
+  {
+    "objectID": "slides/20/slides20.html#api-vs-screen-scraping",
+    "href": "slides/20/slides20.html#api-vs-screen-scraping",
+    "title": "Intro to Web Scraping",
+    "section": "API vs Screen Scraping",
+    "text": "API vs Screen Scraping"
+  },
+  {
+    "objectID": "slides/20/slides20.html#check-the-terms-of-useservice-first",
+    "href": "slides/20/slides20.html#check-the-terms-of-useservice-first",
+    "title": "Intro to Web Scraping",
+    "section": "Check the terms of use/service first!",
+    "text": "Check the terms of use/service first!\n\nCan you query this webpage?\nAre there restrictions on the use of the data?\nHow many requests can you make per minute?\n…and more…"
+  },
+  {
+    "objectID": "slides/20/slides20.html#checking-for-permission-to-scrape",
+    "href": "slides/20/slides20.html#checking-for-permission-to-scrape",
+    "title": "Intro to Web Scraping",
+    "section": "Checking for permission to scrape",
+    "text": "Checking for permission to scrape\nUse robotstxt::paths_allowed() to see if you can scrape the web page.\n\nYou can scrape Zillow\n\nlibrary(robotstxt)\npaths_allowed(\"http://www.zillow.com\")\n\n[1] TRUE\n\n\n\n\nBut not Facebook\n\npaths_allowed(\"http://www.facebook.com\")\n\n[1] FALSE\n\n\n\n\n\nWhat websites have data about you? Think of 1-2 and see if scraping is allowed on those sites."
+  },
+  {
+    "objectID": "slides/20/slides20.html#hypertext-markup-language",
+    "href": "slides/20/slides20.html#hypertext-markup-language",
+    "title": "Intro to Web Scraping",
+    "section": "Hypertext Markup Language",
+    "text": "Hypertext Markup Language\n\nMost of the data on the web is still largely available as HTML\nIt is structured (hierarchical / tree based), but it’s often not available in a form useful for analysis (flat / tidy).\n\n&lt;html&gt;\n  &lt;head&gt;\n    &lt;title&gt;This is a title&lt;/title&gt;\n  &lt;/head&gt;\n  &lt;body&gt;\n    &lt;p align=\"center\"&gt;Hello world!&lt;/p&gt;\n  &lt;/body&gt;\n&lt;/html&gt;"
+  },
+  {
+    "objectID": "slides/20/slides20.html#html-tags",
+    "href": "slides/20/slides20.html#html-tags",
+    "title": "Intro to Web Scraping",
+    "section": "HTML tags",
+    "text": "HTML tags\nHTML uses tags to describe different aspects of document content\n\n\n\n\n\n\nTag\nExample\n\n\n\nheading\n&lt;h1&gt;My Title&lt;/h1&gt;\n\n\nparagraph\n&lt;p&gt;A paragraph of content...&lt;/p&gt;\n\n\ntable\n&lt;table&gt; ... &lt;/table&gt;\n\n\nanchor (with attribute)\n&lt;a href=\"http://www.mysite.net\"&gt;click here for link&lt;/a&gt;"
+  },
+  {
+    "objectID": "slides/20/slides20.html#rvest",
+    "href": "slides/20/slides20.html#rvest",
+    "title": "Intro to Web Scraping",
+    "section": "{rvest}",
+    "text": "{rvest}\n\n\n\n\n\nPronounced like “harvest”\nProcessing and manipulation of HTML data\nInstalled with the {tidyverse} but not loaded automatically\n\n\nlibrary(rvest)"
+  },
+  {
+    "objectID": "slides/20/slides20.html#core-rvest-functions",
+    "href": "slides/20/slides20.html#core-rvest-functions",
+    "title": "Intro to Web Scraping",
+    "section": "Core rvest functions",
+    "text": "Core rvest functions\n\n\nFunction\nDescription\n\n\n\nread_html\nRead HTML data from a url or character string\n\n\nhtml_element\nSelect a specified element from HTML document\n\n\nhtml_element\nSelect specified elements from HTML document\n\n\nhtml_table\nParse an HTML table into a data frame\n\n\nhtml_text\nExtract tag pairs’ content\n\n\nhtml_name\nExtract tags’ names\n\n\nhtml_attrs\nExtract all of each tag’s attributes\n\n\nhtml_attr\nExtract tags’ attribute value by name"
+  },
+  {
+    "objectID": "slides/20/slides20.html#example-box-office-mojo",
+    "href": "slides/20/slides20.html#example-box-office-mojo",
+    "title": "Intro to Web Scraping",
+    "section": "Example: box office mojo",
+    "text": "Example: box office mojo\nhttps://www.boxofficemojo.com/year/2022/\n\n\n\n\nTake a look at the web page and the html source code\nChrome or Firefox: right click -&gt; View page source\n\nLook for the tag &lt;table&gt; tag"
+  },
+  {
+    "objectID": "slides/20/slides20.html#read-html-into-r",
+    "href": "slides/20/slides20.html#read-html-into-r",
+    "title": "Intro to Web Scraping",
+    "section": "Read HTML into R",
+    "text": "Read HTML into R\n\npage &lt;- read_html(\"https://www.boxofficemojo.com/year/2022/\")\npage\n\n{html_document}\n&lt;html class=\"a-no-js\" data-19ax5a9jf=\"dingo\"&gt;\n[1] &lt;head&gt;\\n&lt;meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8 ...\n[2] &lt;body id=\"body\" class=\"mojo-page-id-yld a-m-us a-aui_72554-c a-aui_a11y_6 ...\n\nstr(page)\n\nList of 2\n $ node:&lt;externalptr&gt; \n $ doc :&lt;externalptr&gt; \n - attr(*, \"class\")= chr [1:2] \"xml_document\" \"xml_node\""
+  },
+  {
+    "objectID": "slides/20/slides20.html#extract-tables",
+    "href": "slides/20/slides20.html#extract-tables",
+    "title": "Intro to Web Scraping",
+    "section": "Extract tables",
+    "text": "Extract tables\nUse html_element() or html_elements() to extract pieces out of HTML documents\n\ntables &lt;- page %&gt;% html_elements(\"table\")\nstr(tables)\n\nList of 1\n $ :List of 2\n  ..$ node:&lt;externalptr&gt; \n  ..$ doc :&lt;externalptr&gt; \n  ..- attr(*, \"class\")= chr \"xml_node\"\n - attr(*, \"class\")= chr \"xml_nodeset\""
+  },
+  {
+    "objectID": "slides/20/slides20.html#html_element-vs-html_elements",
+    "href": "slides/20/slides20.html#html_element-vs-html_elements",
+    "title": "Intro to Web Scraping",
+    "section": "\nhtml_element() vs html_elements()\n",
+    "text": "html_element() vs html_elements()\n\n\nhtml_elements() returns all matching elements beneath any of the inputs, flattening results into a new node set\nhtml_element() always returns a vector the same length as the input, using a “missing” element where needed."
+  },
+  {
+    "objectID": "slides/20/slides20.html#check-that-its-the-right-table",
+    "href": "slides/20/slides20.html#check-that-its-the-right-table",
+    "title": "Intro to Web Scraping",
+    "section": "Check that it’s the right table",
+    "text": "Check that it’s the right table\nIt looks promising!\n\ntables\n\n{xml_nodeset (1)}\n[1] &lt;table class=\"a-bordered a-horizontal-stripes a-size-base a-span12 mojo-b ...\n\n\n\nBut we don’t have a data frame yet…\n\ntables[[1]]\n\n{html_node}\n&lt;table class=\"a-bordered a-horizontal-stripes a-size-base a-span12 mojo-body-table mojo-table-annotated mojo-body-table-compact\"&gt;\n [1] &lt;tr&gt;\\n&lt;th class=\"a-text-right mojo-field-type-rank mojo-sort-column mojo ...\n [2] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n [3] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n [4] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n [5] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n [6] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n [7] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n [8] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n [9] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n[10] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n[11] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n[12] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n[13] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n[14] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n[15] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n[16] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n[17] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n[18] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n[19] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n[20] &lt;tr&gt;\\n&lt;td class=\"a-text-right mojo-header-column mojo-truncate mojo-fiel ...\n..."
+  },
+  {
+    "objectID": "slides/20/slides20.html#parse-a-table-into-a-data-frame",
+    "href": "slides/20/slides20.html#parse-a-table-into-a-data-frame",
+    "title": "Intro to Web Scraping",
+    "section": "Parse a table into a data frame",
+    "text": "Parse a table into a data frame\n\ntop2022 &lt;- html_table(tables[[1]])\nglimpse(top2022)\n\nRows: 200\nColumns: 11\n$ Rank           &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, …\n$ Release        &lt;chr&gt; \"Top Gun: Maverick\", \"Black Panther: Wakanda Forever\", …\n$ Genre          &lt;chr&gt; \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", …\n$ Budget         &lt;chr&gt; \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", …\n$ `Running Time` &lt;chr&gt; \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", …\n$ Gross          &lt;chr&gt; \"$718,318,561\", \"$436,499,646\", \"$411,331,607\", \"$401,0…\n$ Theaters       &lt;chr&gt; \"4,751\", \"4,396\", \"4,534\", \"4,340\", \"4,697\", \"4,427\", \"…\n$ `Total Gross`  &lt;chr&gt; \"$718,732,821\", \"$453,829,060\", \"$411,331,607\", \"$684,0…\n$ `Release Date` &lt;chr&gt; \"May 27\", \"Nov 11\", \"May 6\", \"Dec 16\", \"Jun 10\", \"Jul 1…\n$ Distributor    &lt;chr&gt; \"Paramount Pictures\", \"Walt Disney Studios Motion Pictu…\n$ Estimated      &lt;chr&gt; \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"…"
+  },
+  {
+    "objectID": "slides/20/slides20.html#scrape-then-wrangle",
+    "href": "slides/20/slides20.html#scrape-then-wrangle",
+    "title": "Intro to Web Scraping",
+    "section": "Scrape then wrangle",
+    "text": "Scrape then wrangle\nData aren’t ready for analysis, too many character columns!\n\n\nRows: 200\nColumns: 11\n$ Rank           &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, …\n$ Release        &lt;chr&gt; \"Top Gun: Maverick\", \"Black Panther: Wakanda Forever\", …\n$ Genre          &lt;chr&gt; \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", …\n$ Budget         &lt;chr&gt; \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", …\n$ `Running Time` &lt;chr&gt; \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", \"-\", …\n$ Gross          &lt;chr&gt; \"$718,318,561\", \"$436,499,646\", \"$411,331,607\", \"$401,0…\n$ Theaters       &lt;chr&gt; \"4,751\", \"4,396\", \"4,534\", \"4,340\", \"4,697\", \"4,427\", \"…\n$ `Total Gross`  &lt;chr&gt; \"$718,732,821\", \"$453,829,060\", \"$411,331,607\", \"$684,0…\n$ `Release Date` &lt;chr&gt; \"May 27\", \"Nov 11\", \"May 6\", \"Dec 16\", \"Jun 10\", \"Jul 1…\n$ Distributor    &lt;chr&gt; \"Paramount Pictures\", \"Walt Disney Studios Motion Pictu…\n$ Estimated      &lt;chr&gt; \"false\", \"false\", \"false\", \"false\", \"false\", \"false\", \"…"
+  },
+  {
+    "objectID": "slides/05/slides05.html#today",
+    "href": "slides/05/slides05.html#today",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Today",
+    "text": "Today\n\ngit/GitHub\nIntro to Spatial Data\nMaking Maps in ggplot2"
+  },
+  {
+    "objectID": "slides/05/slides05.html#section",
+    "href": "slides/05/slides05.html#section",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "Think of the state on GitHub as “worst case scenario”\nIf you screw things up, copy your important files (eg. hw.Rmd) to a safe place.\n\nUsually your files are JUST FINE. But it is easy to goof up the Git infrastructure when you’re new at this. And it can be hard to get that straightened out on your own.\n\nRename the existing local repo as a temporary measure, i.e. before you do something radical, like delete it.\nClone the original repo from GitHub to RStudio (follow the directions to create a new project). You are back to a happy state.\nCopy all relevant files back over from your safe space. The ones whose updated state you need to commit.\nKnit, commit, push\nCarry on with your life.\n\n\n\n\n\n\nBurn It All Down from Happy Git with R"
+  },
+  {
+    "objectID": "slides/05/slides05.html#cholera",
+    "href": "slides/05/slides05.html#cholera",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Cholera",
+    "text": "Cholera\nIn 1854, a Cholera outbreak killed 127 people in 3 days in a London neighborhood, resulting in a mass exodus of local residents. At the time, people thought that Cholera w as an airborne disease. John Snow was a physician who was critical of the airborne theory, and set out to investigate.\n\nWhat might this data look like?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndate\nlast_name\nfirst_name\naddress\nage\ncause_of_death\n\n\n\n\nAug 31, 1854\nJones\nThomas\n26 Broad St.\n37\ncholera\n\n\nAug 31, 1854\nJones\nMary\n26 Broad St.\n11\ncholera\n\n\nSept 1, 1854\nWarwick\nMartin\n14 Broad St.\n23\ncholera\n\n\n\n\n\n\n\n\nSource: MDSR Ch17.1"
+  },
+  {
+    "objectID": "slides/05/slides05.html#section-2",
+    "href": "slides/05/slides05.html#section-2",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "What makes “address” a useful variable is that it is linked to a specific location in the physical world. If we plot these addresses, we get something like the following:\n\n\n\n\n\n\n\n\n\n\n\nSource: MDSR Ch17.1"
+  },
+  {
+    "objectID": "slides/05/slides05.html#section-3",
+    "href": "slides/05/slides05.html#section-3",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "While we can see patterns in the last plot, the underlying map of the London streets provides helpful context that makes it more intelligble:\n\n\n\n\n\n\n\nSource: MDSR Ch17.1"
+  },
+  {
+    "objectID": "slides/05/slides05.html#section-4",
+    "href": "slides/05/slides05.html#section-4",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "Snow’s insight was driven by another set of data—the locations of the street-side water pumps (it’s kind of hard to see, but they are labelled on the map). Nearly all of the cases were clustered around a single pump on the center of Broad Street.\nJohn Snow’s map (and water pump) are now “famous” among epidemiologists and statisticians.\n\n\n\n\nJohn Snow’s water pump (and pub) from a 2019 visit\n\n\n\n\n\nSource: MDSR Ch17.1"
+  },
+  {
+    "objectID": "slides/05/slides05.html#a-successful-data-science-episode",
+    "href": "slides/05/slides05.html#a-successful-data-science-episode",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "A successful data science episode:",
+    "text": "A successful data science episode:\n\nCombine three sources of data (Cholera deaths, water pump locations, and street map)\nWhile a model might have come to the same conclusion, simply plotting the data is much simpler (and more convincing to lots of people)\nThe problem was resolved when the data-based evidence was combined with a plausible model that explained the physical phenomenon.\n\n\n\nSource: MDSR Ch17.1"
+  },
+  {
+    "objectID": "slides/05/slides05.html#what-is-a-map",
+    "href": "slides/05/slides05.html#what-is-a-map",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "What is a map?",
+    "text": "What is a map?\nA bunch of latitude longitude points…"
+  },
+  {
+    "objectID": "slides/05/slides05.html#what-is-a-map-1",
+    "href": "slides/05/slides05.html#what-is-a-map-1",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "What is a map?",
+    "text": "What is a map?\n… that are connected with lines in a very specific order."
+  },
+  {
+    "objectID": "slides/05/slides05.html#necessary-map-data",
+    "href": "slides/05/slides05.html#necessary-map-data",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Necessary map data",
+    "text": "Necessary map data\n\nlatitude/longitude points for all map boundaries\nwhich boundary group all lat/long points belong\nthe order to connect points within each group"
+  },
+  {
+    "objectID": "slides/05/slides05.html#state-map-data",
+    "href": "slides/05/slides05.html#state-map-data",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "State map data",
+    "text": "State map data\nggplot2::map_data() provides the necessary information\n\nstates &lt;- map_data(\"state\")\nglimpse(states)\n\nRows: 15,537\nColumns: 6\n$ long      &lt;dbl&gt; -87.46201, -87.48493, -87.52503, -87.53076, -87.57087, -87.5…\n$ lat       &lt;dbl&gt; 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30.32665, …\n$ group     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …\n$ order     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1…\n$ region    &lt;chr&gt; \"alabama\", \"alabama\", \"alabama\", \"alabama\", \"alabama\", \"alab…\n$ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …"
+  },
+  {
+    "objectID": "slides/05/slides05.html#using-geom_polygon",
+    "href": "slides/05/slides05.html#using-geom_polygon",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Using geom_polygon()",
+    "text": "Using geom_polygon()\nUsing geom_polygon() will treat states as solid shapes, making it easier to add color\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")"
+  },
+  {
+    "objectID": "slides/05/slides05.html#using-coord_fixed",
+    "href": "slides/05/slides05.html#using-coord_fixed",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Using coord_fixed()",
+    "text": "Using coord_fixed()\nUsing coord_fixed() forces x and y units to be equal\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\") +\n  coord_fixed()"
+  },
+  {
+    "objectID": "slides/05/slides05.html#your-turn",
+    "href": "slides/05/slides05.html#your-turn",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Your turn",
+    "text": "Your turn\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\") +\n    coord_fixed()\n\n\n\nEdit this code so that each shape is colored in with a different color.\nYou only need the 3 variables used: long, lat, and group\n05-maps.Rmd file available in the activities repo\n\n\n\n\n\n−+\n03:00"
+  },
+  {
+    "objectID": "slides/05/slides05.html#coordinate-systems-and-projections",
+    "href": "slides/05/slides05.html#coordinate-systems-and-projections",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Coordinate Systems and Projections",
+    "text": "Coordinate Systems and Projections"
+  },
+  {
+    "objectID": "slides/05/slides05.html#section-5",
+    "href": "slides/05/slides05.html#section-5",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "Geospatial data exists on the globe and is generally described with a latitude and longitude. Any projection from the globe to euclidean space (X-Y plane) is going to cause some distortion."
+  },
+  {
+    "objectID": "slides/05/slides05.html#section-6",
+    "href": "slides/05/slides05.html#section-6",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "",
+    "text": "From The West Wing Season 2 Episode 16"
+  },
+  {
+    "objectID": "slides/05/slides05.html#changing-the-coordinate-system",
+    "href": "slides/05/slides05.html#changing-the-coordinate-system",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Changing the coordinate system",
+    "text": "Changing the coordinate system\ncoord_map function provides a Mercator projection (mapproj package has more options)\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n  geom_polygon(color=\"gold2\", fill=\"navyblue\") + \n  coord_map() + \n  theme_map()"
+  },
+  {
+    "objectID": "slides/05/slides05.html#changing-the-coordinate-system-1",
+    "href": "slides/05/slides05.html#changing-the-coordinate-system-1",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Changing the coordinate system",
+    "text": "Changing the coordinate system\ncoord_map function provides a Mercator projection (mapproj package has more options)\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n  geom_polygon(color=\"gold2\", fill=\"navyblue\") + \n  coord_map(projection = \"sinusoidal\") + \n  theme_map()"
+  },
+  {
+    "objectID": "slides/05/slides05.html#mercator-vs-sinusoidal-projection-world-map",
+    "href": "slides/05/slides05.html#mercator-vs-sinusoidal-projection-world-map",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Mercator vs Sinusoidal projection (world map)",
+    "text": "Mercator vs Sinusoidal projection (world map)\n\nworld &lt;- map_data(\"world\")\n\nggplot(world, aes(x=long, y=lat, group=group)) + \n  geom_polygon(color=\"gold2\", fill=\"navyblue\") + \n  coord_map(projection = \"mercator\", xlim = c(-180, 180)) + \n  theme_map()"
+  },
+  {
+    "objectID": "slides/05/slides05.html#common-types-of-maps",
+    "href": "slides/05/slides05.html#common-types-of-maps",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Common Types of Maps",
+    "text": "Common Types of Maps\n\nChloropleth\nProportional Symbol\nCartograms/Geofacets"
+  },
+  {
+    "objectID": "slides/05/slides05.html#chloropleth",
+    "href": "slides/05/slides05.html#chloropleth",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Chloropleth",
+    "text": "Chloropleth\nFill in regions with variable values\n\n\nNeed two data sources:\n\nmap data with lat, long, region\ndata with measurements for each region\n\nyou don’t need to join them!\n\n\n\n\n\nFundamentals of Data Visualization"
+  },
+  {
+    "objectID": "slides/05/slides05.html#proportional-symbol",
+    "href": "slides/05/slides05.html#proportional-symbol",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Proportional Symbol",
+    "text": "Proportional Symbol\nOverlay symbols on an existing map, where the size of the shape is proportional to the variable\n\n\n\nMade with {ggmap} and {nycflights23}"
+  },
+  {
+    "objectID": "slides/05/slides05.html#cartogram",
+    "href": "slides/05/slides05.html#cartogram",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Cartogram",
+    "text": "Cartogram\nUse approximate geographical position to encode information, but not lat/long directly\n\n\n\nFundamentals of Data Visualization"
+  },
+  {
+    "objectID": "slides/05/slides05.html#your-task",
+    "href": "slides/05/slides05.html#your-task",
+    "title": "Intro to Maps  and Spatial Data",
+    "section": "Your task",
+    "text": "Your task\nYour task is to use the American Community Survey data to make a chloropleth map of the US\n\nYou should:\n\nUse the starter code provided in 05-maps.rmd\nChoose a different variable\nChange the color scale\nUpdate the title, axis labels, and legend"
+  },
+  {
+    "objectID": "slides/03/slides03.html#plan-for-today",
+    "href": "slides/03/slides03.html#plan-for-today",
+    "title": "ggplot2",
     "section": "Plan for today:",
-    "text": "Plan for today:\n\nQuestions from syllabus quiz\nGithub\n\nAccessing your private repos\nknit 🧶 commit ✅ push ⤴️\n\nReproducible Reporting"
+    "text": "Plan for today:\n\nSuper quick grammar of graphics recap\nSpeed Groupwork\nIntro to portfolio project 1"
   },
   {
-    "objectID": "slides/02/slides02.html#questions-from-syllabus-quiz",
-    "href": "slides/02/slides02.html#questions-from-syllabus-quiz",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Questions from syllabus quiz",
-    "text": "Questions from syllabus quiz\n\nWill the course build off of Stat120 concepts?\nClarification of what gets submitted to gradescope and what to GitHub\nRMarkdown versus Quarto?\nExamples of previous final projects?\nInfo about portfolio projects?"
+    "objectID": "slides/03/slides03.html#what-are-the-essential-elements-of-this-scatterplot",
+    "href": "slides/03/slides03.html#what-are-the-essential-elements-of-this-scatterplot",
+    "title": "ggplot2",
+    "section": "What are the essential elements of this scatterplot?",
+    "text": "What are the essential elements of this scatterplot?"
   },
   {
-    "objectID": "slides/02/slides02.html#git-github",
-    "href": "slides/02/slides02.html#git-github",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Git + GitHub",
-    "text": "Git + GitHub\n\n\n\nGit is a version control system - like “Track Changes”, on steroids\nIt’s not the only version control system, but it’s a very popular one\n\n\n\nGitHub is the home for your Git-based projects on the internet—like DropBox but much, much better\nWe will use GitHub as a platform for web hosting and collaboration"
+    "objectID": "slides/03/slides03.html#data",
+    "href": "slides/03/slides03.html#data",
+    "title": "ggplot2",
+    "section": "Data",
+    "text": "Data\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\nAdelie\nTorgersen\n39.1\n18.7\n181\n3750\nmale\n2007\n\n\nAdelie\nTorgersen\n39.5\n17.4\n186\n3800\nfemale\n2007\n\n\nAdelie\nTorgersen\n40.3\n18.0\n195\n3250\nfemale\n2007\n\n\nAdelie\nTorgersen\nNA\nNA\nNA\nNA\nNA\n2007\n\n\nAdelie\nTorgersen\n36.7\n19.3\n193\n3450\nfemale\n2007\n\n\nAdelie\nTorgersen\n39.3\n20.6\n190\n3650\nmale\n2007\n\n\nAdelie\nTorgersen\n38.9\n17.8\n181\n3625\nfemale\n2007\n\n\nAdelie\nTorgersen\n39.2\n19.6\n195\n4675\nmale\n2007\n\n\nAdelie\nTorgersen\n34.1\n18.1\n193\n3475\nNA\n2007\n\n\nAdelie\nTorgersen\n42.0\n20.2\n190\n4250\nNA\n2007\n\n\nAdelie\nTorgersen\n37.8\n17.1\n186\n3300\nNA\n2007\n\n\nAdelie\nTorgersen\n37.8\n17.3\n180\n3700\nNA\n2007\n\n\nAdelie\nTorgersen\n41.1\n17.6\n182\n3200\nfemale\n2007\n\n\nAdelie\nTorgersen\n38.6\n21.2\n191\n3800\nmale\n2007\n\n\nAdelie\nTorgersen\n34.6\n21.1\n198\n4400\nmale\n2007\n\n\nAdelie\nTorgersen\n36.6\n17.8\n185\n3700\nfemale\n2007\n\n\nAdelie\nTorgersen\n38.7\n19.0\n195\n3450\nfemale\n2007\n\n\nAdelie\nTorgersen\n42.5\n20.7\n197\n4500\nmale\n2007\n\n\nAdelie\nTorgersen\n34.4\n18.4\n184\n3325\nfemale\n2007\n\n\nAdelie\nTorgersen\n46.0\n21.5\n194\n4200\nmale\n2007\n\n\nAdelie\nBiscoe\n37.8\n18.3\n174\n3400\nfemale\n2007\n\n\nAdelie\nBiscoe\n37.7\n18.7\n180\n3600\nmale\n2007\n\n\nAdelie\nBiscoe\n35.9\n19.2\n189\n3800\nfemale\n2007\n\n\nAdelie\nBiscoe\n38.2\n18.1\n185\n3950\nmale\n2007\n\n\nAdelie\nBiscoe\n38.8\n17.2\n180\n3800\nmale\n2007\n\n\nAdelie\nBiscoe\n35.3\n18.9\n187\n3800\nfemale\n2007\n\n\nAdelie\nBiscoe\n40.6\n18.6\n183\n3550\nmale\n2007\n\n\nAdelie\nBiscoe\n40.5\n17.9\n187\n3200\nfemale\n2007\n\n\nAdelie\nBiscoe\n37.9\n18.6\n172\n3150\nfemale\n2007\n\n\nAdelie\nBiscoe\n40.5\n18.9\n180\n3950\nmale\n2007\n\n\nAdelie\nDream\n39.5\n16.7\n178\n3250\nfemale\n2007\n\n\nAdelie\nDream\n37.2\n18.1\n178\n3900\nmale\n2007\n\n\nAdelie\nDream\n39.5\n17.8\n188\n3300\nfemale\n2007\n\n\nAdelie\nDream\n40.9\n18.9\n184\n3900\nmale\n2007\n\n\nAdelie\nDream\n36.4\n17.0\n195\n3325\nfemale\n2007\n\n\nAdelie\nDream\n39.2\n21.1\n196\n4150\nmale\n2007\n\n\nAdelie\nDream\n38.8\n20.0\n190\n3950\nmale\n2007\n\n\nAdelie\nDream\n42.2\n18.5\n180\n3550\nfemale\n2007\n\n\nAdelie\nDream\n37.6\n19.3\n181\n3300\nfemale\n2007\n\n\nAdelie\nDream\n39.8\n19.1\n184\n4650\nmale\n2007\n\n\nAdelie\nDream\n36.5\n18.0\n182\n3150\nfemale\n2007\n\n\nAdelie\nDream\n40.8\n18.4\n195\n3900\nmale\n2007\n\n\nAdelie\nDream\n36.0\n18.5\n186\n3100\nfemale\n2007\n\n\nAdelie\nDream\n44.1\n19.7\n196\n4400\nmale\n2007\n\n\nAdelie\nDream\n37.0\n16.9\n185\n3000\nfemale\n2007\n\n\nAdelie\nDream\n39.6\n18.8\n190\n4600\nmale\n2007\n\n\nAdelie\nDream\n41.1\n19.0\n182\n3425\nmale\n2007\n\n\nAdelie\nDream\n37.5\n18.9\n179\n2975\nNA\n2007\n\n\nAdelie\nDream\n36.0\n17.9\n190\n3450\nfemale\n2007\n\n\nAdelie\nDream\n42.3\n21.2\n191\n4150\nmale\n2007\n\n\nAdelie\nBiscoe\n39.6\n17.7\n186\n3500\nfemale\n2008\n\n\nAdelie\nBiscoe\n40.1\n18.9\n188\n4300\nmale\n2008\n\n\nAdelie\nBiscoe\n35.0\n17.9\n190\n3450\nfemale\n2008\n\n\nAdelie\nBiscoe\n42.0\n19.5\n200\n4050\nmale\n2008\n\n\nAdelie\nBiscoe\n34.5\n18.1\n187\n2900\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.4\n18.6\n191\n3700\nmale\n2008\n\n\nAdelie\nBiscoe\n39.0\n17.5\n186\n3550\nfemale\n2008\n\n\nAdelie\nBiscoe\n40.6\n18.8\n193\n3800\nmale\n2008\n\n\nAdelie\nBiscoe\n36.5\n16.6\n181\n2850\nfemale\n2008\n\n\nAdelie\nBiscoe\n37.6\n19.1\n194\n3750\nmale\n2008\n\n\nAdelie\nBiscoe\n35.7\n16.9\n185\n3150\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.3\n21.1\n195\n4400\nmale\n2008\n\n\nAdelie\nBiscoe\n37.6\n17.0\n185\n3600\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.1\n18.2\n192\n4050\nmale\n2008\n\n\nAdelie\nBiscoe\n36.4\n17.1\n184\n2850\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.6\n18.0\n192\n3950\nmale\n2008\n\n\nAdelie\nBiscoe\n35.5\n16.2\n195\n3350\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.1\n19.1\n188\n4100\nmale\n2008\n\n\nAdelie\nTorgersen\n35.9\n16.6\n190\n3050\nfemale\n2008\n\n\nAdelie\nTorgersen\n41.8\n19.4\n198\n4450\nmale\n2008\n\n\nAdelie\nTorgersen\n33.5\n19.0\n190\n3600\nfemale\n2008\n\n\nAdelie\nTorgersen\n39.7\n18.4\n190\n3900\nmale\n2008\n\n\nAdelie\nTorgersen\n39.6\n17.2\n196\n3550\nfemale\n2008\n\n\nAdelie\nTorgersen\n45.8\n18.9\n197\n4150\nmale\n2008\n\n\nAdelie\nTorgersen\n35.5\n17.5\n190\n3700\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.8\n18.5\n195\n4250\nmale\n2008\n\n\nAdelie\nTorgersen\n40.9\n16.8\n191\n3700\nfemale\n2008\n\n\nAdelie\nTorgersen\n37.2\n19.4\n184\n3900\nmale\n2008\n\n\nAdelie\nTorgersen\n36.2\n16.1\n187\n3550\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.1\n19.1\n195\n4000\nmale\n2008\n\n\nAdelie\nTorgersen\n34.6\n17.2\n189\n3200\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.9\n17.6\n196\n4700\nmale\n2008\n\n\nAdelie\nTorgersen\n36.7\n18.8\n187\n3800\nfemale\n2008\n\n\nAdelie\nTorgersen\n35.1\n19.4\n193\n4200\nmale\n2008\n\n\nAdelie\nDream\n37.3\n17.8\n191\n3350\nfemale\n2008\n\n\nAdelie\nDream\n41.3\n20.3\n194\n3550\nmale\n2008\n\n\nAdelie\nDream\n36.3\n19.5\n190\n3800\nmale\n2008\n\n\nAdelie\nDream\n36.9\n18.6\n189\n3500\nfemale\n2008\n\n\nAdelie\nDream\n38.3\n19.2\n189\n3950\nmale\n2008\n\n\nAdelie\nDream\n38.9\n18.8\n190\n3600\nfemale\n2008\n\n\nAdelie\nDream\n35.7\n18.0\n202\n3550\nfemale\n2008\n\n\nAdelie\nDream\n41.1\n18.1\n205\n4300\nmale\n2008\n\n\nAdelie\nDream\n34.0\n17.1\n185\n3400\nfemale\n2008\n\n\nAdelie\nDream\n39.6\n18.1\n186\n4450\nmale\n2008\n\n\nAdelie\nDream\n36.2\n17.3\n187\n3300\nfemale\n2008\n\n\nAdelie\nDream\n40.8\n18.9\n208\n4300\nmale\n2008\n\n\nAdelie\nDream\n38.1\n18.6\n190\n3700\nfemale\n2008\n\n\nAdelie\nDream\n40.3\n18.5\n196\n4350\nmale\n2008\n\n\nAdelie\nDream\n33.1\n16.1\n178\n2900\nfemale\n2008\n\n\nAdelie\nDream\n43.2\n18.5\n192\n4100\nmale\n2008\n\n\nAdelie\nBiscoe\n35.0\n17.9\n192\n3725\nfemale\n2009\n\n\nAdelie\nBiscoe\n41.0\n20.0\n203\n4725\nmale\n2009\n\n\nAdelie\nBiscoe\n37.7\n16.0\n183\n3075\nfemale\n2009\n\n\nAdelie\nBiscoe\n37.8\n20.0\n190\n4250\nmale\n2009\n\n\nAdelie\nBiscoe\n37.9\n18.6\n193\n2925\nfemale\n2009\n\n\nAdelie\nBiscoe\n39.7\n18.9\n184\n3550\nmale\n2009\n\n\nAdelie\nBiscoe\n38.6\n17.2\n199\n3750\nfemale\n2009\n\n\nAdelie\nBiscoe\n38.2\n20.0\n190\n3900\nmale\n2009\n\n\nAdelie\nBiscoe\n38.1\n17.0\n181\n3175\nfemale\n2009\n\n\nAdelie\nBiscoe\n43.2\n19.0\n197\n4775\nmale\n2009\n\n\nAdelie\nBiscoe\n38.1\n16.5\n198\n3825\nfemale\n2009\n\n\nAdelie\nBiscoe\n45.6\n20.3\n191\n4600\nmale\n2009\n\n\nAdelie\nBiscoe\n39.7\n17.7\n193\n3200\nfemale\n2009\n\n\nAdelie\nBiscoe\n42.2\n19.5\n197\n4275\nmale\n2009\n\n\nAdelie\nBiscoe\n39.6\n20.7\n191\n3900\nfemale\n2009\n\n\nAdelie\nBiscoe\n42.7\n18.3\n196\n4075\nmale\n2009\n\n\nAdelie\nTorgersen\n38.6\n17.0\n188\n2900\nfemale\n2009\n\n\nAdelie\nTorgersen\n37.3\n20.5\n199\n3775\nmale\n2009\n\n\nAdelie\nTorgersen\n35.7\n17.0\n189\n3350\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.1\n18.6\n189\n3325\nmale\n2009\n\n\nAdelie\nTorgersen\n36.2\n17.2\n187\n3150\nfemale\n2009\n\n\nAdelie\nTorgersen\n37.7\n19.8\n198\n3500\nmale\n2009\n\n\nAdelie\nTorgersen\n40.2\n17.0\n176\n3450\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.4\n18.5\n202\n3875\nmale\n2009\n\n\nAdelie\nTorgersen\n35.2\n15.9\n186\n3050\nfemale\n2009\n\n\nAdelie\nTorgersen\n40.6\n19.0\n199\n4000\nmale\n2009\n\n\nAdelie\nTorgersen\n38.8\n17.6\n191\n3275\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.5\n18.3\n195\n4300\nmale\n2009\n\n\nAdelie\nTorgersen\n39.0\n17.1\n191\n3050\nfemale\n2009\n\n\nAdelie\nTorgersen\n44.1\n18.0\n210\n4000\nmale\n2009\n\n\nAdelie\nTorgersen\n38.5\n17.9\n190\n3325\nfemale\n2009\n\n\nAdelie\nTorgersen\n43.1\n19.2\n197\n3500\nmale\n2009\n\n\nAdelie\nDream\n36.8\n18.5\n193\n3500\nfemale\n2009\n\n\nAdelie\nDream\n37.5\n18.5\n199\n4475\nmale\n2009\n\n\nAdelie\nDream\n38.1\n17.6\n187\n3425\nfemale\n2009\n\n\nAdelie\nDream\n41.1\n17.5\n190\n3900\nmale\n2009\n\n\nAdelie\nDream\n35.6\n17.5\n191\n3175\nfemale\n2009\n\n\nAdelie\nDream\n40.2\n20.1\n200\n3975\nmale\n2009\n\n\nAdelie\nDream\n37.0\n16.5\n185\n3400\nfemale\n2009\n\n\nAdelie\nDream\n39.7\n17.9\n193\n4250\nmale\n2009\n\n\nAdelie\nDream\n40.2\n17.1\n193\n3400\nfemale\n2009\n\n\nAdelie\nDream\n40.6\n17.2\n187\n3475\nmale\n2009\n\n\nAdelie\nDream\n32.1\n15.5\n188\n3050\nfemale\n2009\n\n\nAdelie\nDream\n40.7\n17.0\n190\n3725\nmale\n2009\n\n\nAdelie\nDream\n37.3\n16.8\n192\n3000\nfemale\n2009\n\n\nAdelie\nDream\n39.0\n18.7\n185\n3650\nmale\n2009\n\n\nAdelie\nDream\n39.2\n18.6\n190\n4250\nmale\n2009\n\n\nAdelie\nDream\n36.6\n18.4\n184\n3475\nfemale\n2009\n\n\nAdelie\nDream\n36.0\n17.8\n195\n3450\nfemale\n2009\n\n\nAdelie\nDream\n37.8\n18.1\n193\n3750\nmale\n2009\n\n\nAdelie\nDream\n36.0\n17.1\n187\n3700\nfemale\n2009\n\n\nAdelie\nDream\n41.5\n18.5\n201\n4000\nmale\n2009\n\n\nGentoo\nBiscoe\n46.1\n13.2\n211\n4500\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n16.3\n230\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n48.7\n14.1\n210\n4450\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n15.2\n218\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n47.6\n14.5\n215\n5400\nmale\n2007\n\n\nGentoo\nBiscoe\n46.5\n13.5\n210\n4550\nfemale\n2007\n\n\nGentoo\nBiscoe\n45.4\n14.6\n211\n4800\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.7\n15.3\n219\n5200\nmale\n2007\n\n\nGentoo\nBiscoe\n43.3\n13.4\n209\n4400\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.8\n15.4\n215\n5150\nmale\n2007\n\n\nGentoo\nBiscoe\n40.9\n13.7\n214\n4650\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.0\n16.1\n216\n5550\nmale\n2007\n\n\nGentoo\nBiscoe\n45.5\n13.7\n214\n4650\nfemale\n2007\n\n\nGentoo\nBiscoe\n48.4\n14.6\n213\n5850\nmale\n2007\n\n\nGentoo\nBiscoe\n45.8\n14.6\n210\n4200\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.3\n15.7\n217\n5850\nmale\n2007\n\n\nGentoo\nBiscoe\n42.0\n13.5\n210\n4150\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.2\n15.2\n221\n6300\nmale\n2007\n\n\nGentoo\nBiscoe\n46.2\n14.5\n209\n4800\nfemale\n2007\n\n\nGentoo\nBiscoe\n48.7\n15.1\n222\n5350\nmale\n2007\n\n\nGentoo\nBiscoe\n50.2\n14.3\n218\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n45.1\n14.5\n215\n5000\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.5\n14.5\n213\n4400\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.3\n15.8\n215\n5050\nmale\n2007\n\n\nGentoo\nBiscoe\n42.9\n13.1\n215\n5000\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.1\n15.1\n215\n5100\nmale\n2007\n\n\nGentoo\nBiscoe\n44.5\n14.3\n216\n4100\nNA\n2007\n\n\nGentoo\nBiscoe\n47.8\n15.0\n215\n5650\nmale\n2007\n\n\nGentoo\nBiscoe\n48.2\n14.3\n210\n4600\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n15.3\n220\n5550\nmale\n2007\n\n\nGentoo\nBiscoe\n47.3\n15.3\n222\n5250\nmale\n2007\n\n\nGentoo\nBiscoe\n42.8\n14.2\n209\n4700\nfemale\n2007\n\n\nGentoo\nBiscoe\n45.1\n14.5\n207\n5050\nfemale\n2007\n\n\nGentoo\nBiscoe\n59.6\n17.0\n230\n6050\nmale\n2007\n\n\nGentoo\nBiscoe\n49.1\n14.8\n220\n5150\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.4\n16.3\n220\n5400\nmale\n2008\n\n\nGentoo\nBiscoe\n42.6\n13.7\n213\n4950\nfemale\n2008\n\n\nGentoo\nBiscoe\n44.4\n17.3\n219\n5250\nmale\n2008\n\n\nGentoo\nBiscoe\n44.0\n13.6\n208\n4350\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.7\n15.7\n208\n5350\nmale\n2008\n\n\nGentoo\nBiscoe\n42.7\n13.7\n208\n3950\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.6\n16.0\n225\n5700\nmale\n2008\n\n\nGentoo\nBiscoe\n45.3\n13.7\n210\n4300\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.6\n15.0\n216\n4750\nmale\n2008\n\n\nGentoo\nBiscoe\n50.5\n15.9\n222\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n43.6\n13.9\n217\n4900\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.5\n13.9\n210\n4200\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.5\n15.9\n225\n5400\nmale\n2008\n\n\nGentoo\nBiscoe\n44.9\n13.3\n213\n5100\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.2\n15.8\n215\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n46.6\n14.2\n210\n4850\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.5\n14.1\n220\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n45.1\n14.4\n210\n4400\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.1\n15.0\n225\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n46.5\n14.4\n217\n4900\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.0\n15.4\n220\n5050\nmale\n2008\n\n\nGentoo\nBiscoe\n43.8\n13.9\n208\n4300\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.5\n15.0\n220\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n43.2\n14.5\n208\n4450\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.4\n15.3\n224\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n45.3\n13.8\n208\n4200\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.2\n14.9\n221\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n45.7\n13.9\n214\n4400\nfemale\n2008\n\n\nGentoo\nBiscoe\n54.3\n15.7\n231\n5650\nmale\n2008\n\n\nGentoo\nBiscoe\n45.8\n14.2\n219\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.8\n16.8\n230\n5700\nmale\n2008\n\n\nGentoo\nBiscoe\n46.2\n14.4\n214\n4650\nNA\n2008\n\n\nGentoo\nBiscoe\n49.5\n16.2\n229\n5800\nmale\n2008\n\n\nGentoo\nBiscoe\n43.5\n14.2\n220\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.7\n15.0\n223\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n47.7\n15.0\n216\n4750\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.4\n15.6\n221\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n48.2\n15.6\n221\n5100\nmale\n2008\n\n\nGentoo\nBiscoe\n46.5\n14.8\n217\n5200\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.4\n15.0\n216\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.6\n16.0\n230\n5800\nmale\n2008\n\n\nGentoo\nBiscoe\n47.5\n14.2\n209\n4600\nfemale\n2008\n\n\nGentoo\nBiscoe\n51.1\n16.3\n220\n6000\nmale\n2008\n\n\nGentoo\nBiscoe\n45.2\n13.8\n215\n4750\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.2\n16.4\n223\n5950\nmale\n2008\n\n\nGentoo\nBiscoe\n49.1\n14.5\n212\n4625\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.5\n15.6\n221\n5450\nmale\n2009\n\n\nGentoo\nBiscoe\n47.4\n14.6\n212\n4725\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.0\n15.9\n224\n5350\nmale\n2009\n\n\nGentoo\nBiscoe\n44.9\n13.8\n212\n4750\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.8\n17.3\n228\n5600\nmale\n2009\n\n\nGentoo\nBiscoe\n43.4\n14.4\n218\n4600\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.3\n14.2\n218\n5300\nmale\n2009\n\n\nGentoo\nBiscoe\n47.5\n14.0\n212\n4875\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.1\n17.0\n230\n5550\nmale\n2009\n\n\nGentoo\nBiscoe\n47.5\n15.0\n218\n4950\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.2\n17.1\n228\n5400\nmale\n2009\n\n\nGentoo\nBiscoe\n45.5\n14.5\n212\n4750\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.5\n16.1\n224\n5650\nmale\n2009\n\n\nGentoo\nBiscoe\n44.5\n14.7\n214\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.8\n15.7\n226\n5200\nmale\n2009\n\n\nGentoo\nBiscoe\n49.4\n15.8\n216\n4925\nmale\n2009\n\n\nGentoo\nBiscoe\n46.9\n14.6\n222\n4875\nfemale\n2009\n\n\nGentoo\nBiscoe\n48.4\n14.4\n203\n4625\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.1\n16.5\n225\n5250\nmale\n2009\n\n\nGentoo\nBiscoe\n48.5\n15.0\n219\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n55.9\n17.0\n228\n5600\nmale\n2009\n\n\nGentoo\nBiscoe\n47.2\n15.5\n215\n4975\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.1\n15.0\n228\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n47.3\n13.8\n216\n4725\nNA\n2009\n\n\nGentoo\nBiscoe\n46.8\n16.1\n215\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n41.7\n14.7\n210\n4700\nfemale\n2009\n\n\nGentoo\nBiscoe\n53.4\n15.8\n219\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n43.3\n14.0\n208\n4575\nfemale\n2009\n\n\nGentoo\nBiscoe\n48.1\n15.1\n209\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n50.5\n15.2\n216\n5000\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.8\n15.9\n229\n5950\nmale\n2009\n\n\nGentoo\nBiscoe\n43.5\n15.2\n213\n4650\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.5\n16.3\n230\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n46.2\n14.1\n217\n4375\nfemale\n2009\n\n\nGentoo\nBiscoe\n55.1\n16.0\n230\n5850\nmale\n2009\n\n\nGentoo\nBiscoe\n44.5\n15.7\n217\n4875\nNA\n2009\n\n\nGentoo\nBiscoe\n48.8\n16.2\n222\n6000\nmale\n2009\n\n\nGentoo\nBiscoe\n47.2\n13.7\n214\n4925\nfemale\n2009\n\n\nGentoo\nBiscoe\nNA\nNA\nNA\nNA\nNA\n2009\n\n\nGentoo\nBiscoe\n46.8\n14.3\n215\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.4\n15.7\n222\n5750\nmale\n2009\n\n\nGentoo\nBiscoe\n45.2\n14.8\n212\n5200\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.9\n16.1\n213\n5400\nmale\n2009\n\n\nChinstrap\nDream\n46.5\n17.9\n192\n3500\nfemale\n2007\n\n\nChinstrap\nDream\n50.0\n19.5\n196\n3900\nmale\n2007\n\n\nChinstrap\nDream\n51.3\n19.2\n193\n3650\nmale\n2007\n\n\nChinstrap\nDream\n45.4\n18.7\n188\n3525\nfemale\n2007\n\n\nChinstrap\nDream\n52.7\n19.8\n197\n3725\nmale\n2007\n\n\nChinstrap\nDream\n45.2\n17.8\n198\n3950\nfemale\n2007\n\n\nChinstrap\nDream\n46.1\n18.2\n178\n3250\nfemale\n2007\n\n\nChinstrap\nDream\n51.3\n18.2\n197\n3750\nmale\n2007\n\n\nChinstrap\nDream\n46.0\n18.9\n195\n4150\nfemale\n2007\n\n\nChinstrap\nDream\n51.3\n19.9\n198\n3700\nmale\n2007\n\n\nChinstrap\nDream\n46.6\n17.8\n193\n3800\nfemale\n2007\n\n\nChinstrap\nDream\n51.7\n20.3\n194\n3775\nmale\n2007\n\n\nChinstrap\nDream\n47.0\n17.3\n185\n3700\nfemale\n2007\n\n\nChinstrap\nDream\n52.0\n18.1\n201\n4050\nmale\n2007\n\n\nChinstrap\nDream\n45.9\n17.1\n190\n3575\nfemale\n2007\n\n\nChinstrap\nDream\n50.5\n19.6\n201\n4050\nmale\n2007\n\n\nChinstrap\nDream\n50.3\n20.0\n197\n3300\nmale\n2007\n\n\nChinstrap\nDream\n58.0\n17.8\n181\n3700\nfemale\n2007\n\n\nChinstrap\nDream\n46.4\n18.6\n190\n3450\nfemale\n2007\n\n\nChinstrap\nDream\n49.2\n18.2\n195\n4400\nmale\n2007\n\n\nChinstrap\nDream\n42.4\n17.3\n181\n3600\nfemale\n2007\n\n\nChinstrap\nDream\n48.5\n17.5\n191\n3400\nmale\n2007\n\n\nChinstrap\nDream\n43.2\n16.6\n187\n2900\nfemale\n2007\n\n\nChinstrap\nDream\n50.6\n19.4\n193\n3800\nmale\n2007\n\n\nChinstrap\nDream\n46.7\n17.9\n195\n3300\nfemale\n2007\n\n\nChinstrap\nDream\n52.0\n19.0\n197\n4150\nmale\n2007\n\n\nChinstrap\nDream\n50.5\n18.4\n200\n3400\nfemale\n2008\n\n\nChinstrap\nDream\n49.5\n19.0\n200\n3800\nmale\n2008\n\n\nChinstrap\nDream\n46.4\n17.8\n191\n3700\nfemale\n2008\n\n\nChinstrap\nDream\n52.8\n20.0\n205\n4550\nmale\n2008\n\n\nChinstrap\nDream\n40.9\n16.6\n187\n3200\nfemale\n2008\n\n\nChinstrap\nDream\n54.2\n20.8\n201\n4300\nmale\n2008\n\n\nChinstrap\nDream\n42.5\n16.7\n187\n3350\nfemale\n2008\n\n\nChinstrap\nDream\n51.0\n18.8\n203\n4100\nmale\n2008\n\n\nChinstrap\nDream\n49.7\n18.6\n195\n3600\nmale\n2008\n\n\nChinstrap\nDream\n47.5\n16.8\n199\n3900\nfemale\n2008\n\n\nChinstrap\nDream\n47.6\n18.3\n195\n3850\nfemale\n2008\n\n\nChinstrap\nDream\n52.0\n20.7\n210\n4800\nmale\n2008\n\n\nChinstrap\nDream\n46.9\n16.6\n192\n2700\nfemale\n2008\n\n\nChinstrap\nDream\n53.5\n19.9\n205\n4500\nmale\n2008\n\n\nChinstrap\nDream\n49.0\n19.5\n210\n3950\nmale\n2008\n\n\nChinstrap\nDream\n46.2\n17.5\n187\n3650\nfemale\n2008\n\n\nChinstrap\nDream\n50.9\n19.1\n196\n3550\nmale\n2008\n\n\nChinstrap\nDream\n45.5\n17.0\n196\n3500\nfemale\n2008\n\n\nChinstrap\nDream\n50.9\n17.9\n196\n3675\nfemale\n2009\n\n\nChinstrap\nDream\n50.8\n18.5\n201\n4450\nmale\n2009\n\n\nChinstrap\nDream\n50.1\n17.9\n190\n3400\nfemale\n2009\n\n\nChinstrap\nDream\n49.0\n19.6\n212\n4300\nmale\n2009\n\n\nChinstrap\nDream\n51.5\n18.7\n187\n3250\nmale\n2009\n\n\nChinstrap\nDream\n49.8\n17.3\n198\n3675\nfemale\n2009\n\n\nChinstrap\nDream\n48.1\n16.4\n199\n3325\nfemale\n2009\n\n\nChinstrap\nDream\n51.4\n19.0\n201\n3950\nmale\n2009\n\n\nChinstrap\nDream\n45.7\n17.3\n193\n3600\nfemale\n2009\n\n\nChinstrap\nDream\n50.7\n19.7\n203\n4050\nmale\n2009\n\n\nChinstrap\nDream\n42.5\n17.3\n187\n3350\nfemale\n2009\n\n\nChinstrap\nDream\n52.2\n18.8\n197\n3450\nmale\n2009\n\n\nChinstrap\nDream\n45.2\n16.6\n191\n3250\nfemale\n2009\n\n\nChinstrap\nDream\n49.3\n19.9\n203\n4050\nmale\n2009\n\n\nChinstrap\nDream\n50.2\n18.8\n202\n3800\nmale\n2009\n\n\nChinstrap\nDream\n45.6\n19.4\n194\n3525\nfemale\n2009\n\n\nChinstrap\nDream\n51.9\n19.5\n206\n3950\nmale\n2009\n\n\nChinstrap\nDream\n46.8\n16.5\n189\n3650\nfemale\n2009\n\n\nChinstrap\nDream\n45.7\n17.0\n195\n3650\nfemale\n2009\n\n\nChinstrap\nDream\n55.8\n19.8\n207\n4000\nmale\n2009\n\n\nChinstrap\nDream\n43.5\n18.1\n202\n3400\nfemale\n2009\n\n\nChinstrap\nDream\n49.6\n18.2\n193\n3775\nmale\n2009\n\n\nChinstrap\nDream\n50.8\n19.0\n210\n4100\nmale\n2009\n\n\nChinstrap\nDream\n50.2\n18.7\n198\n3775\nfemale\n2009"
   },
   {
-    "objectID": "slides/02/slides02.html#why-do-we-need-it",
-    "href": "slides/02/slides02.html#why-do-we-need-it",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Why do we need it?",
-    "text": "Why do we need it?"
+    "objectID": "slides/03/slides03.html#aesthetic",
+    "href": "slides/03/slides03.html#aesthetic",
+    "title": "ggplot2",
+    "section": "Aesthetic",
+    "text": "Aesthetic\n\n\nA visual property of the objects in the plot\n\nx → body mass\ny → flipper length\ncolor → species"
   },
   {
-    "objectID": "slides/02/slides02.html#versioning",
-    "href": "slides/02/slides02.html#versioning",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Versioning",
-    "text": "Versioning"
+    "objectID": "slides/03/slides03.html#geometric-object",
+    "href": "slides/03/slides03.html#geometric-object",
+    "title": "ggplot2",
+    "section": "Geometric Object",
+    "text": "Geometric Object\n\n\nHow the data are represented\n\npoints!"
   },
   {
-    "objectID": "slides/02/slides02.html#versioning-with-human-readable-messages",
-    "href": "slides/02/slides02.html#versioning-with-human-readable-messages",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Versioning (with human-readable messages)",
-    "text": "Versioning (with human-readable messages)"
+    "objectID": "slides/03/slides03.html#the-basic-ggplot-template",
+    "href": "slides/03/slides03.html#the-basic-ggplot-template",
+    "title": "ggplot2",
+    "section": "The basic ggplot template:",
+    "text": "The basic ggplot template:\n\nggplot(data = &lt;dataset_name&gt;) + \n  &lt;geom_function&gt;(mapping = aes(&lt;mappings&gt;))"
   },
   {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
+    "objectID": "slides/03/slides03.html#facets",
+    "href": "slides/03/slides03.html#facets",
+    "title": "ggplot2",
+    "section": "Facets",
+    "text": "Facets\n\nggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm, col = species)) + \n  geom_point() + \n  facet_wrap(vars(species)) +\n  theme(legend.position = \"none\")"
   },
   {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
+    "objectID": "slides/03/slides03.html#statistical-transformations",
+    "href": "slides/03/slides03.html#statistical-transformations",
+    "title": "ggplot2",
+    "section": "Statistical Transformations",
+    "text": "Statistical Transformations"
   },
   {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
+    "objectID": "slides/03/slides03.html#coordinates",
+    "href": "slides/03/slides03.html#coordinates",
+    "title": "ggplot2",
+    "section": "Coordinates",
+    "text": "Coordinates\n\n\nSource: Nathan Yau, Data Points"
   },
   {
-    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
-    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "How does it work for Stat220?",
-    "text": "How does it work for Stat220?"
+    "objectID": "slides/03/slides03.html#scalesguides",
+    "href": "slides/03/slides03.html#scalesguides",
+    "title": "ggplot2",
+    "section": "Scales/guides",
+    "text": "Scales/guides\n\n\nSource: Nathan Yau, Data Points"
   },
   {
-    "objectID": "slides/02/slides02.html#lets-try-it",
-    "href": "slides/02/slides02.html#lets-try-it",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Let’s try it!",
-    "text": "Let’s try it!\n\n\n\nFollow the “Individual Assignment” directions at https://stat220-w25.github.io/computing/git-stat220.html to access your day02 repo and create an R project\nEdit the .Rmd file:\n\nChange “author” to your name\nUse # to add descriptive section headers for each code chunk\nAdd a sentence or two describing the summary statistics of the dataset\n\nknit 🧶 commit ✅ push ⤴️\nView on github.com/stat220-w25/day02yourusername and confirm you can see your changes\n\n\n\n\n\n\n−+\n15:00"
+    "objectID": "slides/03/slides03.html#themes",
+    "href": "slides/03/slides03.html#themes",
+    "title": "ggplot2",
+    "section": "Themes",
+    "text": "Themes\nAll non-data ink (e.g. background color, appearance of grid lines)"
   },
   {
-    "objectID": "slides/02/slides02.html#why-do-we-need-it-1",
-    "href": "slides/02/slides02.html#why-do-we-need-it-1",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Why do we need it?",
-    "text": "Why do we need it?\nOops! I gave you the wrong set of data."
+    "objectID": "slides/03/slides03.html#how-it-works",
+    "href": "slides/03/slides03.html#how-it-works",
+    "title": "ggplot2",
+    "section": "How it works",
+    "text": "How it works\n\nDraw a card\nFind your number’s location\nIntroduce yourselves\nGet to work!"
   },
   {
-    "objectID": "slides/02/slides02.html#why-do-we-need-it-2",
-    "href": "slides/02/slides02.html#why-do-we-need-it-2",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Why do we need it?",
-    "text": "Why do we need it?\n\nKarl – this is very interesting , however you used an old version of the data (n=143 rather than n=226). I’m really sorry you did all that work on the incomplete dataset.\nBruce\n\n\n\nAdapted from Karl Broman"
+    "objectID": "slides/03/slides03.html#round-1-view-the-data-pipes",
+    "href": "slides/03/slides03.html#round-1-view-the-data-pipes",
+    "title": "ggplot2",
+    "section": "Round 1: View the data + pipes",
+    "text": "Round 1: View the data + pipes\n\n\n\n−+\n08:00"
   },
   {
-    "objectID": "slides/02/slides02.html#other-examples",
-    "href": "slides/02/slides02.html#other-examples",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Other examples:",
-    "text": "Other examples:\n\nThe results in Table 1 don’t seem to correspond to those in Figure 2.\nIn what order do I run these scripts?\nWhere did we get this data file?\nWhy did I omit those samples?\nHow did I make that figure?\n“Your script is now giving an error.”\n“The attached is similar to the code we used.”\n\n\n\nAdapted from Karl Broman"
+    "objectID": "slides/03/slides03.html#round-2-scatterplots",
+    "href": "slides/03/slides03.html#round-2-scatterplots",
+    "title": "ggplot2",
+    "section": "Round 2: Scatterplots",
+    "text": "Round 2: Scatterplots\n\n\n\n−+\n08:00"
   },
   {
-    "objectID": "slides/02/slides02.html#reproducible-data-science",
-    "href": "slides/02/slides02.html#reproducible-data-science",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Reproducible data science",
-    "text": "Reproducible data science\n\n\nShort Term Impact\n\nAre the tables and figures reproducible from the code and data?\nDoes the code actually do what you think it does?\nIn addition to what was done, is it clear why it was done? (e.g., how were parameter settings chosen?)\n\n\nLong Term Impact\n\nCan the code be used for other data?\nCan you extend the code to other things?"
+    "objectID": "slides/03/slides03.html#round-3-additional-aesthetics",
+    "href": "slides/03/slides03.html#round-3-additional-aesthetics",
+    "title": "ggplot2",
+    "section": "Round 3: Additional Aesthetics",
+    "text": "Round 3: Additional Aesthetics\n\n\n\n−+\n08:00"
   },
   {
-    "objectID": "slides/02/slides02.html#the-toolkit",
-    "href": "slides/02/slides02.html#the-toolkit",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "The toolkit",
-    "text": "The toolkit\n\n\n\n\n\n\n\n\n\n\nScriptability \\(\\rightarrow\\) R\nCode environment \\(\\rightarrow\\) RStudio\nLiterate programming (code, narrative, output in one place) \\(\\rightarrow\\) R Markdown\nVersion control \\(\\rightarrow\\) Git / GitHub"
+    "objectID": "slides/03/slides03.html#round-4-visualizing-distributions",
+    "href": "slides/03/slides03.html#round-4-visualizing-distributions",
+    "title": "ggplot2",
+    "section": "Round 4: Visualizing Distributions",
+    "text": "Round 4: Visualizing Distributions\n\n\n\n−+\n08:00"
   },
   {
-    "objectID": "slides/02/slides02.html#what-is-r-markdown",
-    "href": "slides/02/slides02.html#what-is-r-markdown",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "What is R Markdown?",
-    "text": "What is R Markdown?\n\nAn authoring framework for data science.\nA document format (.Rmd).\nAn R package named rmarkdown.\nA file format for making dynamic documents with R.\nA tool for integrating prose, code, and results.\nA computational document."
+    "objectID": "slides/03/slides03.html#round-5-bar-and-column-charts-labeling",
+    "href": "slides/03/slides03.html#round-5-bar-and-column-charts-labeling",
+    "title": "ggplot2",
+    "section": "Round 5: Bar and column charts + Labeling",
+    "text": "Round 5: Bar and column charts + Labeling\n\n\n\n−+\n08:00"
   },
   {
-    "objectID": "slides/02/slides02.html#what-about-quarto",
-    "href": "slides/02/slides02.html#what-about-quarto",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "What about quarto?",
-    "text": "What about quarto?\n\n“Next Gen” RMarkdown\nMore compatibility with other languages (python, observable.js, etc.)\nnot an R package/separate software\nI’m going to distribute HW, etc. via RMarkdown, but you are welcome to use either!"
+    "objectID": "course-links.html",
+    "href": "course-links.html",
+    "title": "Useful links",
+    "section": "",
+    "text": "RStudio Server\n🔗 Carleton’s Maize Server\n\n\nCourse GitHub organization\n🔗 GitHub\n\n\nGradebook\n🔗 on Moodle\n\n\nSpend a Token\n🔗 Spend a token\n\n\nTextbooks\n🔗 Modern Data Science with R (MDS)\n🔗 R for Data Science (R4DS)\n🔗 Fundamentals of Data Visualization\n\n\nPackage documentation\n🔗 ggplot2: ggplot2.tidyverse.org\n🔗 dplyr: dplyr.tidyverse.org\n🔗 tidyr: tidyr.tidyverse.org\n🔗 forcats: forcats.tidyverse.org\n🔗 stringr: stringr.tidyverse.org\n🔗 lubridate: lubridate.tidyverse.org\n🔗 readr: readr.tidyverse.org",
+    "crumbs": [
+      "Course information",
+      "Useful links"
+    ]
   },
   {
-    "objectID": "slides/02/slides02.html#the-setup-chunk",
-    "href": "slides/02/slides02.html#the-setup-chunk",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "The setup chunk",
-    "text": "The setup chunk\n\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(\n  collapse = TRUE,   \n  comment = \"#&gt;\", \n  out.width = \"100%\" \n)\n```\n\n\nA special chunk label: setup\nTypically #1\nAll following chunks will use these options (i.e., sets global chunk options)\nTip: set include=FALSE\nYou can (and should) use individual chunk options too"
-  },
-  {
-    "objectID": "slides/02/slides02.html#parameters",
-    "href": "slides/02/slides02.html#parameters",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Parameters",
-    "text": "Parameters\n\n\n---\ntitle: Survivor\noutput:\n  html_document:\n    toc: true\n    toc_float: true\n    theme: flatly\nparams:\n  season: '20'\n---"
-  },
-  {
-    "objectID": "slides/02/slides02.html#your-task",
-    "href": "slides/02/slides02.html#your-task",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Your Task",
-    "text": "Your Task\n\n\nThere’s an example HTML report on the schedule\nYour task is to reproduce it in 02-example-lego.rmd (or .qmd, if you prefer).\nTo be as reproducible as possible, you’ll need to use:\n\nYAML metadata\nYAML parameters\nCode chunks with appropriate options\nInline R code"
-  },
-  {
-    "objectID": "slides/02/slides02.html#hints",
-    "href": "slides/02/slides02.html#hints",
-    "title": "Github +  Reproducible  Reporting",
-    "section": "Hints",
-    "text": "Hints\n\n\nTo begin, use inline R code to replace “hard coding” the quantities that are highlighted below.\n\n\nFor example, instead of typing 19798 you would include nrow(sets) as an inline code chunk. Make sure the report knits and you get the right values.\n\nNext, add a parameter to your YAML header that stores the location of the data set. Make sure the report knits.\nChange the code chunk where you load the data set to use the data parameter you just defined rather than the hard-coded URL. Make sure the report knits.\nNow, let’s make a parameter for the source of the data set so you don’t have to search where every mention of it in the report, it will be with the other metadata (where it belongs). To do this, add a parameter that gives the source of your data (call it data_source) and set it equal to “the 2022-09-09 repository on Tidy Tuesday.” Make sure the report knits.\nAt this point it looks like everything is working—awesome job! To put it to the test, let’s update the parameters of your report and knit it to see if everything changes as we would expect. Here are the new parameter values:\n\ndata: \"http://math.carleton.edu/aluby/stat220/lego_subset.csv\"\ndata_source: \"Amanda's website\"\n\n(optional) If you have time, or would like to try outside of class, I’ve created a practice gradescope assignment space. First, add .pdf output to your document and knit to PDF. Commit the PDF and push to github. Then, log into gradescope (you may have to go through the link on moodle the first time) and link your github repo. You should then be able to submit your .pdf\n\noutput: \n  html_document:\n    default\n  pdf_document:\n    default"
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 220: Intro to Data Science",
+    "section": "",
+    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n📝complete welcome survey\n\nWelcome + data, R review\n\nslides01 01-example-unvotes\n\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\n\nslides02 02-reproducible-reports 02-lego-report\n\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1  📺 intro to ggplot\n\nggplot\n\nslides03 03-ggplot-intro and .rmd\n\nHW 1 (on moodle)\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04  04-customizing-plots .rmd\n\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\n\nslides05  05-maps .rmd\n\nHW 2\n\n\n2\nF\nFri, Jan 17\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\n\nslides07 07-verbs\n\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\n\nslides08 08-dplyr2\n\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4 \n\nTidy data\n\nslides09 09-tidyr\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 19.1-19.3\n\nCombining datasets\n\nslides10 10-combining\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\nslides11 11-import\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 16 \n\nWorking with factors\n\nslides12 12-factors\n\n\n\n\n5\nM\nMon, Feb 3\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\nslides13 13-strings-regex\n\n\n\n\n5\nW\nWed, Feb 5\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nIntro to Text Analysis\n\nslides14 14-text-case-study\n\nHW 5, Portfolio 2\n\n\n\n5\nF\nFri, Feb 7\n📚 The Trouble with Sentiment Analysis\n\nSentiment Analysis\n\nslides15 15-sentiment\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\n❌ Midterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\nslides16 16-functions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nslides17 17-iteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n\nIteration II\n\nslides18 18-iteration-2\n\n\n\n\n7\nW\nWed, Feb 19\n📚What is an API? 📚R4DS 23 (skip case studies) 📝 sign up for a census API key\n\nAPIs\n\nslides19 19-apis\n\nHW7 \n\n\n\n7\nF\nFri, Feb 21\nTBA\nIntro to Scraping\n\n\nLab Quiz 3, Final Project Idea Form\n\n\n\n8\nM\nMon, Feb 24\nTBA\nScraping/Data Privacy\n\nFinal Project Ranking Form\n\n\n8\nW\nWed, Feb 26\nTBA\nIntro to Interactivity\n\nHW8, Portfolio 3\n\n\n\n8\nF\nFri, Feb 28\n\nShiny 1\n\n\n\n\n9\nM\nMon, Mar 3\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\nFinal Project sketch\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
   },
   {
     "objectID": "slides/04/slides04.html#today",
@@ -3063,320 +3330,158 @@
     "text": "Your turn\nNow that we have the toolkit to make customizations to our plots, and some “rules” for good graphs, let’s break them!\n\n\nChoose a graph (the one from class today, one from last class, one from homework, etc.)\nMake it ugly\n\n\nChange the color scale\nChoose a complete theme\nMake at least 3 custom tweaks to the theme options\n\n\nExplain why it’s ugly (what “rules” are you breaking? what makes it an ineffective graph?)\nPost to our slack #social channel when you’re done (you don’t have to post your explanation)"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Stat 220: Intro to Data Science",
-    "section": "",
-    "text": "This page contains an outline of the topics, content, and assignments for the term. Note that this schedule will be updated as the term progresses and the timeline of topics and assignments might be updated. Any major changes to due dates will be announced in class and indicated in bold here.\n\n\n\n\n\n\nWEEK\nDOW\nDATE\nPREPARE\nTOPIC\nMATERIALS\nDUE\n\n\n\n1\nM\nMon, Jan 6\n📝complete welcome survey\n\nWelcome + data, R review\n\nslides01 01-example-unvotes\n\n\n\n\n1\nW\nWed, Jan 8\n📚 R basics  📚 R4DS 1e 27.1-27.4  📺 git and GitHub for poets  📝 Read syllabus and pass syllabus quiz to activate tokens\nGithub + reproducible reports\n\nslides02 02-reproducible-reports 02-lego-report\n\n\n\n\n1\nF\nFri, Jan 10\n📝 10 minute activity on markdown  📚 R4DS Ch1  📺 intro to ggplot\n\nggplot\n\nslides03 03-ggplot-intro and .rmd\n\nHW 1 (on moodle)\n\n\n2\nM\nMon, Jan 13\n📚 DataViz 17-21 \n\nTheming + Design\n\nslides04  04-customizing-plots .rmd\n\n\n\n\n2\nW\nWed, Jan 15\n📚 DataViz 15 \n\nMaps/spatial data\n\nslides05  05-maps .rmd\n\nHW 2\n\n\n2\nF\nFri, Jan 17\n📺 first 15 minutes of Accessible Data Science Beyond Visual Models  📚 Skim Writing Alt Text to Communicate the Meaning in Data Visualizations\n\nAccesibility for data viz\nslides06\n\n\n\n3\nM\nMon, Jan 20\n📚 R4DS 3.1-3.4 \n\nVerbs\n\nslides07 07-verbs\n\nPortfolio 1\n\n\n3\nW\nWed, Jan 22\n📚 R4DS 3.5  📚 R4DS 4 \n\nGroups and summarizing Code style\n\nslides08 08-dplyr2\n\nHW 3\n\n\n3\nF\nFri, Jan 24\n📚 R4DS 5.1-5.4 \n\nTidy data\n\nslides09 09-tidyr\n\nLab Quiz 1\n\n\n4\nM\nMon, Jan 27\n📚 R4DS 19.1-19.3\n\nCombining datasets\n\nslides10 10-combining\n\n\n\n\n4\nW\nWed, Jan 29\n📚 R4DS 7.1-7.4  📚 R4DS 17.1-17.3 \n\nImport data and dates/times\n\nslides11 11-import\n\nHW 4\n\n\n4\nF\nFri, Jan 31\n📚 R4DS 16 \n\nWorking with factors\n\nslides12 12-factors\n\n\n\n\n5\nM\nMon, Feb 3\n📚 R4DS 14  📚 R4DS 15.1-15.5\n\nWorking with strings and Regex\n\nslides13 13-strings-regex\n\n\n\n\n5\nW\nWed, Feb 5\n📚 MDSR 19.2  🌎 Google ngram viewer\n\nIntro to Text Analysis\n\nslides14 14-text-case-study\n\nHW 5, Portfolio 2\n\n\n\n5\nF\nFri, Feb 7\n📚 The Trouble with Sentiment Analysis\n\nSentiment Analysis\n\nslides15 15-sentiment\n\nLab Quiz 2\n\n\n6\nM\nMon, Feb 10\n\n❌ Midterm Break; no class\n\n\n\n\n6\nW\nWed, Feb 12\n📚 R4DS 25\n\nFunctions\n\nslides16 16-functions\n\n\n\n\n6\nF\nFri, Feb 14\n📚 MDSR 7.1-7.3\n\nIteration\n\nslides17 17-iteration\n\nHW6\n\n\n7\nM\nMon, Feb 17\n\nIteration II\n\nslides18 18-iteration-2\n\n\n\n\n7\nW\nWed, Feb 19\n📚What is an API? 📚R4DS 23 (skip case studies) 📝 sign up for a census API key\n\nAPIs\n\nslides19 19-apis\n\nHW7 \n\n\n\n7\nF\nFri, Feb 21\nTBA\nIntro to Scraping\n\n\nLab Quiz 3, Final Project Idea Form\n\n\n8\nM\nMon, Feb 24\nTBA\nScraping/Data Privacy\n\nFinal Project Ranking Form\n\n\n8\nW\nWed, Feb 26\nTBA\nIntro to Interactivity\n\nHW8, Portfolio 3\n\n\n\n8\nF\nFri, Feb 28\n\nShiny 1\n\n\n\n\n9\nM\nMon, Mar 3\nPick one:  📺 Reactivity in shiny playlist  📚Ch 3 of Mastering Shiny\n\nShiny 2\n\n\n\n\n9\nW\nWed, Mar 5\n📚MDSR 15.1-15.4\n\nSQL\n\nFinal Project sketch\n\n\n9\nF\nFri, Mar 7\n\nSQL\n\nPortfolio 4\n\n\n10\nM\nMon, Mar 10\n\nProject Demos\n\n\n\n\n10\nW\nWed, Mar 12\n\nProject Demos\n\nHW9",
-    "crumbs": [
-      "Course information",
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "course-links.html",
-    "href": "course-links.html",
-    "title": "Useful links",
-    "section": "",
-    "text": "RStudio Server\n🔗 Carleton’s Maize Server\n\n\nCourse GitHub organization\n🔗 GitHub\n\n\nGradebook\n🔗 on Moodle\n\n\nSpend a Token\n🔗 Spend a token\n\n\nTextbooks\n🔗 Modern Data Science with R (MDS)\n🔗 R for Data Science (R4DS)\n🔗 Fundamentals of Data Visualization\n\n\nPackage documentation\n🔗 ggplot2: ggplot2.tidyverse.org\n🔗 dplyr: dplyr.tidyverse.org\n🔗 tidyr: tidyr.tidyverse.org\n🔗 forcats: forcats.tidyverse.org\n🔗 stringr: stringr.tidyverse.org\n🔗 lubridate: lubridate.tidyverse.org\n🔗 readr: readr.tidyverse.org",
-    "crumbs": [
-      "Course information",
-      "Useful links"
-    ]
-  },
-  {
-    "objectID": "slides/03/slides03.html#plan-for-today",
-    "href": "slides/03/slides03.html#plan-for-today",
-    "title": "ggplot2",
+    "objectID": "slides/02/slides02.html#plan-for-today",
+    "href": "slides/02/slides02.html#plan-for-today",
+    "title": "Github +  Reproducible  Reporting",
     "section": "Plan for today:",
-    "text": "Plan for today:\n\nSuper quick grammar of graphics recap\nSpeed Groupwork\nIntro to portfolio project 1"
+    "text": "Plan for today:\n\nQuestions from syllabus quiz\nGithub\n\nAccessing your private repos\nknit 🧶 commit ✅ push ⤴️\n\nReproducible Reporting"
   },
   {
-    "objectID": "slides/03/slides03.html#what-are-the-essential-elements-of-this-scatterplot",
-    "href": "slides/03/slides03.html#what-are-the-essential-elements-of-this-scatterplot",
-    "title": "ggplot2",
-    "section": "What are the essential elements of this scatterplot?",
-    "text": "What are the essential elements of this scatterplot?"
+    "objectID": "slides/02/slides02.html#questions-from-syllabus-quiz",
+    "href": "slides/02/slides02.html#questions-from-syllabus-quiz",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Questions from syllabus quiz",
+    "text": "Questions from syllabus quiz\n\nWill the course build off of Stat120 concepts?\nClarification of what gets submitted to gradescope and what to GitHub\nRMarkdown versus Quarto?\nExamples of previous final projects?\nInfo about portfolio projects?"
   },
   {
-    "objectID": "slides/03/slides03.html#data",
-    "href": "slides/03/slides03.html#data",
-    "title": "ggplot2",
-    "section": "Data",
-    "text": "Data\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\nAdelie\nTorgersen\n39.1\n18.7\n181\n3750\nmale\n2007\n\n\nAdelie\nTorgersen\n39.5\n17.4\n186\n3800\nfemale\n2007\n\n\nAdelie\nTorgersen\n40.3\n18.0\n195\n3250\nfemale\n2007\n\n\nAdelie\nTorgersen\nNA\nNA\nNA\nNA\nNA\n2007\n\n\nAdelie\nTorgersen\n36.7\n19.3\n193\n3450\nfemale\n2007\n\n\nAdelie\nTorgersen\n39.3\n20.6\n190\n3650\nmale\n2007\n\n\nAdelie\nTorgersen\n38.9\n17.8\n181\n3625\nfemale\n2007\n\n\nAdelie\nTorgersen\n39.2\n19.6\n195\n4675\nmale\n2007\n\n\nAdelie\nTorgersen\n34.1\n18.1\n193\n3475\nNA\n2007\n\n\nAdelie\nTorgersen\n42.0\n20.2\n190\n4250\nNA\n2007\n\n\nAdelie\nTorgersen\n37.8\n17.1\n186\n3300\nNA\n2007\n\n\nAdelie\nTorgersen\n37.8\n17.3\n180\n3700\nNA\n2007\n\n\nAdelie\nTorgersen\n41.1\n17.6\n182\n3200\nfemale\n2007\n\n\nAdelie\nTorgersen\n38.6\n21.2\n191\n3800\nmale\n2007\n\n\nAdelie\nTorgersen\n34.6\n21.1\n198\n4400\nmale\n2007\n\n\nAdelie\nTorgersen\n36.6\n17.8\n185\n3700\nfemale\n2007\n\n\nAdelie\nTorgersen\n38.7\n19.0\n195\n3450\nfemale\n2007\n\n\nAdelie\nTorgersen\n42.5\n20.7\n197\n4500\nmale\n2007\n\n\nAdelie\nTorgersen\n34.4\n18.4\n184\n3325\nfemale\n2007\n\n\nAdelie\nTorgersen\n46.0\n21.5\n194\n4200\nmale\n2007\n\n\nAdelie\nBiscoe\n37.8\n18.3\n174\n3400\nfemale\n2007\n\n\nAdelie\nBiscoe\n37.7\n18.7\n180\n3600\nmale\n2007\n\n\nAdelie\nBiscoe\n35.9\n19.2\n189\n3800\nfemale\n2007\n\n\nAdelie\nBiscoe\n38.2\n18.1\n185\n3950\nmale\n2007\n\n\nAdelie\nBiscoe\n38.8\n17.2\n180\n3800\nmale\n2007\n\n\nAdelie\nBiscoe\n35.3\n18.9\n187\n3800\nfemale\n2007\n\n\nAdelie\nBiscoe\n40.6\n18.6\n183\n3550\nmale\n2007\n\n\nAdelie\nBiscoe\n40.5\n17.9\n187\n3200\nfemale\n2007\n\n\nAdelie\nBiscoe\n37.9\n18.6\n172\n3150\nfemale\n2007\n\n\nAdelie\nBiscoe\n40.5\n18.9\n180\n3950\nmale\n2007\n\n\nAdelie\nDream\n39.5\n16.7\n178\n3250\nfemale\n2007\n\n\nAdelie\nDream\n37.2\n18.1\n178\n3900\nmale\n2007\n\n\nAdelie\nDream\n39.5\n17.8\n188\n3300\nfemale\n2007\n\n\nAdelie\nDream\n40.9\n18.9\n184\n3900\nmale\n2007\n\n\nAdelie\nDream\n36.4\n17.0\n195\n3325\nfemale\n2007\n\n\nAdelie\nDream\n39.2\n21.1\n196\n4150\nmale\n2007\n\n\nAdelie\nDream\n38.8\n20.0\n190\n3950\nmale\n2007\n\n\nAdelie\nDream\n42.2\n18.5\n180\n3550\nfemale\n2007\n\n\nAdelie\nDream\n37.6\n19.3\n181\n3300\nfemale\n2007\n\n\nAdelie\nDream\n39.8\n19.1\n184\n4650\nmale\n2007\n\n\nAdelie\nDream\n36.5\n18.0\n182\n3150\nfemale\n2007\n\n\nAdelie\nDream\n40.8\n18.4\n195\n3900\nmale\n2007\n\n\nAdelie\nDream\n36.0\n18.5\n186\n3100\nfemale\n2007\n\n\nAdelie\nDream\n44.1\n19.7\n196\n4400\nmale\n2007\n\n\nAdelie\nDream\n37.0\n16.9\n185\n3000\nfemale\n2007\n\n\nAdelie\nDream\n39.6\n18.8\n190\n4600\nmale\n2007\n\n\nAdelie\nDream\n41.1\n19.0\n182\n3425\nmale\n2007\n\n\nAdelie\nDream\n37.5\n18.9\n179\n2975\nNA\n2007\n\n\nAdelie\nDream\n36.0\n17.9\n190\n3450\nfemale\n2007\n\n\nAdelie\nDream\n42.3\n21.2\n191\n4150\nmale\n2007\n\n\nAdelie\nBiscoe\n39.6\n17.7\n186\n3500\nfemale\n2008\n\n\nAdelie\nBiscoe\n40.1\n18.9\n188\n4300\nmale\n2008\n\n\nAdelie\nBiscoe\n35.0\n17.9\n190\n3450\nfemale\n2008\n\n\nAdelie\nBiscoe\n42.0\n19.5\n200\n4050\nmale\n2008\n\n\nAdelie\nBiscoe\n34.5\n18.1\n187\n2900\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.4\n18.6\n191\n3700\nmale\n2008\n\n\nAdelie\nBiscoe\n39.0\n17.5\n186\n3550\nfemale\n2008\n\n\nAdelie\nBiscoe\n40.6\n18.8\n193\n3800\nmale\n2008\n\n\nAdelie\nBiscoe\n36.5\n16.6\n181\n2850\nfemale\n2008\n\n\nAdelie\nBiscoe\n37.6\n19.1\n194\n3750\nmale\n2008\n\n\nAdelie\nBiscoe\n35.7\n16.9\n185\n3150\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.3\n21.1\n195\n4400\nmale\n2008\n\n\nAdelie\nBiscoe\n37.6\n17.0\n185\n3600\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.1\n18.2\n192\n4050\nmale\n2008\n\n\nAdelie\nBiscoe\n36.4\n17.1\n184\n2850\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.6\n18.0\n192\n3950\nmale\n2008\n\n\nAdelie\nBiscoe\n35.5\n16.2\n195\n3350\nfemale\n2008\n\n\nAdelie\nBiscoe\n41.1\n19.1\n188\n4100\nmale\n2008\n\n\nAdelie\nTorgersen\n35.9\n16.6\n190\n3050\nfemale\n2008\n\n\nAdelie\nTorgersen\n41.8\n19.4\n198\n4450\nmale\n2008\n\n\nAdelie\nTorgersen\n33.5\n19.0\n190\n3600\nfemale\n2008\n\n\nAdelie\nTorgersen\n39.7\n18.4\n190\n3900\nmale\n2008\n\n\nAdelie\nTorgersen\n39.6\n17.2\n196\n3550\nfemale\n2008\n\n\nAdelie\nTorgersen\n45.8\n18.9\n197\n4150\nmale\n2008\n\n\nAdelie\nTorgersen\n35.5\n17.5\n190\n3700\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.8\n18.5\n195\n4250\nmale\n2008\n\n\nAdelie\nTorgersen\n40.9\n16.8\n191\n3700\nfemale\n2008\n\n\nAdelie\nTorgersen\n37.2\n19.4\n184\n3900\nmale\n2008\n\n\nAdelie\nTorgersen\n36.2\n16.1\n187\n3550\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.1\n19.1\n195\n4000\nmale\n2008\n\n\nAdelie\nTorgersen\n34.6\n17.2\n189\n3200\nfemale\n2008\n\n\nAdelie\nTorgersen\n42.9\n17.6\n196\n4700\nmale\n2008\n\n\nAdelie\nTorgersen\n36.7\n18.8\n187\n3800\nfemale\n2008\n\n\nAdelie\nTorgersen\n35.1\n19.4\n193\n4200\nmale\n2008\n\n\nAdelie\nDream\n37.3\n17.8\n191\n3350\nfemale\n2008\n\n\nAdelie\nDream\n41.3\n20.3\n194\n3550\nmale\n2008\n\n\nAdelie\nDream\n36.3\n19.5\n190\n3800\nmale\n2008\n\n\nAdelie\nDream\n36.9\n18.6\n189\n3500\nfemale\n2008\n\n\nAdelie\nDream\n38.3\n19.2\n189\n3950\nmale\n2008\n\n\nAdelie\nDream\n38.9\n18.8\n190\n3600\nfemale\n2008\n\n\nAdelie\nDream\n35.7\n18.0\n202\n3550\nfemale\n2008\n\n\nAdelie\nDream\n41.1\n18.1\n205\n4300\nmale\n2008\n\n\nAdelie\nDream\n34.0\n17.1\n185\n3400\nfemale\n2008\n\n\nAdelie\nDream\n39.6\n18.1\n186\n4450\nmale\n2008\n\n\nAdelie\nDream\n36.2\n17.3\n187\n3300\nfemale\n2008\n\n\nAdelie\nDream\n40.8\n18.9\n208\n4300\nmale\n2008\n\n\nAdelie\nDream\n38.1\n18.6\n190\n3700\nfemale\n2008\n\n\nAdelie\nDream\n40.3\n18.5\n196\n4350\nmale\n2008\n\n\nAdelie\nDream\n33.1\n16.1\n178\n2900\nfemale\n2008\n\n\nAdelie\nDream\n43.2\n18.5\n192\n4100\nmale\n2008\n\n\nAdelie\nBiscoe\n35.0\n17.9\n192\n3725\nfemale\n2009\n\n\nAdelie\nBiscoe\n41.0\n20.0\n203\n4725\nmale\n2009\n\n\nAdelie\nBiscoe\n37.7\n16.0\n183\n3075\nfemale\n2009\n\n\nAdelie\nBiscoe\n37.8\n20.0\n190\n4250\nmale\n2009\n\n\nAdelie\nBiscoe\n37.9\n18.6\n193\n2925\nfemale\n2009\n\n\nAdelie\nBiscoe\n39.7\n18.9\n184\n3550\nmale\n2009\n\n\nAdelie\nBiscoe\n38.6\n17.2\n199\n3750\nfemale\n2009\n\n\nAdelie\nBiscoe\n38.2\n20.0\n190\n3900\nmale\n2009\n\n\nAdelie\nBiscoe\n38.1\n17.0\n181\n3175\nfemale\n2009\n\n\nAdelie\nBiscoe\n43.2\n19.0\n197\n4775\nmale\n2009\n\n\nAdelie\nBiscoe\n38.1\n16.5\n198\n3825\nfemale\n2009\n\n\nAdelie\nBiscoe\n45.6\n20.3\n191\n4600\nmale\n2009\n\n\nAdelie\nBiscoe\n39.7\n17.7\n193\n3200\nfemale\n2009\n\n\nAdelie\nBiscoe\n42.2\n19.5\n197\n4275\nmale\n2009\n\n\nAdelie\nBiscoe\n39.6\n20.7\n191\n3900\nfemale\n2009\n\n\nAdelie\nBiscoe\n42.7\n18.3\n196\n4075\nmale\n2009\n\n\nAdelie\nTorgersen\n38.6\n17.0\n188\n2900\nfemale\n2009\n\n\nAdelie\nTorgersen\n37.3\n20.5\n199\n3775\nmale\n2009\n\n\nAdelie\nTorgersen\n35.7\n17.0\n189\n3350\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.1\n18.6\n189\n3325\nmale\n2009\n\n\nAdelie\nTorgersen\n36.2\n17.2\n187\n3150\nfemale\n2009\n\n\nAdelie\nTorgersen\n37.7\n19.8\n198\n3500\nmale\n2009\n\n\nAdelie\nTorgersen\n40.2\n17.0\n176\n3450\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.4\n18.5\n202\n3875\nmale\n2009\n\n\nAdelie\nTorgersen\n35.2\n15.9\n186\n3050\nfemale\n2009\n\n\nAdelie\nTorgersen\n40.6\n19.0\n199\n4000\nmale\n2009\n\n\nAdelie\nTorgersen\n38.8\n17.6\n191\n3275\nfemale\n2009\n\n\nAdelie\nTorgersen\n41.5\n18.3\n195\n4300\nmale\n2009\n\n\nAdelie\nTorgersen\n39.0\n17.1\n191\n3050\nfemale\n2009\n\n\nAdelie\nTorgersen\n44.1\n18.0\n210\n4000\nmale\n2009\n\n\nAdelie\nTorgersen\n38.5\n17.9\n190\n3325\nfemale\n2009\n\n\nAdelie\nTorgersen\n43.1\n19.2\n197\n3500\nmale\n2009\n\n\nAdelie\nDream\n36.8\n18.5\n193\n3500\nfemale\n2009\n\n\nAdelie\nDream\n37.5\n18.5\n199\n4475\nmale\n2009\n\n\nAdelie\nDream\n38.1\n17.6\n187\n3425\nfemale\n2009\n\n\nAdelie\nDream\n41.1\n17.5\n190\n3900\nmale\n2009\n\n\nAdelie\nDream\n35.6\n17.5\n191\n3175\nfemale\n2009\n\n\nAdelie\nDream\n40.2\n20.1\n200\n3975\nmale\n2009\n\n\nAdelie\nDream\n37.0\n16.5\n185\n3400\nfemale\n2009\n\n\nAdelie\nDream\n39.7\n17.9\n193\n4250\nmale\n2009\n\n\nAdelie\nDream\n40.2\n17.1\n193\n3400\nfemale\n2009\n\n\nAdelie\nDream\n40.6\n17.2\n187\n3475\nmale\n2009\n\n\nAdelie\nDream\n32.1\n15.5\n188\n3050\nfemale\n2009\n\n\nAdelie\nDream\n40.7\n17.0\n190\n3725\nmale\n2009\n\n\nAdelie\nDream\n37.3\n16.8\n192\n3000\nfemale\n2009\n\n\nAdelie\nDream\n39.0\n18.7\n185\n3650\nmale\n2009\n\n\nAdelie\nDream\n39.2\n18.6\n190\n4250\nmale\n2009\n\n\nAdelie\nDream\n36.6\n18.4\n184\n3475\nfemale\n2009\n\n\nAdelie\nDream\n36.0\n17.8\n195\n3450\nfemale\n2009\n\n\nAdelie\nDream\n37.8\n18.1\n193\n3750\nmale\n2009\n\n\nAdelie\nDream\n36.0\n17.1\n187\n3700\nfemale\n2009\n\n\nAdelie\nDream\n41.5\n18.5\n201\n4000\nmale\n2009\n\n\nGentoo\nBiscoe\n46.1\n13.2\n211\n4500\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n16.3\n230\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n48.7\n14.1\n210\n4450\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n15.2\n218\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n47.6\n14.5\n215\n5400\nmale\n2007\n\n\nGentoo\nBiscoe\n46.5\n13.5\n210\n4550\nfemale\n2007\n\n\nGentoo\nBiscoe\n45.4\n14.6\n211\n4800\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.7\n15.3\n219\n5200\nmale\n2007\n\n\nGentoo\nBiscoe\n43.3\n13.4\n209\n4400\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.8\n15.4\n215\n5150\nmale\n2007\n\n\nGentoo\nBiscoe\n40.9\n13.7\n214\n4650\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.0\n16.1\n216\n5550\nmale\n2007\n\n\nGentoo\nBiscoe\n45.5\n13.7\n214\n4650\nfemale\n2007\n\n\nGentoo\nBiscoe\n48.4\n14.6\n213\n5850\nmale\n2007\n\n\nGentoo\nBiscoe\n45.8\n14.6\n210\n4200\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.3\n15.7\n217\n5850\nmale\n2007\n\n\nGentoo\nBiscoe\n42.0\n13.5\n210\n4150\nfemale\n2007\n\n\nGentoo\nBiscoe\n49.2\n15.2\n221\n6300\nmale\n2007\n\n\nGentoo\nBiscoe\n46.2\n14.5\n209\n4800\nfemale\n2007\n\n\nGentoo\nBiscoe\n48.7\n15.1\n222\n5350\nmale\n2007\n\n\nGentoo\nBiscoe\n50.2\n14.3\n218\n5700\nmale\n2007\n\n\nGentoo\nBiscoe\n45.1\n14.5\n215\n5000\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.5\n14.5\n213\n4400\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.3\n15.8\n215\n5050\nmale\n2007\n\n\nGentoo\nBiscoe\n42.9\n13.1\n215\n5000\nfemale\n2007\n\n\nGentoo\nBiscoe\n46.1\n15.1\n215\n5100\nmale\n2007\n\n\nGentoo\nBiscoe\n44.5\n14.3\n216\n4100\nNA\n2007\n\n\nGentoo\nBiscoe\n47.8\n15.0\n215\n5650\nmale\n2007\n\n\nGentoo\nBiscoe\n48.2\n14.3\n210\n4600\nfemale\n2007\n\n\nGentoo\nBiscoe\n50.0\n15.3\n220\n5550\nmale\n2007\n\n\nGentoo\nBiscoe\n47.3\n15.3\n222\n5250\nmale\n2007\n\n\nGentoo\nBiscoe\n42.8\n14.2\n209\n4700\nfemale\n2007\n\n\nGentoo\nBiscoe\n45.1\n14.5\n207\n5050\nfemale\n2007\n\n\nGentoo\nBiscoe\n59.6\n17.0\n230\n6050\nmale\n2007\n\n\nGentoo\nBiscoe\n49.1\n14.8\n220\n5150\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.4\n16.3\n220\n5400\nmale\n2008\n\n\nGentoo\nBiscoe\n42.6\n13.7\n213\n4950\nfemale\n2008\n\n\nGentoo\nBiscoe\n44.4\n17.3\n219\n5250\nmale\n2008\n\n\nGentoo\nBiscoe\n44.0\n13.6\n208\n4350\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.7\n15.7\n208\n5350\nmale\n2008\n\n\nGentoo\nBiscoe\n42.7\n13.7\n208\n3950\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.6\n16.0\n225\n5700\nmale\n2008\n\n\nGentoo\nBiscoe\n45.3\n13.7\n210\n4300\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.6\n15.0\n216\n4750\nmale\n2008\n\n\nGentoo\nBiscoe\n50.5\n15.9\n222\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n43.6\n13.9\n217\n4900\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.5\n13.9\n210\n4200\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.5\n15.9\n225\n5400\nmale\n2008\n\n\nGentoo\nBiscoe\n44.9\n13.3\n213\n5100\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.2\n15.8\n215\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n46.6\n14.2\n210\n4850\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.5\n14.1\n220\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n45.1\n14.4\n210\n4400\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.1\n15.0\n225\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n46.5\n14.4\n217\n4900\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.0\n15.4\n220\n5050\nmale\n2008\n\n\nGentoo\nBiscoe\n43.8\n13.9\n208\n4300\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.5\n15.0\n220\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n43.2\n14.5\n208\n4450\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.4\n15.3\n224\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n45.3\n13.8\n208\n4200\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.2\n14.9\n221\n5300\nmale\n2008\n\n\nGentoo\nBiscoe\n45.7\n13.9\n214\n4400\nfemale\n2008\n\n\nGentoo\nBiscoe\n54.3\n15.7\n231\n5650\nmale\n2008\n\n\nGentoo\nBiscoe\n45.8\n14.2\n219\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n49.8\n16.8\n230\n5700\nmale\n2008\n\n\nGentoo\nBiscoe\n46.2\n14.4\n214\n4650\nNA\n2008\n\n\nGentoo\nBiscoe\n49.5\n16.2\n229\n5800\nmale\n2008\n\n\nGentoo\nBiscoe\n43.5\n14.2\n220\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n50.7\n15.0\n223\n5550\nmale\n2008\n\n\nGentoo\nBiscoe\n47.7\n15.0\n216\n4750\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.4\n15.6\n221\n5000\nmale\n2008\n\n\nGentoo\nBiscoe\n48.2\n15.6\n221\n5100\nmale\n2008\n\n\nGentoo\nBiscoe\n46.5\n14.8\n217\n5200\nfemale\n2008\n\n\nGentoo\nBiscoe\n46.4\n15.0\n216\n4700\nfemale\n2008\n\n\nGentoo\nBiscoe\n48.6\n16.0\n230\n5800\nmale\n2008\n\n\nGentoo\nBiscoe\n47.5\n14.2\n209\n4600\nfemale\n2008\n\n\nGentoo\nBiscoe\n51.1\n16.3\n220\n6000\nmale\n2008\n\n\nGentoo\nBiscoe\n45.2\n13.8\n215\n4750\nfemale\n2008\n\n\nGentoo\nBiscoe\n45.2\n16.4\n223\n5950\nmale\n2008\n\n\nGentoo\nBiscoe\n49.1\n14.5\n212\n4625\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.5\n15.6\n221\n5450\nmale\n2009\n\n\nGentoo\nBiscoe\n47.4\n14.6\n212\n4725\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.0\n15.9\n224\n5350\nmale\n2009\n\n\nGentoo\nBiscoe\n44.9\n13.8\n212\n4750\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.8\n17.3\n228\n5600\nmale\n2009\n\n\nGentoo\nBiscoe\n43.4\n14.4\n218\n4600\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.3\n14.2\n218\n5300\nmale\n2009\n\n\nGentoo\nBiscoe\n47.5\n14.0\n212\n4875\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.1\n17.0\n230\n5550\nmale\n2009\n\n\nGentoo\nBiscoe\n47.5\n15.0\n218\n4950\nfemale\n2009\n\n\nGentoo\nBiscoe\n52.2\n17.1\n228\n5400\nmale\n2009\n\n\nGentoo\nBiscoe\n45.5\n14.5\n212\n4750\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.5\n16.1\n224\n5650\nmale\n2009\n\n\nGentoo\nBiscoe\n44.5\n14.7\n214\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.8\n15.7\n226\n5200\nmale\n2009\n\n\nGentoo\nBiscoe\n49.4\n15.8\n216\n4925\nmale\n2009\n\n\nGentoo\nBiscoe\n46.9\n14.6\n222\n4875\nfemale\n2009\n\n\nGentoo\nBiscoe\n48.4\n14.4\n203\n4625\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.1\n16.5\n225\n5250\nmale\n2009\n\n\nGentoo\nBiscoe\n48.5\n15.0\n219\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n55.9\n17.0\n228\n5600\nmale\n2009\n\n\nGentoo\nBiscoe\n47.2\n15.5\n215\n4975\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.1\n15.0\n228\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n47.3\n13.8\n216\n4725\nNA\n2009\n\n\nGentoo\nBiscoe\n46.8\n16.1\n215\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n41.7\n14.7\n210\n4700\nfemale\n2009\n\n\nGentoo\nBiscoe\n53.4\n15.8\n219\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n43.3\n14.0\n208\n4575\nfemale\n2009\n\n\nGentoo\nBiscoe\n48.1\n15.1\n209\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n50.5\n15.2\n216\n5000\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.8\n15.9\n229\n5950\nmale\n2009\n\n\nGentoo\nBiscoe\n43.5\n15.2\n213\n4650\nfemale\n2009\n\n\nGentoo\nBiscoe\n51.5\n16.3\n230\n5500\nmale\n2009\n\n\nGentoo\nBiscoe\n46.2\n14.1\n217\n4375\nfemale\n2009\n\n\nGentoo\nBiscoe\n55.1\n16.0\n230\n5850\nmale\n2009\n\n\nGentoo\nBiscoe\n44.5\n15.7\n217\n4875\nNA\n2009\n\n\nGentoo\nBiscoe\n48.8\n16.2\n222\n6000\nmale\n2009\n\n\nGentoo\nBiscoe\n47.2\n13.7\n214\n4925\nfemale\n2009\n\n\nGentoo\nBiscoe\nNA\nNA\nNA\nNA\nNA\n2009\n\n\nGentoo\nBiscoe\n46.8\n14.3\n215\n4850\nfemale\n2009\n\n\nGentoo\nBiscoe\n50.4\n15.7\n222\n5750\nmale\n2009\n\n\nGentoo\nBiscoe\n45.2\n14.8\n212\n5200\nfemale\n2009\n\n\nGentoo\nBiscoe\n49.9\n16.1\n213\n5400\nmale\n2009\n\n\nChinstrap\nDream\n46.5\n17.9\n192\n3500\nfemale\n2007\n\n\nChinstrap\nDream\n50.0\n19.5\n196\n3900\nmale\n2007\n\n\nChinstrap\nDream\n51.3\n19.2\n193\n3650\nmale\n2007\n\n\nChinstrap\nDream\n45.4\n18.7\n188\n3525\nfemale\n2007\n\n\nChinstrap\nDream\n52.7\n19.8\n197\n3725\nmale\n2007\n\n\nChinstrap\nDream\n45.2\n17.8\n198\n3950\nfemale\n2007\n\n\nChinstrap\nDream\n46.1\n18.2\n178\n3250\nfemale\n2007\n\n\nChinstrap\nDream\n51.3\n18.2\n197\n3750\nmale\n2007\n\n\nChinstrap\nDream\n46.0\n18.9\n195\n4150\nfemale\n2007\n\n\nChinstrap\nDream\n51.3\n19.9\n198\n3700\nmale\n2007\n\n\nChinstrap\nDream\n46.6\n17.8\n193\n3800\nfemale\n2007\n\n\nChinstrap\nDream\n51.7\n20.3\n194\n3775\nmale\n2007\n\n\nChinstrap\nDream\n47.0\n17.3\n185\n3700\nfemale\n2007\n\n\nChinstrap\nDream\n52.0\n18.1\n201\n4050\nmale\n2007\n\n\nChinstrap\nDream\n45.9\n17.1\n190\n3575\nfemale\n2007\n\n\nChinstrap\nDream\n50.5\n19.6\n201\n4050\nmale\n2007\n\n\nChinstrap\nDream\n50.3\n20.0\n197\n3300\nmale\n2007\n\n\nChinstrap\nDream\n58.0\n17.8\n181\n3700\nfemale\n2007\n\n\nChinstrap\nDream\n46.4\n18.6\n190\n3450\nfemale\n2007\n\n\nChinstrap\nDream\n49.2\n18.2\n195\n4400\nmale\n2007\n\n\nChinstrap\nDream\n42.4\n17.3\n181\n3600\nfemale\n2007\n\n\nChinstrap\nDream\n48.5\n17.5\n191\n3400\nmale\n2007\n\n\nChinstrap\nDream\n43.2\n16.6\n187\n2900\nfemale\n2007\n\n\nChinstrap\nDream\n50.6\n19.4\n193\n3800\nmale\n2007\n\n\nChinstrap\nDream\n46.7\n17.9\n195\n3300\nfemale\n2007\n\n\nChinstrap\nDream\n52.0\n19.0\n197\n4150\nmale\n2007\n\n\nChinstrap\nDream\n50.5\n18.4\n200\n3400\nfemale\n2008\n\n\nChinstrap\nDream\n49.5\n19.0\n200\n3800\nmale\n2008\n\n\nChinstrap\nDream\n46.4\n17.8\n191\n3700\nfemale\n2008\n\n\nChinstrap\nDream\n52.8\n20.0\n205\n4550\nmale\n2008\n\n\nChinstrap\nDream\n40.9\n16.6\n187\n3200\nfemale\n2008\n\n\nChinstrap\nDream\n54.2\n20.8\n201\n4300\nmale\n2008\n\n\nChinstrap\nDream\n42.5\n16.7\n187\n3350\nfemale\n2008\n\n\nChinstrap\nDream\n51.0\n18.8\n203\n4100\nmale\n2008\n\n\nChinstrap\nDream\n49.7\n18.6\n195\n3600\nmale\n2008\n\n\nChinstrap\nDream\n47.5\n16.8\n199\n3900\nfemale\n2008\n\n\nChinstrap\nDream\n47.6\n18.3\n195\n3850\nfemale\n2008\n\n\nChinstrap\nDream\n52.0\n20.7\n210\n4800\nmale\n2008\n\n\nChinstrap\nDream\n46.9\n16.6\n192\n2700\nfemale\n2008\n\n\nChinstrap\nDream\n53.5\n19.9\n205\n4500\nmale\n2008\n\n\nChinstrap\nDream\n49.0\n19.5\n210\n3950\nmale\n2008\n\n\nChinstrap\nDream\n46.2\n17.5\n187\n3650\nfemale\n2008\n\n\nChinstrap\nDream\n50.9\n19.1\n196\n3550\nmale\n2008\n\n\nChinstrap\nDream\n45.5\n17.0\n196\n3500\nfemale\n2008\n\n\nChinstrap\nDream\n50.9\n17.9\n196\n3675\nfemale\n2009\n\n\nChinstrap\nDream\n50.8\n18.5\n201\n4450\nmale\n2009\n\n\nChinstrap\nDream\n50.1\n17.9\n190\n3400\nfemale\n2009\n\n\nChinstrap\nDream\n49.0\n19.6\n212\n4300\nmale\n2009\n\n\nChinstrap\nDream\n51.5\n18.7\n187\n3250\nmale\n2009\n\n\nChinstrap\nDream\n49.8\n17.3\n198\n3675\nfemale\n2009\n\n\nChinstrap\nDream\n48.1\n16.4\n199\n3325\nfemale\n2009\n\n\nChinstrap\nDream\n51.4\n19.0\n201\n3950\nmale\n2009\n\n\nChinstrap\nDream\n45.7\n17.3\n193\n3600\nfemale\n2009\n\n\nChinstrap\nDream\n50.7\n19.7\n203\n4050\nmale\n2009\n\n\nChinstrap\nDream\n42.5\n17.3\n187\n3350\nfemale\n2009\n\n\nChinstrap\nDream\n52.2\n18.8\n197\n3450\nmale\n2009\n\n\nChinstrap\nDream\n45.2\n16.6\n191\n3250\nfemale\n2009\n\n\nChinstrap\nDream\n49.3\n19.9\n203\n4050\nmale\n2009\n\n\nChinstrap\nDream\n50.2\n18.8\n202\n3800\nmale\n2009\n\n\nChinstrap\nDream\n45.6\n19.4\n194\n3525\nfemale\n2009\n\n\nChinstrap\nDream\n51.9\n19.5\n206\n3950\nmale\n2009\n\n\nChinstrap\nDream\n46.8\n16.5\n189\n3650\nfemale\n2009\n\n\nChinstrap\nDream\n45.7\n17.0\n195\n3650\nfemale\n2009\n\n\nChinstrap\nDream\n55.8\n19.8\n207\n4000\nmale\n2009\n\n\nChinstrap\nDream\n43.5\n18.1\n202\n3400\nfemale\n2009\n\n\nChinstrap\nDream\n49.6\n18.2\n193\n3775\nmale\n2009\n\n\nChinstrap\nDream\n50.8\n19.0\n210\n4100\nmale\n2009\n\n\nChinstrap\nDream\n50.2\n18.7\n198\n3775\nfemale\n2009"
+    "objectID": "slides/02/slides02.html#git-github",
+    "href": "slides/02/slides02.html#git-github",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Git + GitHub",
+    "text": "Git + GitHub\n\n\n\nGit is a version control system - like “Track Changes”, on steroids\nIt’s not the only version control system, but it’s a very popular one\n\n\n\nGitHub is the home for your Git-based projects on the internet—like DropBox but much, much better\nWe will use GitHub as a platform for web hosting and collaboration"
   },
   {
-    "objectID": "slides/03/slides03.html#aesthetic",
-    "href": "slides/03/slides03.html#aesthetic",
-    "title": "ggplot2",
-    "section": "Aesthetic",
-    "text": "Aesthetic\n\n\nA visual property of the objects in the plot\n\nx → body mass\ny → flipper length\ncolor → species"
+    "objectID": "slides/02/slides02.html#why-do-we-need-it",
+    "href": "slides/02/slides02.html#why-do-we-need-it",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Why do we need it?",
+    "text": "Why do we need it?"
   },
   {
-    "objectID": "slides/03/slides03.html#geometric-object",
-    "href": "slides/03/slides03.html#geometric-object",
-    "title": "ggplot2",
-    "section": "Geometric Object",
-    "text": "Geometric Object\n\n\nHow the data are represented\n\npoints!"
+    "objectID": "slides/02/slides02.html#versioning",
+    "href": "slides/02/slides02.html#versioning",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Versioning",
+    "text": "Versioning"
   },
   {
-    "objectID": "slides/03/slides03.html#the-basic-ggplot-template",
-    "href": "slides/03/slides03.html#the-basic-ggplot-template",
-    "title": "ggplot2",
-    "section": "The basic ggplot template:",
-    "text": "The basic ggplot template:\n\nggplot(data = &lt;dataset_name&gt;) + \n  &lt;geom_function&gt;(mapping = aes(&lt;mappings&gt;))"
+    "objectID": "slides/02/slides02.html#versioning-with-human-readable-messages",
+    "href": "slides/02/slides02.html#versioning-with-human-readable-messages",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Versioning (with human-readable messages)",
+    "text": "Versioning (with human-readable messages)"
   },
   {
-    "objectID": "slides/03/slides03.html#facets",
-    "href": "slides/03/slides03.html#facets",
-    "title": "ggplot2",
-    "section": "Facets",
-    "text": "Facets\n\nggplot(penguins, aes(x = body_mass_g, y = flipper_length_mm, col = species)) + \n  geom_point() + \n  facet_wrap(vars(species)) +\n  theme(legend.position = \"none\")"
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
   },
   {
-    "objectID": "slides/03/slides03.html#statistical-transformations",
-    "href": "slides/03/slides03.html#statistical-transformations",
-    "title": "ggplot2",
-    "section": "Statistical Transformations",
-    "text": "Statistical Transformations"
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-1",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
   },
   {
-    "objectID": "slides/03/slides03.html#coordinates",
-    "href": "slides/03/slides03.html#coordinates",
-    "title": "ggplot2",
-    "section": "Coordinates",
-    "text": "Coordinates\n\n\nSource: Nathan Yau, Data Points"
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-2",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
   },
   {
-    "objectID": "slides/03/slides03.html#scalesguides",
-    "href": "slides/03/slides03.html#scalesguides",
-    "title": "ggplot2",
-    "section": "Scales/guides",
-    "text": "Scales/guides\n\n\nSource: Nathan Yau, Data Points"
+    "objectID": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
+    "href": "slides/02/slides02.html#how-does-it-work-for-stat220-3",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "How does it work for Stat220?",
+    "text": "How does it work for Stat220?"
   },
   {
-    "objectID": "slides/03/slides03.html#themes",
-    "href": "slides/03/slides03.html#themes",
-    "title": "ggplot2",
-    "section": "Themes",
-    "text": "Themes\nAll non-data ink (e.g. background color, appearance of grid lines)"
+    "objectID": "slides/02/slides02.html#lets-try-it",
+    "href": "slides/02/slides02.html#lets-try-it",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Let’s try it!",
+    "text": "Let’s try it!\n\n\n\nFollow the “Individual Assignment” directions at https://stat220-w25.github.io/computing/git-stat220.html to access your day02 repo and create an R project\nEdit the .Rmd file:\n\nChange “author” to your name\nUse # to add descriptive section headers for each code chunk\nAdd a sentence or two describing the summary statistics of the dataset\n\nknit 🧶 commit ✅ push ⤴️\nView on github.com/stat220-w25/day02yourusername and confirm you can see your changes\n\n\n\n\n\n\n−+\n15:00"
   },
   {
-    "objectID": "slides/03/slides03.html#how-it-works",
-    "href": "slides/03/slides03.html#how-it-works",
-    "title": "ggplot2",
-    "section": "How it works",
-    "text": "How it works\n\nDraw a card\nFind your number’s location\nIntroduce yourselves\nGet to work!"
+    "objectID": "slides/02/slides02.html#why-do-we-need-it-1",
+    "href": "slides/02/slides02.html#why-do-we-need-it-1",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Why do we need it?",
+    "text": "Why do we need it?\nOops! I gave you the wrong set of data."
   },
   {
-    "objectID": "slides/03/slides03.html#round-1-view-the-data-pipes",
-    "href": "slides/03/slides03.html#round-1-view-the-data-pipes",
-    "title": "ggplot2",
-    "section": "Round 1: View the data + pipes",
-    "text": "Round 1: View the data + pipes\n\n\n\n−+\n08:00"
+    "objectID": "slides/02/slides02.html#why-do-we-need-it-2",
+    "href": "slides/02/slides02.html#why-do-we-need-it-2",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Why do we need it?",
+    "text": "Why do we need it?\n\nKarl – this is very interesting , however you used an old version of the data (n=143 rather than n=226). I’m really sorry you did all that work on the incomplete dataset.\nBruce\n\n\n\nAdapted from Karl Broman"
   },
   {
-    "objectID": "slides/03/slides03.html#round-2-scatterplots",
-    "href": "slides/03/slides03.html#round-2-scatterplots",
-    "title": "ggplot2",
-    "section": "Round 2: Scatterplots",
-    "text": "Round 2: Scatterplots\n\n\n\n−+\n08:00"
+    "objectID": "slides/02/slides02.html#other-examples",
+    "href": "slides/02/slides02.html#other-examples",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Other examples:",
+    "text": "Other examples:\n\nThe results in Table 1 don’t seem to correspond to those in Figure 2.\nIn what order do I run these scripts?\nWhere did we get this data file?\nWhy did I omit those samples?\nHow did I make that figure?\n“Your script is now giving an error.”\n“The attached is similar to the code we used.”\n\n\n\nAdapted from Karl Broman"
   },
   {
-    "objectID": "slides/03/slides03.html#round-3-additional-aesthetics",
-    "href": "slides/03/slides03.html#round-3-additional-aesthetics",
-    "title": "ggplot2",
-    "section": "Round 3: Additional Aesthetics",
-    "text": "Round 3: Additional Aesthetics\n\n\n\n−+\n08:00"
+    "objectID": "slides/02/slides02.html#reproducible-data-science",
+    "href": "slides/02/slides02.html#reproducible-data-science",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Reproducible data science",
+    "text": "Reproducible data science\n\n\nShort Term Impact\n\nAre the tables and figures reproducible from the code and data?\nDoes the code actually do what you think it does?\nIn addition to what was done, is it clear why it was done? (e.g., how were parameter settings chosen?)\n\n\nLong Term Impact\n\nCan the code be used for other data?\nCan you extend the code to other things?"
   },
   {
-    "objectID": "slides/03/slides03.html#round-4-visualizing-distributions",
-    "href": "slides/03/slides03.html#round-4-visualizing-distributions",
-    "title": "ggplot2",
-    "section": "Round 4: Visualizing Distributions",
-    "text": "Round 4: Visualizing Distributions\n\n\n\n−+\n08:00"
+    "objectID": "slides/02/slides02.html#the-toolkit",
+    "href": "slides/02/slides02.html#the-toolkit",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "The toolkit",
+    "text": "The toolkit\n\n\n\n\n\n\n\n\n\n\nScriptability \\(\\rightarrow\\) R\nCode environment \\(\\rightarrow\\) RStudio\nLiterate programming (code, narrative, output in one place) \\(\\rightarrow\\) R Markdown\nVersion control \\(\\rightarrow\\) Git / GitHub"
   },
   {
-    "objectID": "slides/03/slides03.html#round-5-bar-and-column-charts-labeling",
-    "href": "slides/03/slides03.html#round-5-bar-and-column-charts-labeling",
-    "title": "ggplot2",
-    "section": "Round 5: Bar and column charts + Labeling",
-    "text": "Round 5: Bar and column charts + Labeling\n\n\n\n−+\n08:00"
+    "objectID": "slides/02/slides02.html#what-is-r-markdown",
+    "href": "slides/02/slides02.html#what-is-r-markdown",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "What is R Markdown?",
+    "text": "What is R Markdown?\n\nAn authoring framework for data science.\nA document format (.Rmd).\nAn R package named rmarkdown.\nA file format for making dynamic documents with R.\nA tool for integrating prose, code, and results.\nA computational document."
   },
   {
-    "objectID": "slides/05/slides05.html#today",
-    "href": "slides/05/slides05.html#today",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Today",
-    "text": "Today\n\ngit/GitHub\nIntro to Spatial Data\nMaking Maps in ggplot2"
+    "objectID": "slides/02/slides02.html#what-about-quarto",
+    "href": "slides/02/slides02.html#what-about-quarto",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "What about quarto?",
+    "text": "What about quarto?\n\n“Next Gen” RMarkdown\nMore compatibility with other languages (python, observable.js, etc.)\nnot an R package/separate software\nI’m going to distribute HW, etc. via RMarkdown, but you are welcome to use either!"
   },
   {
-    "objectID": "slides/05/slides05.html#section",
-    "href": "slides/05/slides05.html#section",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "",
-    "text": "Think of the state on GitHub as “worst case scenario”\nIf you screw things up, copy your important files (eg. hw.Rmd) to a safe place.\n\nUsually your files are JUST FINE. But it is easy to goof up the Git infrastructure when you’re new at this. And it can be hard to get that straightened out on your own.\n\nRename the existing local repo as a temporary measure, i.e. before you do something radical, like delete it.\nClone the original repo from GitHub to RStudio (follow the directions to create a new project). You are back to a happy state.\nCopy all relevant files back over from your safe space. The ones whose updated state you need to commit.\nKnit, commit, push\nCarry on with your life.\n\n\n\n\n\n\nBurn It All Down from Happy Git with R"
+    "objectID": "slides/02/slides02.html#the-setup-chunk",
+    "href": "slides/02/slides02.html#the-setup-chunk",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "The setup chunk",
+    "text": "The setup chunk\n\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(\n  collapse = TRUE,   \n  comment = \"#&gt;\", \n  out.width = \"100%\" \n)\n```\n\n\nA special chunk label: setup\nTypically #1\nAll following chunks will use these options (i.e., sets global chunk options)\nTip: set include=FALSE\nYou can (and should) use individual chunk options too"
   },
   {
-    "objectID": "slides/05/slides05.html#cholera",
-    "href": "slides/05/slides05.html#cholera",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Cholera",
-    "text": "Cholera\nIn 1854, a Cholera outbreak killed 127 people in 3 days in a London neighborhood, resulting in a mass exodus of local residents. At the time, people thought that Cholera w as an airborne disease. John Snow was a physician who was critical of the airborne theory, and set out to investigate.\n\nWhat might this data look like?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndate\nlast_name\nfirst_name\naddress\nage\ncause_of_death\n\n\n\n\nAug 31, 1854\nJones\nThomas\n26 Broad St.\n37\ncholera\n\n\nAug 31, 1854\nJones\nMary\n26 Broad St.\n11\ncholera\n\n\nSept 1, 1854\nWarwick\nMartin\n14 Broad St.\n23\ncholera\n\n\n\n\n\n\n\n\nSource: MDSR Ch17.1"
+    "objectID": "slides/02/slides02.html#parameters",
+    "href": "slides/02/slides02.html#parameters",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n---\ntitle: Survivor\noutput:\n  html_document:\n    toc: true\n    toc_float: true\n    theme: flatly\nparams:\n  season: '20'\n---"
   },
   {
-    "objectID": "slides/05/slides05.html#section-2",
-    "href": "slides/05/slides05.html#section-2",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "",
-    "text": "What makes “address” a useful variable is that it is linked to a specific location in the physical world. If we plot these addresses, we get something like the following:\n\n\n\n\n\n\n\n\n\n\n\nSource: MDSR Ch17.1"
+    "objectID": "slides/02/slides02.html#your-task",
+    "href": "slides/02/slides02.html#your-task",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Your Task",
+    "text": "Your Task\n\n\nThere’s an example HTML report on the schedule\nYour task is to reproduce it in 02-example-lego.rmd (or .qmd, if you prefer).\nTo be as reproducible as possible, you’ll need to use:\n\nYAML metadata\nYAML parameters\nCode chunks with appropriate options\nInline R code"
   },
   {
-    "objectID": "slides/05/slides05.html#section-3",
-    "href": "slides/05/slides05.html#section-3",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "",
-    "text": "While we can see patterns in the last plot, the underlying map of the London streets provides helpful context that makes it more intelligble:\n\n\n\n\n\n\n\nSource: MDSR Ch17.1"
-  },
-  {
-    "objectID": "slides/05/slides05.html#section-4",
-    "href": "slides/05/slides05.html#section-4",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "",
-    "text": "Snow’s insight was driven by another set of data—the locations of the street-side water pumps (it’s kind of hard to see, but they are labelled on the map). Nearly all of the cases were clustered around a single pump on the center of Broad Street.\nJohn Snow’s map (and water pump) are now “famous” among epidemiologists and statisticians.\n\n\n\n\nJohn Snow’s water pump (and pub) from a 2019 visit\n\n\n\n\n\nSource: MDSR Ch17.1"
-  },
-  {
-    "objectID": "slides/05/slides05.html#a-successful-data-science-episode",
-    "href": "slides/05/slides05.html#a-successful-data-science-episode",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "A successful data science episode:",
-    "text": "A successful data science episode:\n\nCombine three sources of data (Cholera deaths, water pump locations, and street map)\nWhile a model might have come to the same conclusion, simply plotting the data is much simpler (and more convincing to lots of people)\nThe problem was resolved when the data-based evidence was combined with a plausible model that explained the physical phenomenon.\n\n\n\nSource: MDSR Ch17.1"
-  },
-  {
-    "objectID": "slides/05/slides05.html#what-is-a-map",
-    "href": "slides/05/slides05.html#what-is-a-map",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "What is a map?",
-    "text": "What is a map?\nA bunch of latitude longitude points…"
-  },
-  {
-    "objectID": "slides/05/slides05.html#what-is-a-map-1",
-    "href": "slides/05/slides05.html#what-is-a-map-1",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "What is a map?",
-    "text": "What is a map?\n… that are connected with lines in a very specific order."
-  },
-  {
-    "objectID": "slides/05/slides05.html#necessary-map-data",
-    "href": "slides/05/slides05.html#necessary-map-data",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Necessary map data",
-    "text": "Necessary map data\n\nlatitude/longitude points for all map boundaries\nwhich boundary group all lat/long points belong\nthe order to connect points within each group"
-  },
-  {
-    "objectID": "slides/05/slides05.html#state-map-data",
-    "href": "slides/05/slides05.html#state-map-data",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "State map data",
-    "text": "State map data\nggplot2::map_data() provides the necessary information\n\nstates &lt;- map_data(\"state\")\nglimpse(states)\n\nRows: 15,537\nColumns: 6\n$ long      &lt;dbl&gt; -87.46201, -87.48493, -87.52503, -87.53076, -87.57087, -87.5…\n$ lat       &lt;dbl&gt; 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30.32665, …\n$ group     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …\n$ order     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1…\n$ region    &lt;chr&gt; \"alabama\", \"alabama\", \"alabama\", \"alabama\", \"alabama\", \"alab…\n$ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …"
-  },
-  {
-    "objectID": "slides/05/slides05.html#using-geom_polygon",
-    "href": "slides/05/slides05.html#using-geom_polygon",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Using geom_polygon()",
-    "text": "Using geom_polygon()\nUsing geom_polygon() will treat states as solid shapes, making it easier to add color\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\")"
-  },
-  {
-    "objectID": "slides/05/slides05.html#using-coord_fixed",
-    "href": "slides/05/slides05.html#using-coord_fixed",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Using coord_fixed()",
-    "text": "Using coord_fixed()\nUsing coord_fixed() forces x and y units to be equal\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\") +\n  coord_fixed()"
-  },
-  {
-    "objectID": "slides/05/slides05.html#your-turn",
-    "href": "slides/05/slides05.html#your-turn",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Your turn",
-    "text": "Your turn\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n    geom_polygon(color=\"gold2\", fill=\"navyblue\") +\n    coord_fixed()\n\n\n\nEdit this code so that each shape is colored in with a different color.\nYou only need the 3 variables used: long, lat, and group\n05-maps.Rmd file available in the activities repo\n\n\n\n\n\n−+\n03:00"
-  },
-  {
-    "objectID": "slides/05/slides05.html#coordinate-systems-and-projections",
-    "href": "slides/05/slides05.html#coordinate-systems-and-projections",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Coordinate Systems and Projections",
-    "text": "Coordinate Systems and Projections"
-  },
-  {
-    "objectID": "slides/05/slides05.html#section-5",
-    "href": "slides/05/slides05.html#section-5",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "",
-    "text": "Geospatial data exists on the globe and is generally described with a latitude and longitude. Any projection from the globe to euclidean space (X-Y plane) is going to cause some distortion."
-  },
-  {
-    "objectID": "slides/05/slides05.html#section-6",
-    "href": "slides/05/slides05.html#section-6",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "",
-    "text": "From The West Wing Season 2 Episode 16"
-  },
-  {
-    "objectID": "slides/05/slides05.html#changing-the-coordinate-system",
-    "href": "slides/05/slides05.html#changing-the-coordinate-system",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Changing the coordinate system",
-    "text": "Changing the coordinate system\ncoord_map function provides a Mercator projection (mapproj package has more options)\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n  geom_polygon(color=\"gold2\", fill=\"navyblue\") + \n  coord_map() + \n  theme_map()"
-  },
-  {
-    "objectID": "slides/05/slides05.html#changing-the-coordinate-system-1",
-    "href": "slides/05/slides05.html#changing-the-coordinate-system-1",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Changing the coordinate system",
-    "text": "Changing the coordinate system\ncoord_map function provides a Mercator projection (mapproj package has more options)\n\n\nggplot(states, aes(x=long, y=lat, group=group)) + \n  geom_polygon(color=\"gold2\", fill=\"navyblue\") + \n  coord_map(projection = \"sinusoidal\") + \n  theme_map()"
-  },
-  {
-    "objectID": "slides/05/slides05.html#mercator-vs-sinusoidal-projection-world-map",
-    "href": "slides/05/slides05.html#mercator-vs-sinusoidal-projection-world-map",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Mercator vs Sinusoidal projection (world map)",
-    "text": "Mercator vs Sinusoidal projection (world map)\n\nworld &lt;- map_data(\"world\")\n\nggplot(world, aes(x=long, y=lat, group=group)) + \n  geom_polygon(color=\"gold2\", fill=\"navyblue\") + \n  coord_map(projection = \"mercator\", xlim = c(-180, 180)) + \n  theme_map()"
-  },
-  {
-    "objectID": "slides/05/slides05.html#common-types-of-maps",
-    "href": "slides/05/slides05.html#common-types-of-maps",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Common Types of Maps",
-    "text": "Common Types of Maps\n\nChloropleth\nProportional Symbol\nCartograms/Geofacets"
-  },
-  {
-    "objectID": "slides/05/slides05.html#chloropleth",
-    "href": "slides/05/slides05.html#chloropleth",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Chloropleth",
-    "text": "Chloropleth\nFill in regions with variable values\n\n\nNeed two data sources:\n\nmap data with lat, long, region\ndata with measurements for each region\n\nyou don’t need to join them!\n\n\n\n\n\nFundamentals of Data Visualization"
-  },
-  {
-    "objectID": "slides/05/slides05.html#proportional-symbol",
-    "href": "slides/05/slides05.html#proportional-symbol",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Proportional Symbol",
-    "text": "Proportional Symbol\nOverlay symbols on an existing map, where the size of the shape is proportional to the variable\n\n\n\nMade with {ggmap} and {nycflights23}"
-  },
-  {
-    "objectID": "slides/05/slides05.html#cartogram",
-    "href": "slides/05/slides05.html#cartogram",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Cartogram",
-    "text": "Cartogram\nUse approximate geographical position to encode information, but not lat/long directly\n\n\n\nFundamentals of Data Visualization"
-  },
-  {
-    "objectID": "slides/05/slides05.html#your-task",
-    "href": "slides/05/slides05.html#your-task",
-    "title": "Intro to Maps  and Spatial Data",
-    "section": "Your task",
-    "text": "Your task\nYour task is to use the American Community Survey data to make a chloropleth map of the US\n\nYou should:\n\nUse the starter code provided in 05-maps.rmd\nChoose a different variable\nChange the color scale\nUpdate the title, axis labels, and legend"
+    "objectID": "slides/02/slides02.html#hints",
+    "href": "slides/02/slides02.html#hints",
+    "title": "Github +  Reproducible  Reporting",
+    "section": "Hints",
+    "text": "Hints\n\n\nTo begin, use inline R code to replace “hard coding” the quantities that are highlighted below.\n\n\nFor example, instead of typing 19798 you would include nrow(sets) as an inline code chunk. Make sure the report knits and you get the right values.\n\nNext, add a parameter to your YAML header that stores the location of the data set. Make sure the report knits.\nChange the code chunk where you load the data set to use the data parameter you just defined rather than the hard-coded URL. Make sure the report knits.\nNow, let’s make a parameter for the source of the data set so you don’t have to search where every mention of it in the report, it will be with the other metadata (where it belongs). To do this, add a parameter that gives the source of your data (call it data_source) and set it equal to “the 2022-09-09 repository on Tidy Tuesday.” Make sure the report knits.\nAt this point it looks like everything is working—awesome job! To put it to the test, let’s update the parameters of your report and knit it to see if everything changes as we would expect. Here are the new parameter values:\n\ndata: \"http://math.carleton.edu/aluby/stat220/lego_subset.csv\"\ndata_source: \"Amanda's website\"\n\n(optional) If you have time, or would like to try outside of class, I’ve created a practice gradescope assignment space. First, add .pdf output to your document and knit to PDF. Commit the PDF and push to github. Then, log into gradescope (you may have to go through the link on moodle the first time) and link your github repo. You should then be able to submit your .pdf\n\noutput: \n  html_document:\n    default\n  pdf_document:\n    default"
   },
   {
     "objectID": "slides/18/slides18.html#bakeoff-data-season-14-only",
