@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.6.32">
 <meta name="author" content="Prof Amanda Luby">
-<title>Stat 220 – Intro to  Databases</title>
+<title>Stat 220 – Relational Databases</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -394,8 +394,8 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="../img/sql-images.001.png" data-background-opacity="0.8" data-background-position="right" data-background-size="60%" data-slide-number="none" class="quarto-title-block center"><h1 class="title">Intro to <br>Databases</h1>
-  <p class="subtitle">Day 24</p>
+<section id="title-slide" data-background-image="../img/sql-images.001.png" data-background-opacity="0.8" data-background-position="right" data-background-size="60%" data-slide-number="none" class="quarto-title-block center"><h1 class="title">Relational<br>Databases</h1>
+  <p class="subtitle">Day 26</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -410,16 +410,25 @@ Prof Amanda Luby
 
 </section><section id="warm-up-on-your-own" class="slide level2"><h2>Warm Up: on your own</h2>
 <div class="task">
-<p>Using <code><a href="https://moderndive.github.io/nycflights23/reference/flights.html">nycflights23::flights</a></code>, answer the following using {dplyr} code</p>
-<ul>
-<li>How many flights flew to MSP from JFK in 2023?</li>
-<li>What was the average flight delay for MSP flights in Sept 2023?</li>
-<li>What percentage of MSP flights in 2023 were delayed by 15 minutes or more?</li>
-</ul>
+<p>Review your responses to SQL exercises. Which do you feel confident about? Are there any you’d like to discuss?</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_05faff0f" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_27c26e28" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls">
+<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
+</div>
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section><section id="warm-up-in-groups" class="slide level2"><h2>Warm Up: in groups</h2>
+<div class="task">
+<p>Check in with those around you: are you able to answer each other’s questions? Are there any remaining questions?</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_9db2f642" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls">
 <button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
@@ -427,672 +436,670 @@ Prof Amanda Luby
 </div>
 </div>
 </div>
-</section><section id="nycflights23flights-is-a-subset-of-all-flights-data" class="slide level2"><h2>
-<code>nycflights23::flights</code> is a subset of all flights data</h2>
+</section><section id="relational-databases" class="slide level2"><h2>Relational databases</h2>
+<p>Most databases contain multiple <em>tables</em> that are linked together via <em>keys</em></p>
+<div class="columns">
+<div class="column" style="width:50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
-<span id="cb1-2"><a></a>  <span class="fu">select</span>(year) <span class="sc">%&gt;%</span></span>
-<span id="cb1-3"><a></a>  <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a></a>  <span class="fu">select</span>(origin, dest, arr_delay, sched_arr_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-   year
-  &lt;int&gt;
-1  2023</code></pre>
+<pre><code># A tibble: 435,352 × 4
+   origin dest  arr_delay sched_arr_time
+   &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;          &lt;int&gt;
+ 1 EWR    SMF         205              3
+ 2 JFK    ATL          53            135
+ 3 JFK    BQN          34            426
+ 4 JFK    CHS         166           2352
+ 5 EWR    DTW         211           2252
+ 6 EWR    MIA          -7            815
+ 7 JFK    BQN          -1            949
+ 8 EWR    ORD         -25            710
+ 9 EWR    IAH          68            818
+10 EWR    FLL          -7            852
+# ℹ 435,342 more rows</code></pre>
 </div>
 </div>
-<div class="fragment">
+</div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>nycflights23<span class="sc">::</span>airports <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a></a>  <span class="fu">select</span>(faa, name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-       n
-   &lt;int&gt;
-1 435352</code></pre>
+<pre><code># A tibble: 1,251 × 2
+   faa   name                               
+   &lt;chr&gt; &lt;chr&gt;                              
+ 1 AAF   Apalachicola Regional Airport      
+ 2 AAP   Andrau Airpark                     
+ 3 ABE   Lehigh Valley International Airport
+ 4 ABI   Abilene Regional Airport           
+ 5 ABL   Ambler Airport                     
+ 6 ABQ   Albuquerque International Sunport  
+ 7 ABR   Aberdeen Regional Airport          
+ 8 ABY   Southwest Georgia Regional Airport 
+ 9 ACK   Nantucket Memorial Airport         
+10 ACT   Waco Regional Airport              
+# ℹ 1,241 more rows</code></pre>
 </div>
 </div>
-</div>
-<div class="fragment">
+</div></div>
+</section><section id="relational-databases-1" class="slide level2"><h2>Relational databases</h2>
+<p>Most databases contain multiple <em>tables</em> that are linked together via <em>keys</em></p>
+<div class="columns">
+<div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a></a>  <span class="fu">select</span>(origin) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a></a>  <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>survivoR<span class="sc">::</span>castaways</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 1
-  origin
-  &lt;chr&gt; 
-1 EWR   
-2 JFK   
-3 LGA   </code></pre>
+<pre><code># A tibble: 1,351 × 4
+   season castaway_id castaway city         
+    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;        
+ 1      1 US0001      Sonja    Walnut Creek 
+ 2      1 US0002      B.B.     Mission Hills
+ 3      1 US0003      Stacey   San Francisco
+ 4      1 US0004      Ramona   Edison       
+ 5      1 US0005      Dirk     Spring Green 
+ 6      1 US0006      Joel     Sherwood     
+ 7      1 US0007      Gretchen Clarksville  
+ 8      1 US0008      Greg     Gold Hill    
+ 9      1 US0009      Jenna    Franklin     
+10      1 US0010      Gervase  Willingboro  
+# ℹ 1,341 more rows</code></pre>
 </div>
 </div>
-</div>
-</section><section id="we-can-also-connect-to-a-database-containing-more-flights-data" class="slide level2"><h2>We can also connect to a database containing more flights data:</h2>
+</div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">library</span>(mdsr)</span>
-<span id="cb7-2"><a></a><span class="fu">library</span>(DBI)</span>
-<span id="cb7-3"><a></a>db <span class="ot">&lt;-</span> <span class="fu">dbConnect_scidb</span>(<span class="st">"airlines"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>survivoR<span class="sc">::</span>confessionals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>flights <span class="ot">&lt;-</span> <span class="fu">tbl</span>(db, <span class="st">"flights"</span>)</span>
-<span id="cb8-2"><a></a>carriers <span class="ot">&lt;-</span> <span class="fu">tbl</span>(db, <span class="st">"carriers"</span>)</span>
-<span id="cb8-3"><a></a>airports <span class="ot">&lt;-</span> <span class="fu">tbl</span>(db, <span class="st">"airports"</span>)</span>
-<span id="cb8-4"><a></a></span>
-<span id="cb8-5"><a></a><span class="fu">class</span>(flights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12,853 × 4
+   season episode castaway_id count
+    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1      1       1 US0001          2
+ 2      1       1 US0002          3
+ 3      1       1 US0003          1
+ 4      1       1 US0004          2
+ 5      1       1 US0005          1
+ 6      1       1 US0006          2
+ 7      1       1 US0007          1
+ 8      1       1 US0008          0
+ 9      1       1 US0009          0
+10      1       1 US0010          0
+# ℹ 12,843 more rows</code></pre>
 </div>
-<pre><code>[1] "tbl_MariaDBConnection" "tbl_dbi"               "tbl_sql"              
-[4] "tbl_lazy"              "tbl"      </code></pre>
-</section><section id="we-can-access-information-about-flights-with-dplyr-commands" class="slide level2 smaller"><h2>We can access information about <code>flights</code> with {dplyr} commands:</h2>
+</div>
+</div></div>
+</section><section id="these-relationships-are-often-summarized-with-a-schema" class="slide level2"><h2>These relationships are often summarized with a <em>schema</em>
+</h2>
+<ul>
+<li class="fragment">All <em>tables</em> are listed</li>
+<li class="fragment">Any variables that are <em>shared</em> across tables are listed</li>
+<li class="fragment">All <em>relationships</em> between variables are connected with a line</li>
+<li class="fragment">Other variables may or may not be included</li>
+</ul></section><section id="schema-nycflights23-tables" class="slide level2"><h2>Schema: nycflights23 tables</h2>
+<img data-src="../img/nycflights-schema.svg" class="r-stretch"></section><section id="schema-imaginary-bookstore" class="slide level2"><h2>Schema: imaginary bookstore</h2>
+<img data-src="../img/book-schema.png" class="r-stretch"></section><section id="connect-to-mdsr-imdb" class="slide level2"><h2>Connect to {mdsr} IMDB</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a></a>  <span class="fu">select</span>(year) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a></a>  <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">library</span>(DBI)</span>
+<span id="cb9-2"><a></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb9-3"><a></a>con <span class="ot">&lt;-</span> mdsr<span class="sc">::</span><span class="fu">dbConnect_scidb</span>(<span class="at">dbname =</span> <span class="st">"imdb"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code># Source:   SQL [?? x 1]
-# Database: mysql  [mdsr_public@mdsr.crcbo51tmesf.us-east-2.rds.amazonaws.com:3306/airlines]
-   year
-  &lt;int&gt;
-1  2013
-2  2014
-3  2015</code></pre>
-<div class="fragment">
+</section><section id="list-tables-in-imdb" class="slide level2"><h2>List tables in IMDB</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>flights <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>table_names <span class="ot">&lt;-</span> <span class="fu">dbListTables</span>(con)</span>
+<span id="cb10-2"><a></a>table_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "title"           "link_type"       "person_info"     "movie_info"     
+ [5] "movie_companies" "complete_cast"   "movie_keyword"   "company_type"   
+ [9] "keyword"         "role_type"       "movie_link"      "cast_info"      
+[13] "company_name"    "kind_type"       "aka_title"       "char_name"      
+[17] "name"            "info_type"       "comp_cast_type"  "aka_name"       
+[21] "movie_info_idx" </code></pre>
 </div>
-<pre><code># Source:   SQL [?? x 1]
-# Database: mysql  [mdsr_public@mdsr.crcbo51tmesf.us-east-2.rds.amazonaws.com:3306/airlines]
-         n
-   &lt;int64&gt;
-1 18008372</code></pre>
+</div>
+</section><section id="list-columns-in-a-given-table" class="slide level2"><h2>List columns in a given table</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">dbListFields</span>(con, <span class="st">"title"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "id"              "title"           "imdb_index"      "kind_id"        
+ [5] "production_year" "imdb_id"         "phonetic_code"   "episode_of_id"  
+ [9] "season_nr"       "episode_nr"      "series_years"    "md5sum"         </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">dbListFields</span>(con, table_names[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "id"              "title"           "imdb_index"      "kind_id"        
+ [5] "production_year" "imdb_id"         "phonetic_code"   "episode_of_id"  
+ [9] "season_nr"       "episode_nr"      "series_years"    "md5sum"         </code></pre>
+</div>
+</div>
+</section><section id="your-turn" class="slide level2"><h2>Your turn</h2>
+<div class="task">
+<p>List the fields in the <code>name</code>, <code>cast_info</code>, and <code>role_type</code> tables</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_42530167" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls">
+<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
+</div>
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section><section id="print-first-few-rows-of-a-table" class="slide level2"><h2>Print first few rows of a table</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">dbGetQuery</span>(con, <span class="st">"SELECT * FROM title LIMIT 0,10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      id                                           title imdb_index kind_id
+1  78460 Adults Recat to the Simpsons (30th Anniversary)       &lt;NA&gt;       7
+2  70273                                    (2016-05-18)       &lt;NA&gt;       7
+3  60105                                    (2014-04-11)       &lt;NA&gt;       7
+4  32120                                    (2008-05-01)       &lt;NA&gt;       7
+5  97554                               Schm繹lders Traum       &lt;NA&gt;       7
+6  57966                                          (#1.1)       &lt;NA&gt;       7
+7  76391                                     Anniversary       &lt;NA&gt;       7
+8  11952              Angus Black/Lester Barrie/DC Curry       &lt;NA&gt;       7
+9   1554                                     New Orleans       &lt;NA&gt;       7
+10 58442                                    Kiss Me Kate       &lt;NA&gt;       7
+   production_year imdb_id phonetic_code episode_of_id season_nr episode_nr
+1             2017      NA         A3432         78406        NA         NA
+2             2016      NA          &lt;NA&gt;         68058        NA         NA
+3             2014      NA          &lt;NA&gt;         59138        NA         NA
+4             2008      NA          &lt;NA&gt;         32060        NA         NA
+5             2001      NA         S2543         97302        10          1
+6             2013      NA          &lt;NA&gt;         57965         1          1
+7             1971      NA         A5162         76385         4          9
+8             2009      NA         A5214         11937         4          7
+9             2003      NA         N6452          1508         2         11
+10            2011      NA         K2523         58436         1         10
+   series_years                           md5sum
+1          &lt;NA&gt; 2ae09eed7d576cc2c24774fed5b18168
+2          &lt;NA&gt; 511dfc14cfff7589d29a95abb30cd66a
+3          &lt;NA&gt; c6cdce7e667e07713e431805c407feed
+4          &lt;NA&gt; 100df65742caf5afd092b2e0ead67d8e
+5          &lt;NA&gt; 46862a2f96f9fb2d59e8c9a11ecfdd28
+6          &lt;NA&gt; 409c37703766c4b24f8a86162fd9cf85
+7          &lt;NA&gt; 5e12ce73fac1d1dcf94136b6e9acd8f8
+8          &lt;NA&gt; 9c38b9e5601dc154444b73b518034aa1
+9          &lt;NA&gt; 621bea735740a547e862e4a3226f35d2
+10         &lt;NA&gt; 293e8c75c7f35a4035abf617962be5a9</code></pre>
+</div>
+</div>
+</section><section><section id="interlude-sql-in-rmarkdown" class="title-slide slide level1 center"><h1>Interlude: SQL in RMarkdown</h1>
 
+</section><section id="your-turn-1" class="slide level2"><h2>Your turn</h2>
+<div class="task">
+<p>List the first few rows in the <code>name</code>, <code>cast_info</code>, and <code>role_type</code> tables. What did you learn?</p>
 </div>
-<aside><div>
-<p><em>Warning:</em> slow!</p>
-</div></aside></section><section id="we-can-access-information-about-flights-with-dplyr-commands-1" class="slide level2 smaller"><h2>We can access information about <code>flights</code> with {dplyr} commands:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a></a>  <span class="fu">select</span>(origin) <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a></a>  <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="countdown" id="timer_9dbbbbfd" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls">
+<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
 </div>
-<pre><code># Source:   SQL [?? x 1]
-# Database: mysql  [mdsr_public@mdsr.crcbo51tmesf.us-east-2.rds.amazonaws.com:3306/airlines]
-   origin
-   &lt;chr&gt; 
- 1 ABE   
- 2 ABI   
- 3 ABQ   
- 4 ABR   
- 5 ABY   
- 6 ACK   
- 7 ACT   
- 8 ACV   
- 9 ACY   
-10 ADK   
-# ℹ more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
-
-<aside><div>
-<p><em>Warning:</em> slow!</p>
-</div></aside></section><section id="what-is-happening" class="slide level2"><h2>What is happening?</h2>
-<p><img data-src="../img/sql-images.001.png"></p>
-</section><section id="what-is-happening-1" class="slide level2"><h2>What is happening?</h2>
-<p><img data-src="../img/sql-images.002.png"></p>
-</section><section id="what-is-happening-2" class="slide level2"><h2>What is happening?</h2>
-<p><img data-src="../img/sql-images.003.png"></p>
-</section><section id="if-we-want-to-load-results-into-rs-memory-use-collect" class="slide level2"><h2>If we want to load results into R’s memory, use <code>collect()</code>
-</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>origins <span class="ot">&lt;-</span> flights <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a></a>  <span class="fu">select</span>(origin) <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a></a>  <span class="fu">distinct</span>()</span>
-<span id="cb16-4"><a></a></span>
-<span id="cb16-5"><a></a><span class="fu">class</span>(origins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
-<pre><code>[1] "tbl_MariaDBConnection" "tbl_dbi"               "tbl_sql"              
-[4] "tbl_lazy"              "tbl"   </code></pre>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>origins_tbl <span class="ot">&lt;-</span> <span class="fu">collect</span>(origins)</span>
-<span id="cb18-2"><a></a><span class="fu">class</span>(origins_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
-</section><section id="under-the-hood" class="slide level2"><h2>Under the hood:</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a></a>  <span class="fu">select</span>(origin) <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a></a>  <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>is generating the following SQL code:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="sc">&lt;</span>SQL<span class="sc">&gt;</span></span>
-<span id="cb21-2"><a></a>SELECT DISTINCT <span class="st">`</span><span class="at">origin</span><span class="st">`</span></span>
-<span id="cb21-3"><a></a>FROM <span class="st">`</span><span class="at">flights</span><span class="st">`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section><section id="sql" class="slide level2"><h2>SQL</h2>
-<p>SQL stands for <strong>S</strong>tructured <strong>Q</strong>uery <strong>L</strong>anguage and is a language for database management systems developed in the 1970’s</p>
+</section><section id="joins-in-sql" class="slide level2"><h2>
+<code>JOIN</code>s in SQL</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<pre><code>SELECT *
+FROM table1
+JOIN table2 ON table1.key=table2.key</code></pre>
+</div><div class="column" style="width:50%;">
 <ul>
-<li class="fragment">Up to this point, we’ve been working with <em>small</em> data
-<ul>
-<li class="fragment">Can be saved on our personal computers</li>
-<li class="fragment">Can be loaded directly into R’s memory</li>
+<li class="fragment">Select (everything) from first dataset</li>
+<li class="fragment">Join second dataset</li>
+<li class="fragment">On specified “keys” for each table</li>
 </ul>
-</li>
-<li class="fragment">Moving into <em>medium</em> data:
+</div></div>
+</section><section id="practice-with-joins" class="slide level2"><h2>Practice with joins</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb19-2"><a></a><span class="kw">FROM</span> title</span>
+<span id="cb19-3"><a></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> kind_type <span class="kw">ON</span> title.kind_id<span class="op">=</span>kind_type.<span class="kw">id</span></span>
+<span id="cb19-4"><a></a><span class="kw">LIMIT</span> <span class="dv">0</span>,<span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top" style="width:100%;">
+<caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 2%">
+<col style="width: 23%">
+<col style="width: 5%">
+<col style="width: 3%">
+<col style="width: 7%">
+<col style="width: 3%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 16%">
+<col style="width: 1%">
+<col style="width: 3%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: right;">id</th>
+<th style="text-align: left;">title</th>
+<th style="text-align: left;">imdb_index</th>
+<th style="text-align: right;">kind_id</th>
+<th style="text-align: right;">production_year</th>
+<th style="text-align: right;">imdb_id</th>
+<th style="text-align: left;">phonetic_code</th>
+<th style="text-align: right;">episode_of_id</th>
+<th style="text-align: right;">season_nr</th>
+<th style="text-align: right;">episode_nr</th>
+<th style="text-align: left;">series_years</th>
+<th style="text-align: left;">md5sum</th>
+<th style="text-align: right;">id</th>
+<th style="text-align: left;">kind</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">78460</td>
+<td style="text-align: left;">Adults Recat to the Simpsons (30th Anniversary)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A3432</td>
+<td style="text-align: right;">78406</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2ae09eed7d576cc2c24774fed5b18168</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">70273</td>
+<td style="text-align: left;">(2016-05-18)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">68058</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">511dfc14cfff7589d29a95abb30cd66a</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">60105</td>
+<td style="text-align: left;">(2014-04-11)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2014</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">59138</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">c6cdce7e667e07713e431805c407feed</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">32120</td>
+<td style="text-align: left;">(2008-05-01)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">32060</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">100df65742caf5afd092b2e0ead67d8e</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">97554</td>
+<td style="text-align: left;">Schm繹lders Traum</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">S2543</td>
+<td style="text-align: right;">97302</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">46862a2f96f9fb2d59e8c9a11ecfdd28</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">57966</td>
+<td style="text-align: left;">(#1.1)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">57965</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">409c37703766c4b24f8a86162fd9cf85</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">76391</td>
+<td style="text-align: left;">Anniversary</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1971</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A5162</td>
+<td style="text-align: right;">76385</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">5e12ce73fac1d1dcf94136b6e9acd8f8</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11952</td>
+<td style="text-align: left;">Angus Black/Lester Barrie/DC Curry</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2009</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A5214</td>
+<td style="text-align: right;">11937</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">9c38b9e5601dc154444b73b518034aa1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1554</td>
+<td style="text-align: left;">New Orleans</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">N6452</td>
+<td style="text-align: right;">1508</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">621bea735740a547e862e4a3226f35d2</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">58442</td>
+<td style="text-align: left;">Kiss Me Kate</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2011</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">K2523</td>
+<td style="text-align: right;">58436</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">293e8c75c7f35a4035abf617962be5a9</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="practice-with-joins-1" class="slide level2"><h2>Practice with joins</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb20-2"><a></a><span class="kw">FROM</span> title</span>
+<span id="cb20-3"><a></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> kind_type <span class="kw">ON</span> title.kind_id<span class="op">=</span>kind_type.<span class="kw">id</span></span>
+<span id="cb20-4"><a></a><span class="kw">WHERE</span> kind<span class="op">=</span><span class="st">'tv series'</span></span>
+<span id="cb20-5"><a></a><span class="kw">LIMIT</span> <span class="dv">0</span>,<span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top" style="width:100%;">
+<caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 3%">
+<col style="width: 20%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 16%">
+<col style="width: 1%">
+<col style="width: 5%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: right;">id</th>
+<th style="text-align: left;">title</th>
+<th style="text-align: left;">imdb_index</th>
+<th style="text-align: right;">kind_id</th>
+<th style="text-align: right;">production_year</th>
+<th style="text-align: right;">imdb_id</th>
+<th style="text-align: left;">phonetic_code</th>
+<th style="text-align: right;">episode_of_id</th>
+<th style="text-align: right;">season_nr</th>
+<th style="text-align: right;">episode_nr</th>
+<th style="text-align: left;">series_years</th>
+<th style="text-align: left;">md5sum</th>
+<th style="text-align: right;">id</th>
+<th style="text-align: left;">kind</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">49932</td>
+<td style="text-align: left;">A Pr籀xima V穩tima</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1995</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">P6251</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">1995-????</td>
+<td style="text-align: left;">c7a119d8fd4064cff333a9fb5f4d11f5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11173</td>
+<td style="text-align: left;">1974 National League Championship Series</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1974</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">N3542</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">1974-????</td>
+<td style="text-align: left;">b1f23a00126dbeecd725fdf3c2914415</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">78678</td>
+<td style="text-align: left;">Adventure Inc.</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A3153</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2002-2003</td>
+<td style="text-align: left;">a57c9dfca57a983e73ab1bf1099ce23a</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6328</td>
+<td style="text-align: left;">101 East</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">E23</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2006-????</td>
+<td style="text-align: left;">399cdcab9cf94208effa4fde946e2604</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5803</td>
+<td style="text-align: left;">100% Senorita</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">S563</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2003-2004</td>
+<td style="text-align: left;">c18f662bf2e4aea6886409df429a7cae</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">98954</td>
+<td style="text-align: left;">Aldrig Backa</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A4362</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2017-????</td>
+<td style="text-align: left;">5f9ff20a37b55240474599c12b0da995</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">57257</td>
+<td style="text-align: left;">A-strana</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A2365</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2017-????</td>
+<td style="text-align: left;">4048d4f9b4126b85877d6d4acb6d7776</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12255</td>
+<td style="text-align: left;">2 Become</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">B25</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2016-????</td>
+<td style="text-align: left;">f007958be527d3ee65c11e6d24dd6068</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19082</td>
+<td style="text-align: left;">3 Dads and a House</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2015</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">D3253</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2015-????</td>
+<td style="text-align: left;">0f4a848b4205cc56c47ffeb458ce6bd4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">47519</td>
+<td style="text-align: left;">A Little Rees Specht Cultivates Kindness</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">L3462</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">????</td>
+<td style="text-align: left;">ca9e1f5a62fbc3194bf9574dcd2372c4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="your-turn-2" class="slide level2"><h2>Your turn</h2>
+<div class="task">
+<p>Join the <code>name</code>, <code>cast_info</code>, and <code>role_type</code> tables</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_da373881" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls">
+<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
+</div>
+<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section><section id="sketch-out-a-schema" class="slide level2"><h2>Sketch out a schema</h2>
+<div class="task">
+<p>Sketch out a schema for the following tables:</p>
 <ul>
-<li class="fragment">Can be saved on our personal computers</li>
-<li class="fragment">
-<strong>Can’t</strong> be loaded or worked with in R’s memory</li>
+<li><code>title</code></li>
+<li><code>person_info</code></li>
+<li><code>movie_info</code></li>
+<li><code>complete_cast</code></li>
+<li><code>company_name</code></li>
+<li><code>role_type</code></li>
+<li><code>movie_link</code></li>
 </ul>
-</li>
-</ul></section><section id="sql-1" class="slide level2"><h2>SQL</h2>
-<p>There are many “dialects” of SQL, but they’re all very similar</p>
-<ul>
-<li class="fragment">Oracle/MySQL</li>
-<li class="fragment">Microsoft SQL Server</li>
-<li class="fragment">SQLite</li>
-<li class="fragment">MariaDB is a community version of MySQL</li>
-</ul>
-<div class="fragment">
-<p>The “dialect” we’ll use is MySQL/MariaDB</p>
+<p>https://databasediagram.com/app</p>
 </div>
-</section><section id="sql-2" class="slide level2"><h2>SQL</h2>
-<ul>
-<li class="fragment">Point of the next few days is to show you the basics and build a little bit of familiarity with the commands</li>
-<li class="fragment">The good news: “thinking” in SQL is similar to “thinking” in {dplyr} (even though the syntax is different)</li>
-</ul></section><section id="sql-in-r" class="slide level2"><h2>SQL in R</h2>
-<p>To run SQL in R, use</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">dbGetQuery</span>(db, <span class="st">"&lt;INSERT SQL QUERY HERE&gt;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">dbGetQuery</span>(db, </span>
-<span id="cb23-2"><a></a><span class="st">"SELECT DISTINCT `origin`</span></span>
-<span id="cb23-3"><a></a><span class="st">FROM `flights`"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    origin
-1      ABE
-2      ABI
-3      ABQ
-4      ABR
-5      ABY
-6      ACK
-7      ACT
-8      ACV
-9      ACY
-10     ADK
-11     ADQ
-12     AEX
-13     AGS
-14     AKN
-15     ALB
-16     ALO
-17     AMA
-18     ANC
-19     APN
-20     ART
-21     ASE
-22     ATL
-23     ATW
-24     AUS
-25     AVL
-26     AVP
-27     AZA
-28     AZO
-29     BDL
-30     BET
-31     BFL
-32     BGM
-33     BGR
-34     BHM
-35     BIL
-36     BIS
-37     BJI
-38     BKG
-39     BLI
-40     BMI
-41     BNA
-42     BOI
-43     BOS
-44     BPT
-45     BQK
-46     BQN
-47     BRD
-48     BRO
-49     BRW
-50     BTM
-51     BTR
-52     BTV
-53     BUF
-54     BUR
-55     BWI
-56     BZN
-57     CAE
-58     CAK
-59     CDC
-60     CDV
-61     CEC
-62     CHA
-63     CHO
-64     CHS
-65     CIC
-66     CID
-67     CIU
-68     CLD
-69     CLE
-70     CLL
-71     CLT
-72     CMH
-73     CMI
-74     CMX
-75     CNY
-76     COD
-77     COS
-78     COU
-79     CPR
-80     CRP
-81     CRW
-82     CSG
-83     CVG
-84     CWA
-85     CYS
-86     DAB
-87     DAL
-88     DAY
-89     DBQ
-90     DCA
-91     DEN
-92     DFW
-93     DHN
-94     DIK
-95     DLG
-96     DLH
-97     DRO
-98     DRT
-99     DSM
-100    DTW
-101    DVL
-102    EAU
-103    ECP
-104    EGE
-105    EKO
-106    ELM
-107    ELP
-108    ERI
-109    ESC
-110    EUG
-111    EVV
-112    EWN
-113    EWR
-114    EYW
-115    FAI
-116    FAR
-117    FAT
-118    FAY
-119    FCA
-120    FLG
-121    FLL
-122    FNT
-123    FOE
-124    FSD
-125    FSM
-126    FWA
-127    GCC
-128    GCK
-129    GEG
-130    GFK
-131    GGG
-132    GJT
-133    GNV
-134    GPT
-135    GRB
-136    GRI
-137    GRK
-138    GRR
-139    GSO
-140    GSP
-141    GST
-142    GTF
-143    GTR
-144    GUC
-145    GUM
-146    HDN
-147    HIB
-148    HLN
-149    HNL
-150    HOB
-151    HOU
-152    HPN
-153    HRL
-154    HSV
-155    HYA
-156    HYS
-157    IAD
-158    IAG
-159    IAH
-160    ICT
-161    IDA
-162    ILG
-163    ILM
-164    IMT
-165    IND
-166    INL
-167    IPL
-168    ISN
-169    ISP
-170    ITH
-171    ITO
-172    IYK
-173    JAC
-174    JAN
-175    JAX
-176    JFK
-177    JLN
-178    JMS
-179    JNU
-180    KOA
-181    KTN
-182    LAN
-183    LAR
-184    LAS
-185    LAW
-186    LAX
-187    LBB
-188    LBE
-189    LCH
-190    LEX
-191    LFT
-192    LGA
-193    LGB
-194    LIH
-195    LIT
-196    LMT
-197    LNK
-198    LRD
-199    LSE
-200    LWS
-201    MAF
-202    MBS
-203    MCI
-204    MCN
-205    MCO
-206    MDT
-207    MDW
-208    MEI
-209    MEM
-210    MFE
-211    MFR
-212    MGM
-213    MHK
-214    MHT
-215    MIA
-216    MKE
-217    MKG
-218    MLB
-219    MLI
-220    MLU
-221    MMH
-222    MOB
-223    MOD
-224    MOT
-225    MQT
-226    MRY
-227    MSN
-228    MSO
-229    MSP
-230    MSY
-231    MTJ
-232    MVY
-233    MYR
-234    OAJ
-235    OAK
-236    OGG
-237    OKC
-238    OMA
-239    OME
-240    ONT
-241    ORD
-242    ORF
-243    ORH
-244    OTH
-245    OTZ
-246    PAH
-247    PBG
-248    PBI
-249    PDX
-250    PHF
-251    PHL
-252    PHX
-253    PIA
-254    PIB
-255    PIH
-256    PIT
-257    PLN
-258    PNS
-259    PPG
-260    PSC
-261    PSE
-262    PSG
-263    PSP
-264    PUB
-265    PVD
-266    PWM
-267    RAP
-268    RDD
-269    RDM
-270    RDU
-271    RFD
-272    RHI
-273    RIC
-274    RKS
-275    RNO
-276    ROA
-277    ROC
-278    ROW
-279    RST
-280    RSW
-281    SAF
-282    SAN
-283    SAT
-284    SAV
-285    SBA
-286    SBN
-287    SBP
-288    SCC
-289    SCE
-290    SDF
-291    SEA
-292    SFO
-293    SGF
-294    SGU
-295    SHD
-296    SHV
-297    SIT
-298    SJC
-299    SJT
-300    SJU
-301    SLC
-302    SMF
-303    SMX
-304    SNA
-305    SPI
-306    SPN
-307    SPS
-308    SRQ
-309    STC
-310    STL
-311    STT
-312    STX
-313    SUN
-314    SUX
-315    SWF
-316    SYR
-317    TLH
-318    TOL
-319    TPA
-320    TRI
-321    TTN
-322    TUL
-323    TUS
-324    TVC
-325    TWF
-326    TXK
-327    TYR
-328    TYS
-329    UST
-330    VEL
-331    VLD
-332    VPS
-333    WRG
-334    WYS
-335    XNA
-336    YAK
-337    YUM</code></pre>
-</div>
-</div>
-</div>
-</section><section><section id="a-quick-overview-of-sql-commands" class="title-slide slide level1 center"><h1>A quick overview of SQL commands</h1>
-
-</section><section id="select-and-from" class="slide level2"><h2>
-<code>SELECT</code> and <code>FROM</code>
-</h2>
-<p>are required for every query. The simplest query we can write is:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>SELECT <span class="sc">*</span> FROM flights;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p>which means “select everything from the flights dataset”.</p>
-<p><strong>DO NOT EXECUTE THIS QUERY!</strong> This will cause all 169 million records to be dumped! This will not only crash your machine, but also tie up the server for everyone else.</p>
-<p>A safe version is:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>SELECT <span class="sc">*</span> FROM flights LIMIT <span class="dv">0</span>,<span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section><section id="limit" class="slide level2"><h2><code>LIMIT</code></h2>
-<p>is similar to <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> or <code>slice()</code></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">dbGetQuery</span>(db, </span>
-<span id="cb27-2"><a></a><span class="st">"SELECT DISTINCT `origin`</span></span>
-<span id="cb27-3"><a></a><span class="st">FROM `flights`</span></span>
-<span id="cb27-4"><a></a><span class="st">LIMIT 0,5"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code>  origin
-1    ABE
-2    ABI
-3    ABQ
-4    ABR
-5    ABY</code></pre>
-</section><section id="create-new-variables-with-select-and-as" class="slide level2"><h2>Create new variables with <code>SELECT</code> and <code>AS</code>
-</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>SELECT <span class="fu">SUM</span>(<span class="dv">1</span>) AS numFlights</span>
-<span id="cb29-2"><a></a>FROM flights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code>  numFlights
-1   18008372</code></pre>
-</section><section id="grouped-operations-with-group-by" class="slide level2"><h2>Grouped operations with <code>GROUP BY</code>
-</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>SELECT </span>
-<span id="cb31-2"><a></a>  origin, <span class="fu">SUM</span>(<span class="dv">1</span>) AS numFlights,</span>
-<span id="cb31-3"><a></a>  <span class="fu">AVG</span>(arr_delay) AS avg_arr_delay</span>
-<span id="cb31-4"><a></a>FROM flights</span>
-<span id="cb31-5"><a></a>GROUP BY origin</span>
-<span id="cb31-6"><a></a>LIMIT <span class="dv">0</span>, <span class="dv">6</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code>  origin numFlights avg_arr_delay
-1    ABE       7251        5.5627
-2    ABI       8116        6.3329
-3    ABQ      74195        5.8051
-4    ABR       2239        1.3198
-5    ABY       3002        5.2652
-6    ACK       1295        7.6131</code></pre>
-</section><section id="order-output-with-order-by" class="slide level2"><h2>Order output with <code>ORDER BY</code>
-</h2>
-<p>Similar to <code>arrange()</code> in {dplyr}</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>SELECT </span>
-<span id="cb33-2"><a></a>  origin, <span class="fu">SUM</span>(<span class="dv">1</span>) AS numFlights,</span>
-<span id="cb33-3"><a></a>  <span class="fu">AVG</span>(arr_delay) AS avg_arr_delay</span>
-<span id="cb33-4"><a></a>FROM flights</span>
-<span id="cb33-5"><a></a>GROUP BY origin</span>
-<span id="cb33-6"><a></a>ORDER BY avg_arr_delay DESC</span>
-<span id="cb33-7"><a></a>LIMIT <span class="dv">0</span>, <span class="dv">6</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code>  origin numFlights avg_arr_delay
-1    PPG        334       33.6946
-2    STC        550       22.8691
-3    OTH       1262       20.5713
-4    FOE        449       19.7127
-5    CEC       2143       18.4951
-6    ILG       1155       16.5394</code></pre>
-</section><section id="filter-output-with-where" class="slide level2"><h2>Filter output with <code>WHERE</code>
-</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>SELECT </span>
-<span id="cb35-2"><a></a>  origin, <span class="fu">SUM</span>(<span class="dv">1</span>) AS numFlights,</span>
-<span id="cb35-3"><a></a>  <span class="fu">AVG</span>(arr_delay) AS avg_arr_delay</span>
-<span id="cb35-4"><a></a>FROM flights</span>
-<span id="cb35-5"><a></a>WHERE dest <span class="ot">=</span> <span class="st">'MSP'</span></span>
-<span id="cb35-6"><a></a>  AND numFlights <span class="sc">&gt;</span> <span class="dv">365</span> <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb35-7"><a></a>GROUP BY origin</span>
-<span id="cb35-8"><a></a>ORDER BY avg_arr_delay DESC</span>
-<span id="cb35-9"><a></a>LIMIT <span class="dv">0</span>, <span class="dv">6</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code>  origin numFlights avg_arr_delay
-1    ASE         43       28.0930
-2    HRL        131       27.0687
-3    ORF        483       17.8240
-4    EGE         31       17.4516
-5    TTN        290       17.1552
-6    ORD      18382       12.7469</code></pre>
-</section><section id="filter-output-on-multiple-conditions" class="slide level2"><h2>Filter output on multiple conditions</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>SELECT </span>
-<span id="cb37-2"><a></a>  origin, <span class="fu">SUM</span>(<span class="dv">1</span>) AS numFlights,</span>
-<span id="cb37-3"><a></a>  <span class="fu">AVG</span>(arr_delay) AS avg_arr_delay</span>
-<span id="cb37-4"><a></a>FROM flights</span>
-<span id="cb37-5"><a></a>WHERE dest <span class="ot">=</span> <span class="st">'MSP'</span></span>
-<span id="cb37-6"><a></a>  AND numFlights <span class="sc">&gt;</span> <span class="dv">365</span> <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb37-7"><a></a>GROUP BY origin</span>
-<span id="cb37-8"><a></a>ORDER BY avg_arr_delay DESC</span>
-<span id="cb37-9"><a></a>LIMIT <span class="dv">0</span>, <span class="dv">6</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code>Error: Unknown column 'numFlights' in 'WHERE' [1054]</code></pre>
-<p>Doesn’t work, since <code>numFlights</code> is a column we created in <code>SELECT</code></p>
-</section><section id="filter-output-with-having" class="slide level2"><h2>Filter output with <code>HAVING</code>
-</h2>
-<p>If we want to filter based on a column we created, put it in the <code>HAVING</code> clause instead</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>SELECT </span>
-<span id="cb39-2"><a></a>  origin, <span class="fu">SUM</span>(<span class="dv">1</span>) AS numFlights,</span>
-<span id="cb39-3"><a></a>  <span class="fu">AVG</span>(arr_delay) AS avg_arr_delay</span>
-<span id="cb39-4"><a></a>FROM flights</span>
-<span id="cb39-5"><a></a>WHERE dest <span class="ot">=</span> <span class="st">'MSP'</span></span>
-<span id="cb39-6"><a></a>GROUP BY origin</span>
-<span id="cb39-7"><a></a>HAVING numFlights <span class="sc">&gt;</span> <span class="dv">365</span> <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb39-8"><a></a>ORDER BY avg_arr_delay DESC</span>
-<span id="cb39-9"><a></a>LIMIT <span class="dv">0</span>, <span class="dv">6</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<pre><code>  origin numFlights avg_arr_delay
-1    ORD      18382       12.7469
-2    MDW       9510        9.6110
-3    DEN      17054        9.0643
-4    CID       2106        8.2042
-5    RIC       1009        7.8840
-6    DFW       8404        7.2574</code></pre>
-</section><section id="sql-commands-must-be-written-in-a-specific-order" class="slide level2 scrollable"><h2>SQL commands must be written in a specific order:</h2>
-<ol type="1">
-<li class="fragment"><code>SELECT</code></li>
-<li class="fragment"><code>FROM</code></li>
-<li class="fragment">
-<code>JOIN</code> (next class)</li>
-<li class="fragment"><code>WHERE</code></li>
-<li class="fragment"><code>GROUP BY</code></li>
-<li class="fragment"><code>HAVING</code></li>
-<li class="fragment"><code>ORDER BY</code></li>
-<li class="fragment"><code>LIMIT</code></li>
-</ol></section><section id="your-turn" class="slide level2"><h2>Your turn</h2>
-<p>Try the exercises in the <code>25-databases</code> activity. We’ll start Friday off by talking about them</p>
 
 
 </section></section>
