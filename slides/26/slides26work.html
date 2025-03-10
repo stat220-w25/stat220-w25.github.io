@@ -6,20 +6,17 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-82b21c4badf2b3742632e8f006a51c80.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.32">
-
-  <meta name="author" content="Prof Amanda Luby">
-  <title>Stat 220 – Intro to Maps   and Spatial  Data</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
-  <style>
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-82b21c4badf2b3742632e8f006a51c80.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+<meta name="author" content="Prof Amanda Luby">
+<title>Stat 220 – Relational Databases</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+<style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -97,14 +94,14 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #d4d0ab; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-3fbdf5335c1ee34ace0cfc252b951b28.css">
-  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-9be35e48ac5ff9906ccc019449422c46.css">
+<link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+<link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
 
   .callout {
     margin-top: 1em;
@@ -302,7 +299,7 @@
   }
 
   </style>
-  <style type="text/css">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -313,6 +310,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -389,16 +387,15 @@
       margin-right: 0; 
     }
   </style>
-  <link href="../../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
-  <script src="../../site_libs/countdown-0.4.0/countdown.js"></script>
+<link href="../../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
+<script src="../../site_libs/countdown-0.4.0/countdown.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="../img/snow-cholera-map.jpeg" data-background-opacity="0.8" data-background-position="right" data-background-size="60%" data-slide-number="none" class="quarto-title-block center">
-  <h1 class="title">Intro to Maps <br> and Spatial <br>Data</h1>
-  <p class="subtitle">Day 05</p>
+<section id="title-slide" data-background-image="../img/sql-images.001.png" data-background-opacity="0.8" data-background-position="right" data-background-size="60%" data-slide-number="none" class="quarto-title-block center"><h1 class="title">Relational<br>Databases</h1>
+  <p class="subtitle">Day 26</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -411,441 +408,668 @@ Prof Amanda Luby
     </div>
 </div>
 
-</section>
-<section id="today" class="slide level2">
-<h2>Today</h2>
-<ul>
-<li class="fragment">git/GitHub</li>
-<li class="fragment">Intro to Spatial Data</li>
-<li class="fragment">Making Maps in <code>ggplot2</code></li>
-</ul>
-</section>
-<section id="section" class="slide level2 smaller" data-background-image="https://imgs.xkcd.com/comics/git.png" data-background-position="right" data-background-size="35%">
-<h2></h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li class="fragment">Think of the state on GitHub as “worst case scenario”</li>
-<li class="fragment">If you screw things up, copy your important files (eg. <code>hw.Rmd</code>) to a safe place.
-<ul>
-<li class="fragment">Usually your files are JUST FINE. But it is easy to goof up the Git infrastructure when you’re new at this. And it can be hard to get that straightened out on your own.</li>
-</ul></li>
-<li class="fragment">Rename the existing local repo as a temporary measure, i.e.&nbsp;before you do something radical, like delete it.</li>
-<li class="fragment">Clone the original repo from GitHub to RStudio (follow the directions to create a new project). You are back to a happy state.</li>
-<li class="fragment">Copy all relevant files back over from your safe space. The ones whose updated state you need to commit.</li>
-<li class="fragment">Knit, commit, push</li>
-<li class="fragment">Carry on with your life.</li>
-</ul>
-</div><div class="column" style="width:50%;">
-
-</div></div>
-
-<aside><div>
-<p><a href="https://happygitwithr.com/burn">Burn It All Down</a> from <em>Happy Git with R</em></p>
-</div></aside></section>
-<section id="section-1" class="slide level2">
-<h2></h2>
-<p><img data-src="../img/whole-game-04.png"></p>
-</section>
-<section>
-<section id="spatial-data" class="title-slide slide level1 maize center">
-<h1>Spatial Data</h1>
-
-</section>
-<section id="cholera" class="slide level2 smaller">
-<h2>Cholera</h2>
-<p>In 1854, a <em>Cholera</em> outbreak killed 127 people in 3 days in a London neighborhood, resulting in a mass exodus of local residents. At the time, people thought that Cholera w as an airborne disease. John Snow was a physician who was critical of the airborne theory, and set out to investigate.</p>
-<div class="fragment">
-<p>What might this data look like?</p>
+</section><section id="warm-up-on-your-own" class="slide level2"><h2>Warm Up: on your own</h2>
+<div class="task">
+<p>Review your responses to SQL exercises. Which do you feel confident about, and which would you like to discuss?</p>
 </div>
-<div class="fragment">
+</section><section id="warm-up-in-groups" class="slide level2"><h2>Warm Up: in groups</h2>
+<div class="task">
+<p>discuss</p>
+</div>
+</section><section id="relational-databases" class="slide level2"><h2>Relational databases</h2>
+<p>Most databases contain multiple <em>tables</em> that are linked together via <em>keys</em></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>nycflights23<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a></a>  <span class="fu">select</span>(origin, dest, arr_delay, sched_arr_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 435,352 × 4
+   origin dest  arr_delay sched_arr_time
+   &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;          &lt;int&gt;
+ 1 EWR    SMF         205              3
+ 2 JFK    ATL          53            135
+ 3 JFK    BQN          34            426
+ 4 JFK    CHS         166           2352
+ 5 EWR    DTW         211           2252
+ 6 EWR    MIA          -7            815
+ 7 JFK    BQN          -1            949
+ 8 EWR    ORD         -25            710
+ 9 EWR    IAH          68            818
+10 EWR    FLL          -7            852
+# ℹ 435,342 more rows</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>nycflights23<span class="sc">::</span>airports <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a></a>  <span class="fu">select</span>(faa, name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,251 × 2
+   faa   name                               
+   &lt;chr&gt; &lt;chr&gt;                              
+ 1 AAF   Apalachicola Regional Airport      
+ 2 AAP   Andrau Airpark                     
+ 3 ABE   Lehigh Valley International Airport
+ 4 ABI   Abilene Regional Airport           
+ 5 ABL   Ambler Airport                     
+ 6 ABQ   Albuquerque International Sunport  
+ 7 ABR   Aberdeen Regional Airport          
+ 8 ABY   Southwest Georgia Regional Airport 
+ 9 ACK   Nantucket Memorial Airport         
+10 ACT   Waco Regional Airport              
+# ℹ 1,241 more rows</code></pre>
+</div>
+</div>
+</div></div>
+</section><section id="relational-databases-1" class="slide level2"><h2>Relational databases</h2>
+<p>Most databases contain multiple <em>tables</em> that are linked together via <em>keys</em></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,351 × 4
+   season castaway_id castaway city         
+    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;        
+ 1      1 US0001      Sonja    Walnut Creek 
+ 2      1 US0002      B.B.     Mission Hills
+ 3      1 US0003      Stacey   San Francisco
+ 4      1 US0004      Ramona   Edison       
+ 5      1 US0005      Dirk     Spring Green 
+ 6      1 US0006      Joel     Sherwood     
+ 7      1 US0007      Gretchen Clarksville  
+ 8      1 US0008      Greg     Gold Hill    
+ 9      1 US0009      Jenna    Franklin     
+10      1 US0010      Gervase  Willingboro  
+# ℹ 1,341 more rows</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12,853 × 4
+   season episode castaway_id count
+    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1      1       1 US0001          2
+ 2      1       1 US0002          3
+ 3      1       1 US0003          1
+ 4      1       1 US0004          2
+ 5      1       1 US0005          1
+ 6      1       1 US0006          2
+ 7      1       1 US0007          1
+ 8      1       1 US0008          0
+ 9      1       1 US0009          0
+10      1       1 US0010          0
+# ℹ 12,843 more rows</code></pre>
+</div>
+</div>
+</div></div>
+</section><section id="these-relationships-are-often-summarized-with-a-schema" class="slide level2"><h2>These relationships are often summarized with a <em>schema</em>
+</h2>
+<ul>
+<li class="fragment">All <em>tables</em> are listed</li>
+<li class="fragment">Any variables that are <em>shared</em> across tables are listed</li>
+<li class="fragment">All <em>relationships</em> between variables are connected with a line</li>
+<li class="fragment">Other variables may or may not be included</li>
+</ul></section><section id="schema-nycflights23-tables" class="slide level2"><h2>Schema: nycflights23 tables</h2>
+<img data-src="../img/nycflights-schema.svg" class="r-stretch"></section><section id="schema-imaginary-bookstore" class="slide level2"><h2>Schema: imaginary bookstore</h2>
+<img data-src="../img/book-schema.png" class="r-stretch"></section><section id="connect-to-mdsr-imdb" class="slide level2"><h2>Connect to {mdsr} IMDB</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">library</span>(DBI)</span>
+<span id="cb7-2"><a></a>con <span class="ot">&lt;-</span> mdsr<span class="sc">::</span><span class="fu">dbConnect_scidb</span>(<span class="at">dbname =</span> <span class="st">"imdb"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="list-tables-in-imdb" class="slide level2"><h2>List tables in IMDB</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>table_names <span class="ot">&lt;-</span> <span class="fu">dbListTables</span>(con)</span>
+<span id="cb8-2"><a></a>table_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "title"           "link_type"       "person_info"     "movie_info"     
+ [5] "movie_companies" "complete_cast"   "movie_keyword"   "company_type"   
+ [9] "keyword"         "role_type"       "movie_link"      "cast_info"      
+[13] "company_name"    "kind_type"       "aka_title"       "char_name"      
+[17] "name"            "info_type"       "comp_cast_type"  "aka_name"       
+[21] "movie_info_idx" </code></pre>
+</div>
+</div>
+</section><section id="list-columns-in-a-given-table" class="slide level2"><h2>List columns in a given table</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">dbListFields</span>(con, <span class="st">"title"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "id"              "title"           "imdb_index"      "kind_id"        
+ [5] "production_year" "imdb_id"         "phonetic_code"   "episode_of_id"  
+ [9] "season_nr"       "episode_nr"      "series_years"    "md5sum"         </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">dbListFields</span>(con, table_names[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "id"              "title"           "imdb_index"      "kind_id"        
+ [5] "production_year" "imdb_id"         "phonetic_code"   "episode_of_id"  
+ [9] "season_nr"       "episode_nr"      "series_years"    "md5sum"         </code></pre>
+</div>
+</div>
+</section><section id="your-turn" class="slide level2"><h2>Your turn</h2>
+<div class="task">
+<p>List the fields in the <code>person_info</code>, <code>complete_cast</code>, and <code>comp_cast_type</code>.</p>
+</div>
 <div class="cell">
 <div class="cell-output-display">
-<table class="caption-top">
+<div class="countdown" id="timer_c4df9830" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls">
+<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
+</div>
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section><section id="print-first-few-rows-of-a-table" class="slide level2"><h2>Print first few rows of a table</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">dbGetQuery</span>(con, <span class="st">"SELECT * FROM title LIMIT 0,10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      id                                           title imdb_index kind_id
+1  78460 Adults Recat to the Simpsons (30th Anniversary)       &lt;NA&gt;       7
+2  70273                                    (2016-05-18)       &lt;NA&gt;       7
+3  60105                                    (2014-04-11)       &lt;NA&gt;       7
+4  32120                                    (2008-05-01)       &lt;NA&gt;       7
+5  97554                               Schm繹lders Traum       &lt;NA&gt;       7
+6  57966                                          (#1.1)       &lt;NA&gt;       7
+7  76391                                     Anniversary       &lt;NA&gt;       7
+8  11952              Angus Black/Lester Barrie/DC Curry       &lt;NA&gt;       7
+9   1554                                     New Orleans       &lt;NA&gt;       7
+10 58442                                    Kiss Me Kate       &lt;NA&gt;       7
+   production_year imdb_id phonetic_code episode_of_id season_nr episode_nr
+1             2017      NA         A3432         78406        NA         NA
+2             2016      NA          &lt;NA&gt;         68058        NA         NA
+3             2014      NA          &lt;NA&gt;         59138        NA         NA
+4             2008      NA          &lt;NA&gt;         32060        NA         NA
+5             2001      NA         S2543         97302        10          1
+6             2013      NA          &lt;NA&gt;         57965         1          1
+7             1971      NA         A5162         76385         4          9
+8             2009      NA         A5214         11937         4          7
+9             2003      NA         N6452          1508         2         11
+10            2011      NA         K2523         58436         1         10
+   series_years                           md5sum
+1          &lt;NA&gt; 2ae09eed7d576cc2c24774fed5b18168
+2          &lt;NA&gt; 511dfc14cfff7589d29a95abb30cd66a
+3          &lt;NA&gt; c6cdce7e667e07713e431805c407feed
+4          &lt;NA&gt; 100df65742caf5afd092b2e0ead67d8e
+5          &lt;NA&gt; 46862a2f96f9fb2d59e8c9a11ecfdd28
+6          &lt;NA&gt; 409c37703766c4b24f8a86162fd9cf85
+7          &lt;NA&gt; 5e12ce73fac1d1dcf94136b6e9acd8f8
+8          &lt;NA&gt; 9c38b9e5601dc154444b73b518034aa1
+9          &lt;NA&gt; 621bea735740a547e862e4a3226f35d2
+10         &lt;NA&gt; 293e8c75c7f35a4035abf617962be5a9</code></pre>
+</div>
+</div>
+</section><section><section id="interlude-sql-in-rmarkdown" class="title-slide slide level1 center"><h1>Interlude: SQL in RMarkdown</h1>
+
+</section><section id="your-turn-1" class="slide level2"><h2>Your turn</h2>
+<div class="task">
+<p>List the first few rows in the <code>person_info</code>, <code>complete_cast</code>, and <code>comp_cast_type</code> tables. What did you learn?</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_d642443e" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls">
+<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
+</div>
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section><section id="practice-with-joins" class="slide level2"><h2>Practice with joins</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb16-2"><a></a><span class="kw">FROM</span> title</span>
+<span id="cb16-3"><a></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> kind_type <span class="kw">ON</span> title.kind_id<span class="op">=</span>kind_type.<span class="kw">id</span></span>
+<span id="cb16-4"><a></a><span class="kw">LIMIT</span> <span class="dv">0</span>,<span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top" style="width:100%;">
+<caption>Displaying records 1 - 10</caption>
 <colgroup>
-<col style="width: 19%">
-<col style="width: 15%">
-<col style="width: 16%">
-<col style="width: 19%">
+<col style="width: 2%">
+<col style="width: 23%">
+<col style="width: 5%">
+<col style="width: 3%">
+<col style="width: 7%">
+<col style="width: 3%">
 <col style="width: 6%">
-<col style="width: 22%">
+<col style="width: 6%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 16%">
+<col style="width: 1%">
+<col style="width: 3%">
 </colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">date</th>
-<th style="text-align: left;">last_name</th>
-<th style="text-align: left;">first_name</th>
-<th style="text-align: left;">address</th>
-<th style="text-align: right;">age</th>
-<th style="text-align: left;">cause_of_death</th>
-</tr>
-</thead>
+<thead><tr class="header">
+<th style="text-align: right;">id</th>
+<th style="text-align: left;">title</th>
+<th style="text-align: left;">imdb_index</th>
+<th style="text-align: right;">kind_id</th>
+<th style="text-align: right;">production_year</th>
+<th style="text-align: right;">imdb_id</th>
+<th style="text-align: left;">phonetic_code</th>
+<th style="text-align: right;">episode_of_id</th>
+<th style="text-align: right;">season_nr</th>
+<th style="text-align: right;">episode_nr</th>
+<th style="text-align: left;">series_years</th>
+<th style="text-align: left;">md5sum</th>
+<th style="text-align: right;">id</th>
+<th style="text-align: left;">kind</th>
+</tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Aug 31, 1854</td>
-<td style="text-align: left;">Jones</td>
-<td style="text-align: left;">Thomas</td>
-<td style="text-align: left;">26 Broad St.</td>
-<td style="text-align: right;">37</td>
-<td style="text-align: left;">cholera</td>
+<td style="text-align: right;">78460</td>
+<td style="text-align: left;">Adults Recat to the Simpsons (30th Anniversary)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A3432</td>
+<td style="text-align: right;">78406</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">2ae09eed7d576cc2c24774fed5b18168</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Aug 31, 1854</td>
-<td style="text-align: left;">Jones</td>
-<td style="text-align: left;">Mary</td>
-<td style="text-align: left;">26 Broad St.</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">cholera</td>
+<td style="text-align: right;">70273</td>
+<td style="text-align: left;">(2016-05-18)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">68058</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">511dfc14cfff7589d29a95abb30cd66a</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Sept 1, 1854</td>
-<td style="text-align: left;">Warwick</td>
-<td style="text-align: left;">Martin</td>
-<td style="text-align: left;">14 Broad St.</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: left;">cholera</td>
+<td style="text-align: right;">60105</td>
+<td style="text-align: left;">(2014-04-11)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2014</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">59138</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">c6cdce7e667e07713e431805c407feed</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">32120</td>
+<td style="text-align: left;">(2008-05-01)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">32060</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">100df65742caf5afd092b2e0ead67d8e</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">97554</td>
+<td style="text-align: left;">Schm繹lders Traum</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">S2543</td>
+<td style="text-align: right;">97302</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">46862a2f96f9fb2d59e8c9a11ecfdd28</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">57966</td>
+<td style="text-align: left;">(#1.1)</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">57965</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">409c37703766c4b24f8a86162fd9cf85</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">76391</td>
+<td style="text-align: left;">Anniversary</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1971</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A5162</td>
+<td style="text-align: right;">76385</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">5e12ce73fac1d1dcf94136b6e9acd8f8</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11952</td>
+<td style="text-align: left;">Angus Black/Lester Barrie/DC Curry</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2009</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A5214</td>
+<td style="text-align: right;">11937</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">9c38b9e5601dc154444b73b518034aa1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1554</td>
+<td style="text-align: left;">New Orleans</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">N6452</td>
+<td style="text-align: right;">1508</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">621bea735740a547e862e4a3226f35d2</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">58442</td>
+<td style="text-align: left;">Kiss Me Kate</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2011</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">K2523</td>
+<td style="text-align: right;">58436</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">293e8c75c7f35a4035abf617962be5a9</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">episode</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-
-</div>
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="section-2" class="slide level2">
-<h2></h2>
-<p>What makes “address” a useful variable is that it is linked to a specific location in the physical world. If we plot these addresses, we get something like the following:</p>
+</section><section id="practice-with-joins-1" class="slide level2"><h2>Practice with joins</h2>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb17-2"><a></a><span class="kw">FROM</span> title</span>
+<span id="cb17-3"><a></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> kind_type <span class="kw">ON</span> title.kind_id<span class="op">=</span>kind_type.<span class="kw">id</span></span>
+<span id="cb17-4"><a></a><span class="kw">WHERE</span> kind<span class="op">=</span><span class="st">'tv series'</span></span>
+<span id="cb17-5"><a></a><span class="kw">LIMIT</span> <span class="dv">0</span>,<span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
-</figure>
+<table class="caption-top" style="width:100%;">
+<caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 3%">
+<col style="width: 20%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 16%">
+<col style="width: 1%">
+<col style="width: 5%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: right;">id</th>
+<th style="text-align: left;">title</th>
+<th style="text-align: left;">imdb_index</th>
+<th style="text-align: right;">kind_id</th>
+<th style="text-align: right;">production_year</th>
+<th style="text-align: right;">imdb_id</th>
+<th style="text-align: left;">phonetic_code</th>
+<th style="text-align: right;">episode_of_id</th>
+<th style="text-align: right;">season_nr</th>
+<th style="text-align: right;">episode_nr</th>
+<th style="text-align: left;">series_years</th>
+<th style="text-align: left;">md5sum</th>
+<th style="text-align: right;">id</th>
+<th style="text-align: left;">kind</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">49932</td>
+<td style="text-align: left;">A Pr籀xima V穩tima</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1995</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">P6251</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">1995-????</td>
+<td style="text-align: left;">c7a119d8fd4064cff333a9fb5f4d11f5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11173</td>
+<td style="text-align: left;">1974 National League Championship Series</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1974</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">N3542</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">1974-????</td>
+<td style="text-align: left;">b1f23a00126dbeecd725fdf3c2914415</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">78678</td>
+<td style="text-align: left;">Adventure Inc.</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A3153</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2002-2003</td>
+<td style="text-align: left;">a57c9dfca57a983e73ab1bf1099ce23a</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6328</td>
+<td style="text-align: left;">101 East</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">E23</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2006-????</td>
+<td style="text-align: left;">399cdcab9cf94208effa4fde946e2604</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5803</td>
+<td style="text-align: left;">100% Senorita</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">S563</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2003-2004</td>
+<td style="text-align: left;">c18f662bf2e4aea6886409df429a7cae</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">98954</td>
+<td style="text-align: left;">Aldrig Backa</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A4362</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2017-????</td>
+<td style="text-align: left;">5f9ff20a37b55240474599c12b0da995</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">57257</td>
+<td style="text-align: left;">A-strana</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">A2365</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2017-????</td>
+<td style="text-align: left;">4048d4f9b4126b85877d6d4acb6d7776</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12255</td>
+<td style="text-align: left;">2 Become</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">B25</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2016-????</td>
+<td style="text-align: left;">f007958be527d3ee65c11e6d24dd6068</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19082</td>
+<td style="text-align: left;">3 Dads and a House</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2015</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">D3253</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">2015-????</td>
+<td style="text-align: left;">0f4a848b4205cc56c47ffeb458ce6bd4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">47519</td>
+<td style="text-align: left;">A Little Rees Specht Cultivates Kindness</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">L3462</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">????</td>
+<td style="text-align: left;">ca9e1f5a62fbc3194bf9574dcd2372c4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">tv series</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="section-3" class="slide level2">
-<h2></h2>
-<p>While we can see patterns in the last plot, the underlying map of the London streets provides helpful context that makes it more intelligble:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="../img/snow-cholera-map.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="../img/snow-cholera-map.jpeg" class="quarto-figure quarto-figure-center" style="width:50.0%"></a></p>
-</figure>
-</div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="section-4" class="slide level2">
-<h2></h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p>Snow’s insight was driven by another set of data—the locations of the street-side water pumps (it’s kind of hard to see, but they are labelled on the map). Nearly all of the cases were clustered around a single pump on the center of Broad Street.</p>
-<p>John Snow’s map (and water pump) are now “famous” among epidemiologists and statisticians.</p>
-</div><div class="column fragment" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../img/broad-street-pump.jpeg"></p>
-<figcaption>John Snow’s water pump (and pub) from a 2019 visit</figcaption>
-</figure>
-</div>
-</div></div>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="a-successful-data-science-episode" class="slide level2">
-<h2>A successful data science episode:</h2>
-<ol type="1">
-<li class="fragment">Combine three sources of data (Cholera deaths, water pump locations, and street map)</li>
-<li class="fragment">While a model might have come to the same conclusion, simply plotting the data is much simpler (and more convincing to lots of people)</li>
-<li class="fragment">The problem was resolved when the data-based evidence was combined with a plausible model that explained the physical phenomenon.</li>
-</ol>
-
-<aside><div>
-<p>Source: <a href="https://mdsr-book.github.io/mdsr3e/17-geospatialI.html">MDSR Ch17.1</a></p>
-</div></aside></section>
-<section id="what-is-a-map" class="slide level2">
-<h2>What is a map?</h2>
-<p>A bunch of latitude longitude points…</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="what-is-a-map-1" class="slide level2">
-<h2>What is a map?</h2>
-<p>… that are connected with lines in a very specific order.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="necessary-map-data" class="slide level2">
-<h2>Necessary map data</h2>
-<ul>
-<li class="fragment"><p>latitude/longitude points for all map boundaries</p></li>
-<li class="fragment"><p>which boundary group all lat/long points belong</p></li>
-<li class="fragment"><p>the order to connect points within each group</p></li>
-</ul>
-</section>
-<section id="state-map-data" class="slide level2">
-<h2>State map data</h2>
-<p><code>ggplot2::map_data()</code> provides the necessary information</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>states <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"state"</span>)</span>
-<span id="cb1-2"><a></a><span class="fu">glimpse</span>(states)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 15,537
-Columns: 6
-$ long      &lt;dbl&gt; -87.46201, -87.48493, -87.52503, -87.53076, -87.57087, -87.5…
-$ lat       &lt;dbl&gt; 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30.32665, …
-$ group     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-$ order     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1…
-$ region    &lt;chr&gt; "alabama", "alabama", "alabama", "alabama", "alabama", "alab…
-$ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
-</div>
-</div>
-</section>
-<section id="using-geom_polygon" class="slide level2">
-<h2>Using <code>geom_polygon()</code></h2>
-<p>Using <code>geom_polygon()</code> will treat states as solid shapes, making it easier to add color</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb3-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="using-coord_fixed" class="slide level2">
-<h2>Using <code>coord_fixed()</code></h2>
-<p>Using <code>coord_fixed()</code> forces x and y units to be equal</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb4-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
-<span id="cb4-3"><a></a>  <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="your-turn" class="slide level2">
-<h2>Your turn</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb5-2"><a></a>    <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span></span>
-<span id="cb5-3"><a></a>    <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+</section><section id="your-turn-2" class="slide level2"><h2>Your turn</h2>
 <div class="task">
-<ul>
-<li>Edit this code so that each shape is colored in with a different color.</li>
-<li>You only need the 3 variables used: <code>long</code>, <code>lat</code>, and <code>group</code></li>
-<li><code>05-maps.Rmd</code> file available in the <code>activities</code> repo</li>
-</ul>
+<p>Join the <code>person_info</code>, <code>complete_cast</code>, and <code>comp_cast_type</code> tables</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_f41493ad" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<div class="countdown" id="timer_1f184eea" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls">
+<button class="countdown-bump-down">−</button><button class="countdown-bump-up">&amp;plus;</button>
+</div>
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 </div>
 </div>
-</section>
-<section id="coordinate-systems-and-projections" class="slide level2" data-background-image="../img/02-ggplot-layers.png" data-background-size="60%" data-background-position="right" data-background-opacity="0.8">
-<h2>Coordinate Systems and Projections</h2>
-</section>
-<section id="section-5" class="slide level2" data-background-image="../img/cairo-projections.png" data-background-size="50%" data-background-position="right">
-<h2></h2>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p>Geospatial data exists on the globe and is generally described with a <em>latitude</em> and <em>longitude</em>. Any <em>projection</em> from the globe to euclidean space (X-Y plane) is going to cause some distortion.</p>
-</div></div>
-</section>
-<section id="section-6" class="slide level2">
-<h2></h2>
-<iframe data-external="1" src="https://www.youtube.com/embed/vVX-PrBRtTY?start=45" width="100%" height="100%" title="West Wing: Gall-Peters Projection" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-
-<aside><div>
-<p>From <em>The West Wing</em> Season 2 Episode 16</p>
-</div></aside></section>
-<section id="section-7" class="slide level2">
-<h2></h2>
-<img data-src="../img/africa-greenland-distortions.png" class="r-stretch">
-</section>
-<section id="changing-the-coordinate-system" class="slide level2">
-<h2>Changing the coordinate system</h2>
-<p><code>coord_map</code> function provides a Mercator projection (<code>mapproj</code> package has more options)</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb6-2"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb6-3"><a></a>  <span class="fu">coord_map</span>() <span class="sc">+</span> </span>
-<span id="cb6-4"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="changing-the-coordinate-system-1" class="slide level2">
-<h2>Changing the coordinate system</h2>
-<p><code>coord_map</code> function provides a Mercator projection (<code>mapproj</code> package has more options)</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">ggplot</span>(states, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb7-2"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb7-3"><a></a>  <span class="fu">coord_map</span>(<span class="at">projection =</span> <span class="st">"sinusoidal"</span>) <span class="sc">+</span> </span>
-<span id="cb7-4"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="mercator-vs-sinusoidal-projection-world-map" class="slide level2">
-<h2>Mercator vs Sinusoidal projection (world map)</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>world <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"world"</span>)</span>
-<span id="cb8-2"><a></a></span>
-<span id="cb8-3"><a></a><span class="fu">ggplot</span>(world, <span class="fu">aes</span>(<span class="at">x=</span>long, <span class="at">y=</span>lat, <span class="at">group=</span>group)) <span class="sc">+</span> </span>
-<span id="cb8-4"><a></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">"gold2"</span>, <span class="at">fill=</span><span class="st">"navyblue"</span>) <span class="sc">+</span> </span>
-<span id="cb8-5"><a></a>  <span class="fu">coord_map</span>(<span class="at">projection =</span> <span class="st">"mercator"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>)) <span class="sc">+</span> </span>
-<span id="cb8-6"><a></a>  <span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div>
-
-</div>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-nrow="1">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-14-2.png" width="960"></p>
-</div>
-</div>
-</div>
-</section>
-<section id="common-types-of-maps" class="slide level2">
-<h2>Common Types of Maps</h2>
-<ol type="1">
-<li class="fragment">Chloropleth</li>
-<li class="fragment">Proportional Symbol</li>
-<li class="fragment">Cartograms/Geofacets</li>
-</ol>
-</section>
-<section id="chloropleth" class="slide level2">
-<h2>Chloropleth</h2>
-<p>Fill in regions with variable values</p>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p>Need two data sources:</p>
-<ol type="1">
-<li>map data with lat, long, region</li>
-<li>data with measurements for each region</li>
-</ol>
-<p>you don’t need to join them!</p>
-</div><div class="column" style="width:60%;">
-<p><img data-src="../img/wilke-chloropleth.png"></p>
-</div></div>
-
-<aside><div>
-<p><a href="https://clauswilke.com/dataviz/geospatial-data.html"><em>Fundamentals of Data Visualization</em></a></p>
-</div></aside></section>
-<section id="proportional-symbol" class="slide level2">
-<h2>Proportional Symbol</h2>
-<p>Overlay symbols on an existing map, where the size of the shape is proportional to the variable</p>
-<img data-src="../img/airport-ggmap.png" class="r-stretch">
-
-<aside><div>
-<p>Made with {ggmap} and {nycflights23}</p>
-</div></aside></section>
-<section id="cartogram" class="slide level2">
-<h2>Cartogram</h2>
-<p>Use approximate geographical position to encode information, but not lat/long directly</p>
-<img data-src="../img/wilke-cartogram.png" class="r-stretch">
-
-<aside><div>
-<p><a href="https://clauswilke.com/dataviz/geospatial-data.html"><em>Fundamentals of Data Visualization</em></a></p>
-</div></aside></section>
-<section id="your-task" class="slide level2">
-<h2>Your task</h2>
-<p>Your task is to use the American Community Survey data to make a chloropleth map of the US</p>
+</section><section id="sketch-out-a-schema" class="slide level2"><h2>Sketch out a schema</h2>
 <div class="task">
-<p>You should:</p>
+<p>Sketch out a schema for the following tables:</p>
 <ul>
-<li>Use the starter code provided in <code>05-maps.rmd</code></li>
-<li>Choose a different variable</li>
-<li>Change the color scale</li>
-<li>Update the title, axis labels, and legend</li>
+<li><code>title</code></li>
+<li><code>person_info</code></li>
+<li><code>movie_info</code></li>
+<li><code>complete_cast</code></li>
+<li><code>company_name</code></li>
+<li><code>role_type</code></li>
+<li><code>movie_link</code></li>
 </ul>
+<p>https://databasediagram.com/app</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">dbDisconnect</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
 </section></section>
-    </div>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 <p><a href="https://stat220-w25.github.io">🔗 stat220-w25.github.io</a></p>
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="../../site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script><script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="../../site_libs/revealjs/plugin/notes/notes.js"></script><script src="../../site_libs/revealjs/plugin/search/search.js"></script><script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="../../site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -1037,9 +1261,7 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
           RevealZoom
         ]
       });
-    </script>
-    
-    <script>
+    </script><script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
@@ -1074,9 +1296,7 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
         const mode = bsSheetEl.getAttribute("data-mode");
@@ -1263,38 +1483,6 @@ $ subregion &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
       }
     });
     </script>
-    <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
-    (function() {
-      let previousOnload = window.onload;
-      window.onload = () => {
-        if (previousOnload) {
-          previousOnload();
-        }
-        lightboxQuarto.on('slide_before_load', (data) => {
-          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-          const href = trigger.getAttribute('href');
-          if (href !== null) {
-            const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-            if (imgEl !== null) {
-              const srcAttr = imgEl.getAttribute("src");
-              if (srcAttr && srcAttr.startsWith("data:")) {
-                slideConfig.href = srcAttr;
-              }
-            }
-          } 
-        });
-      
-        lightboxQuarto.on('slide_after_load', (data) => {
-          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(slideNode);
-          }
-        });
-      
-      };
-      
-    })();
-              </script>
-    
+
 
 </body></html>
